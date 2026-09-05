@@ -20,6 +20,18 @@ services:
       timeout: 5s
       retries: 10
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_inventory
+    restart: always
+    ports:
+      - "1000:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
   app:
     image: docker.io/node:20-alpine
     container_name: poc_app
@@ -53,3 +65,4 @@ services:
 volumes:
   pg_data:
   node_modules:
+  pgadmin-data:

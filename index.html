@@ -46,6 +46,13 @@
     input.bad { border-color: #dc3545; background: #fff6f6; }
     input:disabled { background: #f1f1f1; color: #999; }
     .cellwrap { display: flex; align-items: center; }
+
+    /* Query Tab */
+    #queryInput { width:100%; min-height:180px; resize:vertical; font-family:monospace; font-size:14px; line-height:1.5; padding:10px; box-sizing:border-box; }
+    .query-result-wrap { width:100%; overflow:auto; margin-top:15px; max-height:500px; border:1px solid #ddd; }
+    #queryResult { margin-top:0; min-width:100%; }
+    #queryResult th { position:sticky; top:0; background:#fff; }
+    #queryError.is-err { display:block !important; background:#fff0f0; border:1px solid #dc3545; color:#b02a37; padding:10px; border-radius:5px; white-space:pre-wrap; margin-top:15px; }
   </style>
 </head>
 <body>
@@ -56,6 +63,7 @@
     <button class="tab-btn active" onclick="switchTab(event, 'inTab')">Inventory In (Bills)</button>
     <button class="tab-btn" onclick="switchTab(event, 'outTab')">Inventory Out</button>
     <button class="tab-btn" onclick="switchTab(event, 'recipeTab')">Recipe Maker</button>
+    <button class="tab-btn" onclick="switchTab(event, 'queryTab')">Query</button>
   </div>
 
   <div id="cfgWarn"></div>
@@ -113,8 +121,6 @@
 
     <div class="actions">
       <button class="primary" onclick="addInRow()">+ Add Item</button>
-<!--      <input type="file" id="outCsvFile" style="display:none" accept=".csv" onchange="handleOutImport(event)">-->
-      <button class="import" onclick="importCSV()">Import CSVs</button>
       <button class="success" onclick="exportInCSV()">Export CSVs</button>
       <button class="primary" onclick="saveInDB()">Save to DB</button>
       <button class="plain" onclick="resetIn()">Reset</button>
@@ -185,7 +191,6 @@
 
     <div class="actions">
       <button class="primary" onclick="addOutRow()">+ Add Item</button>
-      <button class="success" onclick="importOutCSV()">Import CSV</button>
       <button class="success" onclick="exportOutCSV()">Export CSV</button>
       <button class="primary" onclick="saveOutToDB()">Save to DB</button>
       <button class="plain" onclick="resetOut()">Reset</button>
@@ -206,16 +211,6 @@
         <label for="recipeDishName">Dish Name *</label>
         <div class="combo"><input type="text" id="recipeDishName" placeholder="Search dish name..." autocomplete="off" /></div>
         <div class="hint" id="recipeDishHint">Search &amp; select dish item to build recipe</div>
-      </div>
-      <div>
-        <label for="recipeDishOutScoop">Dish Out Scoop *</label>
-        <div class="combo"><input type="text" id="recipeDishOutScoop" placeholder="Search dish out scoop..." autocomplete="off" disabled /></div>
-        <div class="hint" id="recipeDishOutScoopHint">Select dish name first</div>
-      </div>
-      <div>
-        <label for="recipeDishOutCmt">Dish Out Comments</label>
-        <input type="text" id="recipeDishOutCmt" placeholder="Dish out comments..." />
-        <div class="hint">Comments for dish_out row</div>
       </div>
     </div>
 
@@ -242,6 +237,32 @@
       </tfoot>
     </table>
 
+    <!-- Dish Out - after item entry -->
+    <h3 style="margin-top:25px; font-size:16px;">Dish Out</h3>
+    <div class="head-row">
+      <div>
+        <label for="recipeDishOutScoop">Dish Out Scoop *</label>
+        <div class="combo"><input type="text" id="recipeDishOutScoop" placeholder="Search dish out scoop..." autocomplete="off" disabled /></div>
+        <div class="hint" id="recipeDishOutScoopHint">Select dish name first</div>
+      </div>
+      <div>
+        <label for="dishOutInGm">inGm</label>
+        <input type="number" id="dishOutInGm" min="0" step="any" placeholder="Enter grams" />
+      </div>
+      <div>
+        <label for="dishOutInML">inML</label>
+        <input type="number" id="dishOutInML" min="0" step="any" placeholder="Enter ml" />
+      </div>
+      <div>
+        <label for="dishOutInPiece">inPiece</label>
+        <input type="number" id="dishOutInPiece" min="0" step="any" placeholder="Enter pieces" />
+      </div>
+      <div>
+        <label for="recipeDishOutCmt">Dish Out Comments</label>
+        <input type="text" id="recipeDishOutCmt" placeholder="Dish out comments..." />
+      </div>
+    </div>
+
     <div class="actions">
       <button class="primary" onclick="addRecipeRow()">+ Add Item</button>
       <button class="success" onclick="exportRecipeCSV()">Export CSV</button>
@@ -251,10 +272,26 @@
     <h3 style="margin-top:25px; font-size:14px;">CSV Preview - Recipe Maker</h3>
     <pre id="previewRecipe">-- add items to see preview --</pre>
   </div>
+
+  <!-- TAB 4: QUERY -->
+  <div id="queryTab" class="tab-pane">
+    <h2>Database Query</h2>
+    <label for="queryInput">SQL Query</label>
+    <textarea id="queryInput" placeholder="Enter SQL query here...&#10;&#10;Example: SELECT * FROM orders;" spellcheck="false"></textarea>
+    <div class="actions">
+      <button id="queryRunBtn" class="primary" onclick="Query.run()">Run Query</button>
+      <button class="plain" onclick="Query.clear()">Clear</button>
+    </div>
+    <div id="queryError" style="display:none;"></div>
+    <div id="queryMeta" style="margin-top:15px; font-size:13px; color:#666;"></div>
+    <div class="query-result-wrap"><table id="queryResult"></table></div>
+  </div>
+
 </div>
 
 <!-- DATA CONFIGURATION FILE -->
 <script src="catalog.js"></script>
+<script src="report.js"></script>
 
 <script>
   /* ==========================================================================
@@ -782,7 +819,7 @@
   /* ==========================================================================
      MODULE 3: RECIPE MAKER
      ========================================================================== */
-  const CSV_HEADER_RECIPE = ["dishname", "reciepeItemname", "pgNo", "receipescoop", "qty", "comments"];
+  const CSV_HEADER_RECIPE = ["dishname", "reciepeItemname", "pgNo", "receipescoop", "qty", "inGm", "inML", "inPiece", "comments"];
 
   function allowedDishOutScoops(dishName) {
     if (!dishName) return [];
@@ -892,6 +929,9 @@
     const dishName = document.getElementById("recipeDishName").value.trim();
     const dishOutScoop = document.getElementById("recipeDishOutScoop").value.trim();
     const dishOutCmt = document.getElementById("recipeDishOutCmt").value.trim();
+    const dishOutInGm = num(document.getElementById("dishOutInGm").value);
+    const dishOutInML = num(document.getElementById("dishOutInML").value);
+    const dishOutInPiece = num(document.getElementById("dishOutInPiece").value);
     const totalCmt = document.getElementById("recipeTotalCmt").value.trim();
 
     const recipeRows = [];
@@ -904,6 +944,9 @@
         e.pgNo,
         tr.dataset.scoop || tr.querySelector(".i-scoop").value,
         num(tr.querySelector(".i-qty").value),
+        "",
+        "",
+        "",
         tr.querySelector(".i-cmt").value.trim()
       ]);
     });
@@ -915,6 +958,9 @@
         "",
         "",
         num(document.getElementById("recipeTotalQty").value),
+        "",
+        "",
+        "",
         totalCmt
       ]);
       recipeRows.push([
@@ -923,6 +969,9 @@
         "",
         dishOutScoop,
         "",
+        dishOutInGm,
+        dishOutInML,
+        dishOutInPiece,
         dishOutCmt
       ]);
     }
@@ -936,6 +985,9 @@
     const dishName = document.getElementById("recipeDishName").value.trim();
     const dishOutScoop = document.getElementById("recipeDishOutScoop").value.trim();
     const dishOutCmt = document.getElementById("recipeDishOutCmt").value.trim();
+    const dishOutInGm = num(document.getElementById("dishOutInGm").value);
+    const dishOutInML = num(document.getElementById("dishOutInML").value);
+    const dishOutInPiece = num(document.getElementById("dishOutInPiece").value);
     const totalCmt = document.getElementById("recipeTotalCmt").value.trim();
 
     if (!dishName) { alert("Please select or enter a Dish Name."); return; }
@@ -950,6 +1002,9 @@
         e.pgNo,
         tr.dataset.scoop || tr.querySelector(".i-scoop").value,
         num(tr.querySelector(".i-qty").value),
+        "",
+        "",
+        "",
         tr.querySelector(".i-cmt").value.trim()
       ]);
     });
@@ -962,6 +1017,9 @@
       "",
       "",
       num(document.getElementById("recipeTotalQty").value),
+      "",
+      "",
+      "",
       totalCmt
     ]);
 
@@ -971,6 +1029,9 @@
       "",
       dishOutScoop,
       "",
+      dishOutInGm,
+      dishOutInML,
+      dishOutInPiece,
       dishOutCmt
     ]);
 
@@ -979,11 +1040,18 @@
     downloadBlob(new Blob(["\uFEFF" + txt], { type: "text/csv;charset=utf-8;" }), "recipe_" + sanitizedDishName + ".csv");
   }
 
+  document.getElementById("dishOutInGm").addEventListener("input", refreshRecipe);
+  document.getElementById("dishOutInML").addEventListener("input", refreshRecipe);
+  document.getElementById("dishOutInPiece").addEventListener("input", refreshRecipe);
+
   function resetRecipe() {
     document.getElementById("recipeBody").innerHTML = "";
     document.getElementById("recipeDishName").value = "";
     document.getElementById("recipeDishOutScoop").value = "";
     document.getElementById("recipeDishOutCmt").value = "";
+    document.getElementById("dishOutInGm").value = "";
+    document.getElementById("dishOutInML").value = "";
+    document.getElementById("dishOutInPiece").value = "";
     document.getElementById("recipeTotalCmt").value = "";
     addRecipeRow(); addRecipeRow(); onRecipeDishChange();
   }
@@ -1009,300 +1077,6 @@
     if(!items.length){alert("Please select at least one item.");return;}
     try{const d=await postJSON("/api/inventory-out",{category,dt,time,items});alert("Inventory Out saved to DB. ID: "+d.id);}catch(e){alert("Save to DB failed: "+e.message);}
   }
-
-
-  /* ==========================================================================
-     CSV IMPORT HANDLERS
-     ========================================================================== */
-
-  function handleInImport(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const text = e.target.result;
-      const rows = parseBlock(text);
-      if (rows.length < 2) { alert("Invalid or empty CSV"); return; }
-
-      // Clear existing rows
-      document.getElementById("inBody").innerHTML = "";
-
-      // Headers: Vendor, dt, billno, itemname, pgno, scoopin, qty, rate, itemtotal, comments
-      const firstRow = rows[1];
-      if (firstRow) {
-        document.getElementById("inVendor").value = firstRow[0] || "";
-        document.getElementById("inDt").value = firstRow[1] || "";
-        document.getElementById("inBillNo").value = firstRow[2] || "";
-        onInVendorChange(); // Updates vendor hint & input states
-      }
-
-      for (let i = 1; i < rows.length; i++) {
-        const r = rows[i];
-        if (!r || r.length === 0) continue;
-
-        // Handle footer totals
-        if (r[3] && r[3].toLowerCase() === "billtotal") {
-          document.getElementById("inBillTotal").value = num(r[8]);
-          document.getElementById("inBillTotalCmt").value = r[9] || "";
-          isManualBillTotal = true;
-          continue;
-        }
-
-        // Add row and map catalog items for DB save validation
-        addInRow();
-        const tr = document.getElementById("inBody").lastElementChild;
-        const itemName = (r[3] || "").trim();
-        const pgNo = (r[4] || "").trim();
-
-        const ci = CATALOG.findIndex(c => c.itemname === itemName && c.pgNo === pgNo);
-        if (ci >= 0) {
-          tr.dataset.cat = String(ci);
-          tr.querySelector(".i-name").value = CATALOG[ci].itemname;
-          tr.querySelector(".i-pg").value = CATALOG[ci].pgNo;
-        } else {
-          // Fallback if item isn't in current DB catalog
-          tr.querySelector(".i-name").value = itemName;
-          tr.querySelector(".i-pg").value = pgNo;
-        }
-
-        tr.dataset.scoop = (r[5] || "").trim();
-        tr.querySelector(".i-scoop").value = tr.dataset.scoop;
-        tr.querySelector(".i-qty").value = r[6] || "";
-        tr.querySelector(".i-rate").value = r[7] || "";
-        tr.querySelector(".i-total").value = r[8] || "";
-        tr.querySelector(".i-cmt").value = r[9] || "";
-      }
-
-      refreshIn();
-      event.target.value = ""; // Reset input
-    };
-    reader.readAsText(file);
-  }
-
-  function handleOutImport(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const text = e.target.result;
-      const rows = parseBlock(text);
-      if (rows.length < 2) { alert("Invalid or empty CSV"); return; }
-
-      // Clear existing rows
-      document.getElementById("outBody").innerHTML = "";
-
-      // Headers: category, dt, time, itemname, pgNo, scoop_out, qty, comments
-      const firstRow = rows[1];
-      if (firstRow) {
-        document.getElementById("outCategory").value = firstRow[0] || "";
-        document.getElementById("outDt").value = firstRow[1] || "";
-        document.getElementById("outTm").value = firstRow[2] || "";
-        onOutCategoryChange();
-      }
-
-      for (let i = 1; i < rows.length; i++) {
-        const r = rows[i];
-        if (!r || r.length === 0) continue;
-
-        // Handle footer totals
-        if (r[3] && r[3].toLowerCase() === "totalqty") {
-          document.getElementById("outTotalQty").value = num(r[6]);
-          document.getElementById("outTotalCmt").value = r[7] || "";
-          continue;
-        }
-
-        // Add row and map catalog items for DB save validation
-        addOutRow();
-        const tr = document.getElementById("outBody").lastElementChild;
-        const itemName = (r[3] || "").trim();
-        const pgNo = (r[4] || "").trim();
-
-        const ci = CATALOG.findIndex(c => c.itemname === itemName && c.pgNo === pgNo);
-        if (ci >= 0) {
-          tr.dataset.cat = String(ci);
-          tr.querySelector(".i-name").value = CATALOG[ci].itemname;
-          tr.querySelector(".i-pg").value = CATALOG[ci].pgNo;
-        } else {
-          tr.querySelector(".i-name").value = itemName;
-          tr.querySelector(".i-pg").value = pgNo;
-        }
-
-        tr.dataset.scoop = (r[5] || "").trim();
-        tr.querySelector(".i-scoop").value = tr.dataset.scoop;
-        tr.querySelector(".i-qty").value = r[6] || "";
-        tr.querySelector(".i-cmt").value = r[7] || "";
-      }
-
-      refreshOut();
-      event.target.value = ""; // Reset input
-    };
-    reader.readAsText(file);
-  }
-
-
-  // IMPORT CSV
-  function importCSV() {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".csv,text/csv";
-    input.onchange = e => {
-      const file = input.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = event => doImport(event.target.result);
-      reader.readAsText(file);
-    };
-    input.click();
-  }
-
-  function doImport(text) {
-    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-    if (lines.length < 2) {
-      alert("CSV appears to be empty.");
-      return;
-    }
-
-    // Parse header to find column indexes dynamically
-    const headers = splitCsvLine(lines[0]).map(h => h.toLowerCase());
-    const col = name => headers.indexOf(name);
-
-    const iVendor = col("vendor"), iDt = col("dt"), iBillNo = col("billno");
-    const iItem = col("itemname"), iScoop = col("scoopin"), iPg = col("pgno");
-    const iQty = col("qty"), iRate = col("rate"), iTotal = col("itemtotal");
-    const iCmt = col("comments");
-
-    if (iVendor < 0 || iDt < 0 || iBillNo < 0 || iItem < 0) {
-      alert("CSV missing required columns: vendor, dt, billno, itemname.");
-      return;
-    }
-
-    // Clear existing rows
-    document.getElementById("inBody").innerHTML = "";
-
-    const firstRow = splitCsvLine(lines[1]);
-    document.getElementById("inVendor").value = firstRow[iVendor] || "";
-    document.getElementById("inDt").value = firstRow[iDt] || "";
-    document.getElementById("inBillNo").value = firstRow[iBillNo] || "";
-    onInVendorChange();
-
-    for (let i = 1; i < lines.length; i++) {
-      const r = splitCsvLine(lines[i]);
-      if (!r || r.length === 0) continue;
-
-      // Handle footer total row
-      if (r[iItem] && r[iItem].toLowerCase() === "billtotal") {
-        document.getElementById("inBillTotal").value = num(r[iTotal]);
-        document.getElementById("inBillTotalCmt").value = iCmt >= 0 ? r[iCmt] || "" : "";
-        isManualBillTotal = true;
-        continue;
-      }
-
-      addInRow();
-      const tr = document.getElementById("inBody").lastElementChild;
-      const itemName = (r[iItem] || "").trim();
-      const pgNo = iPg >= 0 ? (r[iPg] || "").trim() : "";
-
-      const ci = CATALOG.findIndex(c => c.itemname === itemName && c.pgNo === pgNo);
-      if (ci >= 0) {
-        tr.dataset.cat = String(ci);
-        tr.querySelector(".i-name").value = CATALOG[ci].itemname;
-        tr.querySelector(".i-pg").value = CATALOG[ci].pgNo;
-      } else {
-        tr.querySelector(".i-name").value = itemName;
-        tr.querySelector(".i-pg").value = pgNo;
-      }
-
-      tr.dataset.scoop = iScoop >= 0 ? (r[iScoop] || "").trim() : "";
-      tr.querySelector(".i-scoop").value = tr.dataset.scoop;
-      tr.querySelector(".i-qty").value = iQty >= 0 ? r[iQty] || "" : "";
-      tr.querySelector(".i-rate").value = iRate >= 0 ? r[iRate] || "" : "";
-      tr.querySelector(".i-total").value = iTotal >= 0 ? r[iTotal] || "" : "";
-      tr.querySelector(".i-cmt").value = iCmt >= 0 ? r[iCmt] || "" : "";
-    }
-
-    refreshIn();
-  }
-
-  function importOutCSV() {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".csv,text/csv";
-    input.onchange = e => {
-      const file = input.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = event => doOutImport(event.target.result);
-      reader.readAsText(file);
-    };
-    input.click();
-  }
-
-  function doOutImport(text) {
-    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-    if (lines.length < 2) {
-      alert("CSV appears to be empty.");
-      return;
-    }
-
-    // Parse header to find column indexes dynamically
-    const headers = splitCsvLine(lines[0]).map(h => h.toLowerCase());
-    const col = name => headers.indexOf(name);
-
-    const iCategory = col("category"), iDt = col("dt"), iTime = col("time");
-    const iItem = col("itemname"), iPg = col("pgno") >= 0 ? col("pgno") : col("pgn");
-    const iScoop = col("scoop_out"), iQty = col("qty"), iCmt = col("comments");
-
-    if (iCategory < 0 || iDt < 0 || iItem < 0) {
-      alert("CSV missing required columns: category, dt, itemname.");
-      return;
-    }
-
-    // Clear existing rows
-    document.getElementById("outBody").innerHTML = "";
-
-    const firstRow = splitCsvLine(lines[1]);
-    document.getElementById("outCategory").value = firstRow[iCategory] || "";
-    document.getElementById("outDt").value = firstRow[iDt] || "";
-    document.getElementById("outTm").value = iTime >= 0 ? firstRow[iTime] || "" : "";
-    onOutCategoryChange();
-
-    for (let i = 1; i < lines.length; i++) {
-      const r = splitCsvLine(lines[i]);
-      if (!r || r.length === 0) continue;
-
-      // Handle footer total row
-      if (r[iItem] && r[iItem].toLowerCase() === "totalqty") {
-        document.getElementById("outTotalQty").value = num(r[iQty]);
-        document.getElementById("outTotalCmt").value = iCmt >= 0 ? r[iCmt] || "" : "";
-        continue;
-      }
-
-      addOutRow();
-      const tr = document.getElementById("outBody").lastElementChild;
-      const itemName = (r[iItem] || "").trim();
-      const pgNo = iPg >= 0 ? (r[iPg] || "").trim() : "";
-
-      const ci = CATALOG.findIndex(c => c.itemname === itemName && c.pgNo === pgNo);
-      if (ci >= 0) {
-        tr.dataset.cat = String(ci);
-        tr.querySelector(".i-name").value = CATALOG[ci].itemname;
-        tr.querySelector(".i-pg").value = CATALOG[ci].pgNo;
-      } else {
-        tr.querySelector(".i-name").value = itemName;
-        tr.querySelector(".i-pg").value = pgNo;
-      }
-
-      tr.dataset.scoop = iScoop >= 0 ? (r[iScoop] || "").trim() : "";
-      tr.querySelector(".i-scoop").value = tr.dataset.scoop;
-      tr.querySelector(".i-qty").value = iQty >= 0 ? r[iQty] || "" : "";
-      tr.querySelector(".i-cmt").value = iCmt >= 0 ? r[iCmt] || "" : "";
-    }
-
-    refreshOut();
-  }
-
 
   /* Initialization */
   (function init() {
@@ -1340,6 +1114,9 @@
     document.getElementById("recipeTotalCmt").addEventListener("input", refreshRecipe);
     document.getElementById("recipeDishOutCmt").addEventListener("input", refreshRecipe);
     document.getElementById("recipeDishOutScoop").addEventListener("input", refreshRecipe);
+    document.getElementById("dishOutInGm").addEventListener("input", refreshRecipe);
+    document.getElementById("dishOutInML").addEventListener("input", refreshRecipe);
+    document.getElementById("dishOutInPiece").addEventListener("input", refreshRecipe);
 
     // Add Initial Rows for each section
     addInRow(); addInRow(); onInVendorChange();
