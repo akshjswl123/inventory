@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inventory &amp; Recipe Management System</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 25px; background: #f6f7f9; }
+    .card { background: #fff; padding: 20px 25px; border-radius: 8px; max-width: 1250px; box-shadow: 0 2px 6px rgba(0,0,0,.12); }
+
+    /* Tabs Navigation */
+    .nav-tabs { display: flex; border-bottom: 2px solid #dee2e6; margin-bottom: 20px; gap: 5px; }
+    .tab-btn { padding: 10px 20px; font-weight: bold; font-size: 14px; border: 1px solid transparent; border-bottom: none; border-radius: 6px 6px 0 0; background: #e9ecef; color: #495057; cursor: pointer; }
+    .tab-btn.active { background: #fff; color: #0d6efd; border-color: #dee2e6 #dee2e6 #fff #dee2e6; margin-bottom: -2px; }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    h2 { margin-top: 0; }
+    label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 4px; }
+    input, select { padding: 7px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; width: 100%; font-size: 13px; background: #fff; }
+    .head-row { display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 15px; }
+    .head-row > div { flex: 1; min-width: 160px; }
+    .hint { font-size: 11px; color: #666; margin-top: 3px; min-height: 14px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 15px; font-size: 13px; }
+    th, td { border: 1px solid #ddd; padding: 6px; }
+    th { background: #f0f0f0; text-align: left; }
+    td.num, th.num { text-align: right; }
+    .num input { text-align: right; }
+    tfoot td { background: #fafafa; font-weight: bold; }
+    button { padding: 8px 15px; border: 0; border-radius: 4px; cursor: pointer; font-size: 13px; }
+    button.primary { background: #0d6efd; color: #fff; }
+    button.success { background: #198754; color: #fff; }
+    button.plain { background: #e2e2e2; }
+    button.danger { background: #dc3545; color: #fff; padding: 4px 9px; }
+    button.mini { padding: 4px 7px; background: #e2e2e2; border-radius: 4px; font-size: 12px; margin-left: 5px; }
+    .actions { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+    pre { background: #20232a; color: #e6e6e6; padding: 12px; border-radius: 5px; overflow-x: auto; font-size: 12px; }
+    #cfgWarn { display: none; background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; padding: 8px 12px; border-radius: 5px; font-size: 12px; margin-bottom: 14px; white-space: pre-line; }
+
+    /* Combobox */
+    .combo { position: relative; }
+    .combo-list { position: absolute; z-index: 60; left: 0; right: 0; top: 100%; margin-top: 2px; background: #fff; border: 1px solid #bbb; border-radius: 4px; max-height: 190px; overflow-y: auto; display: none; box-shadow: 0 4px 12px rgba(0,0,0,.18); }
+    .combo-opt { padding: 6px 8px; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; white-space: nowrap; }
+    .combo-opt:hover, .combo-opt.active { background: #e7f1ff; }
+    .combo-opt .sec { color: #888; font-size: 11px; }
+    .combo-empty { padding: 6px 8px; color: #999; font-style: italic; }
+    input.bad { border-color: #dc3545; background: #fff6f6; }
+    input:disabled { background: #f1f1f1; color: #999; }
+    .cellwrap { display: flex; align-items: center; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <!-- TAB NAVIGATION -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab(event, 'inTab')">Inventory In (Bills)</button>
+    <button class="tab-btn" onclick="switchTab(event, 'outTab')">Inventory Out</button>
+    <button class="tab-btn" onclick="switchTab(event, 'recipeTab')">Recipe Maker</button>
+  </div>
+
+  <div id="cfgWarn"></div>
+
+  <!-- ====================================================================== -->
+  <!-- TAB 1: INVENTORY IN -->
+  <!-- ====================================================================== -->
+  <div id="inTab" class="tab-pane active">
+    <h2>Bill Additions &amp; Inventory In</h2>
+
+    <div class="head-row">
+      <div>
+        <label for="inVendor">Vendor *</label>
+        <div class="combo"><input type="text" id="inVendor" placeholder="Search vendor..." autocomplete="off" /></div>
+        <div class="hint" id="inVendorHint">Search &amp; select vendor to load items</div>
+      </div>
+      <div>
+        <label for="inDt">Date *</label>
+        <input type="date" id="inDt" />
+        <div class="hint">&nbsp;</div>
+      </div>
+      <div>
+        <label for="inBillNo">Bill No *</label>
+        <input type="text" id="inBillNo" placeholder="Enter Bill No" />
+        <div class="hint">&nbsp;</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+      <tr>
+        <th style="width:35px">#</th>
+        <th style="width:180px">Item Name *</th>
+        <th style="width:100px">Pg No *</th>
+        <th style="width:180px">Scoop In *</th>
+        <th class="num" style="width:80px">Qty *</th>
+        <th class="num" style="width:100px">Rate *</th>
+        <th class="num" style="width:110px">Item Total *</th>
+        <th>Comments</th>
+        <th style="width:45px"></th>
+      </tr>
+      </thead>
+      <tbody id="inBody"></tbody>
+      <tfoot>
+      <tr>
+        <td colspan="4" style="text-align:right">Bill Total</td>
+        <td class="num"><input type="text" id="inTotalQty" value="0" readonly title="Total Quantity" /></td>
+        <td></td>
+        <td class="num"><input type="number" id="inBillTotal" value="0" step="any" /></td>
+        <td><input type="text" id="inBillTotalCmt" placeholder="Bill total comments..." /></td>
+        <td></td>
+      </tr>
+      </tfoot>
+    </table>
+
+    <div class="actions">
+      <button class="primary" onclick="addInRow()">+ Add Item</button>
+<!--      <input type="file" id="outCsvFile" style="display:none" accept=".csv" onchange="handleOutImport(event)">-->
+      <button class="import" onclick="importCSV()">Import CSVs</button>
+      <button class="success" onclick="exportInCSV()">Export CSVs</button>
+      <button class="primary" onclick="saveInDB()">Save to DB</button>
+      <button class="plain" onclick="resetIn()">Reset</button>
+    </div>
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top:25px;">
+      <div style="flex: 1; min-width: 300px;">
+        <h3 style="margin:0 0 10px 0; font-size:14px;">CSV Preview - Bill Additions</h3>
+        <pre id="previewBill">-- add items to see preview --</pre>
+      </div>
+      <div style="flex: 1; min-width: 300px;">
+        <h3 style="margin:0 0 10px 0; font-size:14px;">CSV Preview - Inventory In</h3>
+        <pre id="previewInv">-- add items to see preview --</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- TAB 2: INVENTORY OUT -->
+  <!-- ====================================================================== -->
+  <div id="outTab" class="tab-pane">
+    <h2>Inventory Out</h2>
+
+    <div class="head-row">
+      <div>
+        <label for="outCategory">Category *</label>
+        <div class="combo"><input type="text" id="outCategory" placeholder="Search category..." autocomplete="off" /></div>
+        <div class="hint" id="outCategoryHint">Search &amp; select category to load items</div>
+      </div>
+      <div>
+        <label for="outDt">Date *</label>
+        <input type="date" id="outDt" />
+        <div class="hint">&nbsp;</div>
+      </div>
+      <div>
+        <label for="outTm">Time</label>
+        <div class="cellwrap">
+          <input type="time" id="outTm" style="flex:1;" />
+          <button type="button" class="mini" onclick="setOutNow()">Now</button>
+          <button type="button" class="mini" onclick="clearOutTime()">&times;</button>
+        </div>
+        <div class="hint">Optional - leave blank if not needed</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+      <tr>
+        <th style="width:35px">#</th>
+        <th style="width:200px">Item Name *</th>
+        <th style="width:120px">Pg No *</th>
+        <th style="width:200px">Scoop Out *</th>
+        <th class="num" style="width:100px">Qty *</th>
+        <th>Comments</th>
+        <th style="width:45px"></th>
+      </tr>
+      </thead>
+      <tbody id="outBody"></tbody>
+      <tfoot>
+      <tr>
+        <td colspan="4" style="text-align:right">Total Qty</td>
+        <td class="num"><input type="text" id="outTotalQty" value="0" readonly /></td>
+        <td><input type="text" id="outTotalCmt" placeholder="Total qty comments..." /></td>
+        <td></td>
+      </tr>
+      </tfoot>
+    </table>
+
+    <div class="actions">
+      <button class="primary" onclick="addOutRow()">+ Add Item</button>
+      <button class="success" onclick="importOutCSV()">Import CSV</button>
+      <button class="success" onclick="exportOutCSV()">Export CSV</button>
+      <button class="primary" onclick="saveOutToDB()">Save to DB</button>
+      <button class="plain" onclick="resetOut()">Reset</button>
+    </div>
+
+    <h3 style="margin-top:25px; font-size:14px;">CSV Preview - Inventory Out</h3>
+    <pre id="previewOut">-- add items to see preview --</pre>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- TAB 3: RECIPE MAKER -->
+  <!-- ====================================================================== -->
+  <div id="recipeTab" class="tab-pane">
+    <h2>Recipe Maker</h2>
+
+    <div class="head-row">
+      <div>
+        <label for="recipeDishName">Dish Name *</label>
+        <div class="combo"><input type="text" id="recipeDishName" placeholder="Search dish name..." autocomplete="off" /></div>
+        <div class="hint" id="recipeDishHint">Search &amp; select dish item to build recipe</div>
+      </div>
+      <div>
+        <label for="recipeDishOutScoop">Dish Out Scoop *</label>
+        <div class="combo"><input type="text" id="recipeDishOutScoop" placeholder="Search dish out scoop..." autocomplete="off" disabled /></div>
+        <div class="hint" id="recipeDishOutScoopHint">Select dish name first</div>
+      </div>
+      <div>
+        <label for="recipeDishOutCmt">Dish Out Comments</label>
+        <input type="text" id="recipeDishOutCmt" placeholder="Dish out comments..." />
+        <div class="hint">Comments for dish_out row</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+      <tr>
+        <th style="width:35px">#</th>
+        <th style="width:220px">Recipe Item Name *</th>
+        <th style="width:120px">Pg No *</th>
+        <th style="width:200px">Recipe Scoop *</th>
+        <th class="num" style="width:100px">Qty *</th>
+        <th>Comments</th>
+        <th style="width:45px"></th>
+      </tr>
+      </thead>
+      <tbody id="recipeBody"></tbody>
+      <tfoot>
+      <tr>
+        <td colspan="4" style="text-align:right">Total Ingredients Qty</td>
+        <td class="num"><input type="text" id="recipeTotalQty" value="0" readonly /></td>
+        <td><input type="text" id="recipeTotalCmt" placeholder="Total ingredients comments..." /></td>
+        <td></td>
+      </tr>
+      </tfoot>
+    </table>
+
+    <div class="actions">
+      <button class="primary" onclick="addRecipeRow()">+ Add Item</button>
+      <button class="success" onclick="exportRecipeCSV()">Export CSV</button>
+      <button class="plain" onclick="resetRecipe()">Reset</button>
+    </div>
+
+    <h3 style="margin-top:25px; font-size:14px;">CSV Preview - Recipe Maker</h3>
+    <pre id="previewRecipe">-- add items to see preview --</pre>
+  </div>
+</div>
+
+<!-- DATA CONFIGURATION FILE -->
+<script src="catalog.js"></script>
+
+<script>
+  /* ==========================================================================
+     SHARED PARSER ENGINE & DATA INITIALIZATION
+     ========================================================================== */
+  function splitCsvLine(line) {
+    const out = [];
+    let cur = '', inQ = false, wasQuoted = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (inQ) {
+        if (ch === '"') {
+          if (line[i + 1] === '"') { cur += '"'; i++; }
+          else inQ = false;
+        } else cur += ch;
+      } else if (ch === '"') {
+        inQ = true; wasQuoted = true;
+      } else if (ch === ',') {
+        out.push(wasQuoted ? cur : cur.trim());
+        cur = ''; wasQuoted = false;
+      } else cur += ch;
+    }
+    out.push(wasQuoted ? cur : cur.trim());
+    return out;
+  }
+
+  function parseBlock(block) {
+    if (!block) return [];
+    return String(block).split('\n')
+            .map(l => l.trim())
+            .filter(l => l.length > 0 && l.charAt(0) !== '#')
+            .map(splitCsvLine)
+            .filter(cols => cols[0] !== "");
+  }
+
+  const ALL_ITEMS = "All";
+  const cfgWarnings = [];
+
+  /* Master Catalogs */
+  const VENDORS = parseBlock(typeof VENDORS_CSV !== 'undefined' ? VENDORS_CSV : '').reduce((acc, row) => acc.concat(row.filter(v => v !== "")), []);
+  const CATEGORIES = parseBlock(typeof CATEGORIES_CSV !== 'undefined' ? CATEGORIES_CSV : '').reduce((acc, row) => acc.concat(row.filter(v => v !== "")), []);
+  const DISHNAMES = parseBlock(typeof DISHNAME_CSV !== 'undefined' ? DISHNAME_CSV : '').reduce((acc, row) => acc.concat(row.filter(v => v !== "")), []);
+
+  const CATALOG = parseBlock(typeof CATALOG_CSV !== 'undefined' ? CATALOG_CSV : '').map((c, i) => {
+    if (c.length < 2 || c[1] === "") cfgWarnings.push("CATALOG line " + (i + 1) + ": missing pgNo");
+    return { itemname: c[0] || '', pgNo: c[1] || '' };
+  });
+
+  const RECIPE_CATALOG = parseBlock(typeof RECIPE_CATALOG_CSV !== 'undefined' ? RECIPE_CATALOG_CSV : '').map((c, i) => {
+    if (c.length < 2 || c[1] === "") cfgWarnings.push("RECIPE_CATALOG line " + (i + 1) + ": missing pgNo");
+    return { recipeItemName: c[0] || '', pgNo: c[1] || '' };
+  });
+
+  const SCOOP_IN_CATALOG = parseBlock(typeof SCOOP_IN_CSV !== 'undefined' ? SCOOP_IN_CSV : '').map(c => ({
+    itemname: c[0], scoop_in: c[1], rate: isNaN(parseFloat(c[2])) ? 0 : parseFloat(c[2])
+  }));
+
+  const SCOOP_OUT_CATALOG = parseBlock(typeof SCOOP_OUT_CSV !== 'undefined' ? SCOOP_OUT_CSV : '').map(c => ({
+    itemname: c[0], scoop_out: c[1], defaultQty: isNaN(parseFloat(c[2])) ? null : parseFloat(c[2])
+  }));
+
+  const RECIPE_SCOOP_CATALOG = parseBlock(typeof RECIPE_SCOOP_CSV !== 'undefined' ? RECIPE_SCOOP_CSV : '').map(c => ({
+    recipeItemName: c[0], recipeScoop: c[1]
+  }));
+
+  const DISH_OUT_SCOOP_CATALOG = parseBlock(typeof DISH_OUT_SCOOP_CSV !== 'undefined' ? DISH_OUT_SCOOP_CSV : '').map(c => ({
+    dishname: c[0], dish_out_scoop: c[1]
+  }));
+
+  const SCOOP_INVENTORY_CATALOG = {};
+  parseBlock(typeof SCOOP_INVENTORY_CSV !== 'undefined' ? SCOOP_INVENTORY_CSV : '').forEach(c => {
+    if (c[0]) SCOOP_INVENTORY_CATALOG[c[0]] = c[1] || "";
+  });
+
+  const VENDOR_ITEMS = {};
+  parseBlock(typeof VENDOR_ITEMS_CSV !== 'undefined' ? VENDOR_ITEMS_CSV : '').forEach(c => {
+    const items = c.slice(1).filter(item => item !== '');
+    VENDOR_ITEMS[c[0]] = (items.length === 1 && items[0].toLowerCase() === ALL_ITEMS.toLowerCase()) ? ALL_ITEMS : items;
+  });
+
+  const CATEGORY_ITEMS = {};
+  parseBlock(typeof CATEGORY_ITEMS_CSV !== 'undefined' ? CATEGORY_ITEMS_CSV : '').forEach(c => {
+    const items = c.slice(1).filter(item => item !== '');
+    CATEGORY_ITEMS[c[0]] = (items.length === 1 && items[0].toLowerCase() === ALL_ITEMS.toLowerCase()) ? ALL_ITEMS : items;
+  });
+
+  /* Display Warnings if misconfigured */
+  if (cfgWarnings.length) {
+    const box = document.getElementById("cfgWarn");
+    box.style.display = "block";
+    box.textContent = "catalog.js warnings:\n" + cfgWarnings.join("\n");
+  }
+
+  /* Helpers */
+  function csvField(v) { return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; }
+  function num(v) { const n = parseFloat(v); return isNaN(n) ? 0 : n; }
+  function downloadBlob(blob, filename) {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  }
+
+  function switchTab(evt, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+  }
+
+  /* Searchable Combobox Component */
+  function attachCombo(input, provider, onPick) {
+    const list = document.createElement("div");
+    list.className = "combo-list";
+    input.parentNode.appendChild(list);
+    let opts = [], activeIdx = -1;
+
+    function open(term) {
+      opts = provider(term);
+      if (!opts.length) {
+        list.innerHTML = '<div class="combo-empty">No match</div>';
+      } else {
+        if (activeIdx >= opts.length) activeIdx = -1;
+        list.innerHTML = opts.map((o, pos) =>
+                `<div class="combo-opt${pos === activeIdx ? " active" : ""}" data-pos="${pos}">
+          <span>${o.label}</span><span class="sec">${o.sec || ''}</span>
+        </div>`
+        ).join('');
+      }
+      list.style.display = "block";
+    }
+
+    function close() { list.style.display = "none"; activeIdx = -1; }
+    function pick(o) { close(); onPick(o.key); }
+
+    input.addEventListener("focus", () => { if (input.disabled) return; activeIdx = -1; open(''); input.select(); });
+    input.addEventListener("input", () => { activeIdx = -1; open(input.value); input.classList.remove("bad"); });
+    input.addEventListener("keydown", e => {
+      if (input.disabled) return;
+      if (list.style.display !== "block" && ["ArrowDown","ArrowUp"].includes(e.key)) open(input.value);
+      if (e.key === "ArrowDown") { e.preventDefault(); activeIdx = Math.min(activeIdx + 1, opts.length - 1); open(input.value); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); activeIdx = Math.max(activeIdx - 1, 0); open(input.value); }
+      else if (e.key === "Enter") { e.preventDefault(); if (activeIdx >= 0) pick(opts[activeIdx]); else if (opts.length === 1) pick(opts[0]); }
+      else if (e.key === "Escape") close();
+    });
+
+    list.addEventListener("mousedown", e => {
+      const el = e.target.closest(".combo-opt");
+      if (!el) return;
+      e.preventDefault();
+      pick(opts[+el.dataset.pos]);
+    });
+
+    input.addEventListener("blur", () => {
+      setTimeout(() => {
+        close();
+        const raw = input.value.trim();
+        if (!raw) { onPick(null); return; }
+        const hits = provider(raw);
+        const exact = hits.find(o => String(o.label).toLowerCase() === raw.toLowerCase());
+        if (exact) onPick(exact.key);
+        else if (hits.length === 1) onPick(hits[0].key);
+        else input.classList.add("bad");
+      }, 120);
+    });
+  }
+
+  function attachHeaderCombo(inputEl, itemsArray, onChangeCallback) {
+    attachCombo(inputEl, term => {
+      const q = (term || "").trim().toLowerCase();
+      return itemsArray.filter(v => v.toLowerCase().includes(q)).map(v => ({ key: v, label: v }));
+    }, key => {
+      inputEl.value = key || "";
+      inputEl.classList.remove("bad");
+      onChangeCallback();
+    });
+
+    inputEl.addEventListener("input", () => {
+      const val = inputEl.value.trim();
+      if (!val || itemsArray.includes(val)) {
+        onChangeCallback();
+      }
+    });
+  }
+
+  /* ==========================================================================
+     MODULE 1: INVENTORY IN (BILL ADDITIONS)
+     ========================================================================== */
+  const CSV_HEADER_BILL = ["Vendor", "dt", "billno", "itemname", "pgno", "scoopin", "qty", "rate", "itemtotal", "comments"];
+  const CSV_HEADER_INV = ["itemname", "pgNo", "qty", "dt", "billno", "scoop_inventory"];
+
+  let isManualBillTotal = false;
+
+  function allowedInItems(vendor) {
+    if (!vendor) return [];
+    const cfg = VENDOR_ITEMS[vendor];
+    if (cfg === undefined || cfg === ALL_ITEMS) return CATALOG.map(e => e.itemname);
+    return cfg.filter(n => CATALOG.some(e => e.itemname === n));
+  }
+
+  function filterInCatalog(term) {
+    const allowed = allowedInItems(document.getElementById("inVendor").value.trim());
+    const q = (term || "").trim().toLowerCase();
+    return CATALOG.map((e, i) => i)
+            .filter(i => allowed.indexOf(CATALOG[i].itemname) >= 0)
+            .filter(i => CATALOG[i].itemname.toLowerCase().includes(q) || CATALOG[i].pgNo.toLowerCase().includes(q));
+  }
+
+  function addInRow() {
+    const tr = document.createElement("tr");
+    tr.dataset.cat = ""; tr.dataset.scoop = "";
+    tr.innerHTML = `
+    <td class="idx"></td>
+    <td><div class="combo"><input type="text" class="i-name" placeholder="select vendor first" autocomplete="off" disabled /></div></td>
+    <td><div class="combo"><input type="text" class="i-pg" placeholder="-" autocomplete="off" disabled /></div></td>
+    <td><div class="combo"><input type="text" class="i-scoop" placeholder="pick item first" autocomplete="off" disabled /></div></td>
+    <td class="num"><input type="number" class="i-qty" min="0" step="any" /></td>
+    <td class="num"><input type="number" class="i-rate" min="0" step="any" /></td>
+    <td class="num"><input type="number" class="i-total" min="0" step="any" /></td>
+    <td><input type="text" class="i-cmt" /></td>
+    <td style="text-align:center"><button class="danger" onclick="this.closest('tr').remove(); refreshIn();">&times;</button></td>
+  `;
+    document.getElementById("inBody").appendChild(tr);
+
+    const nameIn = tr.querySelector(".i-name");
+    const pgIn = tr.querySelector(".i-pg");
+    const scoopIn = tr.querySelector(".i-scoop");
+    const qtyIn = tr.querySelector(".i-qty");
+    const rateIn = tr.querySelector(".i-rate");
+
+    const resolve = ci => {
+      if (ci === null || CATALOG[ci] === undefined) {
+        tr.dataset.cat = ""; nameIn.value = ""; pgIn.value = ""; scoopIn.disabled = true;
+      } else {
+        tr.dataset.cat = String(ci); nameIn.value = CATALOG[ci].itemname; pgIn.value = CATALOG[ci].pgNo;
+        const scoops = SCOOP_IN_CATALOG.filter(s => s.itemname === CATALOG[ci].itemname);
+        scoopIn.disabled = scoops.length === 0;
+        if (scoops.length === 1) {
+          tr.dataset.scoop = scoops[0].scoop_in; scoopIn.value = scoops[0].scoop_in; rateIn.value = scoops[0].rate;
+          calcInTotal(tr);
+        }
+      }
+      refreshIn();
+    };
+
+    attachCombo(nameIn, term => filterInCatalog(term).map(i => ({ key: i, label: CATALOG[i].itemname, sec: CATALOG[i].pgNo })), resolve);
+    attachCombo(pgIn, term => filterInCatalog(term).map(i => ({ key: i, label: CATALOG[i].pgNo, sec: CATALOG[i].itemname })), resolve);
+    attachCombo(scoopIn, term => {
+      const ci = tr.dataset.cat; if (!ci) return [];
+      return SCOOP_IN_CATALOG.filter(s => s.itemname === CATALOG[+ci].itemname && s.scoop_in.toLowerCase().includes((term||'').toLowerCase()))
+              .map(s => ({ key: s.scoop_in, label: s.scoop_in, sec: "rate: " + s.rate }));
+    }, key => {
+      const ci = tr.dataset.cat;
+      const entry = SCOOP_IN_CATALOG.find(s => s.itemname === CATALOG[+ci].itemname && s.scoop_in === key);
+      if (entry) { tr.dataset.scoop = key; scoopIn.value = key; rateIn.value = entry.rate; calcInTotal(tr); }
+      refreshIn();
+    });
+
+    qtyIn.addEventListener("input", () => { calcInTotal(tr); refreshIn(); });
+    rateIn.addEventListener("input", () => { calcInTotal(tr); refreshIn(); });
+    tr.querySelector(".i-cmt").addEventListener("input", refreshIn);
+
+    applyInVendorState(tr);
+    refreshIn();
+  }
+
+  function calcInTotal(tr) {
+    const q = num(tr.querySelector(".i-qty").value);
+    const r = num(tr.querySelector(".i-rate").value);
+    tr.querySelector(".i-total").value = (q * r) ? (q * r).toFixed(2) : (q * r);
+  }
+
+  function applyInVendorState(tr) {
+    const enabled = !!document.getElementById("inVendor").value.trim();
+    tr.querySelector(".i-name").disabled = tr.querySelector(".i-pg").disabled = !enabled;
+    tr.querySelector(".i-name").placeholder = enabled ? "search item..." : "select vendor first";
+  }
+
+  function onInVendorChange() {
+    const v = document.getElementById("inVendor").value.trim();
+    document.getElementById("inVendorHint").textContent = !v ? "Search & select vendor to load items" : "Items loaded for " + v;
+    document.querySelectorAll("#inBody tr").forEach(tr => applyInVendorState(tr));
+    refreshIn();
+  }
+
+  function refreshIn() {
+    let totalQty = 0, computedBillTotal = 0, i = 0;
+    document.querySelectorAll("#inBody tr").forEach(tr => {
+      totalQty += num(tr.querySelector(".i-qty").value);
+      computedBillTotal += num(tr.querySelector(".i-total").value);
+      tr.querySelector(".idx").textContent = ++i;
+    });
+    document.getElementById("inTotalQty").value = totalQty;
+    if (!isManualBillTotal) document.getElementById("inBillTotal").value = computedBillTotal;
+
+    renderInPreviews();
+  }
+
+  function renderInPreviews() {
+    const vendor = document.getElementById("inVendor").value.trim();
+    const dt = document.getElementById("inDt").value;
+    const billno = document.getElementById("inBillNo").value.trim();
+    const totalCmt = document.getElementById("inBillTotalCmt").value.trim();
+
+    const billRows = [], invRows = [];
+    document.querySelectorAll("#inBody tr").forEach(tr => {
+      const ci = tr.dataset.cat; if (ci === '') return;
+      const e = CATALOG[+ci];
+      const qty = num(tr.querySelector(".i-qty").value);
+      const scoopInv = SCOOP_INVENTORY_CATALOG[e.itemname] || "";
+
+      billRows.push([vendor, dt, billno, e.itemname, e.pgNo, tr.dataset.scoop, qty, num(tr.querySelector(".i-rate").value), num(tr.querySelector(".i-total").value), tr.querySelector(".i-cmt").value.trim()]);
+      invRows.push([e.itemname, e.pgNo, qty, dt, billno, scoopInv]);
+    });
+
+    if (billRows.length) billRows.push([vendor, dt, billno, "billtotal", "", "", "", "", num(document.getElementById("inBillTotal").value), totalCmt]);
+
+    document.getElementById("previewBill").textContent = billRows.length ? [CSV_HEADER_BILL.map(csvField).join(",")].concat(billRows.map(r => r.map(csvField).join(","))).join("\r\n") : "-- add items to see preview --";
+    document.getElementById("previewInv").textContent = invRows.length ? [CSV_HEADER_INV.map(csvField).join(",")].concat(invRows.map(r => r.map(csvField).join(","))).join("\r\n") : "-- add items to see preview --";
+  }
+
+  function exportInCSV() {
+    const vendor = document.getElementById("inVendor").value.trim();
+    const dt = document.getElementById("inDt").value;
+    const billno = document.getElementById("inBillNo").value.trim();
+    const totalCmt = document.getElementById("inBillTotalCmt").value.trim();
+
+    if (!vendor || !dt || !billno) { alert("Please complete Vendor, Date, and Bill No."); return; }
+
+    const billRows = [], invRows = [];
+    document.querySelectorAll("#inBody tr").forEach(tr => {
+      const ci = tr.dataset.cat; if (ci === '') return;
+      const e = CATALOG[+ci];
+      const qty = num(tr.querySelector(".i-qty").value);
+      const scoopInv = SCOOP_INVENTORY_CATALOG[e.itemname] || "";
+
+      billRows.push([vendor, dt, billno, e.itemname, e.pgNo, tr.dataset.scoop, qty, num(tr.querySelector(".i-rate").value), num(tr.querySelector(".i-total").value), tr.querySelector(".i-cmt").value.trim()]);
+      invRows.push([e.itemname, e.pgNo, qty, dt, billno, scoopInv]);
+    });
+
+    if (!billRows.length) { alert("Please add at least one item."); return; }
+    billRows.push([vendor, dt, billno, "billtotal", "", "", "", "", num(document.getElementById("inBillTotal").value), totalCmt]);
+
+    const billTxt = [CSV_HEADER_BILL.map(csvField).join(",")].concat(billRows.map(r => r.map(csvField).join(","))).join("\r\n");
+    const invTxt = [CSV_HEADER_INV.map(csvField).join(",")].concat(invRows.map(r => r.map(csvField).join(","))).join("\r\n");
+
+    downloadBlob(new Blob(["\uFEFF" + billTxt], { type: "text/csv;charset=utf-8;" }), "bill_addition_" + vendor + "_" + billno + ".csv");
+    setTimeout(() => {
+      downloadBlob(new Blob(["\uFEFF" + invTxt], { type: "text/csv;charset=utf-8;" }), "inventory_in_" + vendor + "_" + billno + "_" + dt + ".csv");
+    }, 300);
+  }
+
+  function resetIn() {
+    document.getElementById("inBody").innerHTML = "";
+    document.getElementById("inVendor").value = "";
+    document.getElementById("inBillNo").value = "";
+    document.getElementById("inBillTotalCmt").value = "";
+    isManualBillTotal = false;
+    addInRow(); addInRow(); onInVendorChange();
+  }
+
+  /* ==========================================================================
+     MODULE 2: INVENTORY OUT
+     ========================================================================== */
+  const CSV_HEADER_OUT = ["category", "dt", "time", "itemname", "pgNo", "scoop_out", "qty", "comments"];
+
+  function allowedOutItems(cat) {
+    if (!cat) return [];
+    const cfg = CATEGORY_ITEMS[cat];
+    if (cfg === undefined || cfg === ALL_ITEMS) return CATALOG.map(e => e.itemname);
+    return cfg.filter(n => CATALOG.some(e => e.itemname === n));
+  }
+
+  function filterOutCatalog(term) {
+    const allowed = allowedOutItems(document.getElementById("outCategory").value.trim());
+    const q = (term || "").trim().toLowerCase();
+    return CATALOG.map((e, i) => i)
+            .filter(i => allowed.indexOf(CATALOG[i].itemname) >= 0)
+            .filter(i => CATALOG[i].itemname.toLowerCase().includes(q) || CATALOG[i].pgNo.toLowerCase().includes(q));
+  }
+
+  function addOutRow() {
+    const tr = document.createElement("tr");
+    tr.dataset.cat = ""; tr.dataset.scoop = "";
+    tr.innerHTML = `
+    <td class="idx"></td>
+    <td><div class="combo"><input type="text" class="i-name" placeholder="select category first" autocomplete="off" disabled /></div></td>
+    <td><div class="combo"><input type="text" class="i-pg" placeholder="-" autocomplete="off" disabled /></div></td>
+    <td><div class="combo"><input type="text" class="i-scoop" placeholder="pick item first" autocomplete="off" disabled /></div></td>
+    <td class="num"><input type="number" class="i-qty" min="0" step="any" /></td>
+    <td><input type="text" class="i-cmt" /></td>
+    <td style="text-align:center"><button class="danger" onclick="this.closest('tr').remove(); refreshOut();">&times;</button></td>
+  `;
+    document.getElementById("outBody").appendChild(tr);
+
+    const nameIn = tr.querySelector(".i-name");
+    const pgIn = tr.querySelector(".i-pg");
+    const scoopIn = tr.querySelector(".i-scoop");
+    const qtyIn = tr.querySelector(".i-qty");
+
+    const resolve = ci => {
+      if (ci === null || CATALOG[ci] === undefined) {
+        tr.dataset.cat = ""; nameIn.value = ""; pgIn.value = ""; scoopIn.disabled = true;
+      } else {
+        tr.dataset.cat = String(ci); nameIn.value = CATALOG[ci].itemname; pgIn.value = CATALOG[ci].pgNo;
+        const scoops = SCOOP_OUT_CATALOG.filter(s => s.itemname === CATALOG[ci].itemname);
+        scoopIn.disabled = scoops.length === 0;
+        if (scoops.length === 1) {
+          tr.dataset.scoop = scoops[0].scoop_out; scoopIn.value = scoops[0].scoop_out;
+          if (qtyIn.value === "") qtyIn.value = scoops[0].defaultQty ?? 1;
+        }
+      }
+      refreshOut();
+    };
+
+    attachCombo(nameIn, term => filterOutCatalog(term).map(i => ({ key: i, label: CATALOG[i].itemname, sec: CATALOG[i].pgNo })), resolve);
+    attachCombo(pgIn, term => filterOutCatalog(term).map(i => ({ key: i, label: CATALOG[i].pgNo, sec: CATALOG[i].itemname })), resolve);
+    attachCombo(scoopIn, term => {
+      const ci = tr.dataset.cat; if (!ci) return [];
+      return SCOOP_OUT_CATALOG.filter(s => s.itemname === CATALOG[+ci].itemname && s.scoop_out.toLowerCase().includes((term||'').toLowerCase()))
+              .map(s => ({ key: s.scoop_out, label: s.scoop_out }));
+    }, key => {
+      const ci = tr.dataset.cat;
+      const entry = SCOOP_OUT_CATALOG.find(s => s.itemname === CATALOG[+ci].itemname && s.scoop_out === key);
+      if (entry) { tr.dataset.scoop = key; scoopIn.value = key; if (qtyIn.value === "") qtyIn.value = entry.defaultQty ?? 1; }
+      refreshOut();
+    });
+
+    qtyIn.addEventListener("input", refreshOut);
+    tr.querySelector(".i-cmt").addEventListener("input", refreshOut);
+
+    applyOutCategoryState(tr);
+    refreshOut();
+  }
+
+  function applyOutCategoryState(tr) {
+    const enabled = !!document.getElementById("outCategory").value.trim();
+    tr.querySelector(".i-name").disabled = tr.querySelector(".i-pg").disabled = !enabled;
+    tr.querySelector(".i-name").placeholder = enabled ? "search item..." : "select category first";
+  }
+
+  function onOutCategoryChange() {
+    const c = document.getElementById("outCategory").value.trim();
+    document.getElementById("outCategoryHint").textContent = !c ? "Search & select category to load items" : "Items loaded for " + c;
+    document.querySelectorAll("#outBody tr").forEach(tr => applyOutCategoryState(tr));
+    refreshOut();
+  }
+
+  function refreshOut() {
+    let totalQty = 0, i = 0;
+    document.querySelectorAll("#outBody tr").forEach(tr => {
+      totalQty += num(tr.querySelector(".i-qty").value);
+      tr.querySelector(".idx").textContent = ++i;
+    });
+    document.getElementById("outTotalQty").value = totalQty;
+    renderOutPreview();
+  }
+
+  function renderOutPreview() {
+    const cat = document.getElementById("outCategory").value.trim();
+    const dt = document.getElementById("outDt").value;
+    const tm = document.getElementById("outTm").value;
+    const totalCmt = document.getElementById("outTotalCmt").value.trim();
+
+    const outRows = [];
+    document.querySelectorAll("#outBody tr").forEach(tr => {
+      const ci = tr.dataset.cat; if (ci === '') return;
+      const e = CATALOG[+ci];
+      outRows.push([cat, dt, tm, e.itemname, e.pgNo, tr.dataset.scoop, num(tr.querySelector(".i-qty").value), tr.querySelector(".i-cmt").value.trim()]);
+    });
+
+    if (outRows.length) {
+      outRows.push([cat, dt, tm, "totalqty", "", "", num(document.getElementById("outTotalQty").value), totalCmt]);
+    }
+
+    document.getElementById("previewOut").textContent = outRows.length ? [CSV_HEADER_OUT.map(csvField).join(",")].concat(outRows.map(r => r.map(csvField).join(","))).join("\r\n") : "-- add items to see preview --";
+  }
+
+  function exportOutCSV() {
+    const cat = document.getElementById("outCategory").value.trim();
+    const dt = document.getElementById("outDt").value;
+    const tm = document.getElementById("outTm").value;
+    const totalCmt = document.getElementById("outTotalCmt").value.trim();
+
+    if (!cat || !dt) { alert("Please select Category and Date."); return; }
+
+    const outRows = [];
+    document.querySelectorAll("#outBody tr").forEach(tr => {
+      const ci = tr.dataset.cat; if (ci === '') return;
+      const e = CATALOG[+ci];
+      outRows.push([cat, dt, tm, e.itemname, e.pgNo, tr.dataset.scoop, num(tr.querySelector(".i-qty").value), tr.querySelector(".i-cmt").value.trim()]);
+    });
+
+    if (!outRows.length) { alert("Please select at least one item."); return; }
+
+    outRows.push([cat, dt, tm, "totalqty", "", "", num(document.getElementById("outTotalQty").value), totalCmt]);
+
+    const txt = [CSV_HEADER_OUT.map(csvField).join(",")].concat(outRows.map(r => r.map(csvField).join(","))).join("\r\n");
+    const tmPart = tm ? "_" + tm.replace(":", "") : "";
+    downloadBlob(new Blob(["\uFEFF" + txt], { type: "text/csv;charset=utf-8;" }), "inventory_out_" + cat + "_" + dt + tmPart + ".csv");
+  }
+
+  function setOutNow() {
+    const d = new Date();
+    document.getElementById("outTm").value = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+    refreshOut();
+  }
+
+  function clearOutTime() {
+    document.getElementById("outTm").value = "";
+    refreshOut();
+  }
+
+  function resetOut() {
+    document.getElementById("outBody").innerHTML = "";
+    document.getElementById("outCategory").value = "";
+    document.getElementById("outTotalCmt").value = "";
+    setOutNow();
+    addOutRow(); addOutRow(); onOutCategoryChange();
+  }
+
+  /* ==========================================================================
+     MODULE 3: RECIPE MAKER
+     ========================================================================== */
+  const CSV_HEADER_RECIPE = ["dishname", "reciepeItemname", "pgNo", "receipescoop", "qty", "comments"];
+
+  function allowedDishOutScoops(dishName) {
+    if (!dishName) return [];
+    const matches = DISH_OUT_SCOOP_CATALOG.filter(s => s.dishname.toLowerCase() === dishName.toLowerCase());
+    return matches.length ? matches : DISH_OUT_SCOOP_CATALOG;
+  }
+
+  function filterRecipeCatalog(term) {
+    const q = (term || "").trim().toLowerCase();
+    return RECIPE_CATALOG.map((e, i) => i)
+            .filter(i => RECIPE_CATALOG[i].recipeItemName.toLowerCase().includes(q) || RECIPE_CATALOG[i].pgNo.toLowerCase().includes(q));
+  }
+
+  function addRecipeRow() {
+    const tr = document.createElement("tr");
+    tr.dataset.cat = ""; tr.dataset.scoop = "";
+    tr.innerHTML = `
+    <td class="idx"></td>
+    <td><div class="combo"><input type="text" class="i-name" placeholder="select dish name first" autocomplete="off" disabled /></div></td>
+    <td><div class="combo"><input type="text" class="i-pg" placeholder="-" autocomplete="off" disabled /></div></td>
+    <td><div class="combo"><input type="text" class="i-scoop" placeholder="pick item first" autocomplete="off" disabled /></div></td>
+    <td class="num"><input type="number" class="i-qty" min="0" step="any" value="1" /></td>
+    <td><input type="text" class="i-cmt" /></td>
+    <td style="text-align:center"><button class="danger" onclick="this.closest('tr').remove(); refreshRecipe();">&times;</button></td>
+  `;
+    document.getElementById("recipeBody").appendChild(tr);
+
+    const nameIn = tr.querySelector(".i-name");
+    const pgIn = tr.querySelector(".i-pg");
+    const scoopIn = tr.querySelector(".i-scoop");
+    const qtyIn = tr.querySelector(".i-qty");
+
+    const resolve = ci => {
+      if (ci === null || RECIPE_CATALOG[ci] === undefined) {
+        tr.dataset.cat = ""; nameIn.value = ""; pgIn.value = ""; scoopIn.disabled = true;
+      } else {
+        tr.dataset.cat = String(ci); nameIn.value = RECIPE_CATALOG[ci].recipeItemName; pgIn.value = RECIPE_CATALOG[ci].pgNo;
+        const scoops = RECIPE_SCOOP_CATALOG.filter(s => s.recipeItemName === RECIPE_CATALOG[ci].recipeItemName);
+        scoopIn.disabled = scoops.length === 0;
+        if (scoops.length === 1) {
+          tr.dataset.scoop = scoops[0].recipeScoop; scoopIn.value = scoops[0].recipeScoop;
+        }
+      }
+      refreshRecipe();
+    };
+
+    attachCombo(nameIn, term => filterRecipeCatalog(term).map(i => ({ key: i, label: RECIPE_CATALOG[i].recipeItemName, sec: RECIPE_CATALOG[i].pgNo })), resolve);
+    attachCombo(pgIn, term => filterRecipeCatalog(term).map(i => ({ key: i, label: RECIPE_CATALOG[i].pgNo, sec: RECIPE_CATALOG[i].recipeItemName })), resolve);
+    attachCombo(scoopIn, term => {
+      const ci = tr.dataset.cat; if (!ci) return [];
+      return RECIPE_SCOOP_CATALOG.filter(s => s.recipeItemName === RECIPE_CATALOG[+ci].recipeItemName && s.recipeScoop.toLowerCase().includes((term||'').toLowerCase()))
+              .map(s => ({ key: s.recipeScoop, label: s.recipeScoop }));
+    }, key => {
+      const ci = tr.dataset.cat;
+      const entry = RECIPE_SCOOP_CATALOG.find(s => s.recipeItemName === RECIPE_CATALOG[+ci].recipeItemName && s.recipeScoop === key);
+      if (entry) { tr.dataset.scoop = key; scoopIn.value = key; }
+      refreshRecipe();
+    });
+
+    qtyIn.addEventListener("input", refreshRecipe);
+    tr.querySelector(".i-cmt").addEventListener("input", refreshRecipe);
+
+    applyRecipeDishState(tr);
+    refreshRecipe();
+  }
+
+  function applyRecipeDishState(tr) {
+    const enabled = !!document.getElementById("recipeDishName").value.trim();
+    tr.querySelector(".i-name").disabled = tr.querySelector(".i-pg").disabled = !enabled;
+    tr.querySelector(".i-name").placeholder = enabled ? "search recipe item..." : "select dish name first";
+  }
+
+  function onRecipeDishChange() {
+    const dishName = document.getElementById("recipeDishName").value.trim();
+    const dishOutScoopEl = document.getElementById("recipeDishOutScoop");
+    const dishOutHint = document.getElementById("recipeDishOutScoopHint");
+
+    document.getElementById("recipeDishHint").textContent = !dishName ? "Search & select dish item to build recipe" : "Building recipe for " + dishName;
+
+    dishOutScoopEl.disabled = !dishName;
+    if (!dishName) {
+      dishOutScoopEl.value = "";
+      dishOutHint.textContent = "Select dish name first";
+    } else {
+      dishOutHint.textContent = "Search & select dish out scoop";
+      const available = allowedDishOutScoops(dishName);
+      if (available.length === 1) {
+        dishOutScoopEl.value = available[0].dish_out_scoop;
+      }
+    }
+
+    document.querySelectorAll("#recipeBody tr").forEach(tr => applyRecipeDishState(tr));
+    refreshRecipe();
+  }
+
+  function refreshRecipe() {
+    let totalQty = 0, i = 0;
+    document.querySelectorAll("#recipeBody tr").forEach(tr => {
+      totalQty += num(tr.querySelector(".i-qty").value);
+      tr.querySelector(".idx").textContent = ++i;
+    });
+    document.getElementById("recipeTotalQty").value = totalQty;
+    renderRecipePreview();
+  }
+
+  function renderRecipePreview() {
+    const dishName = document.getElementById("recipeDishName").value.trim();
+    const dishOutScoop = document.getElementById("recipeDishOutScoop").value.trim();
+    const dishOutCmt = document.getElementById("recipeDishOutCmt").value.trim();
+    const totalCmt = document.getElementById("recipeTotalCmt").value.trim();
+
+    const recipeRows = [];
+    document.querySelectorAll("#recipeBody tr").forEach(tr => {
+      const ci = tr.dataset.cat; if (ci === '') return;
+      const e = RECIPE_CATALOG[+ci];
+      recipeRows.push([
+        dishName,
+        e.recipeItemName,
+        e.pgNo,
+        tr.dataset.scoop || tr.querySelector(".i-scoop").value,
+        num(tr.querySelector(".i-qty").value),
+        tr.querySelector(".i-cmt").value.trim()
+      ]);
+    });
+
+    if (recipeRows.length) {
+      recipeRows.push([
+        dishName,
+        "totalingredientsqty",
+        "",
+        "",
+        num(document.getElementById("recipeTotalQty").value),
+        totalCmt
+      ]);
+      recipeRows.push([
+        dishName,
+        "dish_out",
+        "",
+        dishOutScoop,
+        "",
+        dishOutCmt
+      ]);
+    }
+
+    document.getElementById("previewRecipe").textContent = recipeRows.length
+            ? [CSV_HEADER_RECIPE.map(csvField).join(",")].concat(recipeRows.map(r => r.map(csvField).join(","))).join("\r\n")
+            : "-- add items to see preview --";
+  }
+
+  function exportRecipeCSV() {
+    const dishName = document.getElementById("recipeDishName").value.trim();
+    const dishOutScoop = document.getElementById("recipeDishOutScoop").value.trim();
+    const dishOutCmt = document.getElementById("recipeDishOutCmt").value.trim();
+    const totalCmt = document.getElementById("recipeTotalCmt").value.trim();
+
+    if (!dishName) { alert("Please select or enter a Dish Name."); return; }
+
+    const recipeRows = [];
+    document.querySelectorAll("#recipeBody tr").forEach(tr => {
+      const ci = tr.dataset.cat; if (ci === '') return;
+      const e = RECIPE_CATALOG[+ci];
+      recipeRows.push([
+        dishName,
+        e.recipeItemName,
+        e.pgNo,
+        tr.dataset.scoop || tr.querySelector(".i-scoop").value,
+        num(tr.querySelector(".i-qty").value),
+        tr.querySelector(".i-cmt").value.trim()
+      ]);
+    });
+
+    if (!recipeRows.length) { alert("Please select at least one recipe item."); return; }
+
+    recipeRows.push([
+      dishName,
+      "totalingredientsqty",
+      "",
+      "",
+      num(document.getElementById("recipeTotalQty").value),
+      totalCmt
+    ]);
+
+    recipeRows.push([
+      dishName,
+      "dish_out",
+      "",
+      dishOutScoop,
+      "",
+      dishOutCmt
+    ]);
+
+    const txt = [CSV_HEADER_RECIPE.map(csvField).join(",")].concat(recipeRows.map(r => r.map(csvField).join(","))).join("\r\n");
+    const sanitizedDishName = dishName.toLowerCase().replace(/[^a-z0-9]/gi, '_');
+    downloadBlob(new Blob(["\uFEFF" + txt], { type: "text/csv;charset=utf-8;" }), "recipe_" + sanitizedDishName + ".csv");
+  }
+
+  function resetRecipe() {
+    document.getElementById("recipeBody").innerHTML = "";
+    document.getElementById("recipeDishName").value = "";
+    document.getElementById("recipeDishOutScoop").value = "";
+    document.getElementById("recipeDishOutCmt").value = "";
+    document.getElementById("recipeTotalCmt").value = "";
+    addRecipeRow(); addRecipeRow(); onRecipeDishChange();
+  }
+
+  /* Database save */
+  async function postJSON(url, payload) {
+    const res = await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.detail||data.error||res.statusText);
+    return data;
+  }
+  async function saveInDB(){
+    const vendor=document.getElementById("inVendor").value.trim(), dt=document.getElementById("inDt").value, billNo=document.getElementById("inBillNo").value.trim();
+    if(!vendor||!dt||!billNo){alert("Please complete Vendor, Date, and Bill No.");return;}
+    const items=[]; document.querySelectorAll("#inBody tr").forEach(tr=>{const ci=tr.dataset.cat;if(ci===""||!CATALOG[+ci])return;const e=CATALOG[+ci];items.push({itemname:e.itemname,pgNo:e.pgNo,scoopIn:tr.dataset.scoop||tr.querySelector(".i-scoop").value.trim(),qty:num(tr.querySelector(".i-qty").value),rate:num(tr.querySelector(".i-rate").value),itemTotal:num(tr.querySelector(".i-total").value),comments:tr.querySelector(".i-cmt").value.trim()});});
+    if(!items.length){alert("Please select at least one item.");return;}
+    try{const d=await postJSON("/api/orders",{vendor,dt,billNo,billTotal:num(document.getElementById("inBillTotal").value),items});alert("Order saved to DB. ID: "+d.id);}catch(e){alert("Save to DB failed: "+e.message);}
+  }
+  async function saveOutToDB(){
+    const category=document.getElementById("outCategory").value.trim(),dt=document.getElementById("outDt").value,time=document.getElementById("outTm").value||null;
+    if(!category||!dt){alert("Please select Category and Date.");return;}
+    const items=[];document.querySelectorAll("#outBody tr").forEach(tr=>{const ci=tr.dataset.cat;if(ci===""||!CATALOG[+ci])return;const e=CATALOG[+ci];items.push({itemname:e.itemname,pgNo:e.pgNo,scoopOut:tr.dataset.scoop||tr.querySelector(".i-scoop").value.trim(),qty:num(tr.querySelector(".i-qty").value),comments:tr.querySelector(".i-cmt").value.trim()});});
+    if(!items.length){alert("Please select at least one item.");return;}
+    try{const d=await postJSON("/api/inventory-out",{category,dt,time,items});alert("Inventory Out saved to DB. ID: "+d.id);}catch(e){alert("Save to DB failed: "+e.message);}
+  }
+
+
+  /* ==========================================================================
+     CSV IMPORT HANDLERS
+     ========================================================================== */
+
+  function handleInImport(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const text = e.target.result;
+      const rows = parseBlock(text);
+      if (rows.length < 2) { alert("Invalid or empty CSV"); return; }
+
+      // Clear existing rows
+      document.getElementById("inBody").innerHTML = "";
+
+      // Headers: Vendor, dt, billno, itemname, pgno, scoopin, qty, rate, itemtotal, comments
+      const firstRow = rows[1];
+      if (firstRow) {
+        document.getElementById("inVendor").value = firstRow[0] || "";
+        document.getElementById("inDt").value = firstRow[1] || "";
+        document.getElementById("inBillNo").value = firstRow[2] || "";
+        onInVendorChange(); // Updates vendor hint & input states
+      }
+
+      for (let i = 1; i < rows.length; i++) {
+        const r = rows[i];
+        if (!r || r.length === 0) continue;
+
+        // Handle footer totals
+        if (r[3] && r[3].toLowerCase() === "billtotal") {
+          document.getElementById("inBillTotal").value = num(r[8]);
+          document.getElementById("inBillTotalCmt").value = r[9] || "";
+          isManualBillTotal = true;
+          continue;
+        }
+
+        // Add row and map catalog items for DB save validation
+        addInRow();
+        const tr = document.getElementById("inBody").lastElementChild;
+        const itemName = (r[3] || "").trim();
+        const pgNo = (r[4] || "").trim();
+
+        const ci = CATALOG.findIndex(c => c.itemname === itemName && c.pgNo === pgNo);
+        if (ci >= 0) {
+          tr.dataset.cat = String(ci);
+          tr.querySelector(".i-name").value = CATALOG[ci].itemname;
+          tr.querySelector(".i-pg").value = CATALOG[ci].pgNo;
+        } else {
+          // Fallback if item isn't in current DB catalog
+          tr.querySelector(".i-name").value = itemName;
+          tr.querySelector(".i-pg").value = pgNo;
+        }
+
+        tr.dataset.scoop = (r[5] || "").trim();
+        tr.querySelector(".i-scoop").value = tr.dataset.scoop;
+        tr.querySelector(".i-qty").value = r[6] || "";
+        tr.querySelector(".i-rate").value = r[7] || "";
+        tr.querySelector(".i-total").value = r[8] || "";
+        tr.querySelector(".i-cmt").value = r[9] || "";
+      }
+
+      refreshIn();
+      event.target.value = ""; // Reset input
+    };
+    reader.readAsText(file);
+  }
+
+  function handleOutImport(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const text = e.target.result;
+      const rows = parseBlock(text);
+      if (rows.length < 2) { alert("Invalid or empty CSV"); return; }
+
+      // Clear existing rows
+      document.getElementById("outBody").innerHTML = "";
+
+      // Headers: category, dt, time, itemname, pgNo, scoop_out, qty, comments
+      const firstRow = rows[1];
+      if (firstRow) {
+        document.getElementById("outCategory").value = firstRow[0] || "";
+        document.getElementById("outDt").value = firstRow[1] || "";
+        document.getElementById("outTm").value = firstRow[2] || "";
+        onOutCategoryChange();
+      }
+
+      for (let i = 1; i < rows.length; i++) {
+        const r = rows[i];
+        if (!r || r.length === 0) continue;
+
+        // Handle footer totals
+        if (r[3] && r[3].toLowerCase() === "totalqty") {
+          document.getElementById("outTotalQty").value = num(r[6]);
+          document.getElementById("outTotalCmt").value = r[7] || "";
+          continue;
+        }
+
+        // Add row and map catalog items for DB save validation
+        addOutRow();
+        const tr = document.getElementById("outBody").lastElementChild;
+        const itemName = (r[3] || "").trim();
+        const pgNo = (r[4] || "").trim();
+
+        const ci = CATALOG.findIndex(c => c.itemname === itemName && c.pgNo === pgNo);
+        if (ci >= 0) {
+          tr.dataset.cat = String(ci);
+          tr.querySelector(".i-name").value = CATALOG[ci].itemname;
+          tr.querySelector(".i-pg").value = CATALOG[ci].pgNo;
+        } else {
+          tr.querySelector(".i-name").value = itemName;
+          tr.querySelector(".i-pg").value = pgNo;
+        }
+
+        tr.dataset.scoop = (r[5] || "").trim();
+        tr.querySelector(".i-scoop").value = tr.dataset.scoop;
+        tr.querySelector(".i-qty").value = r[6] || "";
+        tr.querySelector(".i-cmt").value = r[7] || "";
+      }
+
+      refreshOut();
+      event.target.value = ""; // Reset input
+    };
+    reader.readAsText(file);
+  }
+
+
+  // IMPORT CSV
+  function importCSV() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".csv,text/csv";
+    input.onchange = e => {
+      const file = input.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = event => doImport(event.target.result);
+      reader.readAsText(file);
+    };
+    input.click();
+  }
+
+  function doImport(text) {
+    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    if (lines.length < 2) {
+      alert("CSV appears to be empty.");
+      return;
+    }
+
+    // Parse header to find column indexes dynamically
+    const headers = splitCsvLine(lines[0]).map(h => h.toLowerCase());
+    const col = name => headers.indexOf(name);
+
+    const iVendor = col("vendor"), iDt = col("dt"), iBillNo = col("billno");
+    const iItem = col("itemname"), iScoop = col("scoopin"), iPg = col("pgno");
+    const iQty = col("qty"), iRate = col("rate"), iTotal = col("itemtotal");
+    const iCmt = col("comments");
+
+    if (iVendor < 0 || iDt < 0 || iBillNo < 0 || iItem < 0) {
+      alert("CSV missing required columns: vendor, dt, billno, itemname.");
+      return;
+    }
+
+    // Clear existing rows
+    document.getElementById("inBody").innerHTML = "";
+
+    const firstRow = splitCsvLine(lines[1]);
+    document.getElementById("inVendor").value = firstRow[iVendor] || "";
+    document.getElementById("inDt").value = firstRow[iDt] || "";
+    document.getElementById("inBillNo").value = firstRow[iBillNo] || "";
+    onInVendorChange();
+
+    for (let i = 1; i < lines.length; i++) {
+      const r = splitCsvLine(lines[i]);
+      if (!r || r.length === 0) continue;
+
+      // Handle footer total row
+      if (r[iItem] && r[iItem].toLowerCase() === "billtotal") {
+        document.getElementById("inBillTotal").value = num(r[iTotal]);
+        document.getElementById("inBillTotalCmt").value = iCmt >= 0 ? r[iCmt] || "" : "";
+        isManualBillTotal = true;
+        continue;
+      }
+
+      addInRow();
+      const tr = document.getElementById("inBody").lastElementChild;
+      const itemName = (r[iItem] || "").trim();
+      const pgNo = iPg >= 0 ? (r[iPg] || "").trim() : "";
+
+      const ci = CATALOG.findIndex(c => c.itemname === itemName && c.pgNo === pgNo);
+      if (ci >= 0) {
+        tr.dataset.cat = String(ci);
+        tr.querySelector(".i-name").value = CATALOG[ci].itemname;
+        tr.querySelector(".i-pg").value = CATALOG[ci].pgNo;
+      } else {
+        tr.querySelector(".i-name").value = itemName;
+        tr.querySelector(".i-pg").value = pgNo;
+      }
+
+      tr.dataset.scoop = iScoop >= 0 ? (r[iScoop] || "").trim() : "";
+      tr.querySelector(".i-scoop").value = tr.dataset.scoop;
+      tr.querySelector(".i-qty").value = iQty >= 0 ? r[iQty] || "" : "";
+      tr.querySelector(".i-rate").value = iRate >= 0 ? r[iRate] || "" : "";
+      tr.querySelector(".i-total").value = iTotal >= 0 ? r[iTotal] || "" : "";
+      tr.querySelector(".i-cmt").value = iCmt >= 0 ? r[iCmt] || "" : "";
+    }
+
+    refreshIn();
+  }
+
+  function importOutCSV() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".csv,text/csv";
+    input.onchange = e => {
+      const file = input.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = event => doOutImport(event.target.result);
+      reader.readAsText(file);
+    };
+    input.click();
+  }
+
+  function doOutImport(text) {
+    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    if (lines.length < 2) {
+      alert("CSV appears to be empty.");
+      return;
+    }
+
+    // Parse header to find column indexes dynamically
+    const headers = splitCsvLine(lines[0]).map(h => h.toLowerCase());
+    const col = name => headers.indexOf(name);
+
+    const iCategory = col("category"), iDt = col("dt"), iTime = col("time");
+    const iItem = col("itemname"), iPg = col("pgno") >= 0 ? col("pgno") : col("pgn");
+    const iScoop = col("scoop_out"), iQty = col("qty"), iCmt = col("comments");
+
+    if (iCategory < 0 || iDt < 0 || iItem < 0) {
+      alert("CSV missing required columns: category, dt, itemname.");
+      return;
+    }
+
+    // Clear existing rows
+    document.getElementById("outBody").innerHTML = "";
+
+    const firstRow = splitCsvLine(lines[1]);
+    document.getElementById("outCategory").value = firstRow[iCategory] || "";
+    document.getElementById("outDt").value = firstRow[iDt] || "";
+    document.getElementById("outTm").value = iTime >= 0 ? firstRow[iTime] || "" : "";
+    onOutCategoryChange();
+
+    for (let i = 1; i < lines.length; i++) {
+      const r = splitCsvLine(lines[i]);
+      if (!r || r.length === 0) continue;
+
+      // Handle footer total row
+      if (r[iItem] && r[iItem].toLowerCase() === "totalqty") {
+        document.getElementById("outTotalQty").value = num(r[iQty]);
+        document.getElementById("outTotalCmt").value = iCmt >= 0 ? r[iCmt] || "" : "";
+        continue;
+      }
+
+      addOutRow();
+      const tr = document.getElementById("outBody").lastElementChild;
+      const itemName = (r[iItem] || "").trim();
+      const pgNo = iPg >= 0 ? (r[iPg] || "").trim() : "";
+
+      const ci = CATALOG.findIndex(c => c.itemname === itemName && c.pgNo === pgNo);
+      if (ci >= 0) {
+        tr.dataset.cat = String(ci);
+        tr.querySelector(".i-name").value = CATALOG[ci].itemname;
+        tr.querySelector(".i-pg").value = CATALOG[ci].pgNo;
+      } else {
+        tr.querySelector(".i-name").value = itemName;
+        tr.querySelector(".i-pg").value = pgNo;
+      }
+
+      tr.dataset.scoop = iScoop >= 0 ? (r[iScoop] || "").trim() : "";
+      tr.querySelector(".i-scoop").value = tr.dataset.scoop;
+      tr.querySelector(".i-qty").value = iQty >= 0 ? r[iQty] || "" : "";
+      tr.querySelector(".i-cmt").value = iCmt >= 0 ? r[iCmt] || "" : "";
+    }
+
+    refreshOut();
+  }
+
+
+  /* Initialization */
+  (function init() {
+    // Attach Searchable Header Comboboxes
+    attachHeaderCombo(document.getElementById("inVendor"), VENDORS, onInVendorChange);
+    attachHeaderCombo(document.getElementById("outCategory"), CATEGORIES, onOutCategoryChange);
+    attachHeaderCombo(document.getElementById("recipeDishName"), DISHNAMES, onRecipeDishChange);
+
+    // Attach Dish Out Scoop Combobox
+    const dishOutScoopInput = document.getElementById("recipeDishOutScoop");
+    attachCombo(dishOutScoopInput, term => {
+      const dishName = document.getElementById("recipeDishName").value.trim();
+      const allowed = allowedDishOutScoops(dishName);
+      const q = (term || "").trim().toLowerCase();
+      return allowed.filter(s => s.dish_out_scoop.toLowerCase().includes(q)).map(s => ({ key: s.dish_out_scoop, label: s.dish_out_scoop }));
+    }, key => {
+      dishOutScoopInput.value = key || "";
+      dishOutScoopInput.classList.remove("bad");
+      refreshRecipe();
+    });
+
+    // Default Dates & Time
+    document.getElementById("inDt").valueAsDate = new Date();
+    document.getElementById("outDt").valueAsDate = new Date();
+    setOutNow();
+
+    // Dynamic listeners
+    ["inDt", "inBillNo"].forEach(id => document.getElementById(id).addEventListener("input", refreshIn));
+    ["outDt", "outTm"].forEach(id => document.getElementById(id).addEventListener("input", refreshOut));
+    document.getElementById("inBillTotal").addEventListener("input", () => { isManualBillTotal = true; refreshIn(); });
+
+    // Comment fields listeners for footer totals & dish out
+    document.getElementById("inBillTotalCmt").addEventListener("input", refreshIn);
+    document.getElementById("outTotalCmt").addEventListener("input", refreshOut);
+    document.getElementById("recipeTotalCmt").addEventListener("input", refreshRecipe);
+    document.getElementById("recipeDishOutCmt").addEventListener("input", refreshRecipe);
+    document.getElementById("recipeDishOutScoop").addEventListener("input", refreshRecipe);
+
+    // Add Initial Rows for each section
+    addInRow(); addInRow(); onInVendorChange();
+    addOutRow(); addOutRow(); onOutCategoryChange();
+    addRecipeRow(); addRecipeRow(); onRecipeDishChange();
+  })();
+</script>
+</body>
+</html>

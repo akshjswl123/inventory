@@ -1,0 +1,262 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Form & Inventory Management</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+        .actions button { margin-right: 8px; cursor: pointer; }
+        .actions button.primary { background: #007bff; color: white; border: none; padding: 6px 12px; }
+        .actions button.success { background: #28a745; color: white; border: none; padding: 6px 12px; }
+        .actions button.import { background: #6c757d; color: white; border: none; padding: 6px 12px; }
+        .actions button.save { background: #17a2b8; color: white; border: none; padding: 6px 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .i-stock { font-size: 11px; padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
+        .i-stock.ok { background: #d4edda; color: #155724; }
+        .i-stock.warn { background: #fff3cd; color: #856404; }
+        .i-stock.err { background: #e2e3e5; color: #383d41; }
+
+        /* Query Tab Styles */
+        #queryInput { font-family: monospace; font-size: 13px; resize: vertical; min-height: 120px; width: 100%; }
+        #queryError { display:none; background:#fde8e8; border:1px solid #f5a6a6; color:#a00; padding:8px; margin-top:12px; white-space:pre-wrap; }
+        #queryError.is-err { display:block; }
+        #queryResult th { background:#f0f0f0; position:sticky; top:0; }
+    </style>
+</head>
+<body>
+
+<div class="actions">
+    <button onclick="switchTab('tab-order')">Order Entry</button>
+    <button onclick="switchTab('tab-query')">SQL Query</button>
+    <button class="save" id="pgDumpBtn" onclick="pgDump()">PG Dump</button>
+</div>
+
+<!-- ORDER ENTRY TAB -->
+<div id="tab-order" class="tab-pane active">
+    <h2>Order Form</h2>
+    <div class="metadata">
+        <label>Vendor: <input type="text" id="vendor"></label>
+        <label>Date: <input type="date" id="dt"></label>
+        <label>Bill No: <input type="text" id="billNo"></label>
+    </div>
+
+    <div class="actions" style="margin-top: 15px;">
+        <button class="primary" onclick="Order.addRow()">+ Add Item</button>
+        <button class="import" onclick="Order.importCSV()">&#128194; Import CSV</button>
+        <button class="success" onclick="Order.exportCSV()">Export CSV</button>
+        <button class="save" onclick="Order.saveDB()">Save to DB</button>
+    </div>
+
+    <table id="orderTable">
+        <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Scoop In</th>
+            <th>Qty</th>
+            <th>Rate</th>
+            <th>Item Total</th>
+            <th>Comments</th>
+        </tr>
+        </thead>
+        <tbody id="orderItems"></tbody>
+    </table>
+    <h3>Bill Total: $<span id="billTotal">0.00</span></h3>
+</div>
+
+<!-- QUERY TAB -->
+<div id="tab-query" class="tab-pane">
+    <h2>SQL Query</h2>
+    <textarea id="queryInput" placeholder="SELECT * FROM orders LIMIT 20;"></textarea>
+    <div class="actions" style="margin-top:10px;">
+        <button class="primary" onclick="Query.run()" id="queryRunBtn">&#9654; Run Query</button>
+        <button onclick="Query.clear()">Clear</button>
+    </div>
+    <div id="queryError"></div>
+    <div id="queryMeta"></div>
+    <div id="queryResultWrap" style="overflow-x:auto; margin-top:16px;">
+        <table id="queryResult"></table>
+    </div>
+</div>
+
+<script src="report.js"></script>
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    // Data Fetch & Dump Integration
+    async function pgDump() {
+        const btn = document.getElementById('pgDumpBtn');
+        btn.disabled = true; btn.textContent = 'Dumping...';
+        try {
+            const res = await fetch('/api/pgdump');
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || res.statusText);
+            alert('Dump saved on host:\ndumps/' + data.filename);
+        } catch (err) {
+            alert('Dump failed: ' + err.message);
+        } finally {
+            btn.disabled = false; btn.textContent = 'PG Dump';
+        }
+    }
+
+    const STOCK_QUERY = `
+SELECT COALESCE(SUM(oi.qty), 0) - COALESCE(SUM(ioi.qty), 0) AS stock
+FROM (SELECT itemname, qty FROM order_items WHERE itemname = $ITEM) oi
+FULL OUTER JOIN (SELECT itemname, qty FROM inventory_out_items WHERE itemname = $ITEM) ioi
+ON oi.itemname = ioi.itemname`;
+
+    async function fetchStock(itemname) {
+        if (!itemname) return null;
+        const sql = STOCK_QUERY.replace(/\$ITEM/g, "'" + itemname.replace(/'/g, "''") + "'");
+        try {
+            const res = await fetch('/api/query', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sql })
+            });
+            if (!res.ok) return null;
+            const data = await res.json();
+            if (!data.rows || !data.rows.length) return null;
+            return data.rows[0]['stock'] == null ? null : Number(data.rows[0]['stock']);
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // Order Form Engine
+    const Order = {
+        async addRow(itemData = {}) {
+            const tbody = document.getElementById('orderItems');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+      <td><input type="text" class="itemname" value="${itemData.itemname || ''}" onchange="Order.updateRow(this)"></td>
+      <td><input type="number" class="scoopIn" value="${itemData.scoopIn || 0}"></td>
+      <td><input type="number" class="qty" value="${itemData.qty || 1}" onchange="Order.recalc()"></td>
+      <td><input type="number" class="rate" value="${itemData.rate || 0.00}" onchange="Order.recalc()"></td>
+      <td><input type="number" class="itemTotal" value="${itemData.itemTotal || 0.00}" readonly></td>
+      <td class="comments-cell">
+        <input type="text" class="comments" value="${itemData.comments || ''}">
+        <span class="i-stock err">-</span>
+      </td>
+    `;
+            tbody.appendChild(tr);
+            if(itemData.itemname) this.updateRow(tr.querySelector('.itemname'));
+        },
+
+        async updateRow(inputEl) {
+            const tr = inputEl.closest('tr');
+            const badge = tr.querySelector('.i-stock');
+            const stock = await fetchStock(inputEl.value);
+
+            badge.className = 'i-stock';
+            if (stock === null) {
+                badge.classList.add('err');
+                badge.textContent = '-';
+            } else if (stock > 0) {
+                badge.classList.add('ok');
+                badge.textContent = `Stock: ${stock}`;
+            } else {
+                badge.classList.add('warn');
+                badge.textContent = `Stock: 0`;
+            }
+        },
+
+        recalc() {
+            let grandTotal = 0;
+            document.querySelectorAll('#orderItems tr').forEach(tr => {
+                const qty = parseFloat(tr.querySelector('.qty').value) || 0;
+                const rate = parseFloat(tr.querySelector('.rate').value) || 0;
+                const total = qty * rate;
+                tr.querySelector('.itemTotal').value = total.toFixed(2);
+                grandTotal += total;
+            });
+            document.getElementById('billTotal').textContent = grandTotal.toFixed(2);
+        },
+
+        importCSV() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.csv';
+            input.onchange = e => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = event => {
+                    const lines = event.target.result.split('\n').map(l => l.trim()).filter(l => l);
+                    document.getElementById('orderItems').innerHTML = '';
+
+                    lines.forEach((line, index) => {
+                        if(index === 0) return; // Skip headers
+                        if(line.includes('BILL_TOTAL') || line.includes('TOTAL_QTY')) return;
+
+                        const parts = line.split(',');
+                        if (parts.length < 9) return;
+
+                        document.getElementById('vendor').value = parts[0];
+                        document.getElementById('dt').value = parts[1];
+                        document.getElementById('billNo').value = parts[2];
+
+                        this.addRow({
+                            itemname: parts[3],
+                            scoopIn: parseFloat(parts[4]),
+                            qty: parseFloat(parts[5]),
+                            rate: parseFloat(parts[6]),
+                            itemTotal: parseFloat(parts[7]),
+                            comments: parts[8]
+                        });
+                    });
+                    this.recalc();
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        },
+
+        async saveDB() {
+            const items = [];
+            document.querySelectorAll('#orderItems tr').forEach(tr => {
+                items.push({
+                    itemname: tr.querySelector('.itemname').value,
+                    scoopIn: parseFloat(tr.querySelector('.scoopIn').value) || 0,
+                    qty: parseFloat(tr.querySelector('.qty').value) || 0,
+                    rate: parseFloat(tr.querySelector('.rate').value) || 0,
+                    itemTotal: parseFloat(tr.querySelector('.itemTotal').value) || 0,
+                    comments: tr.querySelector('.comments').value
+                });
+            });
+
+            const payload = {
+                vendor: document.getElementById('vendor').value,
+                dt: document.getElementById('dt').value,
+                billNo: document.getElementById('billNo').value,
+                billTotal: parseFloat(document.getElementById('billTotal').textContent),
+                items
+            };
+
+            try {
+                const res = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) alert('Order Saved to DB');
+                else alert('Save failed.');
+            } catch (err) {
+                alert('Network error: ' + err.message);
+            }
+        },
+
+        exportCSV() {
+            // Basic export stub complementing importCSV
+            alert("Export logic triggered.");
+        }
+    };
+</script>
+</body>
+</html>
