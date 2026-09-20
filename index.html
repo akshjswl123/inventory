@@ -29,6 +29,7 @@
     button { padding: 8px 15px; border: 0; border-radius: 4px; cursor: pointer; font-size: 13px; }
     button.primary { background: #0d6efd; color: #fff; }
     button.success { background: #198754; color: #fff; }
+    button.import { background: #6f42c1; color: #fff; }
     button.plain { background: #e2e2e2; }
     button.danger { background: #dc3545; color: #fff; padding: 4px 9px; }
     button.mini { padding: 4px 7px; background: #e2e2e2; border-radius: 4px; font-size: 12px; margin-left: 5px; }
@@ -46,6 +47,63 @@
     input.bad { border-color: #dc3545; background: #fff6f6; }
     input:disabled { background: #f1f1f1; color: #999; }
     .cellwrap { display: flex; align-items: center; }
+    .i-stock { font-size: 12px; color: #666; white-space: nowrap; }
+    .i-stock.stock-ok { color: #198754; font-weight: bold; }
+    .i-stock.stock-warn { color: #dc3545; font-weight: bold; }
+    .item-details-table code { font-family: monospace; font-size: 12px; background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+    .item-details-empty { color: #999; font-style: italic; }
+    .unit-converter { margin-top: 20px; padding: 16px 18px; background: #f8f9fb; border: 1px solid #dee2e6; border-radius: 8px; }
+    .unit-converter h3 { margin: 0 0 12px 0; font-size: 14px; color: #333; }
+    .conv-step-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; font-size: 13px; }
+    .conv-step-row input[type="text"] { width: 110px; padding: 6px; }
+    .conv-step-row input[type="number"] { width: 70px; padding: 6px; text-align: right; }
+    .conv-step-row input.conv-child-last { background: #eef2ff; font-weight: bold; }
+    .conv-step-row .conv-eq { font-weight: bold; color: #555; min-width: 12px; }
+    .conv-actions { margin-top: 8px; display: flex; gap: 8px; }
+    .conv-total { margin-top: 14px; padding-top: 12px; border-top: 1px dashed #ccc; font-size: 13px; font-weight: bold; color: #198754; }
+    .conv-empty { color: #999; font-style: italic; font-size: 13px; }
+    .conv-hint { font-size: 11px; color: #666; margin-bottom: 10px; }
+    .item-details-section { margin-top: 18px; padding: 16px 18px; background: #f8f9fb; border: 1px solid #dee2e6; border-radius: 8px; }
+    .item-details-section h3 { margin: 0 0 10px 0; font-size: 14px; color: #333; }
+    .chain-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; font-size: 13px; }
+    .chain-row input.c-this { width: 140px; padding: 6px; }
+    .chain-row input.c-qty {
+      width: 110px; padding: 6px 8px; text-align: right;
+      font-size: 14px; font-variant-numeric: tabular-nums;
+    }
+    /* Hide number spinners if any leftover number inputs appear */
+    .chain-row input.c-qty::-webkit-outer-spin-button,
+    .chain-row input.c-qty::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .chain-row input.c-qty[type=number] { -moz-appearance: textfield; }
+    .chain-done-badge { color: #198754; font-size: 12px; font-weight: bold; margin-left: 8px; }
+    .chain-open-badge { color: #6c757d; font-size: 12px; margin-left: 8px; }
+    .chain-group { margin-bottom: 14px; padding: 12px; background: #fff; border: 1px solid #dee2e6; border-radius: 6px; }
+    .chain-group-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+    .chain-group-head .chain-delete { margin-left: auto; }
+    .chain-row input.c-next { width: 90px; padding: 6px; }
+    .chain-row input.readonly-this { background: #f1f1f1; }
+    .chain-row .lbl { font-weight: bold; color: #555; }
+    .chain-row .contains { color: #666; }
+    .chain-arrow { text-align: center; color: #888; font-size: 18px; margin: 4px 0; }
+    .base-badge { color: #198754; font-weight: bold; font-size: 12px; }
+    .scoop-name { font-family: monospace; font-size: 12px; background: #f4f4f4; padding: 4px 8px; border-radius: 3px; min-height: 18px; }
+    .item-details-unused { background: #fff0f0; }
+    button.save { background: #0d6efd; color: #fff; }
+    #itemDetailsMsg { font-size: 12px; color: #666; }
+    #itemDetailsMsg.ok { color: #198754; }
+    #itemDetailsMsg.err { color: #dc3545; }
+    #rawMaterialsMsg { font-size: 12px; color: #666; }
+    #rawMaterialsMsg.ok { color: #198754; }
+    #rawMaterialsMsg.err { color: #dc3545; }
+    #dishesMsg { font-size: 12px; color: #666; }
+    #dishesMsg.ok { color: #198754; }
+    #dishesMsg.err { color: #dc3545; }
+    #recipeCloneHint.ok { color: #198754; }
+    #recipeCloneHint.err { color: #dc3545; }
+    .chain-group { margin-bottom: 16px; padding: 12px; background: #fff; border: 1px solid #dee2e6; border-radius: 6px; }
+    .chain-group-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; }
+    .chain-group-head .chain-done-badge { color: #198754; font-size: 12px; font-weight: bold; }
+    .chain-group-head button.mini { padding: 2px 8px; font-size: 11px; margin-left: auto; }
 
     /* Query Tab */
     #queryInput { width:100%; min-height:180px; resize:vertical; font-family:monospace; font-size:14px; line-height:1.5; padding:10px; box-sizing:border-box; }
@@ -63,6 +121,8 @@
     <button class="tab-btn active" onclick="switchTab(event, 'inTab')">Inventory In (Bills)</button>
     <button class="tab-btn" onclick="switchTab(event, 'outTab')">Inventory Out</button>
     <button class="tab-btn" onclick="switchTab(event, 'recipeTab')">Recipe Maker</button>
+    <button class="tab-btn" onclick="switchTab(event, 'itemDetailsTab')">Scoop</button>
+    <button class="tab-btn" onclick="switchTab(event, 'rawMaterialsTab')">Raw Materials</button>
     <button class="tab-btn" onclick="switchTab(event, 'queryTab')">Query</button>
   </div>
 
@@ -103,6 +163,7 @@
         <th class="num" style="width:100px">Rate *</th>
         <th class="num" style="width:110px">Item Total *</th>
         <th>Comments</th>
+        <th class="num" style="width:100px">Current Stock</th>
         <th style="width:45px"></th>
       </tr>
       </thead>
@@ -115,12 +176,14 @@
         <td class="num"><input type="number" id="inBillTotal" value="0" step="any" /></td>
         <td><input type="text" id="inBillTotalCmt" placeholder="Bill total comments..." /></td>
         <td></td>
+        <td></td>
       </tr>
       </tfoot>
     </table>
 
     <div class="actions">
       <button class="primary" onclick="addInRow()">+ Add Item</button>
+      <button class="import" onclick="importInCSV()">Import CSV</button>
       <button class="success" onclick="exportInCSV()">Export CSVs</button>
       <button class="primary" onclick="saveInDB()">Save to DB</button>
       <button class="plain" onclick="resetIn()">Reset</button>
@@ -175,6 +238,7 @@
         <th style="width:200px">Scoop Out *</th>
         <th class="num" style="width:100px">Qty *</th>
         <th>Comments</th>
+        <th class="num" style="width:100px">Current Stock</th>
         <th style="width:45px"></th>
       </tr>
       </thead>
@@ -185,12 +249,14 @@
         <td class="num"><input type="text" id="outTotalQty" value="0" readonly /></td>
         <td><input type="text" id="outTotalCmt" placeholder="Total qty comments..." /></td>
         <td></td>
+        <td></td>
       </tr>
       </tfoot>
     </table>
 
     <div class="actions">
       <button class="primary" onclick="addOutRow()">+ Add Item</button>
+      <button class="import" onclick="importOutCSV()">Import CSV</button>
       <button class="success" onclick="exportOutCSV()">Export CSV</button>
       <button class="primary" onclick="saveOutToDB()">Save to DB</button>
       <button class="plain" onclick="resetOut()">Reset</button>
@@ -212,6 +278,16 @@
         <div class="combo"><input type="text" id="recipeDishName" placeholder="Search dish name..." autocomplete="off" /></div>
         <div class="hint" id="recipeDishHint">Search &amp; select dish item to build recipe</div>
       </div>
+      <div>
+        <label for="recipeDishCode">Dish Code</label>
+        <input type="text" id="recipeDishCode" placeholder="-" readonly />
+        <div class="hint">From dishes table — saved in recipe_entries</div>
+      </div>
+      <div>
+        <label for="recipeCloneSource">Clone From</label>
+        <div class="combo"><input type="text" id="recipeCloneSource" placeholder="Search source dish..." autocomplete="off" data-dish-code="" /></div>
+        <div class="hint" id="recipeCloneHint">Select a source dish — ingredients &amp; processed items load automatically</div>
+      </div>
     </div>
 
     <table>
@@ -232,6 +308,31 @@
         <td colspan="4" style="text-align:right">Total Ingredients Qty</td>
         <td class="num"><input type="text" id="recipeTotalQty" value="0" readonly /></td>
         <td><input type="text" id="recipeTotalCmt" placeholder="Total ingredients comments..." /></td>
+        <td></td>
+      </tr>
+      </tfoot>
+    </table>
+
+    <!-- Processed Items - uses existing dishes instead of raw materials -->
+    <h3 style="margin-top:25px; font-size:16px;">Processed Items</h3>
+    <table>
+      <thead>
+      <tr>
+        <th style="width:35px">#</th>
+        <th style="width:220px">Dish Name *</th>
+        <th style="width:120px">Dish Code</th>
+        <th style="width:200px">Scoop *</th>
+        <th class="num" style="width:100px">Qty *</th>
+        <th>Comments</th>
+        <th style="width:45px"></th>
+      </tr>
+      </thead>
+      <tbody id="processedBody"></tbody>
+      <tfoot>
+      <tr>
+        <td colspan="4" style="text-align:right">Total Processed Qty</td>
+        <td class="num"><input type="text" id="processedTotalQty" value="0" readonly /></td>
+        <td><input type="text" id="processedTotalCmt" placeholder="Total processed comments..." /></td>
         <td></td>
       </tr>
       </tfoot>
@@ -265,7 +366,11 @@
 
     <div class="actions">
       <button class="primary" onclick="addRecipeRow()">+ Add Item</button>
+      <button class="primary" onclick="addProcessedRow()">+ Add Processed Item</button>
+      <button class="import" onclick="importRecipeCSV()">Import CSV</button>
       <button class="success" onclick="exportRecipeCSV()">Export CSV</button>
+      <button class="plain" onclick="cloneFromOtherDish()">Clone From Other Dish</button>
+      <button class="save" onclick="saveRecipeToDB()">Save to DB</button>
       <button class="plain" onclick="resetRecipe()">Reset</button>
     </div>
 
@@ -273,13 +378,193 @@
     <pre id="previewRecipe">-- add items to see preview --</pre>
   </div>
 
-  <!-- TAB 4: QUERY -->
+  <!-- TAB 4: ITEM DETAILS -->
+  <div id="itemDetailsTab" class="tab-pane">
+    <h2>Item Unit Config</h2>
+
+    <div class="head-row">
+      <div>
+        <label for="itemDetailsEntityType">Config For</label>
+        <select id="itemDetailsEntityType">
+          <option value="item">Raw Material</option>
+          <option value="dish">Dish</option>
+        </select>
+        <div class="hint">From raw_materials or dishes table</div>
+      </div>
+      <div>
+        <label for="itemDetailsName" id="itemDetailsNameLabel">Item Name *</label>
+        <div class="combo"><input type="text" id="itemDetailsName" placeholder="Search item..." autocomplete="off" /></div>
+        <div class="hint" id="itemDetailsHint">Search &amp; select an item to begin</div>
+      </div>
+      <div>
+        <label for="itemDetailsPgNo" id="itemDetailsPgNoLabel">Pg No</label>
+        <input type="text" id="itemDetailsPgNo" readonly />
+        <div class="hint">&nbsp;</div>
+      </div>
+      <div>
+        <label for="itemDetailsDestUnit">Destination Unit *</label>
+        <select id="itemDetailsDestUnit">
+          <option value="">-- select --</option>
+          <option value="gm">gm</option>
+          <option value="ml">ml</option>
+          <option value="piece">piece</option>
+        </select>
+        <div class="hint">The base unit everything converts down to</div>
+      </div>
+    </div>
+
+    <div id="itemDetailsScoopPanel" class="item-details-section" style="display:none;">
+      <h3>Select Scoops</h3>
+      <table class="item-details-table">
+        <thead>
+        <tr>
+          <th style="width:100px"></th>
+          <th style="width:180px">Unit</th>
+          <th>Saved as</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong>IN</strong><div class="hint">arrives</div></td>
+          <td><select id="itemDetailsScoopIn"><option value="">-- pick --</option></select></td>
+          <td><div class="scoop-name" id="itemDetailsScoopInName">&nbsp;</div></td>
+        </tr>
+        <tr>
+          <td><strong>OUT</strong><div class="hint">issued</div></td>
+          <td><select id="itemDetailsScoopOut"><option value="">-- pick --</option></select></td>
+          <td><div class="scoop-name" id="itemDetailsScoopOutName">&nbsp;</div></td>
+        </tr>
+        <tr>
+          <td><strong>RECIPE</strong><div class="hint">recipe</div></td>
+          <td><select id="itemDetailsScoopRecipe"><option value="">-- pick --</option></select></td>
+          <td><div class="scoop-name" id="itemDetailsScoopRecipeName">&nbsp;</div></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="itemDetailsChainSection" class="item-details-section" style="display:none;">
+      <h3>Conversion Chains</h3>
+      <p class="hint">Build one or more chains (e.g. Bag→kg→gm and packet→gm). Each row: <strong>1 [THIS]</strong> contains <strong>N [NEXT]</strong>. When a chain reaches the destination unit, click <strong>+ Add Chain</strong> for another path.</p>
+      <div id="itemDetailsChainRows"></div>
+      <div class="conv-actions">
+        <button type="button" class="plain" id="itemDetailsAddStepBtn" disabled>+ Add Step</button>
+        <button type="button" class="plain" id="itemDetailsNewChainBtn" disabled>+ Add Chain</button>
+      </div>
+      <div class="actions">
+        <button type="button" class="save" id="itemDetailsAddToListBtn">Add to List &#8595;</button>
+      </div>
+    </div>
+
+    <div class="item-details-section">
+      <h2 style="font-size:16px;margin-bottom:12px;">Config List</h2>
+      <table id="itemDetailsListTable">
+        <thead>
+        <tr>
+          <th>Sr No</th>
+          <th>Item Name</th>
+          <th>Destination Unit</th>
+          <th>Scoop Name</th>
+          <th class="num">Factor</th>
+          <th>Entire Chain</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody id="itemDetailsListBody">
+        <tr id="itemDetailsEmptyRow"><td colspan="7" class="item-details-empty">No items added yet</td></tr>
+        </tbody>
+      </table>
+
+      <div class="actions">
+        <button type="button" class="import" id="itemDetailsImportBtn">Import CSV</button>
+        <button type="button" class="success" id="itemDetailsExportBtn">Export CSV</button>
+        <button type="button" class="save" id="itemDetailsSaveBtn">Save to DB</button>
+        <button type="button" class="plain" id="itemDetailsLoadBtn">Load from DB</button>
+        <button type="button" class="plain" id="itemDetailsClearBtn">Clear List</button>
+        <span id="itemDetailsMsg"></span>
+      </div>
+      <div class="hint" id="itemDetailsDbHint">Save to DB stores rows in PostgreSQL. Load from DB reads them back.</div>
+
+      <h3 style="margin-top:18px;">CSV Preview</h3>
+      <pre id="itemDetailsPreview">-- add items to see preview --</pre>
+    </div>
+  </div>
+
+  <!-- TAB: RAW MATERIALS (pgNo, itemname, comments) -->
+  <div id="rawMaterialsTab" class="tab-pane">
+    <h2>Raw Materials</h2>
+    <p class="hint">Columns: pgNo, itemname, comments — type itemname manually in each row.</p>
+
+    <table>
+      <thead>
+      <tr>
+        <th style="width:120px">pgNo</th>
+        <th style="width:320px">itemname</th>
+        <th>comments</th>
+        <th style="width:45px"></th>
+      </tr>
+      </thead>
+      <tbody id="rawMaterialsBody"></tbody>
+    </table>
+
+    <div class="actions">
+      <button type="button" class="plain" id="rawMaterialsAddRowBtn">+ Add Row</button>
+      <button type="button" class="plain" id="rawMaterialsLoadCatalogBtn">Load from Catalog</button>
+      <button type="button" class="import" id="rawMaterialsImportBtn">Import CSV</button>
+      <button type="button" class="success" id="rawMaterialsExportBtn">Export CSV</button>
+      <button type="button" class="plain" id="rawMaterialsSaveLocalBtn">Save Local</button>
+      <button type="button" class="plain" id="rawMaterialsLoadLocalBtn">Load Local</button>
+      <button type="button" class="save" id="rawMaterialsSaveDbBtn">Save to DB</button>
+      <button type="button" class="plain" id="rawMaterialsResetBtn">Reset</button>
+      <span id="rawMaterialsMsg"></span>
+    </div>
+    <div class="hint" id="rawMaterialsDbHint">Import/Export CSV uses pgNo, itemname, comments.</div>
+
+    <h3 style="margin-top:18px;">CSV Preview</h3>
+    <pre id="rawMaterialsPreview">-- add rows to see preview --</pre>
+
+    <hr style="margin:28px 0; border:none; border-top:1px solid #dee2e6;" />
+
+    <h2>Dishes</h2>
+    <p class="hint">Columns: dishcode, dishname — type dishname manually in each row.</p>
+
+    <table>
+      <thead>
+      <tr>
+        <th style="width:160px">dishcode</th>
+        <th style="width:320px">dishname</th>
+        <th style="width:45px"></th>
+      </tr>
+      </thead>
+      <tbody id="dishesBody"></tbody>
+    </table>
+
+    <div class="actions">
+      <button type="button" class="plain" id="dishesAddRowBtn">+ Add Row</button>
+      <button type="button" class="plain" id="dishesLoadCatalogBtn">Load from Catalog</button>
+      <button type="button" class="import" id="dishesImportBtn">Import CSV</button>
+      <button type="button" class="success" id="dishesExportBtn">Export CSV</button>
+      <button type="button" class="plain" id="dishesSaveLocalBtn">Save Local</button>
+      <button type="button" class="plain" id="dishesLoadLocalBtn">Load Local</button>
+      <button type="button" class="save" id="dishesSaveDbBtn">Save to DB</button>
+      <button type="button" class="plain" id="dishesResetBtn">Reset</button>
+      <span id="dishesMsg"></span>
+    </div>
+    <div class="hint" id="dishesDbHint">Import/Export CSV uses dishcode, dishname.</div>
+
+    <h3 style="margin-top:18px;">CSV Preview</h3>
+    <pre id="dishesPreview">-- add rows to see preview --</pre>
+  </div>
+
+  <!-- TAB 5: QUERY -->
   <div id="queryTab" class="tab-pane">
     <h2>Database Query</h2>
     <label for="queryInput">SQL Query</label>
     <textarea id="queryInput" placeholder="Enter SQL query here...&#10;&#10;Example: SELECT * FROM orders;" spellcheck="false"></textarea>
     <div class="actions">
       <button id="queryRunBtn" class="primary" onclick="Query.run()">Run Query</button>
+      <button class="success" onclick="Query.currentStock()">Current Stock</button>
+      <button id="pgDumpButton" class="plain" onclick="Query.pgDump()">PG Dump</button>
       <button class="plain" onclick="Query.clear()">Clear</button>
     </div>
     <div id="queryError" style="display:none;"></div>
@@ -291,92 +576,74 @@
 
 <!-- DATA CONFIGURATION FILE -->
 <script src="catalog.js"></script>
+<script src="staticDataFetcher.js"></script>
 <script src="report.js"></script>
+<script src="csv.js"></script>
+<script src="itemdetails.js"></script>
+<script src="rawmaterials.js"></script>
+<script src="dishes.js"></script>
 
 <script>
   /* ==========================================================================
-     SHARED PARSER ENGINE & DATA INITIALIZATION
+     SHARED PARSER ENGINE & DATA INITIALIZATION (via StaticDataFetcher)
      ========================================================================== */
-  function splitCsvLine(line) {
-    const out = [];
-    let cur = '', inQ = false, wasQuoted = false;
-    for (let i = 0; i < line.length; i++) {
-      const ch = line[i];
-      if (inQ) {
-        if (ch === '"') {
-          if (line[i + 1] === '"') { cur += '"'; i++; }
-          else inQ = false;
-        } else cur += ch;
-      } else if (ch === '"') {
-        inQ = true; wasQuoted = true;
-      } else if (ch === ',') {
-        out.push(wasQuoted ? cur : cur.trim());
-        cur = ''; wasQuoted = false;
-      } else cur += ch;
-    }
-    out.push(wasQuoted ? cur : cur.trim());
-    return out;
+  var ALL_ITEMS = "All";
+  var cfgWarnings = [];
+  var VENDORS = [];
+  var CATEGORIES = [];
+  var DISHNAMES = [];
+  var DISH_CATALOG = [];
+  var CATALOG = [];
+  var RECIPE_CATALOG = [];
+  var SCOOP_IN_CATALOG = [];
+  var SCOOP_OUT_CATALOG = [];
+  var RECIPE_SCOOP_CATALOG = [];
+  var DISH_OUT_SCOOP_CATALOG = [];
+  var SCOOP_INVENTORY_CATALOG = {};
+  var VENDOR_ITEMS = {};
+  var CATEGORY_ITEMS = {};
+  var UNIT_CONVERSION_CATALOG = [];
+  window.isManualBillTotal = false;
+
+  function syncStaticGlobals(data) {
+    ALL_ITEMS = data.ALL_ITEMS || "All";
+    VENDORS = data.VENDORS || [];
+    CATEGORIES = data.CATEGORIES || [];
+    DISHNAMES = data.DISHNAMES || [];
+    DISH_CATALOG = data.DISH_CATALOG || DISHNAMES.map((name, i) => ({
+      dishName: name,
+      dishCode: 'D' + String(i + 1).padStart(3, '0')
+    }));
+    CATALOG = data.CATALOG || [];
+    RECIPE_CATALOG = data.RECIPE_CATALOG || [];
+    SCOOP_IN_CATALOG = data.SCOOP_IN_CATALOG || [];
+    SCOOP_OUT_CATALOG = data.SCOOP_OUT_CATALOG || [];
+    RECIPE_SCOOP_CATALOG = data.RECIPE_SCOOP_CATALOG || [];
+    DISH_OUT_SCOOP_CATALOG = data.DISH_OUT_SCOOP_CATALOG || [];
+    SCOOP_INVENTORY_CATALOG = data.SCOOP_INVENTORY_CATALOG || {};
+    VENDOR_ITEMS = data.VENDOR_ITEMS || {};
+    CATEGORY_ITEMS = data.CATEGORY_ITEMS || [];
+    UNIT_CONVERSION_CATALOG = data.UNIT_CONVERSION_CATALOG || [];
+    StaticDataFetcher.applyToWindow({
+      ALL_ITEMS: ALL_ITEMS,
+      VENDORS: VENDORS,
+      CATEGORIES: CATEGORIES,
+      DISHNAMES: DISHNAMES,
+      DISH_CATALOG: DISH_CATALOG,
+      CATALOG: CATALOG,
+      RECIPE_CATALOG: RECIPE_CATALOG,
+      SCOOP_IN_CATALOG: SCOOP_IN_CATALOG,
+      SCOOP_OUT_CATALOG: SCOOP_OUT_CATALOG,
+      RECIPE_SCOOP_CATALOG: RECIPE_SCOOP_CATALOG,
+      DISH_OUT_SCOOP_CATALOG: DISH_OUT_SCOOP_CATALOG,
+      SCOOP_INVENTORY_CATALOG: SCOOP_INVENTORY_CATALOG,
+      VENDOR_ITEMS: VENDOR_ITEMS,
+      CATEGORY_ITEMS: CATEGORY_ITEMS,
+      UNIT_CONVERSION_CATALOG: UNIT_CONVERSION_CATALOG,
+      source: data.source,
+      fetchedAt: data.fetchedAt
+    });
   }
-
-  function parseBlock(block) {
-    if (!block) return [];
-    return String(block).split('\n')
-            .map(l => l.trim())
-            .filter(l => l.length > 0 && l.charAt(0) !== '#')
-            .map(splitCsvLine)
-            .filter(cols => cols[0] !== "");
-  }
-
-  const ALL_ITEMS = "All";
-  const cfgWarnings = [];
-
-  /* Master Catalogs */
-  const VENDORS = parseBlock(typeof VENDORS_CSV !== 'undefined' ? VENDORS_CSV : '').reduce((acc, row) => acc.concat(row.filter(v => v !== "")), []);
-  const CATEGORIES = parseBlock(typeof CATEGORIES_CSV !== 'undefined' ? CATEGORIES_CSV : '').reduce((acc, row) => acc.concat(row.filter(v => v !== "")), []);
-  const DISHNAMES = parseBlock(typeof DISHNAME_CSV !== 'undefined' ? DISHNAME_CSV : '').reduce((acc, row) => acc.concat(row.filter(v => v !== "")), []);
-
-  const CATALOG = parseBlock(typeof CATALOG_CSV !== 'undefined' ? CATALOG_CSV : '').map((c, i) => {
-    if (c.length < 2 || c[1] === "") cfgWarnings.push("CATALOG line " + (i + 1) + ": missing pgNo");
-    return { itemname: c[0] || '', pgNo: c[1] || '' };
-  });
-
-  const RECIPE_CATALOG = parseBlock(typeof RECIPE_CATALOG_CSV !== 'undefined' ? RECIPE_CATALOG_CSV : '').map((c, i) => {
-    if (c.length < 2 || c[1] === "") cfgWarnings.push("RECIPE_CATALOG line " + (i + 1) + ": missing pgNo");
-    return { recipeItemName: c[0] || '', pgNo: c[1] || '' };
-  });
-
-  const SCOOP_IN_CATALOG = parseBlock(typeof SCOOP_IN_CSV !== 'undefined' ? SCOOP_IN_CSV : '').map(c => ({
-    itemname: c[0], scoop_in: c[1], rate: isNaN(parseFloat(c[2])) ? 0 : parseFloat(c[2])
-  }));
-
-  const SCOOP_OUT_CATALOG = parseBlock(typeof SCOOP_OUT_CSV !== 'undefined' ? SCOOP_OUT_CSV : '').map(c => ({
-    itemname: c[0], scoop_out: c[1], defaultQty: isNaN(parseFloat(c[2])) ? null : parseFloat(c[2])
-  }));
-
-  const RECIPE_SCOOP_CATALOG = parseBlock(typeof RECIPE_SCOOP_CSV !== 'undefined' ? RECIPE_SCOOP_CSV : '').map(c => ({
-    recipeItemName: c[0], recipeScoop: c[1]
-  }));
-
-  const DISH_OUT_SCOOP_CATALOG = parseBlock(typeof DISH_OUT_SCOOP_CSV !== 'undefined' ? DISH_OUT_SCOOP_CSV : '').map(c => ({
-    dishname: c[0], dish_out_scoop: c[1]
-  }));
-
-  const SCOOP_INVENTORY_CATALOG = {};
-  parseBlock(typeof SCOOP_INVENTORY_CSV !== 'undefined' ? SCOOP_INVENTORY_CSV : '').forEach(c => {
-    if (c[0]) SCOOP_INVENTORY_CATALOG[c[0]] = c[1] || "";
-  });
-
-  const VENDOR_ITEMS = {};
-  parseBlock(typeof VENDOR_ITEMS_CSV !== 'undefined' ? VENDOR_ITEMS_CSV : '').forEach(c => {
-    const items = c.slice(1).filter(item => item !== '');
-    VENDOR_ITEMS[c[0]] = (items.length === 1 && items[0].toLowerCase() === ALL_ITEMS.toLowerCase()) ? ALL_ITEMS : items;
-  });
-
-  const CATEGORY_ITEMS = {};
-  parseBlock(typeof CATEGORY_ITEMS_CSV !== 'undefined' ? CATEGORY_ITEMS_CSV : '').forEach(c => {
-    const items = c.slice(1).filter(item => item !== '');
-    CATEGORY_ITEMS[c[0]] = (items.length === 1 && items[0].toLowerCase() === ALL_ITEMS.toLowerCase()) ? ALL_ITEMS : items;
-  });
 
   /* Display Warnings if misconfigured */
   if (cfgWarnings.length) {
@@ -386,23 +653,50 @@
   }
 
   /* Helpers */
-  function csvField(v) { return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; }
   function num(v) { const n = parseFloat(v); return isNaN(n) ? 0 : n; }
-  function downloadBlob(blob, filename) {
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(a.href);
+  function isServerMode() { return window.Query?.isServerMode ? window.Query.isServerMode() : (location.protocol === 'http:' || location.protocol === 'https:'); }
+  window.stockByItem = {};
+
+  function formatStockGm(gm) {
+    if (gm == null || isNaN(gm)) return "—";
+    return Number(gm) + " gm";
   }
+
+  function updateRowStock(tr) {
+    const el = tr.querySelector(".i-stock");
+    if (!el) return;
+    const ci = tr.dataset.cat;
+    if (ci === "" || !CATALOG[+ci]) {
+      el.textContent = "—";
+      el.className = "i-stock num";
+      return;
+    }
+    const gm = window.stockByItem[CATALOG[+ci].itemname];
+    el.textContent = formatStockGm(gm);
+    el.className = "i-stock num" + (gm > 0 ? " stock-ok" : gm < 0 ? " stock-warn" : "");
+  }
+
+  async function loadStockMap() {
+    try {
+      window.stockByItem = isServerMode() && window.Query?.fetchStockMap
+        ? await window.Query.fetchStockMap()
+        : {};
+    } catch (e) {
+      window.stockByItem = {};
+    }
+    document.querySelectorAll("#inBody tr, #outBody tr").forEach(updateRowStock);
+  }
+  window.loadStockMap = loadStockMap;
+  window.updateRowStock = updateRowStock;
 
   function switchTab(evt, tabId) {
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
     evt.currentTarget.classList.add('active');
+    if (tabId === "inTab" || tabId === "outTab") {
+      if (isServerMode()) loadStockMap().catch(() => {});
+    }
   }
 
   /* Searchable Combobox Component */
@@ -483,10 +777,6 @@
   /* ==========================================================================
      MODULE 1: INVENTORY IN (BILL ADDITIONS)
      ========================================================================== */
-  const CSV_HEADER_BILL = ["Vendor", "dt", "billno", "itemname", "pgno", "scoopin", "qty", "rate", "itemtotal", "comments"];
-  const CSV_HEADER_INV = ["itemname", "pgNo", "qty", "dt", "billno", "scoop_inventory"];
-
-  let isManualBillTotal = false;
 
   function allowedInItems(vendor) {
     if (!vendor) return [];
@@ -515,6 +805,7 @@
     <td class="num"><input type="number" class="i-rate" min="0" step="any" /></td>
     <td class="num"><input type="number" class="i-total" min="0" step="any" /></td>
     <td><input type="text" class="i-cmt" /></td>
+    <td class="i-stock num">—</td>
     <td style="text-align:center"><button class="danger" onclick="this.closest('tr').remove(); refreshIn();">&times;</button></td>
   `;
     document.getElementById("inBody").appendChild(tr);
@@ -537,6 +828,7 @@
           calcInTotal(tr);
         }
       }
+      updateRowStock(tr);
       refreshIn();
     };
 
@@ -588,7 +880,7 @@
       tr.querySelector(".idx").textContent = ++i;
     });
     document.getElementById("inTotalQty").value = totalQty;
-    if (!isManualBillTotal) document.getElementById("inBillTotal").value = computedBillTotal;
+    if (!window.isManualBillTotal) document.getElementById("inBillTotal").value = computedBillTotal;
 
     renderInPreviews();
   }
@@ -610,41 +902,8 @@
       invRows.push([e.itemname, e.pgNo, qty, dt, billno, scoopInv]);
     });
 
-    if (billRows.length) billRows.push([vendor, dt, billno, "billtotal", "", "", "", "", num(document.getElementById("inBillTotal").value), totalCmt]);
-
-    document.getElementById("previewBill").textContent = billRows.length ? [CSV_HEADER_BILL.map(csvField).join(",")].concat(billRows.map(r => r.map(csvField).join(","))).join("\r\n") : "-- add items to see preview --";
-    document.getElementById("previewInv").textContent = invRows.length ? [CSV_HEADER_INV.map(csvField).join(",")].concat(invRows.map(r => r.map(csvField).join(","))).join("\r\n") : "-- add items to see preview --";
-  }
-
-  function exportInCSV() {
-    const vendor = document.getElementById("inVendor").value.trim();
-    const dt = document.getElementById("inDt").value;
-    const billno = document.getElementById("inBillNo").value.trim();
-    const totalCmt = document.getElementById("inBillTotalCmt").value.trim();
-
-    if (!vendor || !dt || !billno) { alert("Please complete Vendor, Date, and Bill No."); return; }
-
-    const billRows = [], invRows = [];
-    document.querySelectorAll("#inBody tr").forEach(tr => {
-      const ci = tr.dataset.cat; if (ci === '') return;
-      const e = CATALOG[+ci];
-      const qty = num(tr.querySelector(".i-qty").value);
-      const scoopInv = SCOOP_INVENTORY_CATALOG[e.itemname] || "";
-
-      billRows.push([vendor, dt, billno, e.itemname, e.pgNo, tr.dataset.scoop, qty, num(tr.querySelector(".i-rate").value), num(tr.querySelector(".i-total").value), tr.querySelector(".i-cmt").value.trim()]);
-      invRows.push([e.itemname, e.pgNo, qty, dt, billno, scoopInv]);
-    });
-
-    if (!billRows.length) { alert("Please add at least one item."); return; }
-    billRows.push([vendor, dt, billno, "billtotal", "", "", "", "", num(document.getElementById("inBillTotal").value), totalCmt]);
-
-    const billTxt = [CSV_HEADER_BILL.map(csvField).join(",")].concat(billRows.map(r => r.map(csvField).join(","))).join("\r\n");
-    const invTxt = [CSV_HEADER_INV.map(csvField).join(",")].concat(invRows.map(r => r.map(csvField).join(","))).join("\r\n");
-
-    downloadBlob(new Blob(["\uFEFF" + billTxt], { type: "text/csv;charset=utf-8;" }), "bill_addition_" + vendor + "_" + billno + ".csv");
-    setTimeout(() => {
-      downloadBlob(new Blob(["\uFEFF" + invTxt], { type: "text/csv;charset=utf-8;" }), "inventory_in_" + vendor + "_" + billno + "_" + dt + ".csv");
-    }, 300);
+    document.getElementById("previewBill").textContent = Csv.buildInBillPreview(vendor, dt, billno, billRows, num(document.getElementById("inBillTotal").value), totalCmt) || "-- add items to see preview --";
+    document.getElementById("previewInv").textContent = Csv.buildInInvPreview(invRows) || "-- add items to see preview --";
   }
 
   function resetIn() {
@@ -652,15 +911,13 @@
     document.getElementById("inVendor").value = "";
     document.getElementById("inBillNo").value = "";
     document.getElementById("inBillTotalCmt").value = "";
-    isManualBillTotal = false;
+    window.isManualBillTotal = false;
     addInRow(); addInRow(); onInVendorChange();
   }
 
   /* ==========================================================================
      MODULE 2: INVENTORY OUT
      ========================================================================== */
-  const CSV_HEADER_OUT = ["category", "dt", "time", "itemname", "pgNo", "scoop_out", "qty", "comments"];
-
   function allowedOutItems(cat) {
     if (!cat) return [];
     const cfg = CATEGORY_ITEMS[cat];
@@ -686,6 +943,7 @@
     <td><div class="combo"><input type="text" class="i-scoop" placeholder="pick item first" autocomplete="off" disabled /></div></td>
     <td class="num"><input type="number" class="i-qty" min="0" step="any" /></td>
     <td><input type="text" class="i-cmt" /></td>
+    <td class="i-stock num">—</td>
     <td style="text-align:center"><button class="danger" onclick="this.closest('tr').remove(); refreshOut();">&times;</button></td>
   `;
     document.getElementById("outBody").appendChild(tr);
@@ -707,6 +965,7 @@
           if (qtyIn.value === "") qtyIn.value = scoops[0].defaultQty ?? 1;
         }
       }
+      updateRowStock(tr);
       refreshOut();
     };
 
@@ -766,35 +1025,7 @@
       outRows.push([cat, dt, tm, e.itemname, e.pgNo, tr.dataset.scoop, num(tr.querySelector(".i-qty").value), tr.querySelector(".i-cmt").value.trim()]);
     });
 
-    if (outRows.length) {
-      outRows.push([cat, dt, tm, "totalqty", "", "", num(document.getElementById("outTotalQty").value), totalCmt]);
-    }
-
-    document.getElementById("previewOut").textContent = outRows.length ? [CSV_HEADER_OUT.map(csvField).join(",")].concat(outRows.map(r => r.map(csvField).join(","))).join("\r\n") : "-- add items to see preview --";
-  }
-
-  function exportOutCSV() {
-    const cat = document.getElementById("outCategory").value.trim();
-    const dt = document.getElementById("outDt").value;
-    const tm = document.getElementById("outTm").value;
-    const totalCmt = document.getElementById("outTotalCmt").value.trim();
-
-    if (!cat || !dt) { alert("Please select Category and Date."); return; }
-
-    const outRows = [];
-    document.querySelectorAll("#outBody tr").forEach(tr => {
-      const ci = tr.dataset.cat; if (ci === '') return;
-      const e = CATALOG[+ci];
-      outRows.push([cat, dt, tm, e.itemname, e.pgNo, tr.dataset.scoop, num(tr.querySelector(".i-qty").value), tr.querySelector(".i-cmt").value.trim()]);
-    });
-
-    if (!outRows.length) { alert("Please select at least one item."); return; }
-
-    outRows.push([cat, dt, tm, "totalqty", "", "", num(document.getElementById("outTotalQty").value), totalCmt]);
-
-    const txt = [CSV_HEADER_OUT.map(csvField).join(",")].concat(outRows.map(r => r.map(csvField).join(","))).join("\r\n");
-    const tmPart = tm ? "_" + tm.replace(":", "") : "";
-    downloadBlob(new Blob(["\uFEFF" + txt], { type: "text/csv;charset=utf-8;" }), "inventory_out_" + cat + "_" + dt + tmPart + ".csv");
+    document.getElementById("previewOut").textContent = Csv.buildOutPreview(outRows, cat, dt, tm, num(document.getElementById("outTotalQty").value), totalCmt) || "-- add items to see preview --";
   }
 
   function setOutNow() {
@@ -819,8 +1050,6 @@
   /* ==========================================================================
      MODULE 3: RECIPE MAKER
      ========================================================================== */
-  const CSV_HEADER_RECIPE = ["dishname", "reciepeItemname", "pgNo", "receipescoop", "qty", "inGm", "inML", "inPiece", "comments"];
-
   function allowedDishOutScoops(dishName) {
     if (!dishName) return [];
     const matches = DISH_OUT_SCOOP_CATALOG.filter(s => s.dishname.toLowerCase() === dishName.toLowerCase());
@@ -892,12 +1121,186 @@
     tr.querySelector(".i-name").placeholder = enabled ? "search recipe item..." : "select dish name first";
   }
 
+  function recipeDishName() {
+    return document.getElementById("recipeDishName").value.trim();
+  }
+
+  function filterDishCatalog(term) {
+    const q = (term || "").trim().toLowerCase();
+    const exclude = recipeDishName().toLowerCase();
+    return DISH_CATALOG.map((e, i) => i)
+      .filter(i => {
+        const d = DISH_CATALOG[i];
+        if (exclude && d.dishName.toLowerCase() === exclude) return false;
+        return d.dishName.toLowerCase().includes(q) || d.dishCode.toLowerCase().includes(q);
+      });
+  }
+
+  function allowedProcessedScoops(dishName) {
+    if (!dishName) return [];
+    const matches = DISH_OUT_SCOOP_CATALOG.filter(s => s.dishname.toLowerCase() === dishName.toLowerCase());
+    return matches.length ? matches : DISH_OUT_SCOOP_CATALOG;
+  }
+
+  function addProcessedRow() {
+    const tr = document.createElement("tr");
+    tr.dataset.dish = ""; tr.dataset.scoop = "";
+    tr.innerHTML = `
+    <td class="idx"></td>
+    <td><div class="combo"><input type="text" class="i-dish" placeholder="select dish name first" autocomplete="off" disabled /></div></td>
+    <td><input type="text" class="i-code" placeholder="-" readonly /></td>
+    <td><div class="combo"><input type="text" class="i-scoop" placeholder="pick dish first" autocomplete="off" disabled /></div></td>
+    <td class="num"><input type="number" class="i-qty" min="0" step="any" value="1" /></td>
+    <td><input type="text" class="i-cmt" /></td>
+    <td style="text-align:center"><button class="danger" onclick="this.closest('tr').remove(); refreshRecipe();">&times;</button></td>
+  `;
+    document.getElementById("processedBody").appendChild(tr);
+
+    const dishIn = tr.querySelector(".i-dish");
+    const codeIn = tr.querySelector(".i-code");
+    const scoopIn = tr.querySelector(".i-scoop");
+    const qtyIn = tr.querySelector(".i-qty");
+
+    const resolveDish = di => {
+      if (di === null || DISH_CATALOG[di] === undefined) {
+        tr.dataset.dish = ""; dishIn.value = ""; codeIn.value = "";
+        scoopIn.value = ""; scoopIn.disabled = true; tr.dataset.scoop = "";
+      } else {
+        tr.dataset.dish = String(di);
+        dishIn.value = DISH_CATALOG[di].dishName;
+        codeIn.value = DISH_CATALOG[di].dishCode || "";
+        const scoops = allowedProcessedScoops(DISH_CATALOG[di].dishName);
+        scoopIn.disabled = scoops.length === 0;
+        if (scoops.length === 1) {
+          tr.dataset.scoop = scoops[0].dish_out_scoop;
+          scoopIn.value = scoops[0].dish_out_scoop;
+        } else {
+          scoopIn.value = "";
+          tr.dataset.scoop = "";
+        }
+      }
+      refreshRecipe();
+    };
+
+    attachCombo(dishIn, term => filterDishCatalog(term).map(i => ({
+      key: i,
+      label: DISH_CATALOG[i].dishName,
+      sec: DISH_CATALOG[i].dishCode
+    })), resolveDish);
+
+    attachCombo(scoopIn, term => {
+      const di = tr.dataset.dish;
+      if (!di) return [];
+      const dishName = DISH_CATALOG[+di].dishName;
+      const q = (term || "").trim().toLowerCase();
+      return allowedProcessedScoops(dishName)
+        .filter(s => s.dish_out_scoop.toLowerCase().includes(q))
+        .map(s => ({ key: s.dish_out_scoop, label: s.dish_out_scoop }));
+    }, key => {
+      tr.dataset.scoop = key || "";
+      scoopIn.value = key || "";
+      refreshRecipe();
+    });
+
+    qtyIn.addEventListener("input", refreshRecipe);
+    tr.querySelector(".i-cmt").addEventListener("input", refreshRecipe);
+
+    applyProcessedDishState(tr);
+    refreshRecipe();
+  }
+
+  function applyProcessedDishState(tr) {
+    const enabled = !!document.getElementById("recipeDishName").value.trim();
+    tr.querySelector(".i-dish").disabled = !enabled;
+    tr.querySelector(".i-dish").placeholder = enabled ? "search dish..." : "select dish name first";
+  }
+
+  let recipeCloneInFlight = false;
+
+  function setRecipeCloneHint(text, kind) {
+    const el = document.getElementById("recipeCloneHint");
+    if (!el) return;
+    el.textContent = text || "Select a source dish — ingredients & processed items load automatically";
+    el.className = kind ? kind : "hint";
+  }
+
+  function attachDishCloneCombo(inputEl) {
+    attachCombo(inputEl, term => {
+      const q = (term || "").trim().toLowerCase();
+      const target = document.getElementById("recipeDishName").value.trim().toLowerCase();
+      return DISH_CATALOG.map((d, i) => ({ d, i }))
+        .filter(({ d }) => {
+          if (target && d.dishName.toLowerCase() === target) return false;
+          return d.dishName.toLowerCase().includes(q)
+            || String(d.dishCode || "").toLowerCase().includes(q);
+        })
+        .map(({ d, i }) => ({
+          key: String(i),
+          label: d.dishName,
+          sec: d.dishCode || ""
+        }));
+    }, key => {
+      if (key === null || key === "") {
+        inputEl.value = "";
+        inputEl.dataset.dishCode = "";
+        setRecipeCloneHint("", "");
+        return;
+      }
+      const d = DISH_CATALOG[+key];
+      if (!d) return;
+      inputEl.value = d.dishName;
+      inputEl.dataset.dishCode = d.dishCode || "";
+      inputEl.classList.remove("bad");
+      onRecipeCloneSourcePick(d);
+    });
+  }
+
+  async function onRecipeCloneSourcePick(dish) {
+    if (!dish || recipeCloneInFlight) return;
+    const code = dish.dishCode || "";
+    if (!code) {
+      setRecipeCloneHint("Source dish has no dish code.", "err");
+      return;
+    }
+    recipeCloneInFlight = true;
+    setRecipeCloneHint("Loading recipe for " + code + "...", "");
+    try {
+      const result = await Csv.cloneRecipeFromDishcode(code);
+      if (result.ok) {
+        setRecipeCloneHint(result.message, "ok");
+      } else {
+        setRecipeCloneHint(result.error || "Could not clone recipe.", "err");
+      }
+    } catch (e) {
+      setRecipeCloneHint("Clone failed: " + (e.message || "unknown error"), "err");
+    } finally {
+      recipeCloneInFlight = false;
+    }
+  }
+
+  async function cloneFromOtherDish() {
+    const input = document.getElementById("recipeCloneSource");
+    const code = (input.dataset.dishCode || "").trim()
+      || (DISH_CATALOG.find(d => d.dishName === input.value.trim()) || {}).dishCode
+      || "";
+    if (!code) {
+      setRecipeCloneHint("Select a source dish from the list.", "err");
+      return;
+    }
+    await onRecipeCloneSourcePick({ dishName: input.value.trim(), dishCode: code });
+  }
+
   function onRecipeDishChange() {
     const dishName = document.getElementById("recipeDishName").value.trim();
     const dishOutScoopEl = document.getElementById("recipeDishOutScoop");
     const dishOutHint = document.getElementById("recipeDishOutScoopHint");
 
     document.getElementById("recipeDishHint").textContent = !dishName ? "Search & select dish item to build recipe" : "Building recipe for " + dishName;
+
+    const dishEntry = dishName
+      ? DISH_CATALOG.find(d => d.dishName.toLowerCase() === dishName.toLowerCase())
+      : null;
+    document.getElementById("recipeDishCode").value = dishEntry ? (dishEntry.dishCode || "") : "";
 
     dishOutScoopEl.disabled = !dishName;
     if (!dishName) {
@@ -912,6 +1315,18 @@
     }
 
     document.querySelectorAll("#recipeBody tr").forEach(tr => applyRecipeDishState(tr));
+    document.querySelectorAll("#processedBody tr").forEach(tr => {
+      applyProcessedDishState(tr);
+      const di = tr.dataset.dish;
+      if (dishName && di !== "" && DISH_CATALOG[+di]?.dishName.toLowerCase() === dishName.toLowerCase()) {
+        tr.dataset.dish = "";
+        tr.dataset.scoop = "";
+        tr.querySelector(".i-dish").value = "";
+        tr.querySelector(".i-code").value = "";
+        tr.querySelector(".i-scoop").value = "";
+        tr.querySelector(".i-scoop").disabled = true;
+      }
+    });
     refreshRecipe();
   }
 
@@ -922,6 +1337,13 @@
       tr.querySelector(".idx").textContent = ++i;
     });
     document.getElementById("recipeTotalQty").value = totalQty;
+
+    let processedQty = 0, j = 0;
+    document.querySelectorAll("#processedBody tr").forEach(tr => {
+      processedQty += num(tr.querySelector(".i-qty").value);
+      tr.querySelector(".idx").textContent = ++j;
+    });
+    document.getElementById("processedTotalQty").value = processedQty;
     renderRecipePreview();
   }
 
@@ -933,111 +1355,11 @@
     const dishOutInML = num(document.getElementById("dishOutInML").value);
     const dishOutInPiece = num(document.getElementById("dishOutInPiece").value);
     const totalCmt = document.getElementById("recipeTotalCmt").value.trim();
+    const processedTotalCmt = document.getElementById("processedTotalCmt").value.trim();
 
-    const recipeRows = [];
-    document.querySelectorAll("#recipeBody tr").forEach(tr => {
-      const ci = tr.dataset.cat; if (ci === '') return;
-      const e = RECIPE_CATALOG[+ci];
-      recipeRows.push([
-        dishName,
-        e.recipeItemName,
-        e.pgNo,
-        tr.dataset.scoop || tr.querySelector(".i-scoop").value,
-        num(tr.querySelector(".i-qty").value),
-        "",
-        "",
-        "",
-        tr.querySelector(".i-cmt").value.trim()
-      ]);
-    });
-
-    if (recipeRows.length) {
-      recipeRows.push([
-        dishName,
-        "totalingredientsqty",
-        "",
-        "",
-        num(document.getElementById("recipeTotalQty").value),
-        "",
-        "",
-        "",
-        totalCmt
-      ]);
-      recipeRows.push([
-        dishName,
-        "dish_out",
-        "",
-        dishOutScoop,
-        "",
-        dishOutInGm,
-        dishOutInML,
-        dishOutInPiece,
-        dishOutCmt
-      ]);
-    }
-
-    document.getElementById("previewRecipe").textContent = recipeRows.length
-            ? [CSV_HEADER_RECIPE.map(csvField).join(",")].concat(recipeRows.map(r => r.map(csvField).join(","))).join("\r\n")
-            : "-- add items to see preview --";
-  }
-
-  function exportRecipeCSV() {
-    const dishName = document.getElementById("recipeDishName").value.trim();
-    const dishOutScoop = document.getElementById("recipeDishOutScoop").value.trim();
-    const dishOutCmt = document.getElementById("recipeDishOutCmt").value.trim();
-    const dishOutInGm = num(document.getElementById("dishOutInGm").value);
-    const dishOutInML = num(document.getElementById("dishOutInML").value);
-    const dishOutInPiece = num(document.getElementById("dishOutInPiece").value);
-    const totalCmt = document.getElementById("recipeTotalCmt").value.trim();
-
-    if (!dishName) { alert("Please select or enter a Dish Name."); return; }
-
-    const recipeRows = [];
-    document.querySelectorAll("#recipeBody tr").forEach(tr => {
-      const ci = tr.dataset.cat; if (ci === '') return;
-      const e = RECIPE_CATALOG[+ci];
-      recipeRows.push([
-        dishName,
-        e.recipeItemName,
-        e.pgNo,
-        tr.dataset.scoop || tr.querySelector(".i-scoop").value,
-        num(tr.querySelector(".i-qty").value),
-        "",
-        "",
-        "",
-        tr.querySelector(".i-cmt").value.trim()
-      ]);
-    });
-
-    if (!recipeRows.length) { alert("Please select at least one recipe item."); return; }
-
-    recipeRows.push([
-      dishName,
-      "totalingredientsqty",
-      "",
-      "",
-      num(document.getElementById("recipeTotalQty").value),
-      "",
-      "",
-      "",
-      totalCmt
-    ]);
-
-    recipeRows.push([
-      dishName,
-      "dish_out",
-      "",
-      dishOutScoop,
-      "",
-      dishOutInGm,
-      dishOutInML,
-      dishOutInPiece,
-      dishOutCmt
-    ]);
-
-    const txt = [CSV_HEADER_RECIPE.map(csvField).join(",")].concat(recipeRows.map(r => r.map(csvField).join(","))).join("\r\n");
-    const sanitizedDishName = dishName.toLowerCase().replace(/[^a-z0-9]/gi, '_');
-    downloadBlob(new Blob(["\uFEFF" + txt], { type: "text/csv;charset=utf-8;" }), "recipe_" + sanitizedDishName + ".csv");
+    const dishCode = document.getElementById("recipeDishCode").value.trim();
+    const recipeRows = Csv.collectRecipeRows(dishName, dishCode, dishOutScoop, dishOutInGm, dishOutInML, dishOutInPiece, dishOutCmt, totalCmt, processedTotalCmt);
+    document.getElementById("previewRecipe").textContent = Csv.buildRecipePreview(recipeRows) || "-- add items to see preview --";
   }
 
   document.getElementById("dishOutInGm").addEventListener("input", refreshRecipe);
@@ -1046,18 +1368,30 @@
 
   function resetRecipe() {
     document.getElementById("recipeBody").innerHTML = "";
+    document.getElementById("processedBody").innerHTML = "";
     document.getElementById("recipeDishName").value = "";
+    document.getElementById("recipeDishCode").value = "";
+    const cloneIn = document.getElementById("recipeCloneSource");
+    if (cloneIn) {
+      cloneIn.value = "";
+      cloneIn.dataset.dishCode = "";
+    }
+    setRecipeCloneHint("", "");
     document.getElementById("recipeDishOutScoop").value = "";
     document.getElementById("recipeDishOutCmt").value = "";
     document.getElementById("dishOutInGm").value = "";
     document.getElementById("dishOutInML").value = "";
     document.getElementById("dishOutInPiece").value = "";
     document.getElementById("recipeTotalCmt").value = "";
-    addRecipeRow(); addRecipeRow(); onRecipeDishChange();
+    document.getElementById("processedTotalCmt").value = "";
+    addRecipeRow(); addRecipeRow();
+    addProcessedRow(); addProcessedRow();
+    onRecipeDishChange();
   }
 
   /* Database save */
   async function postJSON(url, payload) {
+    if (!isServerMode()) throw new Error("Save to DB requires the app server (docker compose up → http://localhost:3050)");
     const res = await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
     const data=await res.json().catch(()=>({}));
     if(!res.ok) throw new Error(data.detail||data.error||res.statusText);
@@ -1068,22 +1402,78 @@
     if(!vendor||!dt||!billNo){alert("Please complete Vendor, Date, and Bill No.");return;}
     const items=[]; document.querySelectorAll("#inBody tr").forEach(tr=>{const ci=tr.dataset.cat;if(ci===""||!CATALOG[+ci])return;const e=CATALOG[+ci];items.push({itemname:e.itemname,pgNo:e.pgNo,scoopIn:tr.dataset.scoop||tr.querySelector(".i-scoop").value.trim(),qty:num(tr.querySelector(".i-qty").value),rate:num(tr.querySelector(".i-rate").value),itemTotal:num(tr.querySelector(".i-total").value),comments:tr.querySelector(".i-cmt").value.trim()});});
     if(!items.length){alert("Please select at least one item.");return;}
-    try{const d=await postJSON("/api/orders",{vendor,dt,billNo,billTotal:num(document.getElementById("inBillTotal").value),items});alert("Order saved to DB. ID: "+d.id);}catch(e){alert("Save to DB failed: "+e.message);}
+    try{const d=await postJSON("/api/orders",{vendor,dt,billNo,billTotal:num(document.getElementById("inBillTotal").value),items});alert("Order saved to DB. ID: "+d.id);await loadStockMap();}catch(e){alert("Save to DB failed: "+e.message);}
   }
   async function saveOutToDB(){
     const category=document.getElementById("outCategory").value.trim(),dt=document.getElementById("outDt").value,time=document.getElementById("outTm").value||null;
     if(!category||!dt){alert("Please select Category and Date.");return;}
     const items=[];document.querySelectorAll("#outBody tr").forEach(tr=>{const ci=tr.dataset.cat;if(ci===""||!CATALOG[+ci])return;const e=CATALOG[+ci];items.push({itemname:e.itemname,pgNo:e.pgNo,scoopOut:tr.dataset.scoop||tr.querySelector(".i-scoop").value.trim(),qty:num(tr.querySelector(".i-qty").value),comments:tr.querySelector(".i-cmt").value.trim()});});
     if(!items.length){alert("Please select at least one item.");return;}
-    try{const d=await postJSON("/api/inventory-out",{category,dt,time,items});alert("Inventory Out saved to DB. ID: "+d.id);}catch(e){alert("Save to DB failed: "+e.message);}
+    try{const d=await postJSON("/api/inventory-out",{category,dt,time,items});alert("Inventory Out saved to DB. ID: "+d.id);await loadStockMap();}catch(e){alert("Save to DB failed: "+e.message);}
+  }
+  async function saveRecipeToDB() {
+    const payload = Csv.collectRecipePayloadFromForm();
+    if (!payload.dishname) { alert("Please select or enter a Dish Name."); return; }
+    if (!payload.rows.length) { alert("Please select at least one recipe item."); return; }
+    try {
+      const d = await postJSON("/api/recipes", payload);
+      alert("Recipe saved to DB. " + d.count + " row(s), last ID: " + d.id);
+    } catch (e) {
+      alert("Save to DB failed: " + e.message);
+    }
   }
 
   /* Initialization */
-  (function init() {
+  async function startApp() {
+    const loadResult = await StaticDataFetcher.load({
+      isServerMode: isServerMode,
+      forceRefresh: false
+    });
+    syncStaticGlobals(loadResult.data);
+    if (loadResult.warnings && loadResult.warnings.length) {
+      cfgWarnings.push.apply(cfgWarnings, loadResult.warnings);
+    }
+    if (loadResult.from === 'catalog.js' && isServerMode()) {
+      cfgWarnings.push("Static data loaded from catalog.js fallback (DB tables may be empty).");
+    }
+
+    if (!isServerMode()) {
+      const box = document.getElementById("cfgWarn");
+      box.style.display = "block";
+      box.textContent = (box.textContent ? box.textContent + "\n\n" : "") +
+        "Offline mode: catalog data and Export CSV work. Save to DB, stock lookup, and Query require the server (docker compose up → http://localhost:3050).";
+    }
+
     // Attach Searchable Header Comboboxes
     attachHeaderCombo(document.getElementById("inVendor"), VENDORS, onInVendorChange);
     attachHeaderCombo(document.getElementById("outCategory"), CATEGORIES, onOutCategoryChange);
     attachHeaderCombo(document.getElementById("recipeDishName"), DISHNAMES, onRecipeDishChange);
+    attachDishCloneCombo(document.getElementById("recipeCloneSource"));
+
+    ItemDetails.init({
+      catalog: CATALOG,
+      dishCatalog: DISH_CATALOG,
+      unitConversions: UNIT_CONVERSION_CATALOG,
+      attachCombo: attachCombo,
+      isServerMode: isServerMode,
+      postJSON: postJSON
+    });
+
+    RawMaterials.init({
+      catalog: CATALOG,
+      postJSON: postJSON,
+      isServerMode: isServerMode
+    });
+
+    if (typeof Dishes !== "undefined") {
+      Dishes.init({
+        catalog: DISH_CATALOG,
+        postJSON: postJSON,
+        isServerMode: isServerMode
+      });
+    } else {
+      cfgWarnings.push("dishes.js failed to load — Dishes tab actions unavailable.");
+    }
 
     // Attach Dish Out Scoop Combobox
     const dishOutScoopInput = document.getElementById("recipeDishOutScoop");
@@ -1106,12 +1496,13 @@
     // Dynamic listeners
     ["inDt", "inBillNo"].forEach(id => document.getElementById(id).addEventListener("input", refreshIn));
     ["outDt", "outTm"].forEach(id => document.getElementById(id).addEventListener("input", refreshOut));
-    document.getElementById("inBillTotal").addEventListener("input", () => { isManualBillTotal = true; refreshIn(); });
+    document.getElementById("inBillTotal").addEventListener("input", () => { window.isManualBillTotal = true; refreshIn(); });
 
     // Comment fields listeners for footer totals & dish out
     document.getElementById("inBillTotalCmt").addEventListener("input", refreshIn);
     document.getElementById("outTotalCmt").addEventListener("input", refreshOut);
     document.getElementById("recipeTotalCmt").addEventListener("input", refreshRecipe);
+    document.getElementById("processedTotalCmt").addEventListener("input", refreshRecipe);
     document.getElementById("recipeDishOutCmt").addEventListener("input", refreshRecipe);
     document.getElementById("recipeDishOutScoop").addEventListener("input", refreshRecipe);
     document.getElementById("dishOutInGm").addEventListener("input", refreshRecipe);
@@ -1121,8 +1512,20 @@
     // Add Initial Rows for each section
     addInRow(); addInRow(); onInVendorChange();
     addOutRow(); addOutRow(); onOutCategoryChange();
-    addRecipeRow(); addRecipeRow(); onRecipeDishChange();
-  })();
+    addRecipeRow(); addRecipeRow();
+    addProcessedRow(); addProcessedRow();
+    onRecipeDishChange();
+    if (isServerMode()) loadStockMap().catch(() => {});
+  }
+
+  startApp().catch(err => {
+    console.error('App init failed:', err);
+    const box = document.getElementById("cfgWarn");
+    if (box) {
+      box.style.display = "block";
+      box.textContent = "Failed to load static data: " + err.message;
+    }
+  });
 </script>
 </body>
 </html>

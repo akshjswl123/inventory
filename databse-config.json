@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Local Postgres",
+      "Group": "Servers",
+      "Host": "host.docker.internal",
+      "Port": 5433,
+      "MaintenanceDB": "poc",
+      "Username": "poc",
+      "Password": "poc_secret",
+      "SSLMode": "prefer"
+    }
+  }
+}

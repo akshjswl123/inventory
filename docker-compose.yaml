@@ -31,6 +31,33 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+      - ./databse-config.json:/pgadmin4/servers.json:ro
+
+  adminer:
+    image: adminer
+    container_name: adminer_inventory
+    restart: always
+    ports:
+      - "7001:8080"
+
+#  cloudbeaver:
+#    image: dbeaver/cloudbeaver:latest
+#    container_name: cloudbeaver
+#    restart: unless-stopped
+#    ports:
+#      - "8978:8978"
+#    volumes:
+#      - cloudbeaver_data:/opt/cloudbeaver/workspace
+
+
+  nocodb:
+    image: nocodb/nocodb:latest
+    container_name: nocodb_inventory
+    restart: always
+    ports:
+      - "1001:8080"
+    volumes:
+      - nocodb-data:/usr/app/data
 
   app:
     image: docker.io/node:20-alpine
@@ -43,13 +70,19 @@ services:
       - ./package.json:/app/package.json:ro
       - ./index.html:/app/index.html:ro
       - ./report.js:/app/report.js:ro
-      - ./successquery.sql:/app/successquery.sql
-      - ./dumps:/app/dumps
+      - ./csv.js:/app/csv.js:ro
+      - ./itemdetails.js:/app/itemdetails.js:ro
+      - ./rawmaterials.js:/app/rawmaterials.js:ro
+      - ./dishes.js:/app/dishes.js:ro
       - ./catalog.js:/app/catalog.js:ro
+      - ./staticDataFetcher.js:/app/staticDataFetcher.js:ro
+      - ./staticDataQueries.js:/app/staticDataQueries.js:ro
+      - ./scripts:/app/scripts:ro
       - node_modules:/app/node_modules
     environment:
       NODE_ENV: production
       PORT: 3000
+      RUN_SEED_ON_STARTUP: "true"
       PGHOST: db
       PGPORT: 5432
       PGDATABASE: poc
@@ -66,3 +99,5 @@ volumes:
   pg_data:
   node_modules:
   pgadmin-data:
+  nocodb-data:
+  cloudbeaver_data:

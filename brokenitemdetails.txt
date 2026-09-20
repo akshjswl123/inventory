@@ -1,0 +1,508 @@
+‹div class="card"»
+<h2>Item Unit Confige/n2>
+‹! -- item selector --› ‹div style="
+‹Label for="itemSel">Item *</label>
+<select id="itemSel" onchange="onItemChangeC)">
+‹option value="">-- select item --</option>
+</ select>
+‹div class="hint" id="itemHint"›Select an item to begin</div>
+</ div>
+<! -- destination unit -->
+‹div style="
+‹label for="destUnit"›Destination Unit *</label>
+‹select id="destUnit" onchange="onDestChange () ">
+<option value="'"›-- select --</option>
+<option value="g">gm</option> <option value="ml">ml</option>
+<option value="piece">piece</option>
+< select>
+<div class="hint" id="destHint">The base unit everything converts down to</div›
+</div>
+
+DOC
+<div class="card"›
+‹! -- scoop selectors --› ‹div id="scoopPanel" style="
+">
+chr style="
+<h3>Select Scoops</h3>
+stable id="scoopTable" style=" sthead>
+<tr>
+<th
+style="
+<th
+style=" sth style="
+"></th>
+">Unit</th›
+Saved as</tha
+</tr>
+</thead>
+Stbody>
+str>
+<td><strong>IN</strong><div class="hint">arrives</div></td>
+std>
+aseLect ida"scoopIN" onchange:"onScoopChangeO">
+‹option value="">-- pick --</option>
+</select>
+</td>
+</tra
+str>
+<td›<div class="scoop-name" id="scoopInName"> </div></td>
+›
+
+•••
+<td›<strong>0UT</strong><div class="hint"sissued</div></td>
+<td>
+selectid-"scoopOuti onchange."onScoopChangeO.""
+‹option value="">-- pick --</option›
+</select>
+</td>
+«td›<div class="scoop-name" id="scoopOutName">|</div></td>
+</tr>
+‹try
+std><strong>STOCK</strong><div class="hint">dispłay</div></td>
+std>
+"select idacoStock" onchange-"'enScogpChange()"»
+‹option value="">-- pick --</option>
+</ select>
+</td>
+<td›<div class="scoop-name" id="scoopStockName">|</dżv></td>
+</tr>
+</tbody>
+</ table>
+</div>
+poc ›
+‹! -- conversion chain -->
+>
+
+‹div class="card">
+‹! -- conversion chain --> <div id="chainSection" style=
+Chr styLe="
+<h3>Conversion Chain</h3>
+<p class-"hint" style="
+">
+Each row: <strong>1 [THIS]</strong> contains ‹strong>N [NEXT]</strong> - keep adding rows until NEXT reaches the destination unit.
+</p>
+<div class="chain" id="chainRows"></div>
+‹div style="...">
+‹button class="plain" onclick="addChainRow()" id="addChainBtn" disabled>+ Add Step</bu
+</div>
+<div class="actions"›
+‹button class="save" onclick="addToList()">Add to List &#8595;</button> </div> </div> </div>
+
+
+SECTION 2 - COLLECTED LIST + EXPORT
+<div class="card"s
+<h2>Config List</h2>
+‹table id="listTable">
+‹thead> str>
+<th>#</th>
+<th>Item</th>
+<th>Base Unit</th> <th>Scoop IN</th> <th>IN factor</th> <th>Scoop OUT</th> <th>OUT factor</th> <th>Scoop STOCK</th> &th>STOCK factor</th> <th>Chain</th> <th></th>
+</tr>
+</thead>
+<tbody id="ListBody">
+str id="emptyRow"><td colspan="11" style="
+</tbody>
+</table>
+">No items added yets/tds</tr>
+
+
+CHANGELOG_FOR_NEW_DEVS.md
+
+
+‹div class-"actions" style="
+<button class="import"
+oncLick="importSV) ">&#128194; Import CV</button>
+‹button class="success" oncLick="exportSV() ">Export CV</button>
+<button class="save"
+onclick="saveDB() "›Save to DB</button>
+‹button class="plain"
+oncLick="LoadDB() ">Load from DB</button>
+<button class="plain"
+onclick="clearList() ">Clear List</button>
+<span id="msg"></span>
+</div>
+<h3 style="
+">CSV Preview</h3>
+<pre id="preview">-- add items to see preview --</pre>
+</div>
+
+< body>
+<script>
+*/
+function parseStockItems (csv) { Show usages
+return String(csv). split('\n')
+• map(L=> l.trim())
+Filter=[
+• flatMap(L=> l.split(',').map(s => s.trim()).filter(Boolean));
+const ITEMS = parseStockItems(STOCK_ITEMS_CSV);
+/* - populate item dropdown — */
+(function initItems() {
+const sel = document. getELementById('itemSel');
+ITEMS. forEach(name = {
+const o = document. createElement(' option');
+o. value = o. textContent = name;
+sel. appendChild(o);
+3);
+})C);
+
+
+chainata: [fthisUnit, qty, next}, ....
+Top-down: 1 [thisUnit] contains [qty] [next]
+Let chainData = []; // [fthisunit, qty, next}]
+let destUnit = ''; // "gm" | "mL" | "piece"
+let chainDone = false;
+- */
+/*
+ITEM / DEST CHANGE
+- */
+function onItemChange() { Show usages
+const item = document.getElementById(' itemSel' ). value;
+document. getElementById('itemHint'). textContent = item ? " : 'Select an item to begin';
+resetChain();
+function onDestChange() { Show usages
+destunit = document.getElementById(' destUnit') . value;
+document. getElementById(' destHint'). textContent =
+destUnit ? 'Chain must end at: ' + destUnit : 'The base unit everything converts down to';
+resetChain();
+
+function resetChain() { Show usages
+ChainData = ［］：
+chainDone = false;
+document.getElementById('chainRows') .innerHTML = '';
+const item = document.getElementById('itemSel') . value;
+const ready = !!(item &d destUnit);
+if (ready) {
+_buildScoopOptions(destUnit, destUnit, destunit);
+document. getElementById(' scoopPanel') .style. display = 'block';
+document. getElementById(' chainSection'). style.display = "block';
+document. getElementById(' addChainBtn'). disabled = false;
+} else {
+document. getELementByjd ('scoopPanel'). style.display = 'none';
+document.getElementById('chainSection").style. display = 'none' ;
+document. getElementById(' addChainBtn'). disabled = true;
+['scoopInName', 'scoopOutName'
+'scoopStockName" ]. forEach(id => {
+document. getElementById(id) .textContent = "lu00a0';
+});
+
+
+
+
+CHAIN ROWS (top-down)
+Row 0: THIS is editable (user names their first unit, e.g. "1 bag wheat")
+Row 1+: THIS is readonly, auto-filled from previous NEXT
+*/
+function addChainRow(d) { Show usages
+d= dll t;
+const id = chainData. length;
+// row o: user types THIS freely; row 1+: prefilled from previous NEXT
+const prefillThis = id === 0 ? (d.thisUnit 1| '°) : chainDatalidx - 1].next;
+const thisEditable = idx === 0;
+chainData.push(f thisUnit: prefillthis, qty: d.aty ||", next: d.next 11 "H;
+const isdest = d.next &d. next === destunit;
+/ arrow between rows if (idx > 0) €
+const arr = document.createELement('div');
+arr.className = 'chain-arrow';
+arr. dataset. arrowFor = String(idx);
+arr. textContent = ;
+document.getELementById('chainRows'). appendChild(arr);
+
+
+const wrap = document. createELement('div');
+wrap. className = 'chain-row';
+wrap.dataset.idx = idx:
+wrap.innerTML =
+‹span class="LbL">1</span>
+‹input type="text" class="c-this${thisEditable ? " : ' readonly-this'}
+value="$-fescHtml(prefillThis)}"
+placeholder="${thisEditable ? 'e.g. 1 bag wheat' : "•} ${thisEditable? " : 'readonLy'} />
+‹span class="contains"> contains</span>
+<input type="number" class="c-qty" placeholder="qty" min="0.0001" step="any"
+<input type="text" class="c-next" placeholder="'${destUnit}
+value="SEd.next |1 ""/>
+$-fisDest ? "<span cLass="base-badge">&#10003; + destUnit+
+•</span>
+<button class="danger" oncLick="removeFromRow($-{idx}) ">&ti
+" Stimes; </button›
+document. getElementById(' chainRows'). appendChild (wrap);
+if (thisEditable) {
+wrap. querySelector
+c-this'). addEventListener('input'
+
+
+if (thisEditable) {
+wrap. querySelector('•c-this'). addEventListener('input', () = {
+chainDatalidx]. thisUnit = wrap.querySelector'
+•c-this'). value.trim;
+_buildScoopOptions;
+}
+wrap. querySelector(' c-qty'). addEventListener('input', () = onChainEdit(idx));
+wrap. querySelector(' c-next') .addEventListener('input', () = onChainEdit(idx));
+if (isDest) _markDone();
+else document.getElementById('addChainBtn'). disabled = false;
+function removeFromRow(idx) { Show usages
+// remove DOM: all rows land arrows from idx onward
+Array. from(document. getElementById(' chainRows'). children). forEach(el => {
+const i = el. dataset.id !== undefined ? +el. dataset.idx
+:el.dataset. accowFommundefined.imtel dataset.annowFor
+amti
+if (i > id) el. remove();
+3);
+chainData = chainData.slice(0, idx);
+
+
+_buildScoopOptions();
+document. getElementById(' addChainBtn'). disabled = Idocument.getElementById("itemSel°).value;
+function onChainEdit(idx) { Show usages
+const wrap = document.queryselector(.chain-row[data-idx="S-(idx3"l):
+const qty = wrap. querySelector(' c-qty'). value.trim();
+const next = wrap.querySelector(". c-next'). value.trim();
+chainData[idx] = { ...chainData[idx], qty, next };
+// update dest badge
+const badge = wrap. querySelector(', base-badge');
+if (badge) badge. remove();
+I
+if (next && next === destUnit) {
+const span = document. createElement(' span');
+span. className = 'base-badge';
+span. innerHTML = '&#10003; + escHtml(destUnit);
+wrap. querySelector('
+.danger') .before(span);
+/l remove any rows/arrows added after this one
+Array. from(document. getElementById('chainRows'). children). forEach(el => {
+const i = el. dataset.idx !== undefined ?
+
+
+Array. from(document.getElementById(' chainRows'). children).forEachel => {
+ele dataset. accowFoculundefined,intel dataset arrowFor
+if
+(i > idx) el.remove();
+chainData = chainData.slice(0, idx + 1);
+_markDone () ;
+else {
+chainDone = false;
+_buildScoopOptions);
+document. getElementById('addChainBtn'). disabled = false;
+function _markDone() { Show usages
+chainDone = true;
+document. getELementById('addChainBtn'). disabled = true;
+_buildScoopOptions);
+SCOOP OPTIONS
+Units = item + each row's thisunit + destUnit
+
+
+一*/
+function _buildScoopOptions(defIn, defout, defstock) { Show usages
+const units = [];
+chainData. forEach(r=> {
+if r.thisunit&lunits.includes(r.thisUnit)) units.push(r.thisUnit);
+}) ;
+if (destUnit && !units.includes(destUnit)) units.push(destUnit);
+const defs = { scoopIn: defIn, scoopOut: defout, scoopStock: defStock Fi
+['scoopIn', 'scoopOut', 'scoopStock']. forEach(id => {
+const sel = document.getElementById(id);
+// keep existing selection if valid, else explicit default, else destunit
+let cur = sel. value;
+if (!units. includes(cur)) cur = defs[id] || destUnit;
+sel. innerHTML = '<option value=""›-- pick --</option>"
+i
+units. forEach = {
+const o = document. createElement ('option');
+o.value = o. textContent = u;
+if (u === cur) o. selected = true;
+
+
+function _buildScoopOptions(defIn, defout, defstock) { Show usages
+const units = [];
+chainData. forEach(r=> {
+if r.thisunit&lunits.includes(r.thisUnit)) units.push(r.thisUnit);
+}) ;
+if (destUnit && !units.includes(destUnit)) units.push(destUnit);
+const defs = { scoopIn: defIn, scoopOut: defout, scoopStock: defStock Fi
+['scoopIn', 'scoopOut', 'scoopStock']. forEach(id => {
+const sel = document.getElementById(id);
+// keep existing selection if valid, else explicit default, else destunit
+let cur = sel. value;
+if (!units. includes(cur)) cur = defs[id] || destUnit;
+sel. innerHTML = '<option value=""›-- pick --</option>"
+i
+units. forEach = {
+const o = document. createElement ('option');
+o.value = o. textContent = u;
+if (u === cur) o. selected = true;
+
+seL. appendChild(o);
+3);
+});
+onScoopChange();
+}
+/*
+FACTOR CALCULATION (top-down chain)
+chainData = Ifthisunit, qty, next}, ...]
+"aty" means: 1 [thisUnit] = qty [next]
+factorFor(unit) = how many destUnits = 1 [unit]
+= product of qty values from the matching row downward. destUnit itself always returns 1.
+* -
+function factorFor (scoopName) {Show usages if (scoopName === destUnit) return 1;
+/l ordered unit list: thisunit of each row, then destunit const units= chainData.map(r=> r.thisUnit).concat([destUnit]);
+const id = units.index0f(scoopName) ;
+
+
+‹script>
+function factorFor(scoopName){ Show usages if (scoopName === destUnit) return 1;
+// ordered unit list: thisUnit of each row, then destunit
+const units = chainData.map(r => r.thisUnit).concat([destUnit]);
+const idx = units.index0f(scoopName) ;
+if (idx < 0) return null;
+/l multiply qty values from row idx to end
+let f = 1;
+for (let i = idx; i ‹ chainData.length; i++) {
+const step = parsefLoat(chainDatalil.qty);
+if (isNaN(step) || step <= 0) return nulL; f *= step;
+}
+return f;
+}
+/* :
+
+
+EJ
+function factorFor(scoopName) { Show usages
+}
+/*
+砳
+SCOOP NAME HELPERS
+computed name = itemname_in_<unit> etc.
+
+*/
+function onScoopChange() { Show usages
+const item = document. getELementById(' itemSel'). value;
+const si = document. getElementById('scoopIn°). value;
+const
+SO = document. getELementById(' scoop0ut'). value;
+const
+SS = document.getElementById(' scoopStock') . value;
+document. getElementById(' scoopInName'). textContent
+= ScoopComputedName (item, 'in"
+document. getElementById(' scoop0utName').textContent = scoopComputedName (item,
+'out'
+document.getELementById(' scoopStockName') .textContent = scoopComputedName (item,
+•
+'stock'
+renderPreview();
+
+
+
+EJ
+function factorFor(scoopName) { Show usages
+}
+/*
+砳
+...
+SCOOP NAME HELPERS
+computed name = itemname_in_<unit> etc.
+
+*/
+function onScoopChange() { Show usages
+const item = document. getELementById(' itemSel'). value;
+const si = document. getElementById('scoopIn°). value;
+const
+SO = document. getELementById(' scoop0ut'). value;
+const
+SS = document.getElementById(' scoopStock') . value;
+document. getElementById(' scoopInName'). textContent
+= ScoopComputedName (item, 'in"
+document. getElementById(' scoop0utName').textContent = scoopComputedName (item,
+'out'
+document.getELementById(' scoopStockName') .textContent = scoopComputedName (item,
+•
+'stock'
+renderPreview();
+Si)
+SO)
+SS)
+
+
+function addToList() { Show usages
+const sif = factorFor(si);
+const sof = factorFor(so) ;
+const ssf = factorFor (ss);
+if (Isif) { alert('Cannot compute IN factor - check chain values.'); if (!sof) { alert('Cannot compute OUT factor - check chain values.');
+return; 3 return; F
+if (!ssf) { alert( 'Cannot compute STOCK factor - check chain values.'); return; }
+const row = {
+
+
+
+}
+ロフ！
+‹script>
+function addToList() { Show usages
+1/ allow multiple conversion chains for the same item
+ListRows.push (row);
+renderList();
+renderPreview();
+setMsg('Added: + item, 'ok');
+function removeListRow(idx) { Show usages
+ListRows. splice(idx, 1); renderList; renderPreview();
+function renderList) { Show usages
+const tbody = document.getElementById(' ListBody');
+if (!listRows. length) {
+tbody. innerHTML = <tr id="emptyRow">std
+return;
+}
+tbody. innerHTML = ListRows.map((r, 1) =
+<tr>
+<td>${i+1}</td>
+colspan="11" style="text-align:center;color:#999;font-style:italic">No items ad
+
+
+
+
+..•
+‹body>
+‹script>
+apps.
+function renderList) K Show usages
+const tbody = document. getElementById('ListBody');
+if (!ListRows.Length) {
+tbody. innerHTML = <tr id="emptyRow"><t colspan="11" style="text-align: center;color: #999; font-style:italic">No
+ite
+return;
+tbody. innerHTML = ListRows.map((r, i) = •
+<tr>
+<td>${i+1}</td>
+<td>$-fescHtml(r.itemname)}</td>
+<td>SlescHtml(r.base_unit)}</td>
+<td>$fescHtml(r.scoop_in)}</td>
+<td>$fr.scoop_in_factor}</td>
+<td>${escHtml(r.scoop_out)}</td>
+<td>$fr.scoop_out_factor}</td>
+<td>${escHtml(r.scoop_stock)}</td>
+<td>$fr.scoop_stock_factor)</td>
+std style="font-size:11px;coLor:#555"›$-fescHtmL(r.conversion_chain)}</td>
+<td><button class="danger" oncLick="removeListRow($-fi})">&times;</button></td>
+</tr>").join('");
+
+
+EJ
+<script>
+function clearList) { ListRows=[]; renderList); renderPreview(); setMsg(",'); } Show usages
+/*=
+CSV BUILD / EXPORT / IMPORT
+*/
+function q(v) {return * + String(v==null?v). cepace(/"/g,'""") + •"'; } Show usages
+function toCsv() { Show usages
+if (!ListRows. length) return '-- add items to see preview --•:
+const Lines = [CSV_HEADER.map(q). join(', ")];
+ListRows. forEach(r= Lines.pushCSV_HEADER.map(k=> q(r[k]||••)).Join(• •))):
+return lines. join('(r\n');
+function renderPreview() { Show usages
+document.getElementById('preview').textContent = toCsv();
+function exportSV { Show usages
+if (!listRows. length) { alert('Nothing to export.'); return; const blob = new Blob([' luFEFF' * toCsv()], { type: "text/csv;charset=utf-8;° H);
+
+
+
+
+}i
+inp. click();

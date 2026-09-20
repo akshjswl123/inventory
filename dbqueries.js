@@ -116,6 +116,168 @@ async function saveInventoryOut(data) {
     }
 }
 
+async function saveRecipe(data) {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        const insertQuery = `
+            INSERT INTO recipe_entries
+                (dishname, dishcode, reciepeitemname, "pgNo", receipescoop, qty, "inGm", "inML", "inPiece", comments)
+            VALUES
+                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+            RETURNING id
+        `;
+
+        let lastId = null;
+        for (const row of data.rows) {
+            const res = await client.query(insertQuery, [
+                row.dishname,
+                row.dishcode || null,
+                row.reciepeItemname,
+                row.pgNo || null,
+                row.receipescoop || null,
+                row.qty,
+                row.inGm,
+                row.inML,
+                row.inPiece,
+                row.comments || ''
+            ]);
+            lastId = res.rows[0].id;
+        }
+
+        await client.query('COMMIT');
+        return { id: lastId, count: data.rows.length };
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+}
+
+async function saveDishes(data) {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        const insertQuery = `
+            INSERT INTO dishes
+                (dish_code, dish_name)
+            VALUES
+                ($1, $2)
+            RETURNING id
+        `;
+
+        let lastId = null;
+        for (const row of data.rows) {
+            const res = await client.query(insertQuery, [
+                row.dishcode || null,
+                row.dishname || null
+            ]);
+            lastId = res.rows[0].id;
+        }
+
+        await client.query('COMMIT');
+        return { id: lastId, count: data.rows.length };
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+}
+
+async function saveRawMaterials(data) {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        const insertQuery = `
+            INSERT INTO raw_materials
+                ("pgNo", itemname, comments)
+            VALUES
+                ($1, $2, $3)
+            RETURNING id
+        `;
+
+        let lastId = null;
+        for (const row of data.rows) {
+            const res = await client.query(insertQuery, [
+                row.pgNo || null,
+                row.itemname || null,
+                row.comments || ''
+            ]);
+            lastId = res.rows[0].id;
+        }
+
+        await client.query('COMMIT');
+        return { id: lastId, count: data.rows.length };
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+}
+
+async function saveScoopConfig(data) {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        const insertQuery = `
+            INSERT INTO scoop_config
+                (scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor, conversion_chain,
+                 qty_in_grams, qty_in_ml, qty_in_piece, unused)
+            VALUES
+                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+            RETURNING id
+        `;
+
+        let lastId = null;
+        for (const row of data.rows) {
+            const res = await client.query(insertQuery, [
+                row.scoopItemName || row.scoop_item_name || row.itemname || null,
+                row.scoopItemId || row.scoop_item_id || row.pgNo || null,
+                row.destinationUnit || null,
+                row.scoopName || null,
+                row.factor,
+                row.chain || null,
+                row.qtyInGrams,
+                row.qtyInMl,
+                row.qtyInPiece,
+                !!row.unused
+            ]);
+            lastId = res.rows[0].id;
+        }
+
+        await client.query('COMMIT');
+        return { id: lastId, count: data.rows.length };
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+}
+
+async function loadScoopConfig() {
+    const res = await pool.query(`
+        SELECT id, scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor,
+               conversion_chain, qty_in_grams, qty_in_ml, qty_in_piece, unused, created_at
+        FROM scoop_config
+        ORDER BY id
+    `);
+    return res.rows;
+}
+
+const { fetchStaticDataBundle } = require('./staticDataQueries');
+
+async function fetchStaticData() {
+    return fetchStaticDataBundle(pool);
+}
+
 async function runQuery(sqlText) {
     const res = await pool.query(sqlText);
     return {
@@ -124,4 +286,91 @@ async function runQuery(sqlText) {
     };
 }
 
-module.exports = { saveOrder, saveInventoryOut,runQuery };
+const DEFAULT_SEED_FILES = [
+    'scripts/seed_data.sql',
+    'scripts/03_seed_data.sql',
+    'scripts/05_sabji3_seed.sql',
+    'scripts/06_processed_seed.sql'
+];
+
+async function waitForDb(maxAttempts = 30, delayMs = 1000) {
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+            await pool.query('SELECT 1');
+            return;
+        } catch (err) {
+            if (attempt === maxAttempts) throw err;
+            await new Promise(resolve => setTimeout(resolve, delayMs));
+        }
+    }
+}
+
+async function runSeedData() {
+    if (process.env.RUN_SEED_ON_STARTUP === 'false') {
+        console.log('[seed] skipped — RUN_SEED_ON_STARTUP=false');
+        return { skipped: true, files: [] };
+    }
+
+    const fromEnv = (process.env.SEED_FILES || '')
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean);
+    const seedFiles = fromEnv.length ? fromEnv : DEFAULT_SEED_FILES;
+    const results = [];
+
+    for (const rel of seedFiles) {
+        const filePath = path.join(__dirname, rel);
+        if (!fs.existsSync(filePath)) {
+            console.warn(`[seed] missing file, skipped: ${rel}`);
+            results.push({ file: rel, ok: false, error: 'file not found' });
+            continue;
+        }
+        try {
+            const sql = fs.readFileSync(filePath, 'utf8');
+            await pool.query(sql);
+            console.log(`[seed] applied: ${rel}`);
+            results.push({ file: rel, ok: true });
+        } catch (err) {
+            console.error(`[seed] failed: ${rel} — ${err.message}`);
+            results.push({ file: rel, ok: false, error: err.message });
+        }
+    }
+
+    return { skipped: false, files: results };
+}
+
+async function loadRecipeByDish(dishname) {
+    const res = await pool.query(`
+        SELECT dishname, dishcode, reciepeitemname, "pgNo", receipescoop, qty, "inGm", "inML", "inPiece", comments
+        FROM recipe_entries
+        WHERE LOWER(TRIM(dishname)) = LOWER(TRIM($1))
+        ORDER BY id
+    `, [dishname]);
+    return res.rows;
+}
+
+async function loadRecipeByDishcode(dishcode) {
+    const res = await pool.query(`
+        SELECT dishname, dishcode, reciepeitemname, "pgNo", receipescoop, qty, "inGm", "inML", "inPiece", comments
+        FROM recipe_entries
+        WHERE LOWER(TRIM(dishcode)) = LOWER(TRIM($1))
+        ORDER BY id
+    `, [dishcode]);
+    return res.rows;
+}
+
+module.exports = {
+    saveOrder,
+    saveInventoryOut,
+    saveRecipe,
+    saveDishes,
+    saveRawMaterials,
+    saveScoopConfig,
+    loadScoopConfig,
+    fetchStaticData,
+    runQuery,
+    waitForDb,
+    runSeedData,
+    loadRecipeByDish,
+    loadRecipeByDishcode
+};
