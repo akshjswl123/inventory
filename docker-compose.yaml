@@ -33,31 +33,31 @@ services:
       - pgadmin-data:/var/lib/pgadmin
       - ./databse-config.json:/pgadmin4/servers.json:ro
 
-  adminer:
-    image: adminer
-    container_name: adminer_inventory
-    restart: always
-    ports:
-      - "7001:8080"
+  #  adminer:
+  #    image: adminer
+  #    container_name: adminer_inventory
+  #    restart: always
+  #    ports:
+  #      - "7001:8080"
 
-#  cloudbeaver:
-#    image: dbeaver/cloudbeaver:latest
-#    container_name: cloudbeaver
-#    restart: unless-stopped
-#    ports:
-#      - "8978:8978"
-#    volumes:
-#      - cloudbeaver_data:/opt/cloudbeaver/workspace
+  #  cloudbeaver:
+  #    image: dbeaver/cloudbeaver:latest
+  #    container_name: cloudbeaver
+  #    restart: unless-stopped
+  #    ports:
+  #      - "8978:8978"
+  #    volumes:
+  #      - cloudbeaver_data:/opt/cloudbeaver/workspace
 
 
-  nocodb:
-    image: nocodb/nocodb:latest
-    container_name: nocodb_inventory
-    restart: always
-    ports:
-      - "1001:8080"
-    volumes:
-      - nocodb-data:/usr/app/data
+  #  nocodb:
+  #    image: nocodb/nocodb:latest
+  #    container_name: nocodb_inventory
+  #    restart: always
+  #    ports:
+  #      - "1001:8080"
+  #    volumes:
+  #      - nocodb-data:/usr/app/data
 
   app:
     image: docker.io/node:20-alpine
