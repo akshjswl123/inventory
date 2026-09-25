@@ -265,7 +265,8 @@ async function saveScoopConfig(data) {
 async function loadScoopConfig() {
     const res = await pool.query(`
         SELECT id, scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor,
-               conversion_chain, qty_in_grams, qty_in_ml, qty_in_piece, unused, created_at
+               conversion_chain, qty_in_grams, qty_in_ml, qty_in_piece, unused,
+               created_at, last_updated_at
         FROM scoop_config
         ORDER BY id
     `);
@@ -282,7 +283,8 @@ async function runQuery(sqlText) {
     const res = await pool.query(sqlText);
     return {
         columns: res.fields ? res.fields.map(f => f.name) : [],
-        rows: res.rows
+        rows: res.rows || [],
+        rowCount: res.rowCount
     };
 }
 
@@ -339,23 +341,30 @@ async function runSeedData() {
     return { skipped: false, files: results };
 }
 
-async function loadRecipeByDish(dishname) {
-    const res = await pool.query(`
+const RECIPE_LATEST_BATCH_SQL = `
         SELECT dishname, dishcode, reciepeitemname, "pgNo", receipescoop, qty, "inGm", "inML", "inPiece", comments
-        FROM recipe_entries
-        WHERE LOWER(TRIM(dishname)) = LOWER(TRIM($1))
-        ORDER BY id
-    `, [dishname]);
+        FROM recipe_entries r
+        WHERE {{WHERE}}
+          AND r.created_at >= (
+            SELECT MAX(sub.created_at) - interval '30 seconds'
+            FROM recipe_entries sub
+            WHERE {{WHERE_SUB}}
+          )
+        ORDER BY r.id`;
+
+async function loadRecipeByDish(dishname) {
+    const sql = RECIPE_LATEST_BATCH_SQL
+        .replace(/\{\{WHERE\}\}/g, 'LOWER(TRIM(r.dishname)) = LOWER(TRIM($1))')
+        .replace(/\{\{WHERE_SUB\}\}/g, 'LOWER(TRIM(sub.dishname)) = LOWER(TRIM($1))');
+    const res = await pool.query(sql, [dishname]);
     return res.rows;
 }
 
 async function loadRecipeByDishcode(dishcode) {
-    const res = await pool.query(`
-        SELECT dishname, dishcode, reciepeitemname, "pgNo", receipescoop, qty, "inGm", "inML", "inPiece", comments
-        FROM recipe_entries
-        WHERE LOWER(TRIM(dishcode)) = LOWER(TRIM($1))
-        ORDER BY id
-    `, [dishcode]);
+    const sql = RECIPE_LATEST_BATCH_SQL
+        .replace(/\{\{WHERE\}\}/g, 'LOWER(TRIM(r.dishcode)) = LOWER(TRIM($1))')
+        .replace(/\{\{WHERE_SUB\}\}/g, 'LOWER(TRIM(sub.dishcode)) = LOWER(TRIM($1))');
+    const res = await pool.query(sql, [dishcode]);
     return res.rows;
 }
 

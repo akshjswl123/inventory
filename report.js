@@ -3,6 +3,31 @@ function isServerMode() {
     return location.protocol === 'http:' || location.protocol === 'https:';
 }
 
+async function readApiJson(res) {
+    const text = await res.text();
+    if (!text) return {};
+    const trimmed = text.trim();
+    if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            throw new Error('Server returned invalid JSON.');
+        }
+    }
+    if (trimmed.startsWith('<!DOCTYPE') || trimmed.startsWith('<html')) {
+        if (res.status === 413) {
+            throw new Error(
+                'Request body too large for the server. Restart the app container after updating server.js (JSON limit raised to 25mb).'
+            );
+        }
+        throw new Error(
+            'Server returned HTML instead of JSON (HTTP ' + res.status + '). ' +
+            'Open the app at http://localhost:3050 (not pgAdmin/Adminer) and ensure the app container is running.'
+        );
+    }
+    throw new Error(trimmed.slice(0, 500) || res.statusText || 'Request failed');
+}
+
 async function run() {
     const sql = document.getElementById("queryInput").value.trim();
     const errBox = document.getElementById("queryError");
@@ -24,13 +49,14 @@ async function run() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sql })
         });
-        const data = await res.json();
-        if (!res.ok) { showErr(data.error || res.statusText); return; }
+        const data = await readApiJson(res);
+        if (!res.ok) { showErr(data.error || data.detail || res.statusText); return; }
 
         const elapsed = Date.now() - t0;
         const { columns = [], rows = [] } = data;
         if (!columns.length) {
-            meta.textContent = `Query executed successfully (${elapsed} ms). No rows returned.`;
+            const extra = data.rowCount != null ? ` (${data.rowCount} row(s) affected)` : '';
+            meta.textContent = `Query executed successfully (${elapsed} ms). No result rows returned${extra}.`;
             return;
         }
 
@@ -109,7 +135,7 @@ async function fetchStockMap() {
             body: JSON.stringify({ sql: STOCK_SQL })
         });
         if (!res.ok) return {};
-        const data = await res.json();
+        const data = await readApiJson(res);
         const map = {};
         (data.rows || []).forEach(row => {
             if (!row.itemname) return;
@@ -167,11 +193,97 @@ async function pgDump() {
     }
 }
 
+function selectedImportTable() {
+    const el = document.getElementById('queryImportTable');
+    return el ? el.value : 'auto';
+}
+
+function setImportMeta(msg) {
+    const hint = document.getElementById('queryImportHint');
+    if (hint && msg) hint.textContent = msg;
+}
+
+function translateCsv() {
+    const QT = window.QueryTranslator;
+    if (!QT) { showErr('queryTranslator.js not loaded'); return; }
+    toggleImportSection(true);
+    try {
+        const tableId = selectedImportTable();
+        const result = QT.translateQueryInput(tableId);
+        const detected = tableId === 'auto' ? '' : tableId;
+        const banner = document.getElementById('queryInput').value.split('\n')[1] || '';
+        setImportMeta('Generated INSERT SQL' + (detected ? ' (' + detected + ')' : '') + '. ' + banner.replace(/^-- /, '') + ' Review, then Run Query.');
+    } catch (e) {
+        showErr(e.message);
+    }
+}
+
+async function importCsvFile() {
+    const QT = window.QueryTranslator;
+    if (!QT) { showErr('queryTranslator.js not loaded'); return; }
+    toggleImportSection(true);
+    try {
+        const { filename } = await QT.importCsvFile(selectedImportTable());
+        setImportMeta('Loaded ' + filename + ' as INSERT SQL. Review the SQL editor above, then Run Query.');
+    } catch (e) {
+        showErr(e.message);
+    }
+}
+
+async function importCsvAndRun() {
+    const QT = window.QueryTranslator;
+    if (!QT) { showErr('queryTranslator.js not loaded'); return; }
+    toggleImportSection(true);
+    const text = document.getElementById('queryInput').value.trim();
+    try {
+        if (QT.looksLikeCsv(text) && !QT.looksLikeSql(text)) {
+            QT.translateQueryInput(selectedImportTable());
+        } else if (!QT.looksLikeSql(text)) {
+            await QT.importCsvFile(selectedImportTable());
+        }
+        await run();
+    } catch (e) {
+        showErr(e.message);
+    }
+}
+
+function initQueryImportTable() {
+    const sel = document.getElementById('queryImportTable');
+    const QT = window.QueryTranslator;
+    if (!sel || !QT || !QT.TABLE_OPTIONS) return;
+    sel.innerHTML = QT.TABLE_OPTIONS.map(o =>
+        '<option value="' + o.id + '">' + o.label + '</option>'
+    ).join('');
+}
+
+function toggleImportSection(forceOpen) {
+    const section = document.getElementById('queryImportSection');
+    const btn = document.getElementById('queryImportToggleBtn');
+    if (!section) return;
+    const open = forceOpen === true ? true : forceOpen === false ? false : !section.classList.contains('is-open');
+    section.classList.toggle('is-open', open);
+    section.setAttribute('aria-hidden', open ? 'false' : 'true');
+    if (btn) {
+        btn.classList.toggle('is-active', open);
+        btn.textContent = open ? 'Hide Import Table' : 'Import Table';
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initQueryImportTable);
+} else {
+    initQueryImportTable();
+}
+
 window.Query = {
     run,
     fetchStockMap,
     isServerMode,
     pgDump,
+    translateCsv,
+    importCsvFile,
+    importCsvAndRun,
+    toggleImportSection,
     currentStock: () => {
         if (!isServerMode()) {
             showErr('Current stock requires the app server. Use http://localhost:3050 instead of opening the HTML file directly.');

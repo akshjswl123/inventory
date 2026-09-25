@@ -70,7 +70,9 @@ services:
       - ./package.json:/app/package.json:ro
       - ./index.html:/app/index.html:ro
       - ./report.js:/app/report.js:ro
+      - ./queryTranslator.js:/app/queryTranslator.js:ro
       - ./csv.js:/app/csv.js:ro
+      - ./cataloghelper.js:/app/cataloghelper.js:ro
       - ./itemdetails.js:/app/itemdetails.js:ro
       - ./rawmaterials.js:/app/rawmaterials.js:ro
       - ./dishes.js:/app/dishes.js:ro

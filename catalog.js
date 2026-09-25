@@ -1797,12 +1797,7 @@ SCOOP_IN_KG_CSV = `
 "lemon mojito","lemon mojito_kg_in"
 `;
 
-const SCOOP_IN_CSV = SCOOP_IN_GM_CSV.trim()+'\n'+SCOOP_IN_ML_CSV.trim()+'\n'
-                        +SCOOP_IN_PIECE_CSV.trim()+'\n'+SCOOP_IN_PKT_CSV.trim()+'\n'
-                        +SCOOP_IN_OTHER_CSV.trim()+'\n'+SCOOP_IN_KG_CSV.trim()+'\n';
-
-
-const SCOOP_OUT_CSV = `
+const SCOOP_OUT_GM_CSV = `
 "staff rice","staff rice_gm_out"
 "tea powder","tea powder_gm_out"
 "oil tin","oil tin_gm_out"
@@ -2975,15 +2970,13 @@ GRAVY 3, GRAVY 3 _gm_recipe
 OTHER , OTHER _gm_recipe
 `;
 
-const RECIPE_SCOOP_CSV = RECIPE_SCOOP_CSV_ACTUAL.trim()+'\n'+RECIPE_SCOOP_CSV_OTHER.trim();
-
 /* --- UNIT CONVERSIONS (item-specific + global) ---
    itemname, from_unit, from_label, to_qty, to_unit
-   Empty itemname = applies to all items */
+   itemname All = applies to all items */
 const UNIT_CONVERSION_CSV = `
 "aata","bag","Bag","25","kg"
 "staff rice","bag","Bag","25","kg"
-"","kg","kg","1000","gm"
-"","l","L","1000","ml"
-"","pkt","Pkt","1","piece"
+"All","kg","kg","1000","gm"
+"All","l","L","1000","ml"
+"All","pkt","Pkt","500","gm"
 `;

@@ -84,7 +84,7 @@
     if (!t) return "";
     if (t === "gm" || t === "ml" || t === "piece") return t;
     for (const c of unitConversions) {
-      if (c.itemname && c.itemname !== itemname) continue;
+      if (c.itemname && c.itemname !== "All" && c.itemname !== itemname) continue;
       if (c.from_unit === t || String(c.from_label).toLowerCase() === t) return c.from_unit;
       if (c.to_unit === t) return c.to_unit;
     }

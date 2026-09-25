@@ -22,8 +22,8 @@ const {
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware
-app.use(express.json());
+// Middleware — pgAdmin CSV → INSERT payloads can exceed the default 100kb JSON limit
+app.use(express.json({ limit: '25mb' }));
 app.use(express.static(path.join(__dirname))); // serves index.html.newversion, catalog.js, report.js
 
 /*

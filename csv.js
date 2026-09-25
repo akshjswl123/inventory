@@ -60,9 +60,17 @@ function parseCsvText(text) {
   return { header, rows: lines.slice(1).map(splitCsvLine) };
 }
 
+function isHousekeepingCsvHeader(h) {
+  const key = String(h || "").toLowerCase().replace(/_/g, "");
+  return key === "id" || key === "createdat" || key === "lastupdatedat";
+}
+
 function rowToObj(header, cols) {
   const obj = {};
-  header.forEach((h, i) => { obj[h] = cols[i] !== undefined ? cols[i] : ""; });
+  header.forEach((h, i) => {
+    if (isHousekeepingCsvHeader(h)) return;
+    obj[h] = cols[i] !== undefined ? cols[i] : "";
+  });
   return obj;
 }
 
@@ -733,6 +741,33 @@ function isRecipeServerAvailable() {
     && (window.location.protocol === "http:" || window.location.protocol === "https:");
 }
 
+async function fetchRecipeByDishname(dishname) {
+  const name = String(dishname || "").trim();
+  if (!name) return { ok: false, error: "No dish name", rows: [] };
+  if (!isRecipeServerAvailable()) {
+    return { ok: false, error: "offline", rows: [] };
+  }
+  try {
+    const res = await fetch("/api/recipes/" + encodeURIComponent(name));
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      return {
+        ok: false,
+        error: data.detail || data.error || res.statusText || "Request failed",
+        rows: []
+      };
+    }
+    return {
+      ok: true,
+      dishname: data.dishname || name,
+      dishcode: data.rows && data.rows[0] ? data.rows[0].dishcode : "",
+      rows: Array.isArray(data.rows) ? data.rows : []
+    };
+  } catch (e) {
+    return { ok: false, error: e.message || "Network error", rows: [] };
+  }
+}
+
 async function fetchRecipeByDishcode(dishcode) {
   const code = String(dishcode || "").trim();
   if (!code) return { ok: false, error: "No dish code", rows: [] };
@@ -766,6 +801,47 @@ function lookupDishByCode(dishcode) {
   return (window.DISH_CATALOG || []).find(d =>
     String(d.dishCode || d.dish_code || "").toLowerCase() === code
   ) || null;
+}
+
+async function loadRecipeFromDbForCurrentDish() {
+  const dishName = document.getElementById("recipeDishName").value.trim();
+  const dishCode = document.getElementById("recipeDishCode").value.trim();
+  if (!dishName && !dishCode) {
+    return { ok: false, error: "Select or enter a Dish Name (and dish code if available)." };
+  }
+  if (!isRecipeServerAvailable()) {
+    return {
+      ok: false,
+      error: "Load from DB requires the app server (docker compose up → http://localhost:3050)."
+    };
+  }
+
+  const fetched = dishCode
+    ? await fetchRecipeByDishcode(dishCode)
+    : await fetchRecipeByDishname(dishName);
+
+  if (!fetched.ok) {
+    const offlineMsg = "Load from DB needs the server. Use Import CSV offline.";
+    return {
+      ok: false,
+      error: fetched.error === "offline" ? offlineMsg : (fetched.error || "Could not load recipe.")
+    };
+  }
+  if (!fetched.rows.length) {
+    const key = dishCode || dishName;
+    return { ok: false, error: 'No saved recipe found for "' + key + '".' };
+  }
+
+  const result = populateRecipeFromRows(fetched.rows, {
+    keepDishName: false,
+    remapDishOutScoop: false
+  });
+
+  const label = fetched.dishname || dishName;
+  const code = fetched.dishcode || dishCode;
+  let msg = 'Loaded latest recipe for "' + label + '"' + (code ? ' (' + code + ')' : '') + '.';
+  if (result.skipped) msg += " " + result.skipped + " unrecognized row(s) skipped.";
+  return { ok: true, message: msg, ...result };
 }
 
 async function cloneRecipeFromDishcode(sourceDishcode) {
@@ -852,6 +928,7 @@ window.Csv = {
   rowsToCsv,
   parseText: parseCsvText,
   rowToObj,
+  isHousekeepingCsvHeader,
   pickFile: pickCsvFile,
   download: downloadCsvBlob,
   buildInBillPreview,
@@ -868,7 +945,9 @@ window.Csv = {
   exportRecipeCSV,
   importRecipeCSV,
   populateRecipeFromRows,
+  fetchRecipeByDishname,
   fetchRecipeByDishcode,
+  loadRecipeFromDbForCurrentDish,
   cloneRecipeFromDishcode,
   cloneRecipeFromDish
 };

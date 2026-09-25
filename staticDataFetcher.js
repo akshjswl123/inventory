@@ -16,7 +16,9 @@
       .filter(Boolean)
       .map(line => {
         const cols = line.match(/("([^"]|"")*"|[^,]*)/g) || [];
-        return cols.map(c => c.replace(/^"|"$/g, '').replace(/""/g, '"').trim());
+        return cols
+          .map(c => c.replace(/^"|"$/g, '').replace(/""/g, '"').trim())
+          .filter(v => v !== '');
       });
   }
 

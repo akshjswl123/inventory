@@ -111,6 +111,13 @@
     #queryResult { margin-top:0; min-width:100%; }
     #queryResult th { position:sticky; top:0; background:#fff; }
     #queryError.is-err { display:block !important; background:#fff0f0; border:1px solid #dc3545; color:#b02a37; padding:10px; border-radius:5px; white-space:pre-wrap; margin-top:15px; }
+    .query-import-bar { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:12px 0; padding:12px; background:#f8f9fa; border:1px solid #e0e0e0; border-radius:6px; }
+    .query-import-bar label { font-size:13px; margin:0; }
+    .query-import-bar select { min-width:220px; padding:6px 8px; }
+    #queryImportHint { font-size:12px; color:#666; margin:0 0 10px 0; }
+    #queryImportSection { display:none; margin-top:12px; padding-top:12px; border-top:1px solid #e0e0e0; }
+    #queryImportSection.is-open { display:block; }
+    #queryImportToggleBtn.is-active { background:#5a32a3; color:#fff; }
   </style>
 </head>
 <body>
@@ -371,6 +378,7 @@
       <button class="success" onclick="exportRecipeCSV()">Export CSV</button>
       <button class="plain" onclick="cloneFromOtherDish()">Clone From Other Dish</button>
       <button class="save" onclick="saveRecipeToDB()">Save to DB</button>
+      <button class="plain" id="recipeLoadDbBtn" onclick="loadRecipeFromDB()">Load from DB</button>
       <button class="plain" onclick="resetRecipe()">Reset</button>
     </div>
 
@@ -559,13 +567,31 @@
   <!-- TAB 5: QUERY -->
   <div id="queryTab" class="tab-pane">
     <h2>Database Query</h2>
-    <label for="queryInput">SQL Query</label>
-    <textarea id="queryInput" placeholder="Enter SQL query here...&#10;&#10;Example: SELECT * FROM orders;" spellcheck="false"></textarea>
+    <label for="queryInput">SQL</label>
+    <textarea id="queryInput" placeholder="Enter SQL query here…&#10;&#10;Example: SELECT * FROM recipe_entries LIMIT 10;&#10;&#10;To load data from a pgAdmin CSV export, click Import Table below." spellcheck="false"></textarea>
     <div class="actions">
       <button id="queryRunBtn" class="primary" onclick="Query.run()">Run Query</button>
       <button class="success" onclick="Query.currentStock()">Current Stock</button>
       <button id="pgDumpButton" class="plain" onclick="Query.pgDump()">PG Dump</button>
+      <button type="button" class="import" id="queryImportToggleBtn" onclick="Query.toggleImportSection()">Import Table</button>
       <button class="plain" onclick="Query.clear()">Clear</button>
+    </div>
+    <div id="queryImportSection" aria-hidden="true">
+      <h3 style="margin:0 0 8px 0; font-size:15px;">Import table from pgAdmin CSV</h3>
+      <p id="queryImportHint">Use <strong>Import CSV file</strong> with a pgAdmin table export (includes <code>id</code> column). All rows are imported (including recipe summary rows). <code>id</code> and timestamps are omitted so the database assigns new ids and sets <code>created_at</code> / <code>last_updated_at</code> to now.</p>
+      <div class="query-import-bar">
+        <label for="queryImportTable">Target table</label>
+        <select id="queryImportTable"></select>
+        <button type="button" class="import" onclick="Query.translateCsv()">CSV → INSERT SQL</button>
+        <button type="button" class="import" onclick="Query.importCsvFile()">Import CSV file…</button>
+        <button type="button" class="success" onclick="Query.importCsvAndRun()">Import CSV &amp; Run</button>
+      </div>
+      <div class="query-import-bar" style="margin-top:-4px;">
+        <label><input type="checkbox" id="queryKeepIds" /> Keep original <code>id</code> (OVERRIDING SYSTEM VALUE)</label>
+        <label><input type="checkbox" id="queryKeepTimestamps" /> Keep <code>created_at</code> / <code>last_updated_at</code> from file (default: omit → DB uses now)</label>
+        <label><input type="checkbox" id="querySkipRecipeMeta" /> Skip recipe summary rows (totalingredientsqty, dish_out, …)</label>
+        <label><input type="checkbox" id="querySkipDuplicates" checked /> Skip duplicates (<code>ON CONFLICT DO NOTHING</code> for dishes, vendors, …)</label>
+      </div>
     </div>
     <div id="queryError" style="display:none;"></div>
     <div id="queryMeta" style="margin-top:15px; font-size:13px; color:#666;"></div>
@@ -576,9 +602,11 @@
 
 <!-- DATA CONFIGURATION FILE -->
 <script src="catalog.js"></script>
+<script src="cataloghelper.js"></script>
 <script src="staticDataFetcher.js"></script>
-<script src="report.js"></script>
 <script src="csv.js"></script>
+<script src="queryTranslator.js"></script>
+<script src="report.js"></script>
 <script src="itemdetails.js"></script>
 <script src="rawmaterials.js"></script>
 <script src="dishes.js"></script>
@@ -1420,6 +1448,27 @@
       alert("Recipe saved to DB. " + d.count + " row(s), last ID: " + d.id);
     } catch (e) {
       alert("Save to DB failed: " + e.message);
+    }
+  }
+
+  let recipeLoadDbInFlight = false;
+  async function loadRecipeFromDB() {
+    if (recipeLoadDbInFlight) return;
+    const btn = document.getElementById("recipeLoadDbBtn");
+    recipeLoadDbInFlight = true;
+    if (btn) { btn.disabled = true; btn.textContent = "Loading…"; }
+    try {
+      const result = await Csv.loadRecipeFromDbForCurrentDish();
+      if (!result.ok) {
+        alert(result.error || "Could not load recipe from DB.");
+        return;
+      }
+      alert(result.message || "Recipe loaded from DB.");
+    } catch (e) {
+      alert("Load from DB failed: " + e.message);
+    } finally {
+      recipeLoadDbInFlight = false;
+      if (btn) { btn.disabled = false; btn.textContent = "Load from DB"; }
     }
   }
 
