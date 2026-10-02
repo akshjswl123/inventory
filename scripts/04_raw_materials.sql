@@ -1,16 +1,11 @@
 -- =============================================================================
--- raw_materials — master item list (pgNo, itemname, comments)
+-- raw_materials — table DDL only (data lives in raw_materials_seed.sql)
 -- =============================================================================
--- Used by:
---   - Raw Materials tab (Save to DB)
---   - StaticDataFetcher CATALOG / RECIPE_CATALOG
---   - vendor_items & category_items cross-join queries
+-- Seed data (pgNo, itemname, comments + scoop_config):
+--   node scripts/generateRawMaterialsSeed.js
+--   psql -h localhost -p 5433 -U poc -d poc -f scripts/raw_materials_seed.sql
 --
--- Run:
---   psql -h localhost -p 5432 -U poc -d poc -f scripts/04_raw_materials.sql
---
--- Docker (port 5433):
---   psql -h localhost -p 5433 -U poc -d poc -f scripts/04_raw_materials.sql
+-- Sources: data/raw_materials30sept11am.csv, data/raw_materialsscoop.csv
 -- =============================================================================
 
 CREATE TABLE IF NOT EXISTS public.raw_materials

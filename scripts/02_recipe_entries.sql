@@ -1,5 +1,6 @@
--- Recipe Maker table (matches CSV export columns)
--- Run on existing DB: psql -U poc -d poc -f scripts/02_recipe_entries.sql
+-- Recipe Maker table (matches CSV export columns; same as 01_schema.sql recipe_entries)
+-- Fresh Docker DB: use docker compose down -v && docker compose up -d (init from 01_schema.sql only).
+-- Manual create only if not using compose init: psql -U poc -d poc -f scripts/02_recipe_entries.sql
 
 CREATE TABLE IF NOT EXISTS public.recipe_entries
 (
@@ -13,6 +14,9 @@ CREATE TABLE IF NOT EXISTS public.recipe_entries
     "inGm" numeric,
     "inML" numeric,
     "inPiece" numeric,
+    is_usable_in_other_dish boolean DEFAULT false,
+    usable_processed_scoop text COLLATE pg_catalog."default",
+    qty_of_scoops numeric,
     comments text COLLATE pg_catalog."default",
     created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
