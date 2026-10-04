@@ -341,7 +341,9 @@ function buildRecipeEntries(rows, opts) {
   const filtered = filterRecipeRows(rows, opts ? opts.skipRecipeMeta : false);
   const cols = [
     'dishname', 'dishcode', 'reciepeitemname', '"pgNo"', 'receipescoop',
-    'qty', '"inGm"', '"inML"', '"inPiece"', 'comments'
+    'qty', '"inGm"', '"inML"', '"inPiece"',
+    'is_usable_in_other_dish', 'usable_processed_scoop', 'qty_of_scoops',
+    'comments'
   ];
   const tuples = filtered.map(r => [
     sqlQuote(pick(r, 'dishname')),
@@ -353,6 +355,13 @@ function buildRecipeEntries(rows, opts) {
     sqlNum(pick(r, 'ingm', 'inGm')),
     sqlNum(pick(r, 'inml', 'inML')),
     sqlNum(pick(r, 'inpiece', 'inPiece')),
+    (function () {
+      const v = pick(r, 'is_usable_in_other_dish', 'isusableinotherdish');
+      const t = String(v == null ? '' : v).trim().toLowerCase();
+      return (t === 'true' || t === '1' || t === 'yes') ? 'true' : 'false';
+    })(),
+    sqlQuote(pick(r, 'usable_processed_scoop', 'usableprocessedscoop')),
+    sqlNum(pick(r, 'qty_of_scoops', 'qtyofscoops')),
     sqlQuote(pick(r, 'comments'))
   ].join(', '));
   const io = insertOptsForTable('recipe_entries', opts);

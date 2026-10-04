@@ -178,8 +178,12 @@
 
   function saveLocal() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(readRowsFromDom()));
-      setMsg("Saved to browser storage", "ok");
+      const dataRows = readRowsFromDom();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(dataRows));
+      const scoopAdded = mergeDefaultScoopsForRows(dataRows);
+      let msg = "Saved to browser storage";
+      if (scoopAdded > 0) msg += "; " + scoopAdded + " scoop_config row(s) in catalog store";
+      setMsg(msg, "ok");
     } catch (e) {
       alert("Save failed: " + e.message);
     }
@@ -200,12 +204,35 @@
     }
   }
 
+  function mergeDefaultScoopsForRows(dataRows) {
+    const builder = global.ScoopUnitDefaultsBuilder;
+    if (!builder || typeof builder.buildDefaultScoopConfigRows !== "function") return 0;
+    let added = 0;
+    dataRows.forEach(row => {
+      const name = (row.itemname || "").trim();
+      if (!name) return;
+      const scoops = builder.buildDefaultScoopConfigRows(name, row.pgNo, { includePortion: false });
+      if (typeof builder.mergeRowsIntoScoopConfigStore === "function") {
+        added += builder.mergeRowsIntoScoopConfigStore(scoops);
+      }
+    });
+    return added;
+  }
+
   async function saveToDB(postJSON) {
     const dataRows = readRowsFromDom();
     if (!dataRows.length) { alert("Add at least one row."); return; }
     try {
       const d = await postJSON("/api/raw-materials", { rows: dataRows });
-      setMsg("Saved " + d.count + " row(s) to database", "ok");
+      mergeDefaultScoopsForRows(dataRows);
+      let msg = "Saved " + d.count + " row(s) to database";
+      if (d.inserted != null || d.updated != null) {
+        msg += " (" + (d.inserted || 0) + " inserted, " + (d.updated || 0) + " updated)";
+      }
+      if (d.scoopConfigCount != null && d.scoopConfigCount > 0) {
+        msg += "; " + d.scoopConfigCount + " scoop_config row(s) added";
+      }
+      setMsg(msg, "ok");
     } catch (e) {
       alert("Save to DB failed: " + e.message);
     }
@@ -244,5 +271,14 @@
     }
   }
 
-  global.RawMaterials = { init: init, toCsv: toCsv, readRowsFromDom: readRowsFromDom };
+  function updateCatalog(newCatalog) {
+    catalog = newCatalog || [];
+  }
+
+  global.RawMaterials = {
+    init: init,
+    updateCatalog: updateCatalog,
+    toCsv: toCsv,
+    readRowsFromDom: readRowsFromDom
+  };
 })(typeof window !== "undefined" ? window : global);

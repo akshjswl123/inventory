@@ -177,6 +177,9 @@ CREATE TABLE IF NOT EXISTS public.recipe_entries
     "inGm" numeric,
     "inML" numeric,
     "inPiece" numeric,
+    is_usable_in_other_dish boolean DEFAULT false,
+    usable_processed_scoop text COLLATE pg_catalog."default",
+    qty_of_scoops numeric,
     comments text COLLATE pg_catalog."default",
     created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -209,6 +212,31 @@ GRANT ALL ON TABLE public.raw_materials TO poc;
 DROP TRIGGER IF EXISTS raw_materials_touch_last_updated_at ON public.raw_materials;
 CREATE TRIGGER raw_materials_touch_last_updated_at
     BEFORE UPDATE ON public.raw_materials
+    FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
+
+-- Table: public.raw_materials_cost (computed rates from purchases + scoop_config)
+CREATE TABLE IF NOT EXISTS public.raw_materials_cost
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    "pgNo" text COLLATE pg_catalog."default" NOT NULL,
+    item_names text[] COLLATE pg_catalog."default",
+    ratepergram numeric(12,4),
+    rateperml numeric(12,4),
+    rateperpiece numeric(12,4),
+    based_on_billno text COLLATE pg_catalog."default",
+    comments text COLLATE pg_catalog."default",
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT raw_materials_cost_pkey PRIMARY KEY (id),
+    CONSTRAINT raw_materials_cost_pgno_billno_key UNIQUE ("pgNo", based_on_billno)
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.raw_materials_cost OWNER TO poc;
+GRANT ALL ON TABLE public.raw_materials_cost TO poc;
+
+DROP TRIGGER IF EXISTS raw_materials_cost_touch_last_updated_at ON public.raw_materials_cost;
+CREATE TRIGGER raw_materials_cost_touch_last_updated_at
+    BEFORE UPDATE ON public.raw_materials_cost
     FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
 
 -- Table: public.scoop_config (Scoop tab flat rows)

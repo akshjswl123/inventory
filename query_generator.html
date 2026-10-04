@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raw materials scoop SQL — query generator</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --card: #fff;
+      --border: #dee2e6;
+      --primary: #0d6efd;
+      --muted: #666;
+      --mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 24px;
+      background: var(--bg);
+      color: #222;
+      line-height: 1.45;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    h1 { font-size: 1.35rem; margin: 0 0 6px; }
+    .sub { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+    .card {
+      background: var(--card);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    h2 { font-size: 14px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: .03em; color: #444; }
+    label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+    }
+    input[type="file"] { font-size: 13px; margin-bottom: 10px; }
+    .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 10px; }
+    button {
+      padding: 8px 14px;
+      border: 0;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      background: #e9ecef;
+      color: #222;
+    }
+    button.primary { background: var(--primary); color: #fff; }
+    button.success { background: #198754; color: #fff; }
+    button:hover { filter: brightness(0.97); }
+    .hint { font-size: 11px; color: var(--muted); margin-top: 6px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; }
+    th { background: #f0f0f0; }
+    .scoop-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .scoop-grid button.chip {
+      padding: 5px 10px;
+      font-size: 11px;
+      font-family: var(--mono);
+      border: 1px solid #bbb;
+      background: #fff;
+    }
+    .scoop-grid button.chip.on {
+      background: #e7f1ff;
+      border-color: var(--primary);
+      color: #084298;
+    }
+    .preset-row { margin-bottom: 12px; }
+    .preset-row button { margin-right: 6px; margin-bottom: 6px; font-size: 12px; }
+    pre#sqlOut {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 14px;
+      border-radius: 6px;
+      overflow: auto;
+      font-size: 11px;
+      line-height: 1.5;
+      max-height: 420px;
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .stats { font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .checkline { font-size: 13px; display: flex; align-items: center; gap: 8px; margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Query generator — raw materials &amp; scoops</h1>
+    <p class="sub">Standalone tool. Paste or upload CSV (<code>pgNo</code>, <code>itemname</code>) and generate PostgreSQL <code>INSERT</code> statements for <code>raw_materials</code> and <code>scoop_config</code>.</p>
+
+    <div class="card">
+      <h2>1. CSV input</h2>
+      <input type="file" id="csvFile" accept=".csv,text/csv" />
+      <label for="csvText">CSV text</label>
+      <textarea id="csvText" spellcheck="false" placeholder="pgNo,itemname&#10;V11,Onion"></textarea>
+      <div class="row" style="margin-top:10px">
+        <button type="button" id="btnParse">Parse CSV</button>
+        <button type="button" id="btnSample">Load sample (added raw materials)</button>
+      </div>
+      <p class="hint" id="parseMsg"></p>
+    </div>
+
+    <div class="card">
+      <h2>2. Scoop patterns</h2>
+      <p class="hint">Naming: <code>{itemname}_{unit}_{in|out|reciepe}</code> (recipe suffix is <code>reciepe</code> in this DB).</p>
+      <div class="preset-row">
+        <button type="button" id="presetUser">Default: kg/ml/piece/pkt × in/out/reciepe</button>
+        <button type="button" id="presetFull">Full raw-material set (+ gm in/out/reciepe)</button>
+        <button type="button" id="presetInOut">All units — in &amp; out only</button>
+        <button type="button" id="presetClear">Clear all</button>
+      </div>
+      <div class="scoop-grid" id="scoopChips"></div>
+    </div>
+
+    <div class="card">
+      <h2>3. Items</h2>
+      <table>
+        <thead><tr><th>#</th><th>pgNo</th><th>itemname</th></tr></thead>
+        <tbody id="itemsBody"><tr><td colspan="3" class="hint">Parse CSV to list items.</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>4. SQL output</h2>
+      <label class="checkline"><input type="checkbox" id="includeRaw" checked /> Include <code>raw_materials</code> INSERT (WHERE NOT EXISTS on itemname)</label>
+      <label class="checkline"><input type="checkbox" id="includeScoop" checked /> Include <code>scoop_config</code> INSERT (WHERE NOT EXISTS on scoop_name)</label>
+      <label for="comments">raw_materials comments column</label>
+      <input type="text" id="comments" value="From query_generator.html" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;margin-bottom:10px" />
+      <div class="row">
+        <button type="button" class="primary" id="btnGenerate">Generate SQL</button>
+        <button type="button" class="success" id="btnCopy">Copy SQL</button>
+      </div>
+      <p class="stats" id="sqlStats"></p>
+      <pre id="sqlOut">-- Click Generate SQL</pre>
+    </div>
+  </div>
+
+  <script>
+(function () {
+  "use strict";
+
+  const UNITS = ["gm", "kg", "ml", "piece", "pkt"];
+  const KINDS = [
+    { key: "in", suffix: "in" },
+    { key: "out", suffix: "out" },
+    { key: "reciepe", suffix: "reciepe", kind: "recipe" }
+  ];
+
+  const UNIT_DEFAULTS = {
+    gm: { factor: 1, conversion_chain: "gm:1:gm", qty_in_grams: 1, qty_in_ml: null, qty_in_piece: null, destination_unit: "gm" },
+    kg: { factor: 1000, conversion_chain: "kg:1000:gm", qty_in_grams: 1000, qty_in_ml: null, qty_in_piece: null, destination_unit: "gm" },
+    ml: { factor: 1, conversion_chain: "ml:1:ml", qty_in_grams: null, qty_in_ml: 1, qty_in_piece: null, destination_unit: "ml" },
+    piece: { factor: 1, conversion_chain: "piece:1:piece", qty_in_grams: null, qty_in_ml: null, qty_in_piece: 1, destination_unit: "piece" },
+    pkt: { factor: 500, conversion_chain: "pkt:500:gm", qty_in_grams: 500, qty_in_ml: null, qty_in_piece: null, destination_unit: "gm" }
+  };
+
+  const SAMPLE_CSV = `"pgNo","itemname"
+"B5","MACE (JAVITRI)"
+"33B","HARI ELAICHI"
+"33A","BADI ELAICHI"
+"103","SAUNF"
+"BL1","Bay leaves"
+"CH3","CHINESE VEGETABLES"
+"OT1","ALL SPICES"
+"CN4","CONTI MASALA"
+"V19","Kadi Patta"
+"V8","Spring Onion"
+"V16","Basil"
+"V21","yellow bell pepper"
+"V3","Ginger"
+"V13","Lemon"
+"V22","potato"
+"V6","Cauliflower"
+"V9","Coriander"
+"V5","Beans"
+"V14","Red Bell Pepper"
+"V11","Onion"
+"V7","Cabbage"
+"V1","Capsicum"
+"V4","Carrot"
+"V20","SPINACH"
+"V18","Tomato"
+"V15","Broccoli"
+"V17","Mint Leaves"
+"V2","Green Chilli"
+"V12","Cucumber"
+"V10","Garlic"
+`;
+
+  /** @type {{ pgNo: string, itemname: string }[]} */
+  let items = [];
+  /** @type {Set<string>} keys like gm_in */
+  const selectedPatterns = new Set();
+
+  function escSql(s) {
+    return String(s == null ? "" : s).replace(/'/g, "''");
+  }
+
+  function sqlStr(s) {
+    return "'" + escSql(s) + "'";
+  }
+
+  function sqlNum(n) {
+    if (n == null || n === "") return "NULL::numeric";
+    return String(n) + "::numeric";
+  }
+
+  function sqlBool(b) {
+    return b ? "true" : "false";
+  }
+
+  function patternKey(unit, kindKey) {
+    return unit + "_" + kindKey;
+  }
+
+  function scoopName(itemname, unit, suffix) {
+    return String(itemname).trim() + "_" + unit + "_" + suffix;
+  }
+
+  function buildScoopRow(itemname, pgNo, unit, kindEntry) {
+    const def = UNIT_DEFAULTS[unit];
+    const name = scoopName(itemname, unit, kindEntry.suffix);
+    const isOut = kindEntry.suffix === "out";
+    const factor = isOut ? 1 : def.factor;
+    return {
+      scoop_item_name: String(itemname).trim(),
+      scoop_item_id: pgNo ? String(pgNo).trim() : null,
+      destination_unit: def.destination_unit,
+      scoop_name: name,
+      factor,
+      conversion_chain: def.conversion_chain,
+      qty_in_grams: def.qty_in_grams,
+      qty_in_ml: def.qty_in_ml,
+      qty_in_piece: def.qty_in_piece,
+      unused: false
+    };
+  }
+
+  function scoopValueTuple(r) {
+    const id = r.scoop_item_id ? sqlStr(r.scoop_item_id) : "NULL";
+    return (
+      "(" +
+      sqlStr(r.scoop_item_name) + ", " + id + ", " +
+      sqlStr(r.destination_unit) + ", " + sqlStr(r.scoop_name) + ", " +
+      sqlNum(r.factor) + ", " + sqlStr(r.conversion_chain) + ", " +
+      sqlNum(r.qty_in_grams) + ", " + sqlNum(r.qty_in_ml) + ", " +
+      sqlNum(r.qty_in_piece) + ", " + sqlBool(r.unused) +
+      ")"
+    );
+  }
+
+  function parseCsvLine(line) {
+    const out = [];
+    let i = 0;
+    let cur = "";
+    let inQ = false;
+    while (i < line.length) {
+      const ch = line[i];
+      if (inQ) {
+        if (ch === '"') {
+          if (line[i + 1] === '"') { cur += '"'; i += 2; continue; }
+          inQ = false;
+          i++;
+          continue;
+        }
+        cur += ch;
+        i++;
+        continue;
+      }
+      if (ch === '"') { inQ = true; i++; continue; }
+      if (ch === ",") { out.push(cur); cur = ""; i++; continue; }
+      cur += ch;
+      i++;
+    }
+    out.push(cur);
+    return out.map(c => c.trim());
+  }
+
+  function parseCsv(text) {
+    const lines = String(text || "").split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    if (!lines.length) return [];
+    const header = parseCsvLine(lines[0]).map(h => h.replace(/^"|"$/g, "").trim().toLowerCase());
+    let pgIdx = header.indexOf("pgno");
+    let nameIdx = header.indexOf("itemname");
+    if (pgIdx < 0) pgIdx = header.indexOf("pg no");
+    if (nameIdx < 0) nameIdx = 1;
+    if (pgIdx < 0) pgIdx = 0;
+    const rows = [];
+    for (let li = 1; li < lines.length; li++) {
+      const cells = parseCsvLine(lines[li]);
+      if (!cells.length) continue;
+      const itemname = (cells[nameIdx] != null ? cells[nameIdx] : "").replace(/^"|"$/g, "").trim();
+      if (!itemname) continue;
+      const pgNo = (cells[pgIdx] != null ? cells[pgIdx] : "").replace(/^"|"$/g, "").trim();
+      rows.push({ pgNo, itemname });
+    }
+    return rows;
+  }
+
+  function renderItems() {
+    const body = document.getElementById("itemsBody");
+    if (!items.length) {
+      body.innerHTML = '<tr><td colspan="3" class="hint">No items.</td></tr>';
+      return;
+    }
+    body.innerHTML = items.map((r, i) =>
+      "<tr><td>" + (i + 1) + "</td><td>" + escHtml(r.pgNo) + "</td><td>" + escHtml(r.itemname) + "</td></tr>"
+    ).join("");
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function renderChips() {
+    const grid = document.getElementById("scoopChips");
+    const parts = [];
+    UNITS.forEach(unit => {
+      KINDS.forEach(k => {
+        const key = patternKey(unit, k.key);
+        const on = selectedPatterns.has(key) ? " on" : "";
+        parts.push('<button type="button" class="chip' + on + '" data-key="' + key + '">' + key + "</button>");
+      });
+    });
+    grid.innerHTML = parts.join("");
+    grid.querySelectorAll(".chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-key");
+        if (selectedPatterns.has(key)) selectedPatterns.delete(key);
+        else selectedPatterns.add(key);
+        btn.classList.toggle("on");
+      });
+    });
+  }
+
+  function setPreset(fn) {
+    selectedPatterns.clear();
+    fn();
+    renderChips();
+  }
+
+  function applyUserDefaultPreset() {
+    ["kg", "ml", "piece", "pkt"].forEach(u => {
+      KINDS.forEach(k => selectedPatterns.add(patternKey(u, k.key)));
+    });
+  }
+
+  function applyFullPreset() {
+    applyUserDefaultPreset();
+    KINDS.forEach(k => selectedPatterns.add(patternKey("gm", k.key)));
+  }
+
+  function applyInOutPreset() {
+    UNITS.forEach(u => {
+      selectedPatterns.add(patternKey(u, "in"));
+      selectedPatterns.add(patternKey(u, "out"));
+    });
+  }
+
+  function collectScoopRows() {
+    const rows = [];
+    const seen = new Set();
+    items.forEach(item => {
+      UNITS.forEach(unit => {
+        KINDS.forEach(k => {
+          const pk = patternKey(unit, k.key);
+          if (!selectedPatterns.has(pk)) return;
+          const row = buildScoopRow(item.itemname, item.pgNo, unit, k);
+          const sk = row.scoop_name.toLowerCase();
+          if (seen.has(sk)) return;
+          seen.add(sk);
+          rows.push(row);
+        });
+      });
+    });
+    rows.sort((a, b) => a.scoop_name.localeCompare(b.scoop_name));
+    return rows;
+  }
+
+  function chunkValues(tuples, size) {
+    const chunks = [];
+    for (let i = 0; i < tuples.length; i += size) {
+      chunks.push(tuples.slice(i, i + size));
+    }
+    return chunks;
+  }
+
+  function insertRawMaterialsSql() {
+    if (!items.length) return "";
+    const comment = document.getElementById("comments").value.trim() || "From query_generator.html";
+    const tuples = items.map(r =>
+      "(" + sqlStr(r.pgNo) + ", " + sqlStr(r.itemname) + ", " + sqlStr(comment) + ")"
+    );
+    const lines = [
+      "-- raw_materials",
+      'INSERT INTO public.raw_materials ("pgNo", itemname, comments)',
+      "SELECT v.\"pgNo\", v.itemname, v.comments",
+      "FROM (VALUES"
+    ];
+    tuples.forEach((t, i) => {
+      lines.push("    " + t + (i < tuples.length - 1 ? "," : ""));
+    });
+    lines.push(') AS v("pgNo", itemname, comments)');
+    lines.push("WHERE NOT EXISTS (");
+    lines.push("    SELECT 1 FROM public.raw_materials rm WHERE rm.itemname = v.itemname");
+    lines.push(");");
+    lines.push("");
+    return lines.join("\n");
+  }
+
+  function insertScoopConfigSql(scoopRows) {
+    if (!scoopRows.length) return "";
+    const tuples = scoopRows.map(scoopValueTuple);
+    const chunks = chunkValues(tuples, 80);
+    const blocks = chunks.map((chunk, ci) => {
+      const lines = [
+        (ci === 0 ? "-- scoop_config" : "-- scoop_config (continued)"),
+        "INSERT INTO public.scoop_config (scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor, conversion_chain, qty_in_grams, qty_in_ml, qty_in_piece, unused)",
+        "SELECT v.scoop_item_name, v.scoop_item_id, v.destination_unit, v.scoop_name, v.factor, v.conversion_chain, v.qty_in_grams, v.qty_in_ml, v.qty_in_piece, v.unused",
+        "FROM (VALUES"
+      ];
+      chunk.forEach((t, i) => {
+        lines.push("    " + t + (i < chunk.length - 1 ? "," : ""));
+      });
+      lines.push(") AS v(scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor, conversion_chain, qty_in_grams, qty_in_ml, qty_in_piece, unused)");
+      lines.push("WHERE NOT EXISTS (");
+      lines.push("    SELECT 1 FROM public.scoop_config i WHERE i.scoop_name = v.scoop_name");
+      lines.push(");");
+      return lines.join("\n");
+    });
+    return blocks.join("\n\n") + "\n";
+  }
+
+  function generateSql() {
+    if (!items.length) {
+      document.getElementById("sqlOut").textContent = "-- Parse CSV first.";
+      document.getElementById("sqlStats").textContent = "";
+      return;
+    }
+    if (!selectedPatterns.size) {
+      document.getElementById("sqlOut").textContent = "-- Select at least one scoop pattern.";
+      document.getElementById("sqlStats").textContent = "";
+      return;
+    }
+    const scoopRows = collectScoopRows();
+    const parts = ["BEGIN;", ""];
+    if (document.getElementById("includeRaw").checked) {
+      parts.push(insertRawMaterialsSql());
+    }
+    if (document.getElementById("includeScoop").checked) {
+      parts.push(insertScoopConfigSql(scoopRows));
+    }
+    parts.push("COMMIT;");
+    const sql = parts.join("\n");
+    document.getElementById("sqlOut").textContent = sql;
+    document.getElementById("sqlStats").textContent =
+      items.length + " item(s), " + scoopRows.length + " scoop_config row(s), " +
+      selectedPatterns.size + " pattern(s) selected.";
+  }
+
+  document.getElementById("btnParse").addEventListener("click", () => {
+    items = parseCsv(document.getElementById("csvText").value);
+    document.getElementById("parseMsg").textContent = items.length
+      ? "Parsed " + items.length + " row(s)."
+      : "No rows found — check header (pgNo, itemname).";
+    renderItems();
+  });
+
+  document.getElementById("btnSample").addEventListener("click", () => {
+    document.getElementById("csvText").value = SAMPLE_CSV;
+    items = parseCsv(SAMPLE_CSV);
+    document.getElementById("parseMsg").textContent = "Loaded sample: " + items.length + " row(s).";
+    renderItems();
+  });
+
+  document.getElementById("csvFile").addEventListener("change", e => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      document.getElementById("csvText").value = reader.result;
+      items = parseCsv(reader.result);
+      document.getElementById("parseMsg").textContent = "Loaded file: " + items.length + " row(s).";
+      renderItems();
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById("presetUser").addEventListener("click", () => setPreset(applyUserDefaultPreset));
+  document.getElementById("presetFull").addEventListener("click", () => setPreset(applyFullPreset));
+  document.getElementById("presetInOut").addEventListener("click", () => setPreset(applyInOutPreset));
+  document.getElementById("presetClear").addEventListener("click", () => setPreset(() => {}));
+
+  document.getElementById("btnGenerate").addEventListener("click", generateSql);
+  document.getElementById("btnCopy").addEventListener("click", async () => {
+    const text = document.getElementById("sqlOut").textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      document.getElementById("sqlStats").textContent = (document.getElementById("sqlStats").textContent || "") + " Copied.";
+    } catch (err) {
+      alert("Copy failed: " + err.message);
+    }
+  });
+
+  setPreset(applyUserDefaultPreset);
+  document.getElementById("csvText").value = SAMPLE_CSV;
+  items = parseCsv(SAMPLE_CSV);
+  renderItems();
+})();
+  </script>
+</body>
+</html>

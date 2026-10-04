@@ -81,6 +81,11 @@
                 if (scoop.endsWith('_gm_reciepe') || scoop.endsWith('_gm_recipe')) {
                     return quoteCatalogCsv(item) + ',' + quoteCatalogCsv(scoop) + ',1';
                 }
+                if (scoop.endsWith('_ml_reciepe') || scoop.endsWith('_piece_reciepe')
+                    || scoop.endsWith('_portion_reciepe') || scoop.endsWith('_kg_reciepe')
+                    || scoop.endsWith('_pkt_reciepe') || scoop.endsWith('_ltr_reciepe')) {
+                    return quoteCatalogCsv(item) + ',' + quoteCatalogCsv(scoop) + ',1';
+                }
                 return line;
             })
             .join('\n');
@@ -114,7 +119,8 @@
         c.SCOOP_IN_CSV = enrichScoopInCsv(
             c.SCOOP_IN_GM_CSV.trim() + '\n' + c.SCOOP_IN_ML_CSV.trim() + '\n'
                 + c.SCOOP_IN_PIECE_CSV.trim() + '\n' + c.SCOOP_IN_PKT_CSV.trim() + '\n'
-                + c.SCOOP_IN_OTHER_CSV.trim() + '\n' + c.SCOOP_IN_KG_CSV.trim()
+                + c.SCOOP_IN_OTHER_CSV.trim() + '\n' + c.SCOOP_IN_KG_CSV.trim() + '\n'
+                + (c.SCOOP_BAG_IN_CSV || '').trim()
         );
 
         c.SCOOP_OUT_ML_CSV = deriveScoopOutCsv(c.SCOOP_IN_ML_CSV, '_ml_in', '_ml_out', 1);
@@ -132,6 +138,7 @@
 
         c.RECIPE_SCOOP_CSV = enrichRecipeScoopCsv(
             c.RECIPE_SCOOP_CSV_ACTUAL.trim() + '\n' + c.RECIPE_SCOOP_CSV_OTHER.trim()
+                + '\n' + (c.DISH_RECIPE_SCOOP_CSV || '').trim()
         );
 
         return c;

@@ -32,6 +32,7 @@
     button.import { background: #6f42c1; color: #fff; }
     button.plain { background: #e2e2e2; }
     button.danger { background: #dc3545; color: #fff; padding: 4px 9px; }
+    #pgRestoreButton { padding: 8px 15px; }
     button.mini { padding: 4px 7px; background: #e2e2e2; border-radius: 4px; font-size: 12px; margin-left: 5px; }
     .actions { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
     pre { background: #20232a; color: #e6e6e6; padding: 12px; border-radius: 5px; overflow-x: auto; font-size: 12px; }
@@ -100,6 +101,23 @@
     #dishesMsg.err { color: #dc3545; }
     #recipeCloneHint.ok { color: #198754; }
     #recipeCloneHint.err { color: #dc3545; }
+
+    .dish-out-usable-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .dish-out-usable-row .dish-out-usable-text { font-size: 13px; font-weight: bold; margin: 0; }
+    button.toggle-switch {
+      position: relative; width: 44px; height: 24px; padding: 0; border: 1px solid #adb5bd;
+      border-radius: 12px; background: #dee2e6; cursor: pointer; flex-shrink: 0;
+      transition: background 0.15s ease;
+    }
+    button.toggle-switch::after {
+      content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px;
+      border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      transition: transform 0.15s ease;
+    }
+    button.toggle-switch[aria-pressed="true"] { background: #198754; border-color: #157347; }
+    button.toggle-switch[aria-pressed="true"]::after { transform: translateX(20px); }
+    #dishOutUsableScoopWrap, #dishOutStandardWrap { width: 100%; }
+    #dishOutUsableScoopWrap[hidden], #dishOutStandardWrap[hidden] { display: none !important; }
     .chain-group { margin-bottom: 16px; padding: 12px; background: #fff; border: 1px solid #dee2e6; border-radius: 6px; }
     .chain-group-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; }
     .chain-group-head .chain-done-badge { color: #198754; font-size: 12px; font-weight: bold; }
@@ -111,6 +129,14 @@
     #queryResult { margin-top:0; min-width:100%; }
     #queryResult th { position:sticky; top:0; background:#fff; }
     #queryError.is-err { display:block !important; background:#fff0f0; border:1px solid #dc3545; color:#b02a37; padding:10px; border-radius:5px; white-space:pre-wrap; margin-top:15px; }
+    #recipeCostError.is-err { display:block !important; background:#fff0f0; border:1px solid #dc3545; color:#b02a37; padding:10px; border-radius:5px; white-space:pre-wrap; margin-top:10px; }
+    #recipeCostWarn.is-warn { display:block !important; background:#fff8e6; border:1px solid #e0a800; color:#664d03; padding:10px; border-radius:5px; margin-top:10px; font-size:13px; }
+    #recipeCostWarn.is-warn ul { margin:6px 0 0 1.2em; padding:0; }
+    #recipeCostResult { margin-top:8px; min-width:100%; font-size:12px; }
+    #recipeCostResult th { position:sticky; top:0; background:#fff; }
+    .query-result-toolbar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:15px; }
+    #queryResult tr.query-dish-cost-sep td { background:#f0f0f4; height:10px; padding:4px; border-left:0; border-right:0; }
+    #queryExportCsvBtn:disabled { opacity:0.45; cursor:not-allowed; }
     .query-import-bar { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:12px 0; padding:12px; background:#f8f9fa; border:1px solid #e0e0e0; border-radius:6px; }
     .query-import-bar label { font-size:13px; margin:0; }
     .query-import-bar select { min-width:220px; padding:6px 8px; }
@@ -118,6 +144,9 @@
     #queryImportSection { display:none; margin-top:12px; padding-top:12px; border-top:1px solid #e0e0e0; }
     #queryImportSection.is-open { display:block; }
     #queryImportToggleBtn.is-active { background:#5a32a3; color:#fff; }
+    .static-data-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    #staticDataRefreshHint.ok { color: #198754; }
+    #staticDataRefreshHint.err { color: #dc3545; }
   </style>
 </head>
 <body>
@@ -131,6 +160,11 @@
     <button class="tab-btn" onclick="switchTab(event, 'itemDetailsTab')">Scoop</button>
     <button class="tab-btn" onclick="switchTab(event, 'rawMaterialsTab')">Raw Materials</button>
     <button class="tab-btn" onclick="switchTab(event, 'queryTab')">Query</button>
+  </div>
+
+  <div class="static-data-bar">
+    <button type="button" class="plain" id="staticDataRefreshBtn" title="Reload shared static data: vendors, items, scoop_config, and derived scoop pickers">Refresh catalog data</button>
+    <span class="hint" id="staticDataRefreshHint">Loading…</span>
   </div>
 
   <div id="cfgWarn"></div>
@@ -167,7 +201,7 @@
         <th style="width:100px">Pg No *</th>
         <th style="width:180px">Scoop In *</th>
         <th class="num" style="width:80px">Qty *</th>
-        <th class="num" style="width:100px">Rate *</th>
+        <th class="num" style="width:100px">Scoop Rate *</th>
         <th class="num" style="width:110px">Item Total *</th>
         <th>Comments</th>
         <th class="num" style="width:100px">Current Stock</th>
@@ -192,6 +226,7 @@
       <button class="primary" onclick="addInRow()">+ Add Item</button>
       <button class="import" onclick="importInCSV()">Import CSV</button>
       <button class="success" onclick="exportInCSV()">Export CSVs</button>
+      <button class="plain" onclick="loadInBillFromDB()">Load from DB</button>
       <button class="primary" onclick="saveInDB()">Save to DB</button>
       <button class="plain" onclick="resetIn()">Reset</button>
     </div>
@@ -265,11 +300,17 @@
       <button class="primary" onclick="addOutRow()">+ Add Item</button>
       <button class="import" onclick="importOutCSV()">Import CSV</button>
       <button class="success" onclick="exportOutCSV()">Export CSV</button>
+      <button type="button" class="plain" onclick="shareOutViaWhatsApp()">Share (WhatsApp)</button>
       <button class="primary" onclick="saveOutToDB()">Save to DB</button>
       <button class="plain" onclick="resetOut()">Reset</button>
     </div>
 
-    <h3 style="margin-top:25px; font-size:14px;">CSV Preview - Inventory Out</h3>
+    <div style="margin-top:25px; font-size:13px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+      <span>Preview / WhatsApp format:</span>
+      <label><input type="radio" name="outShareFormat" value="csv" checked onchange="refreshOut()" /> CSV</label>
+      <label><input type="radio" name="outShareFormat" value="requirement" onchange="refreshOut()" /> Requirement</label>
+    </div>
+    <h3 style="margin-top:10px; font-size:14px;" id="outPreviewTitle">CSV Preview - Inventory Out</h3>
     <pre id="previewOut">-- add items to see preview --</pre>
   </div>
 
@@ -347,29 +388,74 @@
 
     <!-- Dish Out - after item entry -->
     <h3 style="margin-top:25px; font-size:16px;">Dish Out</h3>
+    <div class="dish-out-usable-row">
+      <p class="dish-out-usable-text">Usable in other dish (processed item)</p>
+      <button type="button" class="toggle-switch" id="dishOutUsableInOther" aria-pressed="false" aria-label="Usable in other dish"></button>
+      <span class="hint" id="dishOutUsableLabel" style="margin:0; min-height:0;">Off</span>
+    </div>
+    <div id="dishOutUsableScoopWrap" hidden>
+      <div class="head-row">
+        <div>
+          <label for="dishOutUsableProcessedScoop">Processed scoop *</label>
+          <select id="dishOutUsableProcessedScoop"><option value="">— select scoop —</option></select>
+          <div class="hint" id="dishOutUsableScoopHint">Scoops from scoop_config for this dish</div>
+        </div>
+        <div>
+          <label for="dishOutQtyOfScoops">Qty of scoops *</label>
+docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any" placeholder="e.g. 2500 or 2.5" />
+          <div class="hint" id="dishOutQtyOfScoopsHint">Qty × scoop size. Decimals ok (e.g. 2.6).</div>
+        </div>
+        <div id="dishOutUsableResultWrap" hidden>
+          <label for="dishOutUsableResultValue" id="dishOutUsableResultLabel">inGm</label>
+          <input type="text" id="dishOutUsableResultValue" readonly placeholder="—" />
+          <div class="hint">Saved on dish_out (from scoop unit).</div>
+        </div>
+      </div>
+    </div>
+    <div id="dishOutStandardWrap">
+      <div class="head-row">
+        <div>
+          <label for="recipeDishOutScoop">Dish Out Scoop *</label>
+          <div class="combo"><input type="text" id="recipeDishOutScoop" placeholder="Search dish out scoop..." autocomplete="off" disabled /></div>
+          <div class="hint" id="recipeDishOutScoopHint">Select dish name first</div>
+        </div>
+        <div>
+          <label for="dishOutInGm">inGm</label>
+          <input type="number" id="dishOutInGm" min="0" step="any" placeholder="Enter grams" />
+        </div>
+        <div>
+          <label for="dishOutInML">inML</label>
+          <input type="number" id="dishOutInML" min="0" step="any" placeholder="Enter ml" />
+        </div>
+        <div>
+          <label for="dishOutInPiece">inPiece</label>
+          <input type="number" id="dishOutInPiece" min="0" step="any" placeholder="Enter pieces" />
+        </div>
+      </div>
+    </div>
     <div class="head-row">
-      <div>
-        <label for="recipeDishOutScoop">Dish Out Scoop *</label>
-        <div class="combo"><input type="text" id="recipeDishOutScoop" placeholder="Search dish out scoop..." autocomplete="off" disabled /></div>
-        <div class="hint" id="recipeDishOutScoopHint">Select dish name first</div>
-      </div>
-      <div>
-        <label for="dishOutInGm">inGm</label>
-        <input type="number" id="dishOutInGm" min="0" step="any" placeholder="Enter grams" />
-      </div>
-      <div>
-        <label for="dishOutInML">inML</label>
-        <input type="number" id="dishOutInML" min="0" step="any" placeholder="Enter ml" />
-      </div>
-      <div>
-        <label for="dishOutInPiece">inPiece</label>
-        <input type="number" id="dishOutInPiece" min="0" step="any" placeholder="Enter pieces" />
-      </div>
       <div>
         <label for="recipeDishOutCmt">Dish Out Comments</label>
         <input type="text" id="recipeDishOutCmt" placeholder="Dish out comments..." />
       </div>
     </div>
+
+    <h3 style="margin-top:25px; font-size:16px;">Recipe cost calculation</h3>
+    <p class="hint" id="recipeCostHint">
+      Checks the saved recipe one record at a time, then runs <code>dish_cost_cases.sql</code> for the result grid.
+      Save the recipe first if you changed ingredients. A failed check lists the calculation completed before the error.
+    </p>
+    <div class="actions" style="margin-top:8px;">
+      <button type="button" class="primary" id="recipeCostRunBtn" onclick="RecipeCost.calculate()">Calculate cost</button>
+      <label style="margin-left:12px; font-size:13px;">
+        <input type="checkbox" id="recipeCostShowLines" checked /> Show line breakdown
+      </label>
+    </div>
+    <div id="recipeCostError" style="display:none;"></div>
+    <div id="recipeCostWarn" style="display:none;"></div>
+    <div id="recipeCostSteps" style="display:none; margin-top:8px; font-size:13px;"></div>
+    <div id="recipeCostMeta" style="font-size:13px; color:#666; margin-top:8px;"></div>
+    <div class="query-result-wrap" style="max-height:320px;"><table id="recipeCostResult"></table></div>
 
     <div class="actions">
       <button class="primary" onclick="addRecipeRow()">+ Add Item</button>
@@ -491,7 +577,7 @@
         <button type="button" class="plain" id="itemDetailsClearBtn">Clear List</button>
         <span id="itemDetailsMsg"></span>
       </div>
-      <div class="hint" id="itemDetailsDbHint">Save to DB stores rows in PostgreSQL. Load from DB reads them back.</div>
+      <div class="hint" id="itemDetailsDbHint">Load/Save uses the same shared scoop_config as bill and recipe tabs (DB on server, scoop_config_catalog.js offline).</div>
 
       <h3 style="margin-top:18px;">CSV Preview</h3>
       <pre id="itemDetailsPreview">-- add items to see preview --</pre>
@@ -526,7 +612,7 @@
       <button type="button" class="plain" id="rawMaterialsResetBtn">Reset</button>
       <span id="rawMaterialsMsg"></span>
     </div>
-    <div class="hint" id="rawMaterialsDbHint">Import/Export CSV uses pgNo, itemname, comments.</div>
+    <div class="hint" id="rawMaterialsDbHint">Import/Export CSV uses pgNo, itemname, comments. Save to DB also creates scoop_config rows from SCOOP_UNIT_DEFAULTS_CSV ({item}_gm_in/out/reciepe, etc.).</div>
 
     <h3 style="margin-top:18px;">CSV Preview</h3>
     <pre id="rawMaterialsPreview">-- add rows to see preview --</pre>
@@ -558,7 +644,7 @@
       <button type="button" class="plain" id="dishesResetBtn">Reset</button>
       <span id="dishesMsg"></span>
     </div>
-    <div class="hint" id="dishesDbHint">Import/Export CSV uses dishcode, dishname.</div>
+    <div class="hint" id="dishesDbHint">Import/Export CSV uses dishcode, dishname. Save to DB creates {dish}_gm_in/out/reciepe and {dish}_1_portion (processed convention).</div>
 
     <h3 style="margin-top:18px;">CSV Preview</h3>
     <pre id="dishesPreview">-- add rows to see preview --</pre>
@@ -567,12 +653,34 @@
   <!-- TAB 5: QUERY -->
   <div id="queryTab" class="tab-pane">
     <h2>Database Query</h2>
+    <p class="hint" style="margin:0 0 8px 0;">Standalone page: <a href="recreateFromPgDump.html">recreateFromPgDump.html</a> (works as a static file with App server URL).</p>
+    <div id="queryApiBar" class="query-import-bar" style="display:none;">
+      <label for="queryApiBase">App server URL</label>
+      <input type="url" id="queryApiBase" placeholder="http://localhost:3050" style="min-width:280px;padding:6px 8px;" />
+      <button type="button" class="plain" onclick="Query.saveApiBaseFromUi()">Connect</button>
+    </div>
+    <p id="queryDbTarget" class="hint" style="margin:0 0 10px 0;">App database: loading…</p>
     <label for="queryInput">SQL</label>
     <textarea id="queryInput" placeholder="Enter SQL query here…&#10;&#10;Example: SELECT * FROM recipe_entries LIMIT 10;&#10;&#10;To load data from a pgAdmin CSV export, click Import Table below." spellcheck="false"></textarea>
+    <div class="query-import-bar">
+      <label for="queryBrowseTable">Browse table</label>
+      <select id="queryBrowseTable">
+        <option value="">None</option>
+      </select>
+      <button type="button" class="plain" onclick="Query.showTablesOrderByIdDesc()">ORDER BY id DESC</button>
+    </div>
     <div class="actions">
+      <button type="button" class="import" id="queryRmcUpsertBtn" onclick="Query.upsertRawMaterialsCost()">Upsert raw_materials_cost</button>
+      <button type="button" class="primary" id="queryDishCostAllBtn" onclick="Query.calculateAllDishCosts()">Calculate cost (all dishes)</button>
+      <button type="button" class="success" id="queryDishCostExportBtn" onclick="Query.calculateAllDishCostsAndExport()">Calculate &amp; export CSV</button>
+      <label style="font-size:13px; margin-left:4px;">
+        <input type="checkbox" id="queryDishCostShowLines" checked /> Show line breakdown (same as Recipe Maker)
+      </label>
       <button id="queryRunBtn" class="primary" onclick="Query.run()">Run Query</button>
       <button class="success" onclick="Query.currentStock()">Current Stock</button>
       <button id="pgDumpButton" class="plain" onclick="Query.pgDump()">PG Dump</button>
+      <button id="pgRestoreButton" class="danger" type="button" onclick="Query.pgRestore()">Recreate DB from Dump</button>
+      <input type="file" id="pgRestoreFile" accept=".sql,.dump,.backup,.tar" hidden>
       <button type="button" class="import" id="queryImportToggleBtn" onclick="Query.toggleImportSection()">Import Table</button>
       <button class="plain" onclick="Query.clear()">Clear</button>
     </div>
@@ -594,7 +702,10 @@
       </div>
     </div>
     <div id="queryError" style="display:none;"></div>
-    <div id="queryMeta" style="margin-top:15px; font-size:13px; color:#666;"></div>
+    <div class="query-result-toolbar">
+      <div id="queryMeta" style="font-size:13px; color:#666;"></div>
+      <button type="button" class="success" id="queryExportCsvBtn" onclick="Query.exportCsv()" disabled>Export CSV</button>
+    </div>
     <div class="query-result-wrap"><table id="queryResult"></table></div>
   </div>
 
@@ -603,11 +714,20 @@
 <!-- DATA CONFIGURATION FILE -->
 <script src="catalog.js"></script>
 <script src="cataloghelper.js"></script>
+<script src="scoop_config_catalog.js"></script>
+<script src="scoopStaticBuilders.js"></script>
+<script src="scoopConfigStore.js"></script>
+<script src="scoopDishLoader.js"></script>
+<script src="static_seed_core.js"></script>
+<script src="static_seed_materials.js"></script>
+<script src="static_seed_catalog.js"></script>
 <script src="staticDataFetcher.js"></script>
 <script src="csv.js"></script>
+<script src="recipeCost.js"></script>
 <script src="queryTranslator.js"></script>
 <script src="report.js"></script>
 <script src="itemdetails.js"></script>
+<script src="scoopUnitDefaultsBuilder.js"></script>
 <script src="rawmaterials.js"></script>
 <script src="dishes.js"></script>
 
@@ -628,10 +748,219 @@
   var RECIPE_SCOOP_CATALOG = [];
   var DISH_OUT_SCOOP_CATALOG = [];
   var SCOOP_INVENTORY_CATALOG = {};
+  var SCOOP_CONFIG = [];
+  var SCOOP_CONFIG_BY_DISH_NAME = {};
+  /** Fresh per-dish scoops from GET /api/scoop-config (see scoopDishLoader.js). */
+  var dishScoopPickerCache = new Map();
+  var dishOutUsableScoopSelectGen = 0;
+
+  function uniqueScoopPickerRows(rows) {
+    const seen = new Set();
+    const out = [];
+    (rows || []).forEach(s => {
+      const scoop = String(s.scoop_name || s.dish_out_scoop || "").trim();
+      if (!scoop || seen.has(scoop)) return;
+      seen.add(scoop);
+      out.push(s);
+    });
+    return out;
+  }
+
+  function isDefaultAutoScoopForDish(dishName, scoopName) {
+    const prefix = String(dishName || "").trim().toLowerCase();
+    const scoop = String(scoopName || "").trim().toLowerCase();
+    if (!prefix || !scoop) return false;
+    return (
+      scoop === prefix + "_gm_in" ||
+      scoop === prefix + "_gm_out" ||
+      scoop === prefix + "_gm_reciepe" ||
+      scoop === prefix + "_1_portion"
+    );
+  }
+
+  function isDishOutPickerScoopName(scoopName) {
+    if (typeof ScoopStaticBuilders !== "undefined" && ScoopStaticBuilders.isDishOutPickerScoop) {
+      return ScoopStaticBuilders.isDishOutPickerScoop(scoopName);
+    }
+    const s = String(scoopName || "").toLowerCase();
+    if (!s) return false;
+    if (s.endsWith("_in") || s.endsWith("_inventory")) return false;
+    if (s.endsWith("_out") && !s.endsWith("_1_portion")) return false;
+    return true;
+  }
+
+  /** Active rows + custom scoops (e.g. _peda) even when marked unused in Item Details. */
+  function recipeScoopPickerRows(dishName) {
+    const name = (dishName || "").trim();
+    return uniqueScoopPickerRows(scoopsForDishName(name)).filter(row => {
+      const scoop = row.scoop_name || "";
+      if (!row.unused) return true;
+      return !isDefaultAutoScoopForDish(name, scoop);
+    });
+  }
+
+  function processedUsableScoopRows(dishName) {
+    return recipeScoopPickerRows(dishName).filter(row => {
+      const scoop = String(row.scoop_name || "").toLowerCase();
+      if (scoop.endsWith("_in") || scoop.endsWith("_inventory")) return false;
+      if (typeof Csv !== "undefined" && Csv.isAllowedUsableProcessedDestUnit) {
+        return Csv.isAllowedUsableProcessedDestUnit(row.destination_unit);
+      }
+      return true;
+    });
+  }
+  var USABLE_PROCESSED_DISH_CATALOG = [];
   var VENDOR_ITEMS = {};
   var CATEGORY_ITEMS = {};
-  var UNIT_CONVERSION_CATALOG = [];
   window.isManualBillTotal = false;
+
+  var staticDataRefreshInFlight = false;
+
+  function updateStaticDataRefreshHint(loadResult) {
+    const hint = document.getElementById("staticDataRefreshHint");
+    if (!hint) return;
+    const data = (loadResult && loadResult.data) || {};
+    const from = (loadResult && loadResult.from) || data.source || "";
+    const src = data.source || from || "?";
+    const parts = ["Shared catalog from " + src];
+    if (data.fetchedAt) {
+      try {
+        parts.push(new Date(data.fetchedAt).toLocaleString());
+      } catch (e) {
+        parts.push(String(data.fetchedAt));
+      }
+    }
+    if (from === "cache-stale") parts.push("(offline cache — server unreachable)");
+    if (from === "catalog.js" && isServerMode()) parts.push("(DB unavailable — using catalog.js)");
+    hint.textContent = parts.join(" · ");
+    hint.className = "hint" + (from === "cache-stale" ? " err" : " ok");
+  }
+
+  function applyModuleCatalogs() {
+    if (typeof ItemDetails !== "undefined" && ItemDetails.updateCatalog) {
+      ItemDetails.updateCatalog({ catalog: CATALOG, dishCatalog: DISH_CATALOG });
+    }
+    if (typeof RawMaterials !== "undefined" && RawMaterials.updateCatalog) {
+      RawMaterials.updateCatalog(CATALOG);
+    }
+    if (typeof Dishes !== "undefined" && Dishes.updateCatalog) {
+      Dishes.updateCatalog(DISH_CATALOG);
+    }
+  }
+
+  function syncInRowScoopsFromCatalog(tr) {
+    const ci = tr.dataset.cat;
+    if (ci === "" || ci == null || CATALOG[+ci] === undefined) return;
+    const scoopIn = tr.querySelector(".i-scoop");
+    const scoops = SCOOP_IN_CATALOG.filter(s => s.itemname === CATALOG[+ci].itemname);
+    scoopIn.disabled = scoops.length === 0;
+    const cur = tr.dataset.scoop || scoopIn.value.trim();
+    const entry = scoops.find(s => s.scoop_in === cur);
+    if (entry) {
+      scoopIn.value = entry.scoop_in;
+    } else if (scoops.length === 1) {
+      tr.dataset.scoop = scoops[0].scoop_in;
+      scoopIn.value = scoops[0].scoop_in;
+    }
+  }
+
+  function syncOutRowScoopsFromCatalog(tr) {
+    const ci = tr.dataset.cat;
+    if (ci === "" || ci == null || CATALOG[+ci] === undefined) return;
+    const scoopIn = tr.querySelector(".i-scoop");
+    const qtyIn = tr.querySelector(".i-qty");
+    const scoops = SCOOP_OUT_CATALOG.filter(s => s.itemname === CATALOG[+ci].itemname);
+    scoopIn.disabled = scoops.length === 0;
+    const cur = tr.dataset.scoop || scoopIn.value.trim();
+    const entry = scoops.find(s => s.scoop_out === cur);
+    if (entry && qtyIn.value === "") {
+      qtyIn.value = entry.defaultQty ?? 1;
+    } else if (scoops.length === 1 && !cur) {
+      tr.dataset.scoop = scoops[0].scoop_out;
+      scoopIn.value = scoops[0].scoop_out;
+      if (qtyIn.value === "") qtyIn.value = scoops[0].defaultQty ?? 1;
+    }
+  }
+
+  function syncRecipeRowScoopsFromCatalog(tr) {
+    const ci = tr.dataset.cat;
+    if (ci === "" || ci == null || RECIPE_CATALOG[+ci] === undefined) return;
+    const scoopIn = tr.querySelector(".i-scoop");
+    const name = RECIPE_CATALOG[+ci].recipeItemName;
+    const scoops = RECIPE_SCOOP_CATALOG.filter(s => s.recipeItemName === name);
+    scoopIn.disabled = scoops.length === 0;
+    const cur = tr.dataset.scoop || scoopIn.value.trim();
+    if (!cur && scoops.length === 1) {
+      tr.dataset.scoop = scoops[0].recipeScoop;
+      scoopIn.value = scoops[0].recipeScoop;
+    }
+  }
+
+  function syncProcessedRowScoopsFromCatalog(tr) {
+    const di = tr.dataset.dish;
+    if (di === "" || di == null || DISH_CATALOG[+di] === undefined) return;
+    const scoopIn = tr.querySelector(".i-scoop");
+    const dishName = DISH_CATALOG[+di].dishName;
+    const scoops = allowedProcessedScoops(dishName);
+    scoopIn.disabled = scoops.length === 0;
+    const cur = tr.dataset.scoop || scoopIn.value.trim();
+    if (!cur) {
+      const def = defaultProcessedScoopForDish(dishName, scoops);
+      if (def) {
+        tr.dataset.scoop = def;
+        scoopIn.value = def;
+      }
+    } else if (!scoops.some(s => s.dish_out_scoop === cur)) {
+      const def = defaultProcessedScoopForDish(dishName, scoops);
+      tr.dataset.scoop = def;
+      scoopIn.value = def;
+    }
+  }
+
+  function refreshBillRowScoopUI() {
+    document.querySelectorAll("#inBody tr").forEach(syncInRowScoopsFromCatalog);
+    document.querySelectorAll("#outBody tr").forEach(syncOutRowScoopsFromCatalog);
+    document.querySelectorAll("#recipeBody tr").forEach(syncRecipeRowScoopsFromCatalog);
+    document.querySelectorAll("#processedBody tr").forEach(syncProcessedRowScoopsFromCatalog);
+    refreshIn();
+    refreshOut();
+    refreshRecipe();
+  }
+
+  async function refreshStaticData() {
+    if (staticDataRefreshInFlight) return;
+    const btn = document.getElementById("staticDataRefreshBtn");
+    const hint = document.getElementById("staticDataRefreshHint");
+    staticDataRefreshInFlight = true;
+    if (btn) btn.disabled = true;
+    if (hint) {
+      hint.className = "hint";
+      hint.textContent = "Refreshing shared catalog data…";
+    }
+    try {
+      const loadResult = await StaticDataFetcher.load({
+        isServerMode: isServerMode,
+        forceRefresh: true
+      });
+      syncStaticGlobals(loadResult.data);
+      if (typeof ScoopDishLoader !== "undefined" && ScoopDishLoader.invalidateAll) {
+        ScoopDishLoader.invalidateAll();
+      }
+      applyModuleCatalogs();
+      refreshBillRowScoopUI();
+      onRecipeDishChange();
+      updateStaticDataRefreshHint(loadResult);
+      renderCfgWarnBanner({ data: loadResult.data, from: loadResult.from });
+    } catch (e) {
+      if (hint) {
+        hint.textContent = "Refresh failed: " + (e.message || String(e));
+        hint.className = "hint err";
+      }
+    } finally {
+      staticDataRefreshInFlight = false;
+      if (btn) btn.disabled = false;
+    }
+  }
 
   function syncStaticGlobals(data) {
     ALL_ITEMS = data.ALL_ITEMS || "All";
@@ -649,9 +978,12 @@
     RECIPE_SCOOP_CATALOG = data.RECIPE_SCOOP_CATALOG || [];
     DISH_OUT_SCOOP_CATALOG = data.DISH_OUT_SCOOP_CATALOG || [];
     SCOOP_INVENTORY_CATALOG = data.SCOOP_INVENTORY_CATALOG || {};
+    SCOOP_CONFIG = data.SCOOP_CONFIG || [];
+    SCOOP_CONFIG_BY_DISH_NAME = data.SCOOP_CONFIG_BY_DISH_NAME || {};
+    dishScoopPickerCache = new Map();
+    USABLE_PROCESSED_DISH_CATALOG = data.USABLE_PROCESSED_DISH_CATALOG || [];
     VENDOR_ITEMS = data.VENDOR_ITEMS || {};
     CATEGORY_ITEMS = data.CATEGORY_ITEMS || [];
-    UNIT_CONVERSION_CATALOG = data.UNIT_CONVERSION_CATALOG || [];
     StaticDataFetcher.applyToWindow({
       ALL_ITEMS: ALL_ITEMS,
       VENDORS: VENDORS,
@@ -665,24 +997,52 @@
       RECIPE_SCOOP_CATALOG: RECIPE_SCOOP_CATALOG,
       DISH_OUT_SCOOP_CATALOG: DISH_OUT_SCOOP_CATALOG,
       SCOOP_INVENTORY_CATALOG: SCOOP_INVENTORY_CATALOG,
+      SCOOP_CONFIG: SCOOP_CONFIG,
+      SCOOP_CONFIG_BY_DISH_NAME: SCOOP_CONFIG_BY_DISH_NAME,
+      USABLE_PROCESSED_DISH_CATALOG: USABLE_PROCESSED_DISH_CATALOG,
       VENDOR_ITEMS: VENDOR_ITEMS,
       CATEGORY_ITEMS: CATEGORY_ITEMS,
-      UNIT_CONVERSION_CATALOG: UNIT_CONVERSION_CATALOG,
       source: data.source,
       fetchedAt: data.fetchedAt
     });
   }
 
-  /* Display Warnings if misconfigured */
-  if (cfgWarnings.length) {
-    const box = document.getElementById("cfgWarn");
-    box.style.display = "block";
-    box.textContent = "catalog.js warnings:\n" + cfgWarnings.join("\n");
+  function isServerMode() {
+    return window.Query?.isServerMode
+      ? window.Query.isServerMode()
+      : (location.protocol === 'http:' || location.protocol === 'https:');
   }
 
-  /* Helpers */
-  function num(v) { const n = parseFloat(v); return isNaN(n) ? 0 : n; }
-  function isServerMode() { return window.Query?.isServerMode ? window.Query.isServerMode() : (location.protocol === 'http:' || location.protocol === 'https:'); }
+  /** file:// or bundled static_seed / catalog.js (no live DB static-data). */
+  function shouldShowOfflineBanner(loadResult) {
+    if (location.protocol === 'file:') return true;
+    const src = (loadResult && loadResult.data && loadResult.data.source) || '';
+    return src === 'static_seed_catalog.js'
+      || src === 'static_seed_core.js+static_seed_materials.js'
+      || src === 'catalog.js';
+  }
+
+  function renderCfgWarnBanner(loadResult) {
+    const box = document.getElementById("cfgWarn");
+    if (!box) return;
+    const parts = [];
+    if (cfgWarnings.length) {
+      parts.push("catalog.js warnings:\n" + cfgWarnings.join("\n"));
+    }
+    if (shouldShowOfflineBanner(loadResult)) {
+      parts.push(
+        "Offline mode: catalog data and Export CSV work. Save to DB, stock lookup, and Query require the app server (docker compose up → http://localhost:3050)."
+      );
+    }
+    if (loadResult && loadResult.from === 'catalog.js' && isServerMode()) {
+      parts.push("Static data loaded from catalog.js fallback (DB tables may be empty).");
+    }
+    if (parts.length) {
+      box.style.display = "block";
+      box.textContent = parts.join("\n\n");
+    }
+  }
+
   window.stockByItem = {};
 
   function formatStockGm(gm) {
@@ -716,6 +1076,7 @@
   }
   window.loadStockMap = loadStockMap;
   window.updateRowStock = updateRowStock;
+  window.refreshStaticData = refreshStaticData;
 
   function switchTab(evt, tabId) {
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -806,11 +1167,30 @@
      MODULE 1: INVENTORY IN (BILL ADDITIONS)
      ========================================================================== */
 
+  /** Match catalog itemname to legacy vendor allow-list tokens (case / spelling variants). */
+  function catalogNameMatchesVendorAllow(catalogName, vendorToken) {
+    const e = (catalogName || "").trim().toLowerCase();
+    const v = (vendorToken || "").trim().toLowerCase();
+    if (!e || !v) return false;
+    if (e === v) return true;
+    if (e.endsWith(v) || e.startsWith(v + " ") || e.includes(" " + v + " ")) return true;
+    if (v.length >= 4 && e.includes(v)) return true;
+    return false;
+  }
+
   function allowedInItems(vendor) {
     if (!vendor) return [];
+    const v = vendor.trim();
+    if (v === "ALL" || v === ALL_ITEMS) return CATALOG.map(e => e.itemname);
     const cfg = VENDOR_ITEMS[vendor];
     if (cfg === undefined || cfg === ALL_ITEMS) return CATALOG.map(e => e.itemname);
-    return cfg.filter(n => CATALOG.some(e => e.itemname === n));
+    const allowed = new Set();
+    cfg.forEach(token => {
+      CATALOG.forEach(e => {
+        if (catalogNameMatchesVendorAllow(e.itemname, token)) allowed.add(e.itemname);
+      });
+    });
+    return Array.from(allowed);
   }
 
   function filterInCatalog(term) {
@@ -852,8 +1232,7 @@
         const scoops = SCOOP_IN_CATALOG.filter(s => s.itemname === CATALOG[ci].itemname);
         scoopIn.disabled = scoops.length === 0;
         if (scoops.length === 1) {
-          tr.dataset.scoop = scoops[0].scoop_in; scoopIn.value = scoops[0].scoop_in; rateIn.value = scoops[0].rate;
-          calcInTotal(tr);
+          tr.dataset.scoop = scoops[0].scoop_in; scoopIn.value = scoops[0].scoop_in;
         }
       }
       updateRowStock(tr);
@@ -865,27 +1244,76 @@
     attachCombo(scoopIn, term => {
       const ci = tr.dataset.cat; if (!ci) return [];
       return SCOOP_IN_CATALOG.filter(s => s.itemname === CATALOG[+ci].itemname && s.scoop_in.toLowerCase().includes((term||'').toLowerCase()))
-              .map(s => ({ key: s.scoop_in, label: s.scoop_in, sec: "rate: " + s.rate }));
+              .map(s => ({ key: s.scoop_in, label: s.scoop_in, sec: s.factor != null ? "factor: " + s.factor : "" }));
     }, key => {
       const ci = tr.dataset.cat;
       const entry = SCOOP_IN_CATALOG.find(s => s.itemname === CATALOG[+ci].itemname && s.scoop_in === key);
-      if (entry) { tr.dataset.scoop = key; scoopIn.value = key; rateIn.value = entry.rate; calcInTotal(tr); }
+      if (entry) { tr.dataset.scoop = key; scoopIn.value = key; }
       refreshIn();
     });
 
-    qtyIn.addEventListener("input", () => { calcInTotal(tr); refreshIn(); });
-    rateIn.addEventListener("input", () => { calcInTotal(tr); refreshIn(); });
+    qtyIn.addEventListener("input", () => { syncInRowAmounts(tr, "qty"); refreshIn(); });
+    rateIn.addEventListener("input", () => { syncInRowAmounts(tr, "rate"); refreshIn(); });
+    tr.querySelector(".i-total").addEventListener("input", () => { syncInRowAmounts(tr, "total"); refreshIn(); });
     tr.querySelector(".i-cmt").addEventListener("input", refreshIn);
 
     applyInVendorState(tr);
     refreshIn();
   }
 
-  function calcInTotal(tr) {
-    const q = num(tr.querySelector(".i-qty").value);
-    const r = num(tr.querySelector(".i-rate").value);
-    tr.querySelector(".i-total").value = (q * r) ? (q * r).toFixed(2) : (q * r);
+  function parseOptionalAmount(v) {
+    const s = String(v == null ? "" : v).trim();
+    if (s === "") return null;
+    const n = parseFloat(s);
+    return Number.isFinite(n) ? n : null;
   }
+
+  function formatInAmount(n) {
+    if (!Number.isFinite(n)) return "";
+    const rounded = Math.round(n * 100) / 100;
+    return (rounded % 1 === 0) ? String(rounded) : rounded.toFixed(2);
+  }
+
+  /** qty×rate ↔ itemtotal; overriding total sets rate = itemtotal/qty. */
+  function syncInRowAmounts(tr, edited) {
+    if (tr._syncingInAmounts) return;
+    tr._syncingInAmounts = true;
+    try {
+      const qtyEl = tr.querySelector(".i-qty");
+      const rateEl = tr.querySelector(".i-rate");
+      const totalEl = tr.querySelector(".i-total");
+      const q = parseOptionalAmount(qtyEl.value);
+      const r = parseOptionalAmount(rateEl.value);
+      const t = parseOptionalAmount(totalEl.value);
+
+      if (edited === "total") {
+        if (t != null && q != null && q !== 0) rateEl.value = formatInAmount(t / q);
+      } else if (edited === "rate") {
+        if (q != null && r != null) totalEl.value = formatInAmount(q * r);
+      } else if (edited === "qty") {
+        if (t != null && q != null && q !== 0) rateEl.value = formatInAmount(t / q);
+        else if (q != null && r != null) totalEl.value = formatInAmount(q * r);
+      }
+    } finally {
+      tr._syncingInAmounts = false;
+    }
+  }
+
+  function calcInTotal(tr) {
+    syncInRowAmounts(tr, "rate");
+  }
+
+  function sumInItemTotals() {
+    let sum = 0;
+    document.querySelectorAll("#inBody tr").forEach(tr => {
+      const ci = tr.dataset.cat;
+      if (ci === "" || !CATALOG[+ci]) return;
+      sum += num(tr.querySelector(".i-total").value);
+    });
+    return sum;
+  }
+  window.calcInTotal = calcInTotal;
+  window.syncInRowAmounts = syncInRowAmounts;
 
   function applyInVendorState(tr) {
     const enabled = !!document.getElementById("inVendor").value.trim();
@@ -901,13 +1329,13 @@
   }
 
   function refreshIn() {
-    let totalQty = 0, computedBillTotal = 0, i = 0;
+    let totalQty = 0, i = 0;
     document.querySelectorAll("#inBody tr").forEach(tr => {
       totalQty += num(tr.querySelector(".i-qty").value);
-      computedBillTotal += num(tr.querySelector(".i-total").value);
       tr.querySelector(".idx").textContent = ++i;
     });
     document.getElementById("inTotalQty").value = totalQty;
+    const computedBillTotal = sumInItemTotals();
     if (!window.isManualBillTotal) document.getElementById("inBillTotal").value = computedBillTotal;
 
     renderInPreviews();
@@ -926,11 +1354,12 @@
       const qty = num(tr.querySelector(".i-qty").value);
       const scoopInv = SCOOP_INVENTORY_CATALOG[e.itemname] || "";
 
-      billRows.push([vendor, dt, billno, e.itemname, e.pgNo, tr.dataset.scoop, qty, num(tr.querySelector(".i-rate").value), num(tr.querySelector(".i-total").value), tr.querySelector(".i-cmt").value.trim()]);
+      billRows.push([vendor, dt, billno, e.itemname, e.pgNo, tr.dataset.scoop, qty, optionalNum(tr.querySelector(".i-rate").value), num(tr.querySelector(".i-total").value), tr.querySelector(".i-cmt").value.trim()]);
       invRows.push([e.itemname, e.pgNo, qty, dt, billno, scoopInv]);
     });
 
-    document.getElementById("previewBill").textContent = Csv.buildInBillPreview(vendor, dt, billno, billRows, num(document.getElementById("inBillTotal").value), totalCmt) || "-- add items to see preview --";
+    const previewBillTotal = sumInItemTotals();
+    document.getElementById("previewBill").textContent = Csv.buildInBillPreview(vendor, dt, billno, billRows, previewBillTotal, totalCmt) || "-- add items to see preview --";
     document.getElementById("previewInv").textContent = Csv.buildInInvPreview(invRows) || "-- add items to see preview --";
   }
 
@@ -940,6 +1369,7 @@
     document.getElementById("inBillNo").value = "";
     document.getElementById("inBillTotalCmt").value = "";
     window.isManualBillTotal = false;
+    window.inBillSourceOrderIds = null;
     addInRow(); addInRow(); onInVendorChange();
   }
 
@@ -1053,7 +1483,17 @@
       outRows.push([cat, dt, tm, e.itemname, e.pgNo, tr.dataset.scoop, num(tr.querySelector(".i-qty").value), tr.querySelector(".i-cmt").value.trim()]);
     });
 
-    document.getElementById("previewOut").textContent = Csv.buildOutPreview(outRows, cat, dt, tm, num(document.getElementById("outTotalQty").value), totalCmt) || "-- add items to see preview --";
+    const shareMode = document.querySelector('input[name="outShareFormat"]:checked')?.value || "csv";
+    const titleEl = document.getElementById("outPreviewTitle");
+    if (titleEl) {
+      titleEl.textContent = shareMode === "requirement"
+        ? "Requirement preview - Inventory Out"
+        : "CSV Preview - Inventory Out";
+    }
+    const preview = shareMode === "requirement"
+      ? Csv.buildOutRequirementShare(outRows, dt)
+      : Csv.buildOutPreview(outRows, cat, dt, tm, num(document.getElementById("outTotalQty").value), totalCmt);
+    document.getElementById("previewOut").textContent = preview || "-- add items to see preview --";
   }
 
   function setOutNow() {
@@ -1067,6 +1507,40 @@
     refreshOut();
   }
 
+  function getOutPreviewShareText() {
+    renderOutPreview();
+    const el = document.getElementById("previewOut");
+    const text = el ? String(el.textContent || "").trim() : "";
+    if (!text || text.startsWith("--")) return null;
+    return text;
+  }
+
+  async function shareOutViaWhatsApp() {
+    const cat = document.getElementById("outCategory").value.trim();
+    const dt = document.getElementById("outDt").value;
+    if (!cat || !dt) {
+      alert("Select Category and Date before sharing.");
+      return;
+    }
+    const text = getOutPreviewShareText();
+    if (!text) {
+      alert("Add at least one item to share.");
+      return;
+    }
+    let copied = false;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        copied = true;
+      }
+    } catch (e) { /* clipboard may be blocked */ }
+    const url = "https://wa.me/?text=" + encodeURIComponent(text);
+    window.open(url, "_blank", "noopener,noreferrer");
+    if (copied) {
+      alert("Preview copied to clipboard. Paste in WhatsApp if the message is empty.");
+    }
+  }
+
   function resetOut() {
     document.getElementById("outBody").innerHTML = "";
     document.getElementById("outCategory").value = "";
@@ -1078,11 +1552,126 @@
   /* ==========================================================================
      MODULE 3: RECIPE MAKER
      ========================================================================== */
+  function dishCodeForName(dishName) {
+    if (typeof ScoopDishLoader !== "undefined" && ScoopDishLoader.dishCodeForName) {
+      return ScoopDishLoader.dishCodeForName(dishName);
+    }
+    const key = (dishName || "").trim().toLowerCase();
+    const entry = (DISH_CATALOG || []).find(d =>
+      String(d.dishName || d.dishname || "").trim().toLowerCase() === key
+    );
+    return entry ? String(entry.dishCode || entry.dish_code || "").trim() : "";
+  }
+
+  function scoopsForDishName(dishName) {
+    const name = (dishName || "").trim();
+    const nameKey = name.toLowerCase();
+    if (dishScoopPickerCache.has(nameKey)) return dishScoopPickerCache.get(nameKey);
+    const codeKey = dishCodeForName(name).toLowerCase();
+    let raw = [];
+    if (codeKey && SCOOP_CONFIG_BY_DISH_NAME && SCOOP_CONFIG_BY_DISH_NAME[codeKey]?.length) {
+      raw = SCOOP_CONFIG_BY_DISH_NAME[codeKey];
+    } else {
+      raw = (SCOOP_CONFIG_BY_DISH_NAME && SCOOP_CONFIG_BY_DISH_NAME[nameKey]) || [];
+    }
+    return uniqueScoopPickerRows(raw);
+  }
+
+  function mergeDishOutScoopEntries(dishName, rows) {
+    const name = (dishName || "").trim();
+    if (!name) return [];
+    const key = name.toLowerCase();
+    const seen = new Set();
+    const out = [];
+    (rows || []).forEach(s => {
+      const scoop = s.scoop_name || s.dish_out_scoop;
+      if (!scoop || seen.has(scoop) || !isDishOutPickerScoopName(scoop)) return;
+      seen.add(scoop);
+      out.push({ dishname: name, dish_out_scoop: scoop });
+    });
+    DISH_OUT_SCOOP_CATALOG.filter(s => s.dishname.toLowerCase() === key).forEach(s => {
+      if (!seen.has(s.dish_out_scoop)) {
+        seen.add(s.dish_out_scoop);
+        out.push(s);
+      }
+    });
+    return out;
+  }
+
   function allowedDishOutScoops(dishName) {
+    const merged = mergeDishOutScoopEntries(dishName, recipeScoopPickerRows(dishName));
+    if (merged.length) return merged;
     if (!dishName) return [];
     const matches = DISH_OUT_SCOOP_CATALOG.filter(s => s.dishname.toLowerCase() === dishName.toLowerCase());
     return matches.length ? matches : DISH_OUT_SCOOP_CATALOG;
   }
+
+  async function ensureDishScoopsLoaded(dishName, forceRefresh) {
+    const name = (dishName || "").trim();
+    const code = dishCodeForName(name);
+    const nameKey = name.toLowerCase();
+    if (!name && !code) return [];
+    if (!forceRefresh && dishScoopPickerCache.has(nameKey)) return dishScoopPickerCache.get(nameKey);
+    if (typeof ScoopDishLoader !== "undefined" && ScoopDishLoader.getScoopsByDishName) {
+      try {
+        const rows = uniqueScoopPickerRows(await ScoopDishLoader.getScoopsByDishName(name, !!forceRefresh, code));
+        dishScoopPickerCache.set(nameKey, rows);
+        if (SCOOP_CONFIG_BY_DISH_NAME) {
+          if (code) SCOOP_CONFIG_BY_DISH_NAME[code.toLowerCase()] = rows;
+          if (name) SCOOP_CONFIG_BY_DISH_NAME[nameKey] = rows;
+        }
+        return rows;
+      } catch (e) { /* fallback below */ }
+    }
+    const mem = scoopsForDishName(name);
+    dishScoopPickerCache.set(nameKey, mem);
+    return mem;
+  }
+
+  function refreshDishOutUsableScoopSelect() {
+    const gen = ++dishOutUsableScoopSelectGen;
+    const dishName = document.getElementById("recipeDishName").value.trim();
+    const sel = document.getElementById("dishOutUsableProcessedScoop");
+    if (!sel) return;
+    const prev = sel.value;
+    const rows = processedUsableScoopRows(dishName);
+    if (gen !== dishOutUsableScoopSelectGen) return;
+    const opts = rows.map(s => {
+      const scoop = s.scoop_name || "";
+      const label = scoop + (s.destination_unit ? " (" + s.destination_unit + ")" : "");
+      return '<option value="' + scoop.replace(/"/g, "&quot;") + '">' + label.replace(/</g, "&lt;") + "</option>";
+    }).join("");
+    sel.innerHTML = '<option value="">— select scoop —</option>' + opts;
+    if (prev && [...sel.options].some(o => o.value === prev)) sel.value = prev;
+    const hint = document.getElementById("dishOutUsableScoopHint");
+    if (hint) {
+      hint.textContent = !dishName
+        ? "Select dish name first"
+        : (rows.length ? "Pick scoop for usable processed output" : "No scoops in scoop_config for this dish");
+    }
+    if (typeof Csv !== "undefined" && Csv.updateUsableDishOutResultDisplay) Csv.updateUsableDishOutResultDisplay();
+  }
+
+  async function toggleDishOutUsableUI() {
+    const on = Csv.dishOutUsableInOtherOn();
+    const usableWrap = document.getElementById("dishOutUsableScoopWrap");
+    const standardWrap = document.getElementById("dishOutStandardWrap");
+    if (usableWrap) usableWrap.hidden = !on;
+    if (standardWrap) standardWrap.hidden = on;
+    if (on) {
+      const dishName = document.getElementById("recipeDishName").value.trim();
+      if (dishName) {
+        if (typeof ScoopDishLoader !== "undefined" && ScoopDishLoader.invalidateDish) {
+          ScoopDishLoader.invalidateDish(dishName, dishCodeForName(dishName));
+        }
+        dishScoopPickerCache.delete(dishName.toLowerCase());
+        await ensureDishScoopsLoaded(dishName, true);
+      }
+      refreshDishOutUsableScoopSelect();
+    }
+    refreshRecipe();
+  }
+  window.toggleDishOutUsableUI = toggleDishOutUsableUI;
 
   function filterRecipeCatalog(term) {
     const q = (term || "").trim().toLowerCase();
@@ -1156,18 +1745,52 @@
   function filterDishCatalog(term) {
     const q = (term || "").trim().toLowerCase();
     const exclude = recipeDishName().toLowerCase();
+    const usableNames = new Set(
+      (USABLE_PROCESSED_DISH_CATALOG || []).map(d => String(d.dishName || d.dishname || "").toLowerCase()).filter(Boolean)
+    );
     return DISH_CATALOG.map((e, i) => i)
       .filter(i => {
         const d = DISH_CATALOG[i];
         if (exclude && d.dishName.toLowerCase() === exclude) return false;
+        if (usableNames.size && !usableNames.has(d.dishName.toLowerCase())) return false;
         return d.dishName.toLowerCase().includes(q) || d.dishCode.toLowerCase().includes(q);
       });
   }
 
   function allowedProcessedScoops(dishName) {
+    const merged = mergeDishOutScoopEntries(dishName, recipeScoopPickerRows(dishName));
+    if (merged.length) return merged;
     if (!dishName) return [];
-    const matches = DISH_OUT_SCOOP_CATALOG.filter(s => s.dishname.toLowerCase() === dishName.toLowerCase());
-    return matches.length ? matches : DISH_OUT_SCOOP_CATALOG;
+    return DISH_OUT_SCOOP_CATALOG.filter(s =>
+      s.dishname.toLowerCase() === dishName.toLowerCase()
+    );
+  }
+
+  function afterDishScoopsLoaded(dishName) {
+    refreshDishOutUsableScoopSelect();
+    document.querySelectorAll("#processedBody tr").forEach(syncProcessedRowScoopsFromCatalog);
+    const mainDish = document.getElementById("recipeDishName").value.trim();
+    if (mainDish && mainDish.toLowerCase() === String(dishName || "").trim().toLowerCase()) {
+      const dishOutScoopEl = document.getElementById("recipeDishOutScoop");
+      if (dishOutScoopEl && !Csv.dishOutUsableInOtherOn()) {
+        const available = allowedDishOutScoops(mainDish);
+        if (available.length === 1 && !dishOutScoopEl.value.trim()) {
+          dishOutScoopEl.value = available[0].dish_out_scoop;
+        }
+      }
+    }
+    refreshRecipe();
+  }
+
+  function defaultProcessedScoopForDish(dishName, scoops) {
+    if (!scoops || !scoops.length) return "";
+    const entry = (USABLE_PROCESSED_DISH_CATALOG || []).find(d =>
+      String(d.dishName || d.dishname || "").toLowerCase() === String(dishName || "").toLowerCase()
+    );
+    const preferred = entry && entry.usableProcessedScoop ? entry.usableProcessedScoop : "";
+    if (preferred && scoops.some(s => s.dish_out_scoop === preferred)) return preferred;
+    if (scoops.length === 1) return scoops[0].dish_out_scoop;
+    return "";
   }
 
   function addProcessedRow() {
@@ -1189,25 +1812,27 @@
     const scoopIn = tr.querySelector(".i-scoop");
     const qtyIn = tr.querySelector(".i-qty");
 
+    const applyProcessedScoopsForDish = dishName => {
+      const scoops = allowedProcessedScoops(dishName);
+      scoopIn.disabled = scoops.length === 0;
+      const def = defaultProcessedScoopForDish(dishName, scoops);
+      tr.dataset.scoop = def;
+      scoopIn.value = def;
+      refreshRecipe();
+    };
+
     const resolveDish = di => {
       if (di === null || DISH_CATALOG[di] === undefined) {
         tr.dataset.dish = ""; dishIn.value = ""; codeIn.value = "";
         scoopIn.value = ""; scoopIn.disabled = true; tr.dataset.scoop = "";
+        refreshRecipe();
       } else {
         tr.dataset.dish = String(di);
         dishIn.value = DISH_CATALOG[di].dishName;
         codeIn.value = DISH_CATALOG[di].dishCode || "";
-        const scoops = allowedProcessedScoops(DISH_CATALOG[di].dishName);
-        scoopIn.disabled = scoops.length === 0;
-        if (scoops.length === 1) {
-          tr.dataset.scoop = scoops[0].dish_out_scoop;
-          scoopIn.value = scoops[0].dish_out_scoop;
-        } else {
-          scoopIn.value = "";
-          tr.dataset.scoop = "";
-        }
+        const dishName = DISH_CATALOG[di].dishName;
+        ensureDishScoopsLoaded(dishName, false).then(() => applyProcessedScoopsForDish(dishName));
       }
-      refreshRecipe();
     };
 
     attachCombo(dishIn, term => filterDishCatalog(term).map(i => ({
@@ -1334,12 +1959,16 @@
     if (!dishName) {
       dishOutScoopEl.value = "";
       dishOutHint.textContent = "Select dish name first";
+      refreshDishOutUsableScoopSelect();
     } else {
       dishOutHint.textContent = "Search & select dish out scoop";
-      const available = allowedDishOutScoops(dishName);
-      if (available.length === 1) {
-        dishOutScoopEl.value = available[0].dish_out_scoop;
-      }
+      ensureDishScoopsLoaded(dishName, true).then(() => {
+        const available = allowedDishOutScoops(dishName);
+        if (available.length === 1 && !Csv.dishOutUsableInOtherOn()) {
+          dishOutScoopEl.value = available[0].dish_out_scoop;
+        }
+        afterDishScoopsLoaded(dishName);
+      });
     }
 
     document.querySelectorAll("#recipeBody tr").forEach(tr => applyRecipeDishState(tr));
@@ -1373,20 +2002,15 @@
     });
     document.getElementById("processedTotalQty").value = processedQty;
     renderRecipePreview();
+    if (typeof Csv !== "undefined" && Csv.updateUsableDishOutResultDisplay) Csv.updateUsableDishOutResultDisplay();
   }
 
   function renderRecipePreview() {
     const dishName = document.getElementById("recipeDishName").value.trim();
-    const dishOutScoop = document.getElementById("recipeDishOutScoop").value.trim();
-    const dishOutCmt = document.getElementById("recipeDishOutCmt").value.trim();
-    const dishOutInGm = num(document.getElementById("dishOutInGm").value);
-    const dishOutInML = num(document.getElementById("dishOutInML").value);
-    const dishOutInPiece = num(document.getElementById("dishOutInPiece").value);
     const totalCmt = document.getElementById("recipeTotalCmt").value.trim();
     const processedTotalCmt = document.getElementById("processedTotalCmt").value.trim();
-
     const dishCode = document.getElementById("recipeDishCode").value.trim();
-    const recipeRows = Csv.collectRecipeRows(dishName, dishCode, dishOutScoop, dishOutInGm, dishOutInML, dishOutInPiece, dishOutCmt, totalCmt, processedTotalCmt);
+    const recipeRows = Csv.collectRecipeRows(dishName, dishCode, totalCmt, processedTotalCmt);
     document.getElementById("previewRecipe").textContent = Csv.buildRecipePreview(recipeRows) || "-- add items to see preview --";
   }
 
@@ -1410,10 +2034,17 @@
     document.getElementById("dishOutInGm").value = "";
     document.getElementById("dishOutInML").value = "";
     document.getElementById("dishOutInPiece").value = "";
+    Csv.setDishOutUsableInOther(false);
+    const usableScoopSel = document.getElementById("dishOutUsableProcessedScoop");
+    if (usableScoopSel) usableScoopSel.value = "";
+    const qtyScoopsIn = document.getElementById("dishOutQtyOfScoops");
+    if (qtyScoopsIn) qtyScoopsIn.value = "";
+    toggleDishOutUsableUI();
     document.getElementById("recipeTotalCmt").value = "";
     document.getElementById("processedTotalCmt").value = "";
     addRecipeRow(); addRecipeRow();
     addProcessedRow(); addProcessedRow();
+    if (typeof RecipeCost !== "undefined" && RecipeCost.clear) RecipeCost.clear();
     onRecipeDishChange();
   }
 
@@ -1425,17 +2056,59 @@
     if(!res.ok) throw new Error(data.detail||data.error||res.statusText);
     return data;
   }
+  async function loadInBillFromDB() {
+    const billNo = document.getElementById("inBillNo").value.trim();
+    const dt = document.getElementById("inDt").value.trim();
+    if (!billNo) { alert("Enter Bill No. to load."); return; }
+    if (!isServerMode()) {
+      alert("Load from DB requires the app server (docker compose up → http://localhost:3050)");
+      return;
+    }
+    const params = new URLSearchParams({ billNo });
+    if (dt) params.set("dt", dt);
+    try {
+      const res = await fetch("/api/orders/by-bill?" + params.toString());
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.detail || data.error || res.statusText);
+      if (!data.order) { alert("No bill found."); return; }
+      window.inBillSourceOrderIds = data.sourceOrderIds || null;
+      const applied = Csv.applyOrderToInForm(data.order);
+      let msg = "Loaded bill " + data.order.billNo + " (" + (data.order.items?.length || 0) + " merged line(s)).";
+      if (data.mergedOrders) {
+        msg += " Merged " + data.matchCount + " order(s).";
+        if (data.order.vendor === "ALL") msg += " Vendor set to ALL (multiple vendors).";
+      }
+      if (applied.skipped) msg += " " + applied.skipped + " line(s) skipped (not in catalog).";
+      alert(msg);
+      await loadStockMap();
+    } catch (e) {
+      alert("Load from DB failed: " + e.message);
+    }
+  }
+
   async function saveInDB(){
     const vendor=document.getElementById("inVendor").value.trim(), dt=document.getElementById("inDt").value, billNo=document.getElementById("inBillNo").value.trim();
     if(!vendor||!dt||!billNo){alert("Please complete Vendor, Date, and Bill No.");return;}
-    const items=[]; document.querySelectorAll("#inBody tr").forEach(tr=>{const ci=tr.dataset.cat;if(ci===""||!CATALOG[+ci])return;const e=CATALOG[+ci];items.push({itemname:e.itemname,pgNo:e.pgNo,scoopIn:tr.dataset.scoop||tr.querySelector(".i-scoop").value.trim(),qty:num(tr.querySelector(".i-qty").value),rate:num(tr.querySelector(".i-rate").value),itemTotal:num(tr.querySelector(".i-total").value),comments:tr.querySelector(".i-cmt").value.trim()});});
+    const items=[]; document.querySelectorAll("#inBody tr").forEach(tr=>{const ci=tr.dataset.cat;if(ci===""||!CATALOG[+ci])return;const e=CATALOG[+ci];const pgNo=tr.querySelector(".i-pg").value.trim()||e.pgNo||"";items.push({itemname:e.itemname,pgNo,scoopIn:tr.dataset.scoop||tr.querySelector(".i-scoop").value.trim(),qty:num(tr.querySelector(".i-qty").value),rate:optionalNumOrNull(tr.querySelector(".i-rate").value),itemTotal:num(tr.querySelector(".i-total").value),comments:tr.querySelector(".i-cmt").value.trim()});});
     if(!items.length){alert("Please select at least one item.");return;}
-    try{const d=await postJSON("/api/orders",{vendor,dt,billNo,billTotal:num(document.getElementById("inBillTotal").value),items});alert("Order saved to DB. ID: "+d.id);await loadStockMap();}catch(e){alert("Save to DB failed: "+e.message);}
+    const billTotal = sumInItemTotals();
+    if (!window.isManualBillTotal) document.getElementById("inBillTotal").value = billTotal;
+    const payload={vendor,dt,billNo,billTotal,items};
+    if(window.inBillSourceOrderIds&&window.inBillSourceOrderIds.length)payload.consolidateOrderIds=window.inBillSourceOrderIds;
+    try{
+      const d=await postJSON("/api/orders",payload);
+      window.inBillSourceOrderIds=null;
+      let msg="Order "+(d.updated?"updated":"saved")+" in DB. ID: "+d.id;
+      if(d.removedDuplicates)msg+=" | removed "+d.removedDuplicates+" duplicate bill row(s)";
+      if(d.rawMaterialsCostCount!=null)msg+=" | raw_materials_cost: "+d.rawMaterialsCostCount+" row(s)";
+      alert(msg);
+      await loadStockMap();
+    }catch(e){alert("Save to DB failed: "+e.message);}
   }
   async function saveOutToDB(){
     const category=document.getElementById("outCategory").value.trim(),dt=document.getElementById("outDt").value,time=document.getElementById("outTm").value||null;
     if(!category||!dt){alert("Please select Category and Date.");return;}
-    const items=[];document.querySelectorAll("#outBody tr").forEach(tr=>{const ci=tr.dataset.cat;if(ci===""||!CATALOG[+ci])return;const e=CATALOG[+ci];items.push({itemname:e.itemname,pgNo:e.pgNo,scoopOut:tr.dataset.scoop||tr.querySelector(".i-scoop").value.trim(),qty:num(tr.querySelector(".i-qty").value),comments:tr.querySelector(".i-cmt").value.trim()});});
+    const items=[];document.querySelectorAll("#outBody tr").forEach(tr=>{const ci=tr.dataset.cat;if(ci===""||!CATALOG[+ci])return;const e=CATALOG[+ci];const pgNo=tr.querySelector(".i-pg").value.trim()||e.pgNo||"";items.push({itemname:e.itemname,pgNo,scoopOut:tr.dataset.scoop||tr.querySelector(".i-scoop").value.trim(),qty:num(tr.querySelector(".i-qty").value),comments:tr.querySelector(".i-cmt").value.trim()});});
     if(!items.length){alert("Please select at least one item.");return;}
     try{const d=await postJSON("/api/inventory-out",{category,dt,time,items});alert("Inventory Out saved to DB. ID: "+d.id);await loadStockMap();}catch(e){alert("Save to DB failed: "+e.message);}
   }
@@ -1443,9 +2116,14 @@
     const payload = Csv.collectRecipePayloadFromForm();
     if (!payload.dishname) { alert("Please select or enter a Dish Name."); return; }
     if (!payload.rows.length) { alert("Please select at least one recipe item."); return; }
+    if (Csv.dishOutUsableInOtherOn()) {
+      const check = Csv.validateUsableDishOutForm();
+      if (!check.ok) { alert(check.error); return; }
+    }
     try {
       const d = await postJSON("/api/recipes", payload);
       alert("Recipe saved to DB. " + d.count + " row(s), last ID: " + d.id);
+      if (typeof refreshStaticData === "function") await refreshStaticData();
     } catch (e) {
       alert("Save to DB failed: " + e.message);
     }
@@ -1479,6 +2157,7 @@
       forceRefresh: false
     });
     syncStaticGlobals(loadResult.data);
+    updateStaticDataRefreshHint(loadResult);
     if (loadResult.warnings && loadResult.warnings.length) {
       cfgWarnings.push.apply(cfgWarnings, loadResult.warnings);
     }
@@ -1486,12 +2165,7 @@
       cfgWarnings.push("Static data loaded from catalog.js fallback (DB tables may be empty).");
     }
 
-    if (!isServerMode()) {
-      const box = document.getElementById("cfgWarn");
-      box.style.display = "block";
-      box.textContent = (box.textContent ? box.textContent + "\n\n" : "") +
-        "Offline mode: catalog data and Export CSV work. Save to DB, stock lookup, and Query require the server (docker compose up → http://localhost:3050).";
-    }
+    document.getElementById("staticDataRefreshBtn").addEventListener("click", refreshStaticData);
 
     // Attach Searchable Header Comboboxes
     attachHeaderCombo(document.getElementById("inVendor"), VENDORS, onInVendorChange);
@@ -1502,7 +2176,6 @@
     ItemDetails.init({
       catalog: CATALOG,
       dishCatalog: DISH_CATALOG,
-      unitConversions: UNIT_CONVERSION_CATALOG,
       attachCombo: attachCombo,
       isServerMode: isServerMode,
       postJSON: postJSON
@@ -1554,6 +2227,18 @@
     document.getElementById("processedTotalCmt").addEventListener("input", refreshRecipe);
     document.getElementById("recipeDishOutCmt").addEventListener("input", refreshRecipe);
     document.getElementById("recipeDishOutScoop").addEventListener("input", refreshRecipe);
+    const dishOutToggle = document.getElementById("dishOutUsableInOther");
+    if (dishOutToggle) {
+      dishOutToggle.addEventListener("click", () => {
+        Csv.setDishOutUsableInOther(!Csv.dishOutUsableInOtherOn());
+        toggleDishOutUsableUI();
+      });
+    }
+    const dishOutQtyScoops = document.getElementById("dishOutQtyOfScoops");
+    if (dishOutQtyScoops) dishOutQtyScoops.addEventListener("input", refreshRecipe);
+    const dishOutUsableScoop = document.getElementById("dishOutUsableProcessedScoop");
+    if (dishOutUsableScoop) dishOutUsableScoop.addEventListener("change", refreshRecipe);
+    toggleDishOutUsableUI();
     document.getElementById("dishOutInGm").addEventListener("input", refreshRecipe);
     document.getElementById("dishOutInML").addEventListener("input", refreshRecipe);
     document.getElementById("dishOutInPiece").addEventListener("input", refreshRecipe);
@@ -1565,6 +2250,7 @@
     addProcessedRow(); addProcessedRow();
     onRecipeDishChange();
     if (isServerMode()) loadStockMap().catch(() => {});
+    renderCfgWarnBanner(loadResult);
   }
 
   startApp().catch(err => {

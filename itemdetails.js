@@ -17,7 +17,6 @@
   let catalog = [];
   let dishCatalog = [];
   let entityType = "item";
-  let unitConversions = [];
   let attachComboFn = null;
   let isServerModeFn = () => false;
   let postJSONFn = null;
@@ -79,15 +78,10 @@
     return !!na && na === normUnit(b);
   }
 
-  function unitToScoopSlug(unitLabel, itemname) {
+  function unitToScoopSlug(unitLabel) {
     const t = normUnit(unitLabel) || String(unitLabel || "").trim().toLowerCase();
     if (!t) return "";
     if (t === "gm" || t === "ml" || t === "piece") return t;
-    for (const c of unitConversions) {
-      if (c.itemname && c.itemname !== "All" && c.itemname !== itemname) continue;
-      if (c.from_unit === t || String(c.from_label).toLowerCase() === t) return c.from_unit;
-      if (c.to_unit === t) return c.to_unit;
-    }
     return t.replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "");
   }
 
@@ -99,14 +93,14 @@
 
   function scoopComputedName(item, kind, unitLabel) {
     if (!item || !unitLabel) return "";
-    const slug = unitToScoopSlug(unitLabel, item);
+    const slug = unitToScoopSlug(unitLabel);
     return item + "_" + slug + "_" + scoopKindSuffix(kind);
   }
 
   /** Unit-only scoop name for chain roots not yet assigned IN/OUT/RECIPE (no suffix). */
   function scoopUnitOnlyName(item, unitLabel) {
     if (!item || !unitLabel) return "";
-    const slug = unitToScoopSlug(unitLabel, item);
+    const slug = unitToScoopSlug(unitLabel);
     return item + "_" + slug;
   }
 
@@ -961,6 +955,20 @@
     });
   }
 
+  /** Shared offline/online scoop_config rows for the selected item or dish (ScoopConfigStore). */
+  function scoopConfigRowsForSelection() {
+    const name = getItem();
+    if (!name) return [];
+    const store = global.ScoopConfigStore;
+    if (store && typeof store.getRowsForScoopItem === "function") {
+      return store.getRowsForScoopItem(name);
+    }
+    const q = name.trim().toLowerCase();
+    return (global.SCOOP_CONFIG || []).filter(
+      r => String(r.scoop_item_name || "").trim().toLowerCase() === q
+    );
+  }
+
   function listRowsFromApiRows(apiRows) {
     return (apiRows || []).map(r => ({
       itemname: r.scoop_item_name || r.scoopItemName || r.itemname || "",
@@ -996,27 +1004,62 @@
 
   async function loadDB() {
     if (isServerModeFn()) {
+      const scoopItemName = getItem();
+      if (!scoopItemName) {
+        alert(isDishMode() ? "Select a dish name first." : "Select an item name first.");
+        return;
+      }
       try {
-        const res = await fetch("/api/scoop-config");
+        const dishCode = isDishMode() ? getEntityId() : "";
+        const loadUrl = dishCode
+          ? "/api/scoop-config/by-dishcode?dishcode=" + encodeURIComponent(dishCode)
+          : "/api/scoop-config?scoopItemName=" + encodeURIComponent(scoopItemName);
+        const res = await fetch(loadUrl);
         const data = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(data.detail || data.error || res.statusText);
         listRows = listRowsFromApiRows(data.rows);
         renderList();
         renderPreview();
-        setMsg("Loaded " + listRows.length + " row(s) from database", "ok");
+        const label = isDishMode() ? "dish" : "item";
+        setMsg(
+          "Loaded " + listRows.length + " row(s) for " + label + " \"" + scoopItemName + "\"",
+          "ok"
+        );
       } catch (e) {
         alert("Load from DB failed: " + e.message);
       }
       return;
     }
 
+    const scoopItemName = getItem();
+    if (!scoopItemName) {
+      alert(isDishMode() ? "Select a dish name first." : "Select an item name first.");
+      return;
+    }
+
+    const catalogRows = scoopConfigRowsForSelection();
+    if (catalogRows.length) {
+      listRows = listRowsFromApiRows(catalogRows);
+      renderList();
+      renderPreview();
+      const label = isDishMode() ? "dish" : "item";
+      setMsg(
+        "Loaded " + listRows.length + " row(s) for " + label + " \"" + scoopItemName + "\" from scoop_config catalog",
+        "ok"
+      );
+      return;
+    }
+
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) { setMsg("Nothing saved in browser storage", "err"); return; }
+      if (!raw) {
+        setMsg("No scoop_config rows for this " + (isDishMode() ? "dish" : "item") + " in catalog; nothing in browser storage", "err");
+        return;
+      }
       listRows = flattenListRows(JSON.parse(raw));
       renderList();
       renderPreview();
-      setMsg("Loaded " + listRows.length + " row(s)", "ok");
+      setMsg("Loaded " + listRows.length + " row(s) from browser storage (catalog had no rows for selection)", "ok");
     } catch (e) {
       alert("Load failed: " + e.message);
     }
@@ -1050,7 +1093,6 @@
   function init(opts) {
     catalog = opts.catalog || [];
     dishCatalog = opts.dishCatalog || [];
-    unitConversions = opts.unitConversions || [];
     attachComboFn = opts.attachCombo || null;
     isServerModeFn = opts.isServerMode || isServerModeFn;
     postJSONFn = opts.postJSON || null;
@@ -1125,12 +1167,22 @@
 
     if (!isServerModeFn()) {
       const hint = document.getElementById("itemDetailsDbHint");
-      if (hint) hint.textContent = "Save/Load uses browser localStorage offline. Save to DB requires the app server (docker compose up → http://localhost:3050).";
+      if (hint) {
+        hint.textContent =
+          "Offline: Load uses shared scoop_config catalog (scoop_config_catalog.js); Save uses browser storage. Server: Save/Load uses PostgreSQL.";
+      }
     }
+  }
+
+  function updateCatalog(opts) {
+    opts = opts || {};
+    if (opts.catalog) catalog = opts.catalog;
+    if (opts.dishCatalog) dishCatalog = opts.dishCatalog;
   }
 
   global.ItemDetails = {
     init: init,
+    updateCatalog: updateCatalog,
     scoopComputedName: scoopComputedName,
     factorFor: factorFor,
     chainUnits: chainUnits,

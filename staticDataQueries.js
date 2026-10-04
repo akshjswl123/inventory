@@ -1,6 +1,7 @@
 'use strict';
 
 const ALL_ITEMS = 'All';
+const { buildScoopDerivedCatalogs, buildScoopConfigByDishName } = require('./scoopStaticBuilders');
 
 const SQL = {
     vendors: `
@@ -30,7 +31,8 @@ const SQL = {
         ORDER BY scoop_name
     `,
     scoopRows: `
-        SELECT scoop_item_name, scoop_name, factor
+        SELECT scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor,
+               conversion_chain, qty_in_grams, qty_in_ml, qty_in_piece, unused
         FROM scoop_config
         WHERE scoop_name IS NOT NULL AND TRIM(scoop_name) <> ''
         ORDER BY scoop_item_name, scoop_name
@@ -46,60 +48,20 @@ const SQL = {
         FROM categories c
         CROSS JOIN raw_materials rm
         ORDER BY c.category_name, rm.itemname
+    `,
+    usableProcessedDishes: `
+        SELECT DISTINCT ON (LOWER(TRIM(r.dishname)))
+            TRIM(r.dishname) AS dish_name,
+            TRIM(r.dishcode) AS dish_code,
+            TRIM(r.usable_processed_scoop) AS usable_processed_scoop
+        FROM recipe_entries r
+        WHERE LOWER(TRIM(r.reciepeitemname)) = 'dish_out'
+          AND COALESCE(r.is_usable_in_other_dish, false) = true
+          AND r.usable_processed_scoop IS NOT NULL
+          AND TRIM(r.usable_processed_scoop) <> ''
+        ORDER BY LOWER(TRIM(r.dishname)), r.created_at DESC, r.id DESC
     `
 };
-
-function endsWithSuffix(value, suffix) {
-    const v = String(value || '');
-    const s = String(suffix || '');
-    return v.length >= s.length && v.slice(-s.length).toLowerCase() === s.toLowerCase();
-}
-
-function buildScoopCatalog(rows, suffix, scoopField) {
-    return rows
-        .filter(r => endsWithSuffix(r.scoop_name, suffix))
-        .map(r => ({
-            itemname: r.scoop_item_name || '',
-            [scoopField]: r.scoop_name,
-            rate: r.factor != null ? Number(r.factor) : 0,
-            defaultQty: r.factor != null ? Number(r.factor) : null
-        }));
-}
-
-function buildRecipeScoopCatalog(rows) {
-    return rows
-        .filter(r => endsWithSuffix(r.scoop_name, '_reciepe') || endsWithSuffix(r.scoop_name, '_recipe'))
-        .map(r => ({
-            recipeItemName: r.scoop_item_name || '',
-            recipeScoop: r.scoop_name
-        }));
-}
-
-function buildInventoryCatalog(rows) {
-    const out = {};
-    rows
-        .filter(r => endsWithSuffix(r.scoop_name, '_inventory'))
-        .forEach(r => {
-            if (r.scoop_item_name) out[r.scoop_item_name] = r.scoop_name;
-        });
-    return out;
-}
-
-function buildDishOutScoopCatalog(rows, dishNames) {
-    const fromScoops = rows
-        .filter(r => endsWithSuffix(r.scoop_name, '_1_portion'))
-        .map(r => ({
-            dishname: r.scoop_item_name || r.scoop_name.replace(/_1_portion$/i, ''),
-            dish_out_scoop: r.scoop_name
-        }));
-
-    if (fromScoops.length) return fromScoops;
-
-    return (dishNames || []).map(name => ({
-        dishname: name,
-        dish_out_scoop: name + '_1_portion'
-    }));
-}
 
 function buildVendorItems(vendorRows, itemNames) {
     const out = {};
@@ -149,7 +111,8 @@ async function fetchStaticDataBundle(pool) {
         dishesRes,
         scoopRowsRes,
         vendorItemsRes,
-        categoryItemsRes
+        categoryItemsRes,
+        usableProcessedRes
     ] = await Promise.all([
         pool.query(SQL.vendors),
         pool.query(SQL.categories),
@@ -157,7 +120,8 @@ async function fetchStaticDataBundle(pool) {
         pool.query(SQL.dishes),
         pool.query(SQL.scoopRows),
         pool.query(SQL.vendorItems),
-        pool.query(SQL.categoryItems)
+        pool.query(SQL.categoryItems),
+        pool.query(SQL.usableProcessedDishes)
     ]);
 
     const vendors = vendorsRes.rows.map(r => r.vendor_name).filter(Boolean);
@@ -175,9 +139,13 @@ async function fetchStaticDataBundle(pool) {
         }));
     const dishNames = dishCatalog.map(r => r.dishName);
     const scoopRows = scoopRowsRes.rows;
-
-    const scoopInCatalog = buildScoopCatalog(scoopRows, '_in', 'scoop_in');
-    const scoopOutCatalog = buildScoopCatalog(scoopRows, '_out', 'scoop_out');
+    const scoopDerived = buildScoopDerivedCatalogs(scoopRows, dishNames, dishCatalog);
+    const SCOOP_CONFIG_BY_DISH_NAME = buildScoopConfigByDishName(scoopDerived.SCOOP_CONFIG, dishCatalog);
+    const USABLE_PROCESSED_DISH_CATALOG = (usableProcessedRes.rows || []).map(r => ({
+        dishName: r.dish_name || '',
+        dishCode: r.dish_code || '',
+        usableProcessedScoop: r.usable_processed_scoop || ''
+    })).filter(e => e.dishName && e.usableProcessedScoop);
 
     return {
         source: 'database',
@@ -192,18 +160,16 @@ async function fetchStaticDataBundle(pool) {
             recipeItemName: r.itemname,
             pgNo: r.pgNo
         })),
-        SCOOP_IN_CATALOG: scoopInCatalog,
-        SCOOP_OUT_CATALOG: scoopOutCatalog.map(r => ({
-            itemname: r.itemname,
-            scoop_out: r.scoop_out,
-            defaultQty: r.defaultQty
-        })),
-        RECIPE_SCOOP_CATALOG: buildRecipeScoopCatalog(scoopRows),
-        DISH_OUT_SCOOP_CATALOG: buildDishOutScoopCatalog(scoopRows, dishNames),
-        SCOOP_INVENTORY_CATALOG: buildInventoryCatalog(scoopRows),
+        SCOOP_CONFIG: scoopDerived.SCOOP_CONFIG,
+        SCOOP_IN_CATALOG: scoopDerived.SCOOP_IN_CATALOG,
+        SCOOP_OUT_CATALOG: scoopDerived.SCOOP_OUT_CATALOG,
+        RECIPE_SCOOP_CATALOG: scoopDerived.RECIPE_SCOOP_CATALOG,
+        DISH_OUT_SCOOP_CATALOG: scoopDerived.DISH_OUT_SCOOP_CATALOG,
+        SCOOP_INVENTORY_CATALOG: scoopDerived.SCOOP_INVENTORY_CATALOG,
+        SCOOP_CONFIG_BY_DISH_NAME,
+        USABLE_PROCESSED_DISH_CATALOG,
         VENDOR_ITEMS: buildVendorItems(vendorItemsRes.rows, itemNames),
-        CATEGORY_ITEMS: buildCategoryItems(categoryItemsRes.rows, itemNames),
-        UNIT_CONVERSION_CATALOG: []
+        CATEGORY_ITEMS: buildCategoryItems(categoryItemsRes.rows, itemNames)
     };
 }
 

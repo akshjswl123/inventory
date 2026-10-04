@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PG Dump &amp; Recreate — Inventory</title>
+  <style>
+    :root { --primary: #5a32a3; --danger: #dc3545; --ok: #198754; --border: #ddd; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 20px 24px 40px;
+      background: #f4f4f8;
+      color: #222;
+      line-height: 1.45;
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 1.4rem; margin: 0 0 6px; }
+    .sub { font-size: 13px; color: #555; margin: 0 0 16px; }
+    .sub a { color: var(--primary); }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      margin-bottom: 14px;
+    }
+    label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px; }
+    #queryInput {
+      width: 100%;
+      min-height: 200px;
+      resize: vertical;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0;
+      padding: 12px;
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+    }
+    .bar label { margin: 0; font-weight: normal; }
+    .bar select, .bar input[type="url"] { padding: 6px 8px; font-size: 13px; }
+    button {
+      padding: 8px 14px;
+      border: 0;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      background: #e9ecef;
+      color: #222;
+    }
+    button.primary { background: var(--primary); color: #fff; }
+    button.success { background: var(--ok); color: #fff; }
+    button.danger { background: var(--danger); color: #fff; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .hint { font-size: 12px; color: #666; margin: 0; }
+    #queryError.is-err {
+      display: block !important;
+      background: #fff0f0;
+      border: 1px solid var(--danger);
+      color: #b02a37;
+      padding: 10px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      margin-top: 12px;
+    }
+    #queryError { display: none; }
+    .query-result-wrap {
+      width: 100%;
+      overflow: auto;
+      margin-top: 12px;
+      max-height: 480px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+    }
+    #queryResult { width: 100%; border-collapse: collapse; font-size: 13px; }
+    #queryResult th, #queryResult td { border: 1px solid #eee; padding: 6px 8px; text-align: left; }
+    #queryResult th { position: sticky; top: 0; background: #fafafa; }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 12px; }
+    #queryExportCsvBtn:disabled { opacity: 0.45; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>PG Dump &amp; Recreate</h1>
+    <p class="sub">
+      Run SQL, download a <strong>pg_dump</strong> backup, or <strong>recreate</strong> the app database from a dump file.
+      The Node app renames the existing <code>PGDATABASE</code> (e.g. <code>poc_backup_YYYYMMDD_HHMMSS</code>) if present,
+      creates a fresh <code>poc</code>, restores the file, and reconnects its pool.
+      <a href="index.html">Full inventory app</a>
+    </p>
+
+    <div class="card">
+      <div id="queryApiBar" class="bar">
+        <label for="queryApiBase">App server URL</label>
+        <input type="url" id="queryApiBase" placeholder="http://localhost:3050" style="min-width:300px;" />
+        <button type="button" onclick="Query.saveApiBaseFromUi()">Connect</button>
+        <span class="hint">Required when this file is opened from disk (<code>file://</code>). Use docker: <code>http://localhost:3050</code>.</span>
+      </div>
+      <p id="queryDbTarget" class="hint">App database: loading…</p>
+
+      <label for="queryInput">SQL</label>
+      <textarea id="queryInput" spellcheck="false" placeholder="SELECT * FROM orders ORDER BY id DESC LIMIT 20;"></textarea>
+
+      <div class="bar">
+        <label for="queryBrowseTable">Browse table</label>
+        <select id="queryBrowseTable"><option value="">None</option></select>
+        <button type="button" onclick="Query.showTablesOrderByIdDesc()">ORDER BY id DESC</button>
+      </div>
+
+      <div class="bar">
+        <button id="queryRunBtn" class="primary" onclick="Query.run()">Run Query</button>
+        <button class="success" onclick="Query.currentStock()">Current Stock</button>
+        <button id="pgDumpButton" class="plain" onclick="Query.pgDump()">PG Dump</button>
+        <button id="pgRestoreButton" class="danger" type="button" onclick="Query.pgRestore()">Recreate DB from Dump</button>
+        <input type="file" id="pgRestoreFile" accept=".sql,.dump,.backup,.tar" hidden />
+        <button type="button" onclick="Query.clear()">Clear</button>
+      </div>
+
+      <p class="hint" style="margin-top:8px;">
+        <strong>PG Dump</strong> downloads a plain SQL backup of the current app database.
+        <strong>Recreate DB from Dump</strong> renames the current DB as a backup, then restores your file (plain <code>.sql</code> or custom <code>pg_dump -Fc</code>).
+      </p>
+
+      <div id="queryError"></div>
+      <div class="toolbar">
+        <div id="queryMeta" class="hint"></div>
+        <button type="button" class="success" id="queryExportCsvBtn" onclick="Query.exportCsv()" disabled>Export CSV</button>
+      </div>
+      <div class="query-result-wrap"><table id="queryResult"></table></div>
+    </div>
+  </div>
+
+  <script src="csv.js"></script>
+  <script src="report.js"></script>
+</body>
+</html>
