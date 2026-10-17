@@ -135,14 +135,14 @@ services:
     volumes:
       - ./excel-csv/site:/usr/share/nginx/html:ro
 
-  # ADD THIS NEW SERVICE BELOW
-#  tunnel:
-#    image: cloudflare/cloudflared:latest
-#    container_name: poc_tunnel
-#    restart: unless-stopped
-#    command: tunnel --url http://app:3000
-#    depends_on:
-#      - app
+#   ADD THIS NEW SERVICE BELOW
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: poc_tunnel
+    restart: unless-stopped
+    command: tunnel --url http://app:3000
+    depends_on:
+      - app
 
 volumes:
   pg_data:
