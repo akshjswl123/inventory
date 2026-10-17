@@ -395,8 +395,12 @@ async function loadOrderByBillNo(billNo, dt) {
 }
 
 
-/** Same rate math as scripts/07_raw_materials_cost.sql, scoped to one saved bill. */
-const UPSERT_RAW_MATERIALS_COST_FOR_ORDER_SQL = `
+/**
+ * Append a new raw_materials_cost snapshot for one bill (after bump_item_version).
+ * Does NOT update older versions — history is kept for comparison.
+ * Unique key: ("pgNo", version) — see scripts/17_raw_materials_cost_version_unique.sql
+ */
+const INSERT_RAW_MATERIALS_COST_FOR_ORDER_SQL = `
 INSERT INTO public.raw_materials_cost (
     "pgNo",
     item_names,
@@ -404,7 +408,8 @@ INSERT INTO public.raw_materials_cost (
     rateperml,
     rateperpiece,
     based_on_billno,
-    comments
+    comments,
+    version
 )
 WITH purchases AS (
     SELECT
@@ -457,6 +462,17 @@ lines AS (
        AND LOWER(TRIM(sc.scoop_item_name)) = LOWER(TRIM(p.itemname))
        AND sc.destination_unit IS NOT NULL
        AND TRIM(sc.destination_unit) <> ''
+       AND COALESCE(sc.unused, false) = false
+       AND sc.version = COALESCE(
+           (
+               SELECT iv.version
+               FROM public.item_versions iv
+               WHERE iv.item_type = 'scoop_config'
+                 AND iv.item_code = LOWER(TRIM(sc.scoop_name))
+               LIMIT 1
+           ),
+           1
+       )
 ),
 with_units AS (
     SELECT
@@ -526,23 +542,37 @@ SELECT
                 THEN 'rateperpiece from latest piece purchase on ' || p.purchase_dt::text
             END
         ))
-    END AS comments
+    END AS comments,
+    (
+        SELECT iv.version
+        FROM public.item_versions iv
+        WHERE iv.item_type = 'raw_materials_cost'
+          AND iv.item_code = UPPER(TRIM(bp.pgno))
+        LIMIT 1
+    ) AS version
 FROM bill_pg bp
 INNER JOIN name_agg n ON n.pgno = bp.pgno
 LEFT JOIN latest_gm g ON g.pgno = bp.pgno
 LEFT JOIN latest_ml m ON m.pgno = bp.pgno
 LEFT JOIN latest_piece p ON p.pgno = bp.pgno
-ON CONFLICT ("pgNo", based_on_billno) DO UPDATE SET
-    item_names = EXCLUDED.item_names,
-    ratepergram = EXCLUDED.ratepergram,
-    rateperml = EXCLUDED.rateperml,
-    rateperpiece = EXCLUDED.rateperpiece,
-    comments = EXCLUDED.comments,
-    last_updated_at = CURRENT_TIMESTAMP
 `;
 
 async function upsertRawMaterialsCostForOrder(client, orderId) {
-    return client.query(UPSERT_RAW_MATERIALS_COST_FOR_ORDER_SQL, [orderId]);
+    const pgRes = await client.query(
+        `SELECT DISTINCT TRIM(oi.pgno) AS pgno
+         FROM public.order_items oi
+         WHERE oi.order_id = $1
+           AND oi.pgno IS NOT NULL
+           AND TRIM(oi.pgno) <> ''`,
+        [orderId]
+    );
+    for (const row of pgRes.rows) {
+        await client.query(
+            'SELECT public.bump_item_version($1, $2)',
+            [row.pgno, 'raw_materials_cost']
+        );
+    }
+    return client.query(INSERT_RAW_MATERIALS_COST_FOR_ORDER_SQL, [orderId]);
 }
 
 async function saveInventoryOut(data) {
@@ -610,12 +640,24 @@ async function saveRecipe(data) {
     try {
         await client.query('BEGIN');
 
+        const dishcodeForVersion = (data.rows || [])
+            .map((r) => (r.dishcode != null ? String(r.dishcode).trim() : ''))
+            .find((c) => c !== '') || null;
+        let recipeVersion = 1;
+        if (dishcodeForVersion) {
+            const bumpRes = await client.query(
+                'SELECT public.bump_item_version($1, $2) AS version',
+                [dishcodeForVersion, 'dishes']
+            );
+            recipeVersion = bumpRes.rows[0]?.version ?? 1;
+        }
+
         const insertQuery = `
             INSERT INTO recipe_entries
                 (dishname, dishcode, reciepeitemname, "pgNo", receipescoop, qty, "inGm", "inML", "inPiece",
-                 is_usable_in_other_dish, usable_processed_scoop, qty_of_scoops, comments)
+                 is_usable_in_other_dish, usable_processed_scoop, qty_of_scoops, comments, version)
             VALUES
-                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
             RETURNING id
         `;
 
@@ -634,7 +676,8 @@ async function saveRecipe(data) {
                 !!row.isUsableInOtherDish,
                 row.usableProcessedScoop || null,
                 row.qtyOfScoops != null && row.qtyOfScoops !== '' ? row.qtyOfScoops : null,
-                row.comments || ''
+                row.comments || '',
+                recipeVersion
             ]);
             lastId = res.rows[0].id;
         }
@@ -822,49 +865,27 @@ async function saveScoopConfig(data) {
     try {
         await client.query('BEGIN');
 
+        // Append a new scoop_config row at bumped version (keep older versions for history).
         const insertQuery = `
             INSERT INTO scoop_config
                 (scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor, conversion_chain,
-                 qty_in_grams, qty_in_ml, qty_in_piece, unused)
+                 qty_in_grams, qty_in_ml, qty_in_piece, unused, version)
             VALUES
-                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
             RETURNING id
-        `;
-
-        const updateQuery = `
-            UPDATE scoop_config
-            SET scoop_item_name = $1,
-                scoop_item_id = $2,
-                destination_unit = $3,
-                factor = $4,
-                conversion_chain = $5,
-                qty_in_grams = $6,
-                qty_in_ml = $7,
-                qty_in_piece = $8,
-                unused = $9
-            WHERE id = $10
-            RETURNING id
-        `;
-
-        const findCanonicalIdQuery = `
-            SELECT id FROM scoop_config
-            WHERE LOWER(TRIM(scoop_name)) = LOWER(TRIM($1))
-            ORDER BY unused ASC, id DESC
-            LIMIT 1
-        `;
-
-        const deleteDupesQuery = `
-            DELETE FROM scoop_config
-            WHERE LOWER(TRIM(scoop_name)) = LOWER(TRIM($1))
-              AND id <> $2
         `;
 
         let lastId = null;
-        let updated = 0;
         let inserted = 0;
         for (const row of data.rows) {
             const scoopName = row.scoopName || row.scoop_name || null;
             if (!scoopName || !String(scoopName).trim()) continue;
+
+            const bumpRes = await client.query(
+                'SELECT public.bump_item_version($1, $2) AS version',
+                [scoopName, 'scoop_config']
+            );
+            const scoopVersion = bumpRes.rows[0]?.version ?? 1;
 
             const params = [
                 row.scoopItemName || row.scoop_item_name || row.itemname || null,
@@ -876,36 +897,17 @@ async function saveScoopConfig(data) {
                 row.qtyInGrams != null ? row.qtyInGrams : row.qty_in_grams,
                 row.qtyInMl != null ? row.qtyInMl : row.qty_in_ml,
                 row.qtyInPiece != null ? row.qtyInPiece : row.qty_in_piece,
-                !!row.unused
+                !!row.unused,
+                scoopVersion
             ];
 
-            const existing = await client.query(findCanonicalIdQuery, [scoopName]);
-            if (existing.rows[0]) {
-                const id = existing.rows[0].id;
-                const res = await client.query(updateQuery, [
-                    params[0],
-                    params[1],
-                    params[2],
-                    params[4],
-                    params[5],
-                    params[6],
-                    params[7],
-                    params[8],
-                    params[9],
-                    id
-                ]);
-                lastId = res.rows[0].id;
-                updated += 1;
-                await client.query(deleteDupesQuery, [scoopName, id]);
-            } else {
-                const res = await client.query(insertQuery, params);
-                lastId = res.rows[0].id;
-                inserted += 1;
-            }
+            const res = await client.query(insertQuery, params);
+            lastId = res.rows[0].id;
+            inserted += 1;
         }
 
         await client.query('COMMIT');
-        return { id: lastId, count: data.rows.length, inserted, updated };
+        return { id: lastId, count: data.rows.length, inserted, updated: 0 };
     } catch (err) {
         await client.query('ROLLBACK');
         throw err;
@@ -1061,10 +1063,20 @@ const RECIPE_LATEST_BATCH_SQL = `
                is_usable_in_other_dish, usable_processed_scoop, qty_of_scoops, comments
         FROM recipe_entries r
         WHERE {{WHERE}}
-          AND r.created_at >= (
-            SELECT MAX(sub.created_at) - interval '30 seconds'
-            FROM recipe_entries sub
-            WHERE {{WHERE_SUB}}
+          AND r.version = COALESCE(
+              (
+                  SELECT iv.version
+                  FROM public.item_versions iv
+                  WHERE iv.item_type = 'dishes'
+                    AND iv.item_code = UPPER(TRIM(r.dishcode))
+                  LIMIT 1
+              ),
+              (
+                  SELECT MAX(sub.version)
+                  FROM recipe_entries sub
+                  WHERE UPPER(TRIM(sub.dishcode)) = UPPER(TRIM(r.dishcode))
+              ),
+              1
           )
         ORDER BY r.id`;
 
@@ -1141,6 +1153,217 @@ async function listDishesForCostCalculation() {
     }));
 }
 
+const ITEM_REPORT_ENSURE_SQL = fs.readFileSync(
+    path.join(__dirname, 'scripts', '12_item_report.sql'),
+    'utf8'
+);
+
+async function ensureItemReportTable() {
+    await pool.query(ITEM_REPORT_ENSURE_SQL);
+}
+
+const ITEM_REPORT_UPSERT_SQL = `
+INSERT INTO public.item_report_lines (
+    report_date, invoice_no, item_name, area, qty,
+    event_timestamp, payment_type, order_type, price, sub_total, discount, tax,
+    final_total, status, table_no, server_name, covers, variation, category,
+    group_name, hsn, phone, customer_name, address, gst, assign_to,
+    non_taxable, line_total
+) VALUES (
+    $1::date, $2, $3, $4, $5,
+    $6::timestamptz, $7, $8, $9, $10, $11, $12,
+    $13, $14, $15, $16, $17, $18, $19,
+    $20, $21, $22, $23, $24, $25, $26,
+    $27, $28
+)
+ON CONFLICT (invoice_no, report_date, item_name, area)
+DO UPDATE SET
+    qty = EXCLUDED.qty,
+    event_timestamp = EXCLUDED.event_timestamp,
+    payment_type = EXCLUDED.payment_type,
+    order_type = EXCLUDED.order_type,
+    price = EXCLUDED.price,
+    sub_total = EXCLUDED.sub_total,
+    discount = EXCLUDED.discount,
+    tax = EXCLUDED.tax,
+    final_total = EXCLUDED.final_total,
+    status = EXCLUDED.status,
+    table_no = EXCLUDED.table_no,
+    server_name = EXCLUDED.server_name,
+    covers = EXCLUDED.covers,
+    variation = EXCLUDED.variation,
+    category = EXCLUDED.category,
+    group_name = EXCLUDED.group_name,
+    hsn = EXCLUDED.hsn,
+    phone = EXCLUDED.phone,
+    customer_name = EXCLUDED.customer_name,
+    address = EXCLUDED.address,
+    gst = EXCLUDED.gst,
+    assign_to = EXCLUDED.assign_to,
+    non_taxable = EXCLUDED.non_taxable,
+    line_total = EXCLUDED.line_total,
+    last_updated_at = CURRENT_TIMESTAMP
+RETURNING (xmax = 0) AS inserted
+`;
+
+async function upsertItemReportLines(rows) {
+    await ensureItemReportTable();
+    const client = await pool.connect();
+    let inserted = 0;
+    let updated = 0;
+    const failed = [];
+    try {
+        await client.query('BEGIN');
+        for (const row of rows) {
+            try {
+                const res = await client.query(ITEM_REPORT_UPSERT_SQL, [
+                    row.report_date,
+                    row.invoice_no,
+                    row.item_name,
+                    row.area,
+                    row.qty,
+                    row.event_timestamp,
+                    row.payment_type,
+                    row.order_type,
+                    row.price,
+                    row.sub_total,
+                    row.discount,
+                    row.tax,
+                    row.final_total,
+                    row.status,
+                    row.table_no,
+                    row.server_name,
+                    row.covers,
+                    row.variation,
+                    row.category,
+                    row.group_name,
+                    row.hsn,
+                    row.phone,
+                    row.customer_name,
+                    row.address,
+                    row.gst,
+                    row.assign_to,
+                    row.non_taxable,
+                    row.line_total
+                ]);
+                if (res.rows[0] && res.rows[0].inserted) inserted += 1;
+                else updated += 1;
+            } catch (err) {
+                failed.push({
+                    csv_row: row.csv_row != null ? row.csv_row : row.excel_row,
+                    report_date: row.report_date,
+                    invoice_no: row.invoice_no,
+                    item_name: row.item_name,
+                    area: row.area,
+                    qty: row.qty,
+                    reason: err.message
+                });
+            }
+        }
+        await client.query('COMMIT');
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+    return { inserted, updated, failed };
+}
+
+function normalizeItemReportChannel(raw) {
+    const c = String(raw || 'swiggy').trim().toLowerCase();
+    if (c === 'zomato') return 'zomato';
+    if (c === 'dinein' || c === 'dine_in' || c === 'dine-in') return 'dinein';
+    return 'swiggy';
+}
+
+async function getItemReportSummary(channel) {
+    await ensureItemReportTable();
+    const ch = normalizeItemReportChannel(channel);
+    const areaFilter = ch === 'swiggy'
+        ? `UPPER(TRIM(area)) = 'SWIGGY'`
+        : ch === 'zomato'
+            ? `UPPER(TRIM(area)) = 'ZOMATO'`
+            : `UPPER(TRIM(area)) NOT IN ('SWIGGY', 'ZOMATO')`;
+
+    const res = await pool.query(
+        `
+        WITH lines AS (
+            SELECT item_name, report_date, qty
+            FROM public.item_report_lines
+            WHERE ${areaFilter}
+        ),
+        grouped AS (
+            SELECT
+                l.item_name,
+                l.report_date,
+                SUM(l.qty)::numeric AS sum_qty,
+                COALESCE(
+                    (
+                        SELECT dc.dish_cost::numeric
+                        FROM public.dish_cost dc
+                        WHERE LOWER(TRIM(dc.row_kind)) = 'dish_total'
+                          AND LOWER(TRIM(dc.dishname)) = LOWER(TRIM(l.item_name))
+                        ORDER BY dc.last_updated_at DESC NULLS LAST, dc.id DESC
+                        LIMIT 1
+                    ),
+                    0::numeric
+                ) AS dish_cost
+            FROM lines l
+            GROUP BY l.item_name, l.report_date
+        )
+        SELECT
+            item_name,
+            report_date,
+            sum_qty,
+            dish_cost,
+            ROUND(sum_qty * dish_cost, 4) AS total_dish_cost
+        FROM grouped
+        ORDER BY report_date DESC, item_name
+        `
+    );
+
+    const rows = res.rows || [];
+    const totals = rows.reduce(
+        (acc, r) => {
+            acc.sum_qty += Number(r.sum_qty) || 0;
+            acc.total_dish_cost += Number(r.total_dish_cost) || 0;
+            return acc;
+        },
+        { sum_qty: 0, total_dish_cost: 0 }
+    );
+
+    return {
+        channel: ch,
+        channel_label: ch === 'swiggy' ? 'Swiggy' : ch === 'zomato' ? 'Zomato' : 'Dine-in',
+        rows,
+        totals: {
+            sum_qty: Math.round(totals.sum_qty * 10000) / 10000,
+            total_dish_cost: Math.round(totals.total_dish_cost * 10000) / 10000
+        }
+    };
+}
+
+async function listItemReportLines(opts) {
+    opts = opts || {};
+    const limit = Math.min(Math.max(Number(opts.limit) || 500, 1), 5000);
+    const offset = Math.max(Number(opts.offset) || 0, 0);
+    await ensureItemReportTable();
+    const res = await pool.query(
+        `
+        SELECT id, report_date, invoice_no, item_name, area, qty,
+               event_timestamp, payment_type, order_type, price, category, status,
+               created_at, last_updated_at
+        FROM public.item_report_lines
+        ORDER BY report_date DESC, invoice_no DESC, id DESC
+        LIMIT $1 OFFSET $2
+        `,
+        [limit, offset]
+    );
+    const countRes = await pool.query('SELECT COUNT(*)::int AS total FROM public.item_report_lines');
+    return { rows: res.rows, total: countRes.rows[0].total };
+}
+
 module.exports = {
     saveOrder,
     loadOrderByBillNo,
@@ -1162,5 +1385,9 @@ module.exports = {
     loadRecipeByDishcode,
     runRecipeCostForDish,
     runDishCostValidation,
-    listDishesForCostCalculation
+    listDishesForCostCalculation,
+    ensureItemReportTable,
+    upsertItemReportLines,
+    listItemReportLines,
+    getItemReportSummary
 };

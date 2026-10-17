@@ -96,6 +96,10 @@
     #rawMaterialsMsg { font-size: 12px; color: #666; }
     #rawMaterialsMsg.ok { color: #198754; }
     #rawMaterialsMsg.err { color: #dc3545; }
+    #itemReportMsg { font-size: 12px; color: #666; margin-left: 8px; }
+    #itemReportMsg.ok { color: #198754; }
+    #itemReportMsg.warn { color: #b45309; }
+    #itemReportMsg.err { color: #dc3545; }
     #dishesMsg { font-size: 12px; color: #666; }
     #dishesMsg.ok { color: #198754; }
     #dishesMsg.err { color: #dc3545; }
@@ -147,7 +151,15 @@
     .static-data-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
     #staticDataRefreshHint.ok { color: #198754; }
     #staticDataRefreshHint.err { color: #dc3545; }
+    .excel-to-csv-panel { max-width: 650px; border: 1px solid #ddd; border-radius: 10px; padding: 24px; margin-top: 8px; }
+    .excel-to-csv-panel label { margin-top: 14px; }
+    .excel-to-csv-panel label:first-of-type { margin-top: 0; }
+    .excel-to-csv-panel input[type="file"],
+    .excel-to-csv-panel select,
+    .excel-to-csv-panel #excelToCsvDownload { margin-top: 14px; }
+    #excelToCsvStatus { margin-top: 16px; overflow-wrap: anywhere; font-size: 13px; color: #444; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -159,6 +171,8 @@
     <button class="tab-btn" onclick="switchTab(event, 'recipeTab')">Recipe Maker</button>
     <button class="tab-btn" onclick="switchTab(event, 'itemDetailsTab')">Scoop</button>
     <button class="tab-btn" onclick="switchTab(event, 'rawMaterialsTab')">Raw Materials</button>
+    <button class="tab-btn" onclick="switchTab(event, 'itemReportTab')">Item Report</button>
+    <button class="tab-btn" onclick="switchTab(event, 'excelToCsvTab')">Excel → CSV</button>
     <button class="tab-btn" onclick="switchTab(event, 'queryTab')">Query</button>
   </div>
 
@@ -650,6 +664,122 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
     <pre id="dishesPreview">-- add rows to see preview --</pre>
   </div>
 
+  <!-- TAB: ITEM REPORT -->
+  <div id="itemReportTab" class="tab-pane">
+    <h2>Item Report</h2>
+    <p class="hint" style="margin-top:0;">
+      Import POS CSV export (<code>itemReportCsv.js</code>). Leading metadata (Date:, Name:, …) and summary rows (Total) are skipped.
+      Required columns: <strong>Date</strong>, <strong>Invoice No.</strong>, <strong>Area</strong>,
+      <strong>Item Name</strong>, <strong>Qty.</strong> Other columns are stored when mapped; extras are ignored.
+      Upsert when the same <strong>invoice + date + item + area</strong> appears again (invoice + date required on every line).
+    </p>
+    <div class="actions">
+      <input type="file" id="itemReportFile" accept=".csv,text/csv" hidden />
+      <button type="button" class="import" id="itemReportImportBtn">Import CSV</button>
+      <button type="button" class="plain" id="itemReportSampleBtn" title="Import sample from data/">Import sample CSV</button>
+      <button type="button" class="plain" id="itemReportRefreshBtn">Refresh from DB</button>
+      <span id="itemReportMsg"></span>
+    </div>
+    <p class="hint" id="itemReportMeta"></p>
+
+    <div class="query-import-bar" style="margin-top:12px;">
+      <label for="itemReportChannel">Channel (by Area)</label>
+      <select id="itemReportChannel">
+        <option value="swiggy">Swiggy</option>
+        <option value="zomato">Zomato</option>
+        <option value="dinein">Dine-in (not Swiggy/Zomato)</option>
+      </select>
+      <button type="button" class="plain" id="itemReportSummaryRefreshBtn">Refresh summary</button>
+    </div>
+
+    <h3 style="font-size:15px; margin:18px 0 8px;">Summary by item &amp; date</h3>
+    <p class="hint" id="itemReportSummaryMeta"></p>
+    <table>
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>Item Name</th>
+        <th class="num">Sum Qty</th>
+        <th class="num">Dish cost</th>
+        <th class="num">Total dish cost</th>
+      </tr>
+      </thead>
+      <tbody id="itemReportSummaryBody"></tbody>
+      <tfoot>
+      <tr>
+        <td colspan="2" style="text-align:right;font-weight:600;">Totals</td>
+        <td class="num" id="itemReportSummaryTotalQty">0</td>
+        <td></td>
+        <td class="num" id="itemReportSummaryTotalCost">0</td>
+      </tr>
+      </tfoot>
+    </table>
+
+    <div id="itemReportFailedWrap" hidden>
+      <h3 style="font-size:15px; margin:18px 0 8px;">Unsuccessful lines</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>CSV row</th>
+          <th>Date</th>
+          <th>Invoice No.</th>
+          <th>Item Name</th>
+          <th>Area</th>
+          <th class="num">Qty</th>
+          <th>Reason</th>
+        </tr>
+        </thead>
+        <tbody id="itemReportFailedBody"></tbody>
+      </table>
+    </div>
+
+    <div id="itemReportLinesWrap">
+      <div style="display:flex;align-items:center;gap:10px;margin:22px 0 8px;">
+        <h3 style="font-size:15px; margin:0;">Stored lines</h3>
+        <button type="button" class="plain" id="itemReportToggleLinesBtn">Hide lines</button>
+      </div>
+      <table id="itemReportLinesTable">
+        <thead>
+        <tr>
+          <th>id</th>
+          <th>Date</th>
+          <th>Invoice No.</th>
+          <th>Item Name</th>
+          <th>Area</th>
+          <th class="num">Qty</th>
+          <th>Payment</th>
+          <th>Order type</th>
+          <th class="num">Price</th>
+          <th>Category</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+        <tbody id="itemReportBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB: EXCEL → CSV -->
+  <div id="excelToCsvTab" class="tab-pane">
+    <h2>Excel → CSV Converter</h2>
+    <p class="hint" style="margin-top:0;">Convert a worksheet to CSV for Item Report import. Server API: <code>POST /excelToCsv</code> (raw Excel body).</p>
+    <div class="excel-to-csv-panel">
+      <label for="excelToCsvFile">Select Excel file (.xlsx / .xls)</label>
+      <input id="excelToCsvFile" type="file" accept=".xlsx,.xls" />
+
+      <label for="excelToCsvSheet">Worksheet</label>
+      <select id="excelToCsvSheet" disabled>
+        <option value="">Import an Excel file first</option>
+      </select>
+
+      <button type="button" class="primary" id="excelToCsvDownload" hidden disabled>
+        Download CSV
+      </button>
+
+      <p id="excelToCsvStatus">Choose an Excel file to begin.</p>
+    </div>
+  </div>
+
   <!-- TAB 5: QUERY -->
   <div id="queryTab" class="tab-pane">
     <h2>Database Query</h2>
@@ -730,6 +860,9 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
 <script src="scoopUnitDefaultsBuilder.js"></script>
 <script src="rawmaterials.js"></script>
 <script src="dishes.js"></script>
+<script src="itemReportCsv.js"></script>
+<script src="itemReport.js"></script>
+<script src="excelToCsvTab.js"></script>
 
 <script>
   /* ==========================================================================

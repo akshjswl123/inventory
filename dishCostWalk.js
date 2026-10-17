@@ -99,22 +99,54 @@ function rateColumnLabel(unit, cost) {
     return null;
 }
 
+const RECIPE_VERSION_FOR_DISH_SQL = `
+    COALESCE(
+        (
+            SELECT iv.version
+            FROM public.item_versions iv
+            WHERE iv.item_type = 'dishes'
+              AND iv.item_code = UPPER(TRIM($1::text))
+            LIMIT 1
+        ),
+        (
+            SELECT MAX(sub.version)
+            FROM public.recipe_entries sub
+            WHERE UPPER(TRIM(sub.dishcode)) = UPPER(TRIM($1::text))
+        ),
+        1
+    )`;
+
 async function resolveDish(pool, dishcode, dishname) {
     const code = dishcode ? String(dishcode).trim() : '';
     const name = dishname ? String(dishname).trim() : '';
     const res = await pool.query(
         `
-        SELECT DISTINCT ON (UPPER(TRIM(dishcode)))
-            UPPER(TRIM(dishcode)) AS dish_code,
-            TRIM(dishname) AS dishname
-        FROM public.recipe_entries
-        WHERE dishcode IS NOT NULL
-          AND TRIM(dishcode) <> ''
+        SELECT DISTINCT ON (UPPER(TRIM(re.dishcode)))
+            UPPER(TRIM(re.dishcode)) AS dish_code,
+            TRIM(re.dishname) AS dishname
+        FROM public.recipe_entries re
+        WHERE re.dishcode IS NOT NULL
+          AND TRIM(re.dishcode) <> ''
           AND (
-                ($1::text <> '' AND UPPER(TRIM(dishcode)) = UPPER($1::text))
-             OR ($1::text = '' AND $2::text <> '' AND LOWER(TRIM(dishname)) = LOWER($2::text))
+                ($1::text <> '' AND UPPER(TRIM(re.dishcode)) = UPPER($1::text))
+             OR ($1::text = '' AND $2::text <> '' AND LOWER(TRIM(re.dishname)) = LOWER($2::text))
           )
-        ORDER BY UPPER(TRIM(dishcode)), created_at DESC, id DESC
+          AND re.version = COALESCE(
+              (
+                  SELECT iv.version
+                  FROM public.item_versions iv
+                  WHERE iv.item_type = 'dishes'
+                    AND iv.item_code = UPPER(TRIM(re.dishcode))
+                  LIMIT 1
+              ),
+              (
+                  SELECT MAX(sub.version)
+                  FROM public.recipe_entries sub
+                  WHERE UPPER(TRIM(sub.dishcode)) = UPPER(TRIM(re.dishcode))
+              ),
+              1
+          )
+        ORDER BY UPPER(TRIM(re.dishcode)), re.id DESC
         LIMIT 1
         `,
         [code, name]
@@ -123,27 +155,16 @@ async function resolveDish(pool, dishcode, dishname) {
 }
 
 async function loadRecipeRows(pool, dishCode) {
-    const saved = await pool.query(
-        `
-        SELECT created_at AS saved_at
-        FROM public.recipe_entries
-        WHERE UPPER(TRIM(dishcode)) = $1
-        ORDER BY created_at DESC, id DESC
-        LIMIT 1
-        `,
-        [dishCode]
-    );
-    if (!saved.rows[0]) return [];
     const rows = await pool.query(
         `
         SELECT id, dishname, dishcode, reciepeitemname, "pgNo", receipescoop, qty,
                is_usable_in_other_dish, usable_processed_scoop, qty_of_scoops
-        FROM public.recipe_entries
-        WHERE UPPER(TRIM(dishcode)) = $1
-          AND created_at >= $2::timestamptz - interval '30 seconds'
-        ORDER BY id
+        FROM public.recipe_entries re
+        WHERE UPPER(TRIM(re.dishcode)) = UPPER(TRIM($1::text))
+          AND re.version = ${RECIPE_VERSION_FOR_DISH_SQL}
+        ORDER BY re.id
         `,
-        [dishCode, saved.rows[0].saved_at]
+        [dishCode]
     );
     return rows.rows;
 }
@@ -154,9 +175,19 @@ async function loadScoop(pool, scoopName, itemId, itemName) {
         `
         SELECT id, scoop_item_name, scoop_item_id, destination_unit, scoop_name,
                factor, conversion_chain, qty_in_grams, qty_in_ml, qty_in_piece
-        FROM public.scoop_config
-        WHERE LOWER(TRIM(scoop_name)) = LOWER(TRIM($1))
-          AND COALESCE(unused, false) = false
+        FROM public.scoop_config sc
+        WHERE LOWER(TRIM(sc.scoop_name)) = LOWER(TRIM($1))
+          AND COALESCE(sc.unused, false) = false
+          AND sc.version = COALESCE(
+              (
+                  SELECT iv.version
+                  FROM public.item_versions iv
+                  WHERE iv.item_type = 'scoop_config'
+                    AND iv.item_code = LOWER(TRIM(sc.scoop_name))
+                  LIMIT 1
+              ),
+              1
+          )
           AND (
                 scoop_item_id IS NULL OR TRIM(scoop_item_id) = ''
                 OR TRIM(scoop_item_id) = TRIM($2::text)
@@ -196,12 +227,13 @@ async function loadRawMaterial(pool, pgNo, itemName) {
 async function loadDishName(pool, dishCode) {
     const res = await pool.query(
         `
-        SELECT TRIM(dishname) AS dishname
-        FROM public.recipe_entries
-        WHERE UPPER(TRIM(dishcode)) = UPPER(TRIM($1))
-          AND dishcode IS NOT NULL
-          AND TRIM(dishcode) <> ''
-        ORDER BY created_at DESC, id DESC
+        SELECT TRIM(re.dishname) AS dishname
+        FROM public.recipe_entries re
+        WHERE UPPER(TRIM(re.dishcode)) = UPPER(TRIM($1))
+          AND re.dishcode IS NOT NULL
+          AND TRIM(re.dishcode) <> ''
+          AND re.version = ${RECIPE_VERSION_FOR_DISH_SQL}
+        ORDER BY re.id DESC
         LIMIT 1
         `,
         [dishCode]
@@ -212,10 +244,20 @@ async function loadDishName(pool, dishCode) {
 async function loadRawCost(pool, pgNo) {
     const res = await pool.query(
         `
-        SELECT "pgNo", ratepergram, rateperml, rateperpiece, based_on_billno
-        FROM public.raw_materials_cost
-        WHERE TRIM("pgNo") = TRIM($1)
-        ORDER BY last_updated_at DESC NULLS LAST, id DESC
+        SELECT r."pgNo", r.ratepergram, r.rateperml, r.rateperpiece, r.based_on_billno
+        FROM public.raw_materials_cost r
+        WHERE TRIM(r."pgNo") = TRIM($1)
+          AND r.version = COALESCE(
+              (
+                  SELECT iv.version
+                  FROM public.item_versions iv
+                  WHERE iv.item_type = 'raw_materials_cost'
+                    AND iv.item_code = UPPER(TRIM(r."pgNo"))
+                  LIMIT 1
+              ),
+              1
+          )
+        ORDER BY r.last_updated_at DESC NULLS LAST, r.id DESC
         LIMIT 1
         `,
         [pgNo]

@@ -33,22 +33,33 @@ dish_filter AS (
 -- A. Latest saved recipe rows per dish
 -- ===========================================================================
 
-recipe_latest_batch AS (
-    SELECT DISTINCT ON (UPPER(TRIM(dishcode)))
-        UPPER(TRIM(dishcode)) AS dish_code,
-        created_at AS saved_at
-    FROM public.recipe_entries
-    WHERE dishcode IS NOT NULL
-      AND TRIM(dishcode) <> ''
-    ORDER BY UPPER(TRIM(dishcode)), created_at DESC, id DESC
+recipe_current_version AS (
+    SELECT
+        iv.item_code AS dish_code,
+        iv.version AS current_version
+    FROM public.item_versions iv
+    WHERE iv.item_type = 'dishes'
 ),
 
 recipe_scope AS (
     SELECT re.*
     FROM public.recipe_entries re
-    INNER JOIN recipe_latest_batch lb
-        ON UPPER(TRIM(re.dishcode)) = lb.dish_code
-       AND re.created_at >= lb.saved_at - interval '30 seconds'
+    WHERE re.dishcode IS NOT NULL
+      AND TRIM(re.dishcode) <> ''
+      AND re.version = COALESCE(
+          (
+              SELECT cv.current_version
+              FROM recipe_current_version cv
+              WHERE cv.dish_code = UPPER(TRIM(re.dishcode))
+              LIMIT 1
+          ),
+          (
+              SELECT MAX(sub.version)
+              FROM public.recipe_entries sub
+              WHERE UPPER(TRIM(sub.dishcode)) = UPPER(TRIM(re.dishcode))
+          ),
+          1
+      )
 ),
 
 dishes_in_report AS (

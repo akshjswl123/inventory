@@ -26,8 +26,13 @@ const {
     loadRecipeByDishcode,
     runRecipeCostForDish,
     runDishCostValidation,
-    listDishesForCostCalculation
+    listDishesForCostCalculation,
+    ensureItemReportTable,
+    upsertItemReportLines,
+    listItemReportLines,
+    getItemReportSummary
 } = require('./dbqueries');
+const { excelBufferToCsv } = require('./excelToCsv');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -49,7 +54,39 @@ app.use((req, res, next) => {
 });
 
 app.get('/query.html', (req, res) => res.redirect(301, '/recreateFromPgDump.html'));
-app.use(express.static(path.join(__dirname))); // serves index.html, recreateFromPgDump.html, report.js
+
+/*
+ * POST /excelToCsv — raw .xlsx/.xls body; optional ?sheet=WorksheetName
+ * Response: text/csv (UTF-8 BOM) unless Accept: application/json
+ */
+app.post(
+    '/excelToCsv',
+    express.raw({ type: () => true, limit: '25mb' }),
+    (req, res) => {
+        try {
+            const result = excelBufferToCsv(
+                req.body,
+                req.query.sheet || req.headers['x-sheet-name']
+            );
+            const wantsJson = String(req.headers.accept || '').includes('application/json');
+            if (wantsJson) {
+                return res.json({
+                    sheetName: result.sheetName,
+                    sheetNames: result.sheetNames,
+                    csv: result.csv
+                });
+            }
+            res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+            res.setHeader('X-Sheet-Name', result.sheetName);
+            res.send('\uFEFF' + result.csv);
+        } catch (err) {
+            res.status(400).json({ error: err.message || 'Conversion failed' });
+        }
+    }
+);
+
+app.use('/data', express.static(path.join(__dirname, 'data')));
+app.use(express.static(path.join(__dirname))); // serves index.html, excelToCSV.html, report.js
 
 /*
  * POST /api/orders
@@ -453,9 +490,65 @@ app.post('/api/pgrestore', express.raw({ type: () => true, limit: '200mb' }), as
     }
 });
 
+/*
+ * GET /api/item-report — list imported lines (latest first)
+ */
+app.get('/api/item-report', async (req, res) => {
+    try {
+        const data = await listItemReportLines({
+            limit: req.query.limit,
+            offset: req.query.offset
+        });
+        res.json(data);
+    } catch (err) {
+        console.error('GET /api/item-report error:', err);
+        res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
+ * GET /api/item-report/summary?channel=swiggy|zomato|dinein
+ * Group by item name + date; dish cost from public.dish_cost (dish_total) or 0.
+ */
+app.get('/api/item-report/summary', async (req, res) => {
+    try {
+        const data = await getItemReportSummary(req.query.channel);
+        res.json(data);
+    } catch (err) {
+        console.error('GET /api/item-report/summary error:', err);
+        res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
+ * POST /api/item-report/import — upsert rows parsed in browser (itemReportCsv.js)
+ * Body: { rows: [...], skipped?: number, failed?: [...] }
+ */
+app.post('/api/item-report/import', async (req, res) => {
+    const rows = req.body && req.body.rows;
+    if (!Array.isArray(rows) || rows.length === 0) {
+        return res.status(400).json({ error: 'rows array is required (parse Excel in the Item Report tab first)' });
+    }
+    try {
+        const upsert = await upsertItemReportLines(rows);
+        const failed = (req.body.failed || []).concat(upsert.failed || []);
+        res.json({
+            parsed: rows.length,
+            inserted: upsert.inserted,
+            updated: upsert.updated,
+            skipped: Number(req.body.skipped) || 0,
+            failed
+        });
+    } catch (err) {
+        console.error('POST /api/item-report/import error:', err);
+        res.status(500).json({ error: 'Import failed', detail: err.message });
+    }
+});
+
 async function startServer() {
     try {
         await waitForDb();
+        await ensureItemReportTable();
         const seedResult = await runSeedData();
         if (!seedResult.skipped) {
             const failed = seedResult.files.filter(f => !f.ok);

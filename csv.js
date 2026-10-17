@@ -482,21 +482,35 @@ function formatOutQtyForShare(q) {
   return String(n);
 }
 
-function scoopNameForWhatsAppShare(scoop) {
-  const s = String(scoop ?? "");
-  return s.endsWith("_out") ? s.slice(0, -4) : s;
+/** Unit label from scoop_out: strip itemname_ prefix and _out suffix (e.g. AJWAIN_gm_out → gm). */
+function outScoopUnitFromName(itemname, scoopOut) {
+  let s = String(scoopOut ?? "").trim();
+  if (s.endsWith("_out")) s = s.slice(0, -4);
+  const item = String(itemname ?? "").trim();
+  if (item) {
+    const prefix = item + "_";
+    if (s.startsWith(prefix)) s = s.slice(prefix.length);
+    else {
+      const lower = s.toLowerCase();
+      const pLower = prefix.toLowerCase();
+      if (lower.startsWith(pLower)) s = s.slice(prefix.length);
+    }
+  }
+  return s.trim();
 }
 
-/** WhatsApp requirement list: date on line 1, then "N. pgNo scoop qty comments". */
+/** WhatsApp requirement: date, then "N. pgNo Itemname qtyOfScoop unit [comments]". */
 function buildOutRequirementShare(outRows, dt) {
   if (!outRows.length) return null;
   const displayDt = isoDateToDdMmYyyy(dt);
   const lines = outRows.map((row, i) => {
+    const itemname = row[3];
     const pgNo = row[4];
-    const scoop = scoopNameForWhatsAppShare(row[5]);
-    const qty = formatOutQtyForShare(row[6]);
+    const scoopOut = row[5];
+    const qtyOfScoop = formatOutQtyForShare(row[6]);
+    const unit = outScoopUnitFromName(itemname, scoopOut);
     const cmt = String(row[7] || "").trim();
-    let line = `${i + 1}. ${pgNo} ${scoop} ${qty}`;
+    let line = `${i + 1}. ${pgNo} ${itemname} ${qtyOfScoop} ${unit}`;
     if (cmt) line += ` ${cmt}`;
     return line;
   });

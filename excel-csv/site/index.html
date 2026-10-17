@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Excel to CSV</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 650px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .panel {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    input, select, button {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 14px;
+      padding: 12px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    #download {
+      display: none;
+    }
+
+    #status {
+      margin-top: 16px;
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="panel">
+    <h2>Excel → CSV Converter</h2>
+
+    <label for="file">Select Excel file (.xlsx / .xls)</label>
+    <input
+      id="file"
+      type="file"
+      accept=".xlsx,.xls"
+    >
+
+    <label for="sheet">Worksheet</label>
+    <select id="sheet" disabled>
+      <option value="">Import an Excel file first</option>
+    </select>
+
+    <button id="download" disabled>
+      Download CSV
+    </button>
+
+    <p id="status">Choose an Excel file to begin.</p>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById("file");
+    const sheetSelect = document.getElementById("sheet");
+    const downloadButton = document.getElementById("download");
+    const status = document.getElementById("status");
+
+    let workbook = null;
+    let fileName = "output";
+
+    fileInput.addEventListener("change", async () => {
+      workbook = null;
+      downloadButton.style.display = "none";
+      downloadButton.disabled = true;
+      sheetSelect.disabled = true;
+
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      try {
+        if (typeof XLSX === "undefined") {
+          throw new Error("Excel library could not load. Check internet access.");
+        }
+
+        const buffer = await file.arrayBuffer();
+
+        workbook = XLSX.read(buffer, {
+          type: "array"
+        });
+
+        if (!workbook.SheetNames.length) {
+          throw new Error("No worksheets found.");
+        }
+
+        fileName = file.name.replace(/\.(xlsx|xls)$/i, "");
+
+        sheetSelect.replaceChildren();
+
+        workbook.SheetNames.forEach((name) => {
+          const option = document.createElement("option");
+          option.value = name;
+          option.textContent = name;
+          sheetSelect.appendChild(option);
+        });
+
+        sheetSelect.disabled = false;
+        downloadButton.style.display = "block";
+        downloadButton.disabled = false;
+
+        status.textContent =
+          `Imported ${file.name} — ${workbook.SheetNames.length} worksheet(s).`;
+
+      } catch (error) {
+        workbook = null;
+        status.textContent = "Import failed: " + error.message;
+      }
+    });
+
+    downloadButton.addEventListener("click", () => {
+      if (!workbook) return;
+
+      try {
+        const sheetName = sheetSelect.value;
+        const worksheet = workbook.Sheets[sheetName];
+
+        const csv = XLSX.utils.sheet_to_csv(worksheet, {
+          blankrows: false
+        });
+
+        const blob = new Blob(
+          ["\uFEFF", csv],
+          { type: "text/csv;charset=utf-8;" }
+        );
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = `${fileName}_${sheetName}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+        status.textContent = `Downloaded ${fileName}_${sheetName}.csv`;
+      } catch (error) {
+        status.textContent = "Conversion failed: " + error.message;
+      }
+    });
+  </script>
+</body>
+</html>

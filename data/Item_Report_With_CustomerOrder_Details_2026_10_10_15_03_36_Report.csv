@@ -1,0 +1,385 @@
+﻿Date:,2026-10-09 to 2026-10-10,,,,,,,,,,,,,,,,,,,,,,,,,
+Name:,Item Report With Customer/Order Details,,,,,,,,,,,,,,,,,,,,,,,,,
+Restaurant Name:,Skywalk restro and cafe,,,,,,,,,,,,,,,,,,,,,,,,,
+Restaurant Address:,"wathoda ,beside wathoda police station 440008",,,,,,,,,,,,,,,,,,,,,,,,,
+Date,Timestamp,Invoice No.,Payment Type,Order Type,Area,Item Name,Price,Qty.,Sub Total,Discount,Tax,Final Total,Status,Table No.,Server Name,Covers,Variation,Category,Group Name,HSN,Phone,Name,Address,GST,Assign To,Non Taxable
+Total,,,,,,,55444.00,577.00,66825.00,8303.69,0.00,58521.31,,,,,,,,,,,,,,58521.31
+2026-10-10,2026-10-10 14:35:28,3062,Online,Delivery(Parcel),Swiggy,Veg Dum Biryani,249.00,1.00,249.00,60.00,0.00,189.00,Success,,Autoaccept,0,,Biryani & Pulao,,,,Mrunalini,,,,189.00
+2026-10-10,2026-10-10 14:27:50,3061,Online,Delivery(Parcel),Zomato,Alfredo Pasta (white Sause),239.00,1.00,239.00,0.00,0.00,239.00,Success,,Autoaccept,0,,Pasta & Pizzas,,,,Amir khan," Mangaldeep Colony, Pardi, Nagpur, Maharashtra Nagpur India",,,239.00
+2026-10-10,2026-10-10 14:26:34,3060,Online,Delivery(Parcel),Zomato,Veg Fried Rice.,219.00,1.00,219.00,0.00,0.00,219.00,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,Akash Meshram, Nagpur India,,,219.00
+2026-10-10,2026-10-10 14:14:25,3059,Online,Delivery(Parcel),Zomato,Mix Veg,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,Veg Main Course,,,,Pratyusha Srirambhatla, Nagpur India,,,199.00
+2026-10-10,2026-10-10 14:13:35,3058,Online,Delivery(Parcel),Zomato,Manchurian Noodles,229.00,1.00,229.00,0.00,0.00,229.00,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,Tiasha Pereira, Nagpur India,,,229.00
+2026-10-10,2026-10-10 14:08:57,3057,Online,Delivery(Parcel),Swiggy,Paneer Punjabi Rice Bowl,239.00,1.00,239.00,23.90,0.00,215.10,Success,,Autoaccept,0,,MEALS,,,,sanika,,,,215.10
+2026-10-10,2026-10-10 14:03:08,3056,,Dine In,LOUNGE,Dal Tadka,179.00,1.00,179.00,17.90,0.00,161.10,Success,L1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,161.10
+2026-10-10,2026-10-10 14:03:08,3056,,Dine In,LOUNGE,Paneer Punjabi,269.00,1.00,269.00,26.90,0.00,242.10,Success,L1,Ravi,0,,Paneer Main course,,,,,,,Ravi,242.10
+2026-10-10,2026-10-10 14:03:08,3056,,Dine In,LOUNGE,Garlic Butter Naan,65.00,2.00,130.00,13.00,0.00,117.00,Success,L1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,117.00
+2026-10-10,2026-10-10 14:03:08,3056,,Dine In,LOUNGE,Butter Naan,40.00,1.00,40.00,4.00,0.00,36.00,Success,L1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,36.00
+2026-10-10,2026-10-10 14:03:08,3056,,Dine In,LOUNGE,Butter Naan,40.00,1.00,40.00,4.00,0.00,36.00,Success,L1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,36.00
+2026-10-10,2026-10-10 14:03:08,3056,,Dine In,LOUNGE,Sizzling Brownie,209.00,1.00,209.00,20.90,0.00,188.10,Success,L1,Ravi,0,,Shakes & Desserts,,,,,,,Ravi,188.10
+2026-10-10,2026-10-10 14:03:08,3056,,Dine In,LOUNGE,Water Bottle,20.00,1.00,20.00,2.00,0.00,18.00,Success,L1,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,18.00
+2026-10-10,2026-10-10 13:58:23,3055,Online,Delivery(Parcel),Zomato,Veg Tawa Pulao,209.00,1.00,209.00,0.00,0.00,209.00,Success,,Autoaccept,0,,Biryani & Pulao,,,,Akanksha , Nagpur India,,,209.00
+2026-10-10,2026-10-10 13:53:20,3054,Online,Delivery(Parcel),Zomato,Veg Biryani,229.00,1.00,229.00,0.00,0.00,229.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Rohit, Nagpur India,,,229.00
+2026-10-10,2026-10-10 13:49:55,3053,Online,Delivery(Parcel),Zomato,Paneer Noodles,269.00,1.00,269.00,0.00,0.00,269.00,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,Sahaj Tiwari, Nagpur India,,,269.00
+2026-10-10,2026-10-10 13:47:50,3052,,Dine In,Sofa,Mutter Paneer,259.00,1.00,259.00,25.90,0.00,233.10,Success,S1,biller,0,,Paneer Main course,,,,,,,Ravi,233.10
+2026-10-10,2026-10-10 13:47:50,3052,,Dine In,Sofa,Garlic Naan,55.00,1.00,55.00,5.50,0.00,49.50,Success,S1,biller,0,,Breads / Dal / Rice,,,,,,,Ravi,49.50
+2026-10-10,2026-10-10 13:47:50,3052,,Dine In,Sofa,Sprite,30.00,1.00,30.00,3.00,0.00,27.00,Success,S1,biller,0,,Drinks ( Beverages ),,,,,,,Ravi,27.00
+2026-10-10,2026-10-10 13:47:50,3052,,Dine In,Sofa,Garlic Naan,55.00,1.00,55.00,5.50,0.00,49.50,Success,S1,biller,0,,Breads / Dal / Rice,,,,,,,Ravi,49.50
+2026-10-10,2026-10-10 13:47:50,3052,,Dine In,Sofa,Sprite,30.00,1.00,30.00,3.00,0.00,27.00,Success,S1,biller,0,,Drinks ( Beverages ),,,,,,,Ravi,27.00
+2026-10-10,2026-10-10 13:47:50,3052,,Dine In,Sofa,Tandoori Roti,25.00,2.00,50.00,5.00,0.00,45.00,Success,S1,biller,0,,Breads / Dal / Rice,,,,,,,Ravi,45.00
+2026-10-10,2026-10-10 13:47:50,3052,,Dine In,Sofa,Sprite,30.00,1.00,30.00,3.00,0.00,27.00,Success,S1,biller,0,,Drinks ( Beverages ),,,,,,,Ravi,27.00
+2026-10-10,2026-10-10 13:40:35,3051,Online,Delivery(Parcel),Zomato,Paneer Tikka Masala,329.00,1.00,329.00,110.69,0.00,218.31,Success,,Autoaccept,0,,Paneer Main course,,,,saurabh wankhede, Nagpur India,,,218.31
+2026-10-10,2026-10-10 13:40:21,3050,Online,Delivery(Parcel),Zomato,Veg Fried Rice.,189.00,1.00,189.00,78.49,0.00,110.51,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,Amartya Dive, Nagpur India,,,110.51
+2026-10-10,2026-10-10 13:32:08,3049,Online,Delivery(Parcel),Zomato,Chilly Paneer (Semi Gravy),239.00,1.00,239.00,142.11,0.00,96.89,Success,,Autoaccept,0,Semi Gravy,Starters,,,,Parth Pethia, Nagpur India,,,96.89
+2026-10-10,2026-10-10 13:26:44,3048,Cash,Dine In,BAR,Mushroom Masala,219.00,1.00,219.00,21.90,0.00,197.10,Success,C1,Ravi,0,,Veg Main Course,,,,,,,Ravi,197.10
+2026-10-10,2026-10-10 13:26:44,3048,Cash,Dine In,BAR,Butter Naan,40.00,2.00,80.00,8.00,0.00,72.00,Success,C1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,72.00
+2026-10-10,2026-10-10 13:26:44,3048,Cash,Dine In,BAR,Thumbsup,30.00,1.00,30.00,3.00,0.00,27.00,Success,C1,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,27.00
+2026-10-10,2026-10-10 13:26:44,3048,Cash,Dine In,BAR,Jeera Rice Half,79.00,1.00,79.00,7.90,0.00,71.10,Success,C1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,71.10
+2026-10-10,2026-10-10 13:21:50,3047,,Dine In,Sofa,Chole Bhature,199.00,1.00,199.00,19.90,0.00,179.10,Success,S3,Ravi,0,,North Indian (Chole Bhature & Parathas n more),,,,,,,Ravi,179.10
+2026-10-10,2026-10-10 13:21:50,3047,,Dine In,Sofa,Chole Kulche,179.00,1.00,179.00,17.90,0.00,161.10,Success,S3,Ravi,0,,North Indian (Chole Bhature & Parathas n more),,,,,,,Ravi,161.10
+2026-10-10,2026-10-10 13:21:50,3047,,Dine In,Sofa,Water Bottle,20.00,1.00,20.00,2.00,0.00,18.00,Success,S3,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,18.00
+2026-10-10,2026-10-10 13:21:12,3046,,Dine In,Sofa,Lemon Soda,59.00,1.00,59.00,0.00,0.00,59.00,Success,S2,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,59.00
+2026-10-10,2026-10-10 13:21:12,3046,,Dine In,Sofa,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,S2,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,20.00
+2026-10-10,2026-10-10 13:21:12,3046,,Dine In,Sofa,Hara Bhara Kebab,199.00,1.00,199.00,0.00,0.00,199.00,Success,S2,Ravi,0,,Starters,,,,,,,Ravi,199.00
+2026-10-10,2026-10-10 13:21:12,3046,,Dine In,Sofa,Diet Coke 300 Ml,70.00,3.00,210.00,0.00,0.00,210.00,Success,S2,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,210.00
+2026-10-10,2026-10-10 13:21:12,3046,,Dine In,Sofa,Paneer Punjabi,269.00,1.00,269.00,0.00,0.00,269.00,Success,S2,Ravi,0,,Paneer Main course,,,,,,,Ravi,269.00
+2026-10-10,2026-10-10 13:21:12,3046,,Dine In,Sofa,Punjabi Dal Tadka,199.00,1.00,199.00,0.00,0.00,199.00,Success,S2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,199.00
+2026-10-10,2026-10-10 13:21:12,3046,,Dine In,Sofa,Butter Tandoori Roti,30.00,6.00,180.00,0.00,0.00,180.00,Success,S2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,180.00
+2026-10-10,2026-10-10 13:17:06,3045,Online,Delivery(Parcel),Zomato,Chole Kulche,199.00,1.00,199.00,120.00,0.00,79.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Priyanka," Lakadganj, Nagpur Nagpur India",,,79.00
+2026-10-10,2026-10-10 13:10:49,3044,Online,Delivery(Parcel),Zomato,Alfredo Pasta (white Sause),239.00,1.00,239.00,148.93,0.00,90.07,Success,,Autoaccept,0,,Pasta & Pizzas,,,,Prerna, Nagpur India,,,90.07
+2026-10-10,2026-10-10 13:09:58,3043,Online,Delivery(Parcel),Zomato,Chole Kulche,199.00,1.00,199.00,100.00,0.00,99.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Aditya Gedam, Nagpur India,,,99.00
+2026-10-10,2026-10-10 13:08:35,3042,Online,Delivery(Parcel),Zomato,Paneer Fried Rice,219.00,1.00,219.00,87.60,0.00,131.40,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,Nirmal, Nagpur India,,,131.40
+2026-10-10,2026-10-10 13:07:13,3041,Online,Delivery(Parcel),Zomato,Garlic Butter Naan,69.00,2.00,138.00,45.25,0.00,92.75,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Aman Sheikh, Nagpur India,,,92.75
+2026-10-10,2026-10-10 13:07:13,3041,Online,Delivery(Parcel),Zomato,Paneer Butter Masala,289.00,1.00,289.00,94.75,0.00,194.25,Success,,Autoaccept,0,,Paneer Main course,,,,Aman Sheikh, Nagpur India,,,194.25
+2026-10-10,2026-10-10 13:05:26,3040,Online,Delivery(Parcel),Zomato,Crispy Veg,199.00,1.00,199.00,159.20,0.00,39.80,Success,,Autoaccept,0,,Starters,,,,om, Nagpur India,,,39.80
+2026-10-10,2026-10-10 13:03:02,3039,Online,Delivery(Parcel),Zomato,Aloo Lehsuni Paratha,129.00,1.00,129.00,0.00,0.00,129.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Shantanu Shebe, Nagpur India,,,129.00
+2026-10-10,2026-10-10 13:03:02,3039,Online,Delivery(Parcel),Zomato,Aloo Paratha,129.00,1.00,129.00,0.00,0.00,129.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Shantanu Shebe, Nagpur India,,,129.00
+2026-10-10,2026-10-10 12:56:37,3038,Online,Delivery(Parcel),Zomato,Crispy Veg,199.00,1.00,199.00,84.23,0.00,114.77,Success,,Autoaccept,0,,Starters,,,,Tanu, Nagpur India,,,114.77
+2026-10-10,2026-10-10 12:56:37,3038,Online,Delivery(Parcel),Zomato,Cheese Corn Sandwich,179.00,1.00,179.00,75.77,0.00,103.23,Success,,Autoaccept,0,,Burgers & Sandwiches,,,,Tanu, Nagpur India,,,103.23
+2026-10-10,2026-10-10 12:53:57,3037,Online,Delivery(Parcel),Zomato,Chole Kulche,199.00,1.00,199.00,100.00,0.00,99.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Aastha Agrawal, Nagpur India,,,99.00
+2026-10-10,2026-10-10 12:53:45,3036,Online,Delivery(Parcel),Zomato,Chole Kulche,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,manthan kuhikar," Ishwar Nagar, Nagpur, Maharashtra Nagpur India",,,199.00
+2026-10-10,2026-10-10 12:52:56,3035,Online,Delivery(Parcel),Zomato,Hakka Noodles,199.00,1.00,199.00,159.20,0.00,39.80,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,Swarupa," Chitnis Nagar, Nagpur, Maharashtra Nagpur India",,,39.80
+2026-10-10,2026-10-10 12:43:31,3034,Online,Delivery(Parcel),Zomato,Veg Biryani,268.00,1.00,268.00,60.00,0.00,208.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,bhagyashri Karpe," Shikshak Colony, Dighori, Nagpur, Maharashtra Nagpur India",,,208.00
+2026-10-10,2026-10-10 12:37:09,3033,Online,Delivery(Parcel),Zomato,Chole Kulche,199.00,1.00,199.00,120.00,0.00,79.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Sejal Charde, Nagpur India,,,79.00
+2026-10-10,2026-10-10 12:35:49,3032,Online,Delivery(Parcel),Zomato,Cold Coffee,149.00,1.00,149.00,80.00,0.00,69.00,Success,,Autoaccept,0,,Cold Coffee,,,,PRATHIK VASHIST, Nagpur India,,,69.00
+2026-10-09,2026-10-09 23:58:11,3031,Online,Delivery(Parcel),Zomato,Paneer Paratha,139.00,1.00,139.00,41.49,0.00,97.51,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Atharva Abhyankar, Nagpur India,,,97.51
+2026-10-09,2026-10-09 23:58:11,3031,Online,Delivery(Parcel),Zomato,Aloo Paratha,129.00,1.00,129.00,38.51,0.00,90.49,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Atharva Abhyankar, Nagpur India,,,90.49
+2026-10-09,2026-10-09 23:58:11,3031,Online,Delivery(Parcel),Zomato,Peri Peri Burger,169.00,1.00,169.00,0.00,0.00,169.00,Success,,Autoaccept,0,,Burgers & Sandwiches,,,,Atharva Abhyankar, Nagpur India,,,169.00
+2026-10-09,2026-10-09 23:47:46,3030,Online,Delivery(Parcel),Zomato,Crispy Veg,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,Starters,,,,spider man, Nagpur India,,,199.00
+2026-10-09,2026-10-09 23:41:43,3029,,Dine In,Sofa,Mix Veg,179.00,2.00,358.00,0.00,0.00,358.00,Success,S1,biller,0,,Veg Main Course,,,,,,,manish,358.00
+2026-10-09,2026-10-09 23:41:43,3029,,Dine In,Sofa,Dal Tadka,179.00,2.00,358.00,0.00,0.00,358.00,Success,S1,biller,0,,Breads / Dal / Rice,,,,,,,manish,358.00
+2026-10-09,2026-10-09 23:41:43,3029,,Dine In,Sofa,Water Bottle,20.00,2.00,40.00,0.00,0.00,40.00,Success,S1,biller,0,,Drinks ( Beverages ),,,,,,,manish,40.00
+2026-10-09,2026-10-09 23:41:43,3029,,Dine In,Sofa,Tandoori Roti,25.00,15.00,375.00,0.00,0.00,375.00,Success,S1,biller,0,,Breads / Dal / Rice,,,,,,,manish,375.00
+2026-10-09,2026-10-09 23:41:43,3029,,Dine In,Sofa,Jeera Rice,149.00,5.00,745.00,0.00,0.00,745.00,Success,S1,biller,0,,Breads / Dal / Rice,,,,,,,manish,745.00
+2026-10-09,2026-10-09 23:41:43,3029,,Dine In,Sofa,Water Bottle,20.00,3.00,60.00,0.00,0.00,60.00,Success,S1,biller,0,,Drinks ( Beverages ),,,,,,,manish,60.00
+2026-10-09,2026-10-09 23:37:02,3028,Online,Delivery(Parcel),Zomato,Paneer Tikka Sandwich,189.00,1.00,189.00,0.00,0.00,189.00,Success,,Autoaccept,0,,Burgers & Sandwiches,,,,Abhishek Gupta, Nagpur India,,,189.00
+2026-10-09,2026-10-09 23:36:04,3027,Online,Delivery(Parcel),Swiggy,Dal Tadka,189.00,1.00,189.00,50.00,0.00,139.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Harshadip Hood,,,,139.00
+2026-10-09,2026-10-09 23:27:38,3026,Online,Delivery(Parcel),Zomato,Paneer Tikka Sandwich,189.00,1.00,189.00,0.00,0.00,189.00,Success,,Autoaccept,0,,Burgers & Sandwiches,,,,Pavan Lande, Nagpur India,,,189.00
+2026-10-09,2026-10-09 23:27:06,3025,Online,Delivery(Parcel),Swiggy,Crispy Veg,199.00,1.00,199.00,60.00,0.00,139.00,Success,,Autoaccept,0,,Starters,,,,jatin,,,,139.00
+2026-10-09,2026-10-09 23:27:06,3025,Online,Delivery(Parcel),Swiggy,Friends Starter Box ( For 2 ),389.00,1.00,389.00,0.00,0.00,389.00,Success,,Autoaccept,0,,COMBOS,,,,jatin,,,,389.00
+2026-10-09,2026-10-09 23:25:13,3024,,Dine In,Parcel,Veg Keema Kasturi,219.00,1.00,219.00,21.90,0.00,197.10,Success,PARCEL-1,biller,0,,Veg Main Course,,,,,,,Ravi,197.10
+2026-10-09,2026-10-09 23:25:13,3024,,Dine In,Parcel,Laccha Paratha,65.00,1.00,65.00,6.50,0.00,58.50,Success,PARCEL-1,biller,0,,Breads / Dal / Rice,,,,,,,Ravi,58.50
+2026-10-09,2026-10-09 23:25:13,3024,,Dine In,Parcel,Jeera Rice,149.00,1.00,149.00,14.90,0.00,134.10,Success,PARCEL-1,biller,0,,Breads / Dal / Rice,,,,,,,Ravi,134.10
+2026-10-09,2026-10-09 23:25:13,3024,,Dine In,Parcel,Dal Tadka,179.00,1.00,179.00,17.90,0.00,161.10,Success,PARCEL-1,biller,0,,Breads / Dal / Rice,,,,,,,Ravi,161.10
+2026-10-09,2026-10-09 23:24:41,3023,Online,Delivery(Parcel),Zomato,Crispy Veg,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,Starters,,,,Sudhanshu, Nagpur India,,,199.00
+2026-10-09,2026-10-09 23:11:03,3022,Cash,Dine In,Garden,Manchurian Fried Rice,179.00,2.00,358.00,0.00,0.00,358.00,Success,G5,prabha,0,,Noodles & Fried Rice,,,,,,,prabha,358.00
+2026-10-09,2026-10-09 23:11:03,3022,Cash,Dine In,Garden,Chilly Paneer (Gravy),199.00,2.00,398.00,0.00,0.00,398.00,Success,G5,prabha,0,Gravy,Starters,,,,,,,prabha,398.00
+2026-10-09,2026-10-09 23:11:03,3022,Cash,Dine In,Garden,Hakka Noodles,179.00,2.00,358.00,0.00,0.00,358.00,Success,G5,prabha,0,,Noodles & Fried Rice,,,,,,,prabha,358.00
+2026-10-09,2026-10-09 23:11:03,3022,Cash,Dine In,Garden,Dal Tadka,179.00,1.00,179.00,0.00,0.00,179.00,Success,G5,prabha,0,,Breads / Dal / Rice,,,,,,,prabha,179.00
+2026-10-09,2026-10-09 23:11:03,3022,Cash,Dine In,Garden,Jeera Rice,149.00,1.00,149.00,0.00,0.00,149.00,Success,G5,prabha,0,,Breads / Dal / Rice,,,,,,,prabha,149.00
+2026-10-09,2026-10-09 23:11:03,3022,Cash,Dine In,Garden,Tandoori Roti,25.00,4.00,100.00,0.00,0.00,100.00,Success,G5,prabha,0,,Breads / Dal / Rice,,,,,,,prabha,100.00
+2026-10-09,2026-10-09 23:08:43,3021,Online,Delivery(Parcel),Zomato,Manchurian Noodles,229.00,1.00,229.00,0.00,0.00,229.00,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,Tanisha Mohapatra, Nagpur India,,,229.00
+2026-10-09,2026-10-09 23:08:43,3021,Online,Delivery(Parcel),Zomato,Aloo Paratha,129.00,1.00,129.00,0.00,0.00,129.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Tanisha Mohapatra, Nagpur India,,,129.00
+2026-10-09,2026-10-09 23:08:19,3020,Online,Delivery(Parcel),Zomato,Cold Coffee,149.00,1.00,149.00,0.00,0.00,149.00,Success,,Autoaccept,0,,Cold Coffee,,,,Jai Kakkar, Nagpur India,,,149.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Hara Bhara Kebab,199.00,1.00,199.00,0.00,0.00,199.00,Success,C2,Ravi,0,,Starters,,,,,,,Ravi,199.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Chilly Paneer (Semi Gravy),199.00,1.00,199.00,0.00,0.00,199.00,Success,C2,Ravi,0,Semi Gravy,Starters,,,,,,,Ravi,199.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Water Bottle,20.00,3.00,60.00,0.00,0.00,60.00,Success,C2,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,60.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Fried Masala Papad,49.00,2.00,98.00,0.00,0.00,98.00,Success,C2,Ravi,0,,Salad - Papad - Raita,,,,,,,Ravi,98.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Veg Kofta,219.00,1.00,219.00,0.00,0.00,219.00,Success,C2,Ravi,0,,Veg Main Course,,,,,,,Ravi,219.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Paneer Angara,279.00,1.00,279.00,0.00,0.00,279.00,Success,C2,Ravi,0,,Paneer Main course,,,,,,,Ravi,279.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Butter Tandoori Roti,30.00,5.00,150.00,0.00,0.00,150.00,Success,C2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,150.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Laccha Paratha,65.00,1.00,65.00,0.00,0.00,65.00,Success,C2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,65.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Dal Tadka,179.00,1.00,179.00,0.00,0.00,179.00,Success,C2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,179.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Butter Milk,59.00,4.00,236.00,0.00,0.00,236.00,Success,C2,Ravi,0,,Salad - Papad - Raita,,,,,,,Ravi,236.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Butter Tandoori Roti,30.00,3.00,90.00,0.00,0.00,90.00,Success,C2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,90.00
+2026-10-09,2026-10-09 23:08:13,3019,Cash,Dine In,BAR,Jeera Rice,149.00,1.00,149.00,0.00,0.00,149.00,Success,C2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,149.00
+2026-10-09,2026-10-09 23:04:54,3018,Online,Delivery(Parcel),Zomato,Masala Dal Khichdi,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Divya Sharma," Jai Maa Vaishno Devi Nagar, Dighori, Nagpur, Maharashtra Nagpur India",,,199.00
+2026-10-09,2026-10-09 22:57:56,3017,Online,Delivery(Parcel),Swiggy,Paneer Fried Rice,328.00,1.00,328.00,32.80,0.00,295.20,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,Yogita,,,,295.20
+2026-10-09,2026-10-09 22:52:47,3016,Online,Delivery(Parcel),Swiggy,Arrabiata Pasta (red Sause),229.00,1.00,229.00,22.90,0.00,206.10,Success,,Autoaccept,0,,Pasta & Pizzas,,,,Syed Shizan,,,,206.10
+2026-10-09,2026-10-09 22:52:41,3015,Cash,Dine In,Sofa,Paneer Makhani Pizza,199.00,1.00,199.00,0.00,0.00,199.00,Success,S3,manish,0,,Pasta & Pizzas,,,,,,,manish,199.00
+2026-10-09,2026-10-09 22:52:41,3015,Cash,Dine In,Sofa,Paneer Schezwan Pizza,199.00,1.00,199.00,0.00,0.00,199.00,Success,S3,manish,0,,Pasta & Pizzas,,,,,,,manish,199.00
+2026-10-09,2026-10-09 22:52:41,3015,Cash,Dine In,Sofa,Salted Fries,109.00,1.00,109.00,0.00,0.00,109.00,Success,S3,manish,0,,"Snacks ( Fries ,Nachos & Maggi)",,,,,,,manish,109.00
+2026-10-09,2026-10-09 22:52:41,3015,Cash,Dine In,Sofa,Water Bottle,20.00,2.00,40.00,0.00,0.00,40.00,Success,S3,manish,0,,Drinks ( Beverages ),,,,,,,manish,40.00
+2026-10-09,2026-10-09 22:30:50,3014,Cash,Dine In,Dining,Cold Coffee,129.00,1.00,129.00,0.00,0.00,129.00,Success,D4,NIKITA,0,,Cold Coffee,,,,,,,NIKITA,129.00
+2026-10-09,2026-10-09 22:30:50,3014,Cash,Dine In,Dining,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,D4,NIKITA,0,,Drinks ( Beverages ),,,,,,,NIKITA,20.00
+2026-10-09,2026-10-09 22:30:02,3013,Cash,Dine In,Parcel,Lahsuni Paneer,269.00,1.00,269.00,0.00,0.00,269.00,Success,PARCEL-3,biller,0,,Paneer Main course,,,,,,,pandeyji,269.00
+2026-10-09,2026-10-09 22:28:55,3012,Online,Delivery(Parcel),Zomato,Paneer Paratha,139.00,2.00,278.00,0.00,0.00,278.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Jai Kakkar, Nagpur India,,,278.00
+2026-10-09,2026-10-09 22:27:19,3011,Online,Delivery(Parcel),Swiggy,Dal Tadka,189.00,1.00,189.00,50.00,0.00,139.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Mack Madavi,,,,139.00
+2026-10-09,2026-10-09 22:24:02,3010,Online,Delivery(Parcel),Zomato,Chocolate Brownie Shake,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,Shakes & Desserts,,,,Mitesh wadibhasme," Vidhya Nagar, Wathoda Layout, Nagpur, Maharashtra Nagpur India",,,199.00
+2026-10-09,2026-10-09 22:21:27,3009,Online,Delivery(Parcel),Zomato,Masala Dal Khichdi,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Ashwini, Nagpur India,,,199.00
+2026-10-09,2026-10-09 22:16:41,3008,,Dine In,LOUNGE,Kadhhai Paneer,269.00,1.00,269.00,0.00,0.00,269.00,Success,L2,Ravi,0,,Paneer Main course,,,,,,,Ravi,269.00
+2026-10-09,2026-10-09 22:16:41,3008,,Dine In,LOUNGE,Veg Kolhapuri,189.00,1.00,189.00,0.00,0.00,189.00,Success,L2,Ravi,0,,Veg Main Course,,,,,,,Ravi,189.00
+2026-10-09,2026-10-09 22:16:41,3008,,Dine In,LOUNGE,Dal Tadka,179.00,1.00,179.00,0.00,0.00,179.00,Success,L2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,179.00
+2026-10-09,2026-10-09 22:16:41,3008,,Dine In,LOUNGE,Butter Tandoori Roti,30.00,4.00,120.00,0.00,0.00,120.00,Success,L2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,120.00
+2026-10-09,2026-10-09 22:16:41,3008,,Dine In,LOUNGE,Laccha Paratha,65.00,1.00,65.00,0.00,0.00,65.00,Success,L2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,65.00
+2026-10-09,2026-10-09 22:16:41,3008,,Dine In,LOUNGE,Tandoori Roti,25.00,4.00,100.00,0.00,0.00,100.00,Success,L2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,100.00
+2026-10-09,2026-10-09 22:16:41,3008,,Dine In,LOUNGE,Crispy Veg,169.00,1.00,169.00,0.00,0.00,169.00,Success,L2,Ravi,0,,Starters,,,,,,,Ravi,169.00
+2026-10-09,2026-10-09 22:16:41,3008,,Dine In,LOUNGE,Water Bottle,20.00,2.00,40.00,0.00,0.00,40.00,Success,L2,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,40.00
+2026-10-09,2026-10-09 22:16:41,3008,,Dine In,LOUNGE,Jeera Rice,149.00,2.00,298.00,0.00,0.00,298.00,Success,L2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,298.00
+2026-10-09,2026-10-09 22:16:41,3008,,Dine In,LOUNGE,Jeera Rice Half,79.00,1.00,79.00,0.00,0.00,79.00,Success,L2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,79.00
+2026-10-09,2026-10-09 22:15:18,3007,Online,Delivery(Parcel),Zomato,Paneer Punjabi,299.00,1.00,299.00,0.00,0.00,299.00,Success,,Autoaccept,0,,Paneer Main course,,,,Shubham Mokaddam," Pawanputra Nagar, Dighori, Nagpur, Maharashtra Nagpur India",,,299.00
+2026-10-09,2026-10-09 22:04:36,3006,Cash,Dine In,Sofa,Manchow Soup,159.00,1.00,159.00,15.90,0.00,143.10,Success,S1,manish,0,,Soup,,,,,,,manish,143.10
+2026-10-09,2026-10-09 22:04:36,3006,Cash,Dine In,Sofa,Fried Masala Papad,49.00,2.00,98.00,9.80,0.00,88.20,Success,S1,manish,0,,Salad - Papad - Raita,,,,,,,manish,88.20
+2026-10-09,2026-10-09 22:04:36,3006,Cash,Dine In,Sofa,Mexican Sandwich,129.00,1.00,129.00,12.90,0.00,116.10,Success,S1,manish,0,,Burgers & Sandwiches,,,,,,,manish,116.10
+2026-10-09,2026-10-09 22:04:36,3006,Cash,Dine In,Sofa,Chili Garlic Noodlesula,179.00,1.00,179.00,17.90,0.00,161.10,Success,S1,manish,0,,Noodles & Fried Rice,,,,,,,manish,161.10
+2026-10-09,2026-10-09 22:04:36,3006,Cash,Dine In,Sofa,Manchurian (Semi Gravy),189.00,1.00,189.00,18.90,0.00,170.10,Success,S1,manish,0,Semi Gravy,Starters,,,,,,,manish,170.10
+2026-10-09,2026-10-09 22:04:36,3006,Cash,Dine In,Sofa,Thumbsup,30.00,1.00,30.00,3.00,0.00,27.00,Success,S1,manish,0,,Drinks ( Beverages ),,,,,,,manish,27.00
+2026-10-09,2026-10-09 22:04:36,3006,Cash,Dine In,Sofa,Peri Peri Pizza,169.00,1.00,169.00,16.90,0.00,152.10,Success,S1,manish,0,,Pasta & Pizzas,,,,,,,manish,152.10
+2026-10-09,2026-10-09 22:04:36,3006,Cash,Dine In,Sofa,Sprite,30.00,1.00,30.00,3.00,0.00,27.00,Success,S1,manish,0,,Drinks ( Beverages ),,,,,,,manish,27.00
+2026-10-09,2026-10-09 22:01:03,3005,,Dine In,LOUNGE,Chole Bhature,199.00,1.00,199.00,0.00,0.00,199.00,Success,L1,NIKITA,0,,North Indian (Chole Bhature & Parathas n more),,,,,,,NIKITA,199.00
+2026-10-09,2026-10-09 22:01:03,3005,,Dine In,LOUNGE,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,L1,NIKITA,0,,Drinks ( Beverages ),,,,,,,NIKITA,20.00
+2026-10-09,2026-10-09 22:01:03,3005,,Dine In,LOUNGE,Veg Tawa Pulao,199.00,1.00,199.00,0.00,0.00,199.00,Success,L1,NIKITA,0,,Biryani & Pulao,,,,,,,NIKITA,199.00
+2026-10-09,2026-10-09 22:00:52,3004,Online,Delivery(Parcel),Swiggy,Tandoori Roti,25.00,4.00,100.00,8.00,0.00,92.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Vanshika,,,,92.00
+2026-10-09,2026-10-09 22:00:52,3004,Online,Delivery(Parcel),Swiggy,Kadhhai Paneer,299.00,1.00,299.00,30.00,0.00,269.00,Success,,Autoaccept,0,,Paneer Main course,,,,Vanshika,,,,269.00
+2026-10-09,2026-10-09 21:54:03,3003,Online,Delivery(Parcel),Zomato,Butter Naan,45.00,1.00,45.00,0.00,0.00,45.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Pilesh varma, Nagpur India,,,45.00
+2026-10-09,2026-10-09 21:54:03,3003,Online,Delivery(Parcel),Zomato,Jeera Rice,169.00,1.00,169.00,0.00,0.00,169.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Pilesh varma, Nagpur India,,,169.00
+2026-10-09,2026-10-09 21:54:03,3003,Online,Delivery(Parcel),Zomato,Butter Tandoori Roti,35.00,1.00,35.00,0.00,0.00,35.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Pilesh varma, Nagpur India,,,35.00
+2026-10-09,2026-10-09 21:47:57,3002,Online,Delivery(Parcel),Zomato,Paneer Tikka Sandwich,189.00,1.00,189.00,0.00,0.00,189.00,Success,,Autoaccept,0,,Burgers & Sandwiches,,,,Akhilesh Raut," Reshim Bagh, Nagpur Nagpur India",,,189.00
+2026-10-09,2026-10-09 21:47:37,3001,,Dine In,Dining,Crispy Corn,199.00,1.00,199.00,0.00,0.00,199.00,Success,D2,NIKITA,0,,Starters,,,,,,,NIKITA,199.00
+2026-10-09,2026-10-09 21:47:37,3001,,Dine In,Dining,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,D2,NIKITA,0,,Drinks ( Beverages ),,,,,,,NIKITA,20.00
+2026-10-09,2026-10-09 21:47:37,3001,,Dine In,Dining,Kadhhai Paneer,269.00,1.00,269.00,0.00,0.00,269.00,Success,D2,NIKITA,0,,Paneer Main course,,,,,,,NIKITA,269.00
+2026-10-09,2026-10-09 21:47:37,3001,,Dine In,Dining,Butter Naan,40.00,2.00,80.00,0.00,0.00,80.00,Success,D2,NIKITA,0,,Breads / Dal / Rice,,,,,,,NIKITA,80.00
+2026-10-09,2026-10-09 21:47:37,3001,,Dine In,Dining,Container 2,20.00,1.00,20.00,0.00,0.00,20.00,Success,D2,NIKITA,0,,OTHERS,,,,,,,NIKITA,20.00
+2026-10-09,2026-10-09 21:38:47,3000,,Dine In,Sofa,Manchurian (Gravy),199.00,1.00,199.00,0.00,0.00,199.00,Success,S3,prabha,0,Gravy,Starters,,,,,,,prabha,199.00
+2026-10-09,2026-10-09 21:38:47,3000,,Dine In,Sofa,Water Bottle,20.00,2.00,40.00,0.00,0.00,40.00,Success,S3,prabha,0,,Drinks ( Beverages ),,,,,,,prabha,40.00
+2026-10-09,2026-10-09 21:38:47,3000,,Dine In,Sofa,Paneer Punjabi,269.00,1.00,269.00,0.00,0.00,269.00,Success,S3,prabha,0,,Paneer Main course,,,,,,,prabha,269.00
+2026-10-09,2026-10-09 21:38:47,3000,,Dine In,Sofa,Malai Kofta,289.00,1.00,289.00,0.00,0.00,289.00,Success,S3,prabha,0,,Veg Main Course,,,,,,,prabha,289.00
+2026-10-09,2026-10-09 21:38:47,3000,,Dine In,Sofa,Tandoori Roti,25.00,4.00,100.00,0.00,0.00,100.00,Success,S3,prabha,0,,Breads / Dal / Rice,,,,,,,prabha,100.00
+2026-10-09,2026-10-09 21:38:47,3000,,Dine In,Sofa,Cheese Burger,109.00,1.00,109.00,0.00,0.00,109.00,Success,S3,prabha,0,,Burgers & Sandwiches,,,,,,,prabha,109.00
+2026-10-09,2026-10-09 21:38:47,3000,,Dine In,Sofa,Butter Naan,40.00,1.00,40.00,0.00,0.00,40.00,Success,S3,prabha,0,,Breads / Dal / Rice,,,,,,,prabha,40.00
+2026-10-09,2026-10-09 21:38:47,3000,,Dine In,Sofa,Steam Rice,129.00,2.00,258.00,0.00,0.00,258.00,Success,S3,prabha,0,,Breads / Dal / Rice,,,,,,,prabha,258.00
+2026-10-09,2026-10-09 21:38:47,3000,,Dine In,Sofa,Dal Tadka,179.00,1.00,179.00,0.00,0.00,179.00,Success,S3,prabha,0,,Breads / Dal / Rice,,,,,,,prabha,179.00
+2026-10-09,2026-10-09 21:38:47,3000,,Dine In,Sofa,Container 1,10.00,2.00,20.00,0.00,0.00,20.00,Success,S3,prabha,0,,OTHERS,,,,,,,prabha,20.00
+2026-10-09,2026-10-09 21:33:15,2999,Online,Delivery(Parcel),Zomato,Veg Kolhapuri,219.00,1.00,219.00,0.00,0.00,219.00,Success,,Autoaccept,0,,Veg Main Course,,,,Hitanshu Agrawal," Double Layout, Surya Nagar, Nagpur, Maharashtra Nagpur India",,,219.00
+2026-10-09,2026-10-09 21:32:58,2998,,Dine In,Dining,Paneer Schezwan Fried Rice,189.00,1.00,189.00,18.90,0.00,170.10,Success,D3,biller,0,,Noodles & Fried Rice,,,,,,,NIKITA,170.10
+2026-10-09,2026-10-09 21:32:58,2998,,Dine In,Dining,Water Bottle,20.00,1.00,20.00,2.00,0.00,18.00,Success,D3,biller,0,,Drinks ( Beverages ),,,,,,,NIKITA,18.00
+2026-10-09,2026-10-09 21:32:10,2997,,Dine In,BAR,Butter Naan,40.00,3.00,120.00,12.00,0.00,108.00,Success,C1,biller,0,,Breads / Dal / Rice,,,,,,,NIKITA,108.00
+2026-10-09,2026-10-09 21:32:10,2997,,Dine In,BAR,Chilly Mushroom,209.00,1.00,209.00,20.90,0.00,188.10,Success,C1,biller,0,,Starters,,,,,,,NIKITA,188.10
+2026-10-09,2026-10-09 21:32:10,2997,,Dine In,BAR,Paneer Butter Masala,249.00,1.00,249.00,24.90,0.00,224.10,Success,C1,biller,0,,Paneer Main course,,,,,,,NIKITA,224.10
+2026-10-09,2026-10-09 21:32:10,2997,,Dine In,BAR,Water Bottle,20.00,1.00,20.00,2.00,0.00,18.00,Success,C1,biller,0,,Drinks ( Beverages ),,,,,,,NIKITA,18.00
+2026-10-09,2026-10-09 21:32:10,2997,,Dine In,BAR,Gulab Jamun With Ice Cream,80.00,3.00,240.00,24.00,0.00,216.00,Success,C1,biller,0,,Shakes & Desserts,,,,,,,NIKITA,216.00
+2026-10-09,2026-10-09 21:29:26,2996,Cash,Dine In,Parcel,Manchurian (Semi Gravy),189.00,1.00,189.00,0.00,0.00,189.00,Success,PARCEL-1,biller,0,Semi Gravy,Starters,,,,,,,manish,189.00
+2026-10-09,2026-10-09 21:27:57,2995,Online,Delivery(Parcel),Swiggy,Fast Track Delux Mini Meal,299.00,1.00,299.00,100.00,0.00,199.00,Success,,Autoaccept,0,,MEALS,,,,vishesh,,,,199.00
+2026-10-09,2026-10-09 21:24:58,2994,Online,Delivery(Parcel),Zomato,Veg Biryani,229.00,1.00,229.00,0.00,0.00,229.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Chetan," Gadge Baba Nagar, New Sahakar Nagar, Kharbi, Nagpur, Maharashtra Nagpur India",,,229.00
+2026-10-09,2026-10-09 21:24:25,2993,Online,Delivery(Parcel),Zomato,Masala Dal Khichdi,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Diksha Wasnik, Nagpur India,,,199.00
+2026-10-09,2026-10-09 21:08:43,2991,,Dine In,LOUNGE,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,L1,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,20.00
+2026-10-09,2026-10-09 21:09:36,2992,Online,Delivery(Parcel),Zomato,Veg Biryani,229.00,1.00,229.00,59.69,0.00,169.31,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Arya Yadav," Laxmi Narayan Colony, Dighori, Nagpur, Maharashtra Nagpur India",,,169.31
+2026-10-09,2026-10-09 21:08:43,2991,,Dine In,LOUNGE,Crispy Veg,169.00,1.00,169.00,0.00,0.00,169.00,Success,L1,Ravi,0,,Starters,,,,,,,Ravi,169.00
+2026-10-09,2026-10-09 21:08:43,2991,,Dine In,LOUNGE,Paneer Angara,279.00,1.00,279.00,0.00,0.00,279.00,Success,L1,Ravi,0,,Paneer Main course,,,,,,,Ravi,279.00
+2026-10-09,2026-10-09 21:08:43,2991,,Dine In,LOUNGE,Fried Masala Papad,49.00,2.00,98.00,0.00,0.00,98.00,Success,L1,Ravi,0,,Salad - Papad - Raita,,,,,,,Ravi,98.00
+2026-10-09,2026-10-09 21:08:43,2991,,Dine In,LOUNGE,Dal Tadka,179.00,1.00,179.00,0.00,0.00,179.00,Success,L1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,179.00
+2026-10-09,2026-10-09 21:08:43,2991,,Dine In,LOUNGE,Laccha Paratha,65.00,2.00,130.00,0.00,0.00,130.00,Success,L1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,130.00
+2026-10-09,2026-10-09 21:08:43,2991,,Dine In,LOUNGE,Garlic Butter Naan,65.00,1.00,65.00,0.00,0.00,65.00,Success,L1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,65.00
+2026-10-09,2026-10-09 21:08:43,2991,,Dine In,LOUNGE,Cold Coffee,129.00,1.00,129.00,0.00,0.00,129.00,Success,L1,Ravi,0,,Cold Coffee,,,,,,,Ravi,129.00
+2026-10-09,2026-10-09 21:08:43,2991,,Dine In,LOUNGE,Aloo Tikki Burger,99.00,1.00,99.00,0.00,0.00,99.00,Success,L1,Ravi,0,,Burgers & Sandwiches,,,,,,,Ravi,99.00
+2026-10-09,2026-10-09 21:08:43,2991,,Dine In,LOUNGE,Lemon Soda,59.00,2.00,118.00,0.00,0.00,118.00,Success,L1,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,118.00
+2026-10-09,2026-10-09 21:08:43,2991,,Dine In,LOUNGE,Jeera Rice,149.00,1.00,149.00,0.00,0.00,149.00,Success,L1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,149.00
+2026-10-09,2026-10-09 21:02:24,2990,Online,Delivery(Parcel),Zomato,Butter Naan,45.00,2.00,90.00,45.00,0.00,45.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Poonam Bundela, Nagpur India,,,45.00
+2026-10-09,2026-10-09 21:02:24,2990,Online,Delivery(Parcel),Zomato,Tandoori Roti,30.00,1.00,30.00,15.00,0.00,15.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Poonam Bundela, Nagpur India,,,15.00
+2026-10-09,2026-10-09 20:59:58,2989,Online,Delivery(Parcel),Zomato,Honey Chilli Potato,249.00,1.00,249.00,60.00,0.00,189.00,Success,,Autoaccept,0,,Starters,,,,Vansika, Nagpur India,,,189.00
+2026-10-09,2026-10-09 20:58:34,2988,Online,Delivery(Parcel),Zomato,Crispy Veg,199.00,1.00,199.00,52.65,0.00,146.35,Success,,Autoaccept,0,,Starters,,,,lokesh karare, Nagpur India,,,146.35
+2026-10-09,2026-10-09 20:58:34,2988,Online,Delivery(Parcel),Zomato,Cheese Corn Sandwich,179.00,1.00,179.00,47.35,0.00,131.65,Success,,Autoaccept,0,,Burgers & Sandwiches,,,,lokesh karare, Nagpur India,,,131.65
+2026-10-09,2026-10-09 20:56:36,2987,Online,Delivery(Parcel),Zomato,Chilly Paneer (Gravy),239.00,1.00,239.00,102.25,0.00,136.75,Success,,Autoaccept,0,Gravy,Starters,,,,Anubhav, Nagpur India,,,136.75
+2026-10-09,2026-10-09 20:56:36,2987,Online,Delivery(Parcel),Zomato,Butter Naan,45.00,3.00,135.00,57.75,0.00,77.25,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Anubhav, Nagpur India,,,77.25
+2026-10-09,2026-10-09 20:56:22,2986,Online,Delivery(Parcel),Zomato,Chilly Paneer (Semi Gravy),239.00,1.00,239.00,160.00,0.00,79.00,Success,,Autoaccept,0,Semi Gravy,Starters,,,,Yash Ghughuskar, Nagpur India,,,79.00
+2026-10-09,2026-10-09 20:56:08,2985,Online,Delivery(Parcel),Zomato,Laccha Paratha,69.00,3.00,207.00,160.00,0.00,47.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Dipak Ale, Nagpur India,,,47.00
+2026-10-09,2026-10-09 20:55:42,2984,,Dine In,Garden,Kadhhai Paneer,269.00,1.00,269.00,0.00,0.00,269.00,Success,G5,prabha,0,,Paneer Main course,,,,,,,prabha,269.00
+2026-10-09,2026-10-09 20:55:42,2984,,Dine In,Garden,Butter Naan,40.00,1.00,40.00,0.00,0.00,40.00,Success,G5,prabha,0,,Breads / Dal / Rice,,,,,,,prabha,40.00
+2026-10-09,2026-10-09 20:55:42,2984,,Dine In,Garden,Tandoori Roti,25.00,2.00,50.00,0.00,0.00,50.00,Success,G5,prabha,0,,Breads / Dal / Rice,,,,,,,prabha,50.00
+2026-10-09,2026-10-09 20:55:42,2984,,Dine In,Garden,Fried Masala Papad,49.00,1.00,49.00,0.00,0.00,49.00,Success,G5,prabha,0,,Salad - Papad - Raita,,,,,,,prabha,49.00
+2026-10-09,2026-10-09 20:55:42,2984,,Dine In,Garden,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,G5,prabha,0,,Drinks ( Beverages ),,,,,,,prabha,20.00
+2026-10-09,2026-10-09 20:55:42,2984,,Dine In,Garden,Jeera Rice Half,79.00,1.00,79.00,0.00,0.00,79.00,Success,G5,prabha,0,,Breads / Dal / Rice,,,,,,,prabha,79.00
+2026-10-09,2026-10-09 20:55:42,2984,,Dine In,Garden,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,G5,prabha,0,,Drinks ( Beverages ),,,,,,,prabha,20.00
+2026-10-09,2026-10-09 20:52:07,2983,,Dine In,LOUNGE,Pink Sause Pasta,219.00,1.00,219.00,21.90,0.00,197.10,Success,L3,Ravi,0,,Pasta & Pizzas,,,,,,,Ravi,197.10
+2026-10-09,2026-10-09 20:52:07,2983,,Dine In,LOUNGE,Coke,30.00,1.00,30.00,3.00,0.00,27.00,Success,L3,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,27.00
+2026-10-09,2026-10-09 20:52:07,2983,,Dine In,LOUNGE,Aloo Paratha,109.00,1.00,109.00,10.90,0.00,98.10,Success,L3,Ravi,0,,North Indian (Chole Bhature & Parathas n more),,,,,,,Ravi,98.10
+2026-10-09,2026-10-09 20:52:07,2983,,Dine In,LOUNGE,Onion Paratha,99.00,1.00,99.00,9.90,0.00,89.10,Success,L3,Ravi,0,,North Indian (Chole Bhature & Parathas n more),,,,,,,Ravi,89.10
+2026-10-09,2026-10-09 20:50:04,2982,Online,Delivery(Parcel),Zomato,Veg Dum Biryani,249.00,1.00,249.00,160.00,0.00,89.00,Success,,Autoaccept,0,,Biryani & Pulao,,,,maitali chavhan, Nagpur India,,,89.00
+2026-10-09,2026-10-09 20:49:05,2981,Online,Delivery(Parcel),Zomato,Veg Kofta,229.00,1.00,229.00,160.00,0.00,69.00,Success,,Autoaccept,0,,Veg Main Course,,,,Poonam Bundela, Nagpur India,,,69.00
+2026-10-09,2026-10-09 20:48:49,2980,,Dine In,BAR,Dal Tadka,179.00,1.00,179.00,17.90,0.00,161.10,Success,C3,manish,0,,Breads / Dal / Rice,,,,,,,manish,161.10
+2026-10-09,2026-10-09 20:48:49,2980,,Dine In,BAR,Butter Naan,40.00,1.00,40.00,4.00,0.00,36.00,Success,C3,manish,0,,Breads / Dal / Rice,,,,,,,manish,36.00
+2026-10-09,2026-10-09 20:48:49,2980,,Dine In,BAR,Butter Tandoori Roti,30.00,2.00,60.00,6.00,0.00,54.00,Success,C3,manish,0,,Breads / Dal / Rice,,,,,,,manish,54.00
+2026-10-09,2026-10-09 20:48:49,2980,,Dine In,BAR,Water Bottle,20.00,1.00,20.00,2.00,0.00,18.00,Success,C3,manish,0,,Drinks ( Beverages ),,,,,,,manish,18.00
+2026-10-09,2026-10-09 20:48:49,2980,,Dine In,BAR,Butter Tandoori Roti,30.00,1.00,30.00,3.00,0.00,27.00,Success,C3,manish,0,,Breads / Dal / Rice,,,,,,,manish,27.00
+2026-10-09,2026-10-09 20:48:49,2980,,Dine In,BAR,Butter Tandoori Roti,30.00,1.00,30.00,3.00,0.00,27.00,Success,C3,manish,0,,Breads / Dal / Rice,,,,,,,manish,27.00
+2026-10-09,2026-10-09 20:48:34,2979,Online,Delivery(Parcel),Zomato,Crispy Veg,199.00,1.00,199.00,159.20,0.00,39.80,Success,,Autoaccept,0,,Starters,,,,shravani," Solanki Patil Wadi, Nagpur, Maharashtra Nagpur India",,,39.80
+2026-10-09,2026-10-09 20:40:15,2978,Online,Delivery(Parcel),Zomato,Tandoori Roti,30.00,4.00,120.00,60.00,0.00,60.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Sharayu Faye," Bidgaon., Maharashtra Nagpur India",,,60.00
+2026-10-09,2026-10-09 20:37:36,2977,Online,Delivery(Parcel),Zomato,Honey Chilli Potato,249.00,1.00,249.00,160.00,0.00,89.00,Success,,Autoaccept,0,,Starters,,,,Lalitha Chadalavada, Nagpur India,,,89.00
+2026-10-09,2026-10-09 20:29:58,2976,Cash,Dine In,Sofa,Crispy Veg,169.00,1.00,169.00,16.90,0.00,152.10,Success,S2,manish,0,,Starters,,,,,,,manish,152.10
+2026-10-09,2026-10-09 20:29:58,2976,Cash,Dine In,Sofa,Paneer Angara,279.00,1.00,279.00,27.90,0.00,251.10,Success,S2,manish,0,,Paneer Main course,,,,,,,manish,251.10
+2026-10-09,2026-10-09 20:29:58,2976,Cash,Dine In,Sofa,Dal Tadka,179.00,1.00,179.00,17.90,0.00,161.10,Success,S2,manish,0,,Breads / Dal / Rice,,,,,,,manish,161.10
+2026-10-09,2026-10-09 20:29:58,2976,Cash,Dine In,Sofa,Tandoori Roti,25.00,8.00,200.00,20.00,0.00,180.00,Success,S2,manish,0,,Breads / Dal / Rice,,,,,,,manish,180.00
+2026-10-09,2026-10-09 20:29:58,2976,Cash,Dine In,Sofa,Water Bottle,20.00,1.00,20.00,2.00,0.00,18.00,Success,S2,manish,0,,Drinks ( Beverages ),,,,,,,manish,18.00
+2026-10-09,2026-10-09 20:29:58,2976,Cash,Dine In,Sofa,Tandoori Roti,25.00,4.00,100.00,10.00,0.00,90.00,Success,S2,manish,0,,Breads / Dal / Rice,,,,,,,manish,90.00
+2026-10-09,2026-10-09 20:29:58,2976,Cash,Dine In,Sofa,Water Bottle,20.00,1.00,20.00,2.00,0.00,18.00,Success,S2,manish,0,,Drinks ( Beverages ),,,,,,,manish,18.00
+2026-10-09,2026-10-09 20:29:58,2976,Cash,Dine In,Sofa,Paneer Fried Rice,189.00,1.00,189.00,18.90,0.00,170.10,Success,S2,manish,0,,Noodles & Fried Rice,,,,,,,manish,170.10
+2026-10-09,2026-10-09 20:27:25,2975,Online,Delivery(Parcel),Zomato,Veg Dum Biryani,249.00,1.00,249.00,83.37,0.00,165.63,Success,,Autoaccept,0,,Biryani & Pulao,,,,Aditi Singh, Nagpur India,,,165.63
+2026-10-09,2026-10-09 20:27:25,2975,Online,Delivery(Parcel),Zomato,Chole Kulche,199.00,1.00,199.00,66.63,0.00,132.37,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Aditi Singh, Nagpur India,,,132.37
+2026-10-09,2026-10-09 20:27:17,2974,Online,Delivery(Parcel),Zomato,Pyaz Kulcha (roti),49.00,1.00,49.00,11.28,0.00,37.72,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,diya dhaked, Nagpur India,,,37.72
+2026-10-09,2026-10-09 20:27:17,2974,Online,Delivery(Parcel),Zomato,Curd,70.00,1.00,70.00,16.12,0.00,53.88,Success,,Autoaccept,0,,Salad - Papad - Raita,,,,diya dhaked, Nagpur India,,,53.88
+2026-10-09,2026-10-09 20:27:17,2974,Online,Delivery(Parcel),Zomato,Butter Tandoori Roti,35.00,2.00,70.00,16.12,0.00,53.88,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,diya dhaked, Nagpur India,,,53.88
+2026-10-09,2026-10-09 20:27:17,2974,Online,Delivery(Parcel),Zomato,Jain Paneer Butter Masala,329.00,1.00,329.00,75.76,0.00,253.24,Success,,Autoaccept,0,,JAIN SPECIAL,,,,diya dhaked, Nagpur India,,,253.24
+2026-10-09,2026-10-09 20:27:17,2974,Online,Delivery(Parcel),Zomato,Butter Naan,45.00,2.00,90.00,20.72,0.00,69.28,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,diya dhaked, Nagpur India,,,69.28
+2026-10-09,2026-10-09 20:23:56,2973,Cash,Dine In,Parcel,Paneer Butter Masala,249.00,1.00,249.00,0.00,0.00,249.00,Success,PARCEL-3,biller,0,,Paneer Main course,,,,,,,pandeyji,249.00
+2026-10-09,2026-10-09 20:23:56,2973,Cash,Dine In,Parcel,Butter Naan,40.00,2.00,80.00,0.00,0.00,80.00,Success,PARCEL-3,biller,0,,Breads / Dal / Rice,,,,,,,pandeyji,80.00
+2026-10-09,2026-10-09 20:22:49,2972,Online,Delivery(Parcel),Zomato,Aloo Lehsuni Paratha,129.00,1.00,129.00,60.00,0.00,69.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Gauri, Nagpur India,,,69.00
+2026-10-09,2026-10-09 20:19:56,2971,,Dine In,Garden,Hakka Noodles,259.00,1.00,259.00,0.00,0.00,259.00,Success,G4,prabha,0,,Noodles & Fried Rice,,,,,,,prabha,259.00
+2026-10-09,2026-10-09 20:19:56,2971,,Dine In,Garden,Cheese Corn Pizza,169.00,1.00,169.00,0.00,0.00,169.00,Success,G4,prabha,0,,Pasta & Pizzas,,,,,,,prabha,169.00
+2026-10-09,2026-10-09 20:19:56,2971,,Dine In,Garden,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,G4,prabha,0,,Drinks ( Beverages ),,,,,,,prabha,20.00
+2026-10-09,2026-10-09 20:16:00,2970,,Dine In,Dining,Paneer Butter Masala,249.00,1.00,249.00,0.00,0.00,249.00,Success,D2,NIKITA,0,,Paneer Main course,,,,,,,NIKITA,249.00
+2026-10-09,2026-10-09 20:16:00,2970,,Dine In,Dining,Tandoori Roti,25.00,2.00,50.00,0.00,0.00,50.00,Success,D2,NIKITA,0,,Breads / Dal / Rice,,,,,,,NIKITA,50.00
+2026-10-09,2026-10-09 20:16:00,2970,,Dine In,Dining,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,D2,NIKITA,0,,Drinks ( Beverages ),,,,,,,NIKITA,20.00
+2026-10-09,2026-10-09 20:16:00,2970,,Dine In,Dining,Tandoori Roti,25.00,2.00,50.00,0.00,0.00,50.00,Success,D2,NIKITA,0,,Breads / Dal / Rice,,,,,,,NIKITA,50.00
+2026-10-09,2026-10-09 20:16:00,2970,,Dine In,Dining,Jeera Rice,149.00,1.00,149.00,0.00,0.00,149.00,Success,D2,NIKITA,0,,Breads / Dal / Rice,,,,,,,NIKITA,149.00
+2026-10-09,2026-10-09 20:16:00,2970,,Dine In,Dining,Tandoori Roti,25.00,1.00,25.00,0.00,0.00,25.00,Success,D2,NIKITA,0,,Breads / Dal / Rice,,,,,,,NIKITA,25.00
+2026-10-09,2026-10-09 20:14:21,2969,Online,Delivery(Parcel),Zomato,Honey Chilli Potato,249.00,1.00,249.00,26.46,0.00,222.54,Success,,Autoaccept,0,,Starters,,,,Aryan, Nagpur India,,,222.54
+2026-10-09,2026-10-09 20:13:58,2968,Online,Delivery(Parcel),Zomato,Crispy Veg,199.00,1.00,199.00,14.96,0.00,184.04,Success,,Autoaccept,0,,Starters,,,,Mayuresh Gangthade, Nagpur India,,,184.04
+2026-10-09,2026-10-09 20:11:00,2967,Online,Delivery(Parcel),Zomato,Hakka Noodles,229.00,1.00,229.00,57.52,0.00,171.48,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,siddhi, Nagpur India,,,171.48
+2026-10-09,2026-10-09 20:10:33,2966,Online,Delivery(Parcel),Zomato,Paneer Butter Masala,289.00,1.00,289.00,71.32,0.00,217.68,Success,,Autoaccept,0,,Paneer Main course,,,,sanjana Vishwakarma," Mahal, Nagpur Nagpur India",,,217.68
+2026-10-09,2026-10-09 20:07:25,2965,Online,Delivery(Parcel),Zomato,Chole Bhature,199.00,1.00,199.00,50.62,0.00,148.38,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Mayuri Ukey," Bhamdewadi, Pardi, Nagpur, Maharashtra Nagpur India",,,148.38
+2026-10-09,2026-10-09 20:02:21,2964,Online,Delivery(Parcel),Zomato,Paneer Kolhapuri,289.00,1.00,289.00,68.81,0.00,220.19,Success,,Autoaccept,0,,Paneer Main course,,,,Samiksha Deshmukh," Gadge Baba Nagar, New Sahakar Nagar, Kharbi, Nagpur, Maharashtra Nagpur India",,,220.19
+2026-10-09,2026-10-09 20:02:21,2964,Online,Delivery(Parcel),Zomato,Paneer Lababdar,299.00,1.00,299.00,71.19,0.00,227.81,Success,,Autoaccept,0,,Paneer Main course,,,,Samiksha Deshmukh," Gadge Baba Nagar, New Sahakar Nagar, Kharbi, Nagpur, Maharashtra Nagpur India",,,227.81
+2026-10-09,2026-10-09 19:59:41,2963,Online,Delivery(Parcel),Zomato,Tandoori Roti,30.00,1.00,30.00,0.00,0.00,30.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Divyani Awale, Nagpur India,,,30.00
+2026-10-09,2026-10-09 19:59:41,2963,Online,Delivery(Parcel),Zomato,Dal Tadka,199.00,1.00,199.00,57.52,0.00,141.48,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Divyani Awale, Nagpur India,,,141.48
+2026-10-09,2026-10-09 19:57:20,2962,Online,Delivery(Parcel),Zomato,Veg Dum Biryani,249.00,1.00,249.00,59.74,0.00,189.26,Success,,Autoaccept,0,,Biryani & Pulao,,,,Arpan Patiye," Tamale Layout, Pardi, Nagpur, Maharashtra Nagpur India",,,189.26
+2026-10-09,2026-10-09 19:57:20,2962,Online,Delivery(Parcel),Zomato,Veg Kadhai,239.00,1.00,239.00,57.35,0.00,181.65,Success,,Autoaccept,0,,Veg Main Course,,,,Arpan Patiye," Tamale Layout, Pardi, Nagpur, Maharashtra Nagpur India",,,181.65
+2026-10-09,2026-10-09 19:51:21,2961,Online,Delivery(Parcel),Zomato,Garlic Butter Naan,69.00,3.00,207.00,0.00,0.00,207.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Tanishkaa Sharma, Nagpur India,,,207.00
+2026-10-09,2026-10-09 19:51:19,2960,Online,Delivery(Parcel),Zomato,Crispy Veg,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,Starters,,,,Anant Tawle, Nagpur India,,,199.00
+2026-10-09,2026-10-09 19:49:05,2959,Online,Delivery(Parcel),Zomato,Kadhhai Paneer,299.00,1.00,299.00,0.00,0.00,299.00,Success,,Autoaccept,0,,Paneer Main course,,,,Tanishkaa Sharma, Nagpur India,,,299.00
+2026-10-09,2026-10-09 19:49:05,2959,Online,Delivery(Parcel),Zomato,Gulab Jamun,80.00,1.00,80.00,0.00,0.00,80.00,Success,,Autoaccept,0,,Shakes & Desserts,,,,Tanishkaa Sharma, Nagpur India,,,80.00
+2026-10-09,2026-10-09 19:38:44,2958,Online,Delivery(Parcel),Zomato,Chole Bhature,199.00,1.00,199.00,45.77,0.00,153.23,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Yash Paunikar, Nagpur India,,,153.23
+2026-10-09,2026-10-09 19:37:50,2957,Online,Delivery(Parcel),Zomato,Veg Tawa Pulao,209.00,1.00,209.00,78.88,0.00,130.12,Success,,Autoaccept,0,,Biryani & Pulao,,,,saurav Shende, Nagpur India,,,130.12
+2026-10-09,2026-10-09 19:37:27,2956,Online,Delivery(Parcel),Swiggy,Crispy Veg,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,Starters,,,,Yash,,,,199.00
+2026-10-09,2026-10-09 19:31:20,2955,Online,Delivery(Parcel),Zomato,Crispy Veg,199.00,1.00,199.00,76.58,0.00,122.42,Success,,Autoaccept,0,,Starters,,,,Mitali yelane," Anmol Nagar, Dighori, Nagpur, Maharashtra Nagpur India",,,122.42
+2026-10-09,2026-10-09 19:30:24,2954,,Dine In,Parcel,Veg Noodls,169.00,1.00,169.00,0.00,0.00,169.00,Success,PARCEL-3,biller,0,,Noodles & Fried Rice,,,,,,,prabha,169.00
+2026-10-09,2026-10-09 19:18:33,2953,Online,Delivery(Parcel),Zomato,Paneer Butter Masala,289.00,1.00,289.00,97.28,0.00,191.72,Success,,Autoaccept,0,,Paneer Main course,,,,yash," Laxmi Narayan Colony, Dighori, Nagpur, Maharashtra Nagpur India",,,191.72
+2026-10-09,2026-10-09 19:18:26,2952,Online,Delivery(Parcel),Zomato,Butter Naan,45.00,2.00,90.00,0.00,0.00,90.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Pankaj Bhagat," Bidgaon., Maharashtra Nagpur India",,,90.00
+2026-10-09,2026-10-09 19:18:26,2952,Online,Delivery(Parcel),Zomato,Dal Tadka,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Pankaj Bhagat," Bidgaon., Maharashtra Nagpur India",,,199.00
+2026-10-09,2026-10-09 19:18:13,2951,Online,Delivery(Parcel),Zomato,Veg Kolhapuri,219.00,1.00,219.00,81.18,0.00,137.82,Success,,Autoaccept,0,,Veg Main Course,,,,yug parasiya, Nagpur India,,,137.82
+2026-10-09,2026-10-09 19:15:47,2950,Online,Delivery(Parcel),Swiggy,Crispy Veg,199.00,1.00,199.00,60.00,0.00,139.00,Success,,Autoaccept,0,,Starters,,,,Pratham khetan,,,,139.00
+2026-10-09,2026-10-09 19:15:47,2950,Online,Delivery(Parcel),Swiggy,Choco Cold Coffee,139.00,1.00,139.00,13.90,0.00,125.10,Success,,Autoaccept,0,,Cold Coffee,,,,Pratham khetan,,,,125.10
+2026-10-09,2026-10-09 19:15:39,2949,,Dine In,Garden,Hakka Noodles,179.00,1.00,179.00,0.00,0.00,179.00,Success,G2,prabha,0,,Noodles & Fried Rice,,,,,,,prabha,179.00
+2026-10-09,2026-10-09 19:15:39,2949,,Dine In,Garden,Veg Fried Rice,169.00,1.00,169.00,0.00,0.00,169.00,Success,G2,prabha,0,,Noodles & Fried Rice,,,,,,,prabha,169.00
+2026-10-09,2026-10-09 19:11:38,2948,,Dine In,BAR,Alfredo Pasta (white Sause),219.00,1.00,219.00,0.00,0.00,219.00,Success,C1,prabha,0,,Pasta & Pizzas,,,,,,,prabha,219.00
+2026-10-09,2026-10-09 19:09:57,2947,Cash,Dine In,Parcel,Chilly Paneer (Semi Gravy),199.00,1.00,199.00,0.00,0.00,199.00,Success,PARCEL-1,Ravi,0,Semi Gravy,Starters,,,,,,,Ravi,199.00
+2026-10-09,2026-10-09 19:07:05,2946,Cash,Dine In,Dining,Ice Cream Mango,40.00,2.00,80.00,0.00,0.00,80.00,Success,D2,prabha,0,,Shakes & Desserts,,,,,,,prabha,80.00
+2026-10-09,2026-10-09 18:51:33,2945,Cash,Dine In,LOUNGE,Vegetable Maggi,119.00,1.00,119.00,11.90,0.00,107.10,Success,L1,manish,0,,"Snacks ( Fries ,Nachos & Maggi)",,,,,,,manish,107.10
+2026-10-09,2026-10-09 18:51:33,2945,Cash,Dine In,LOUNGE,Manchurian Fried Rice,179.00,1.00,179.00,17.90,0.00,161.10,Success,L1,manish,0,,Noodles & Fried Rice,,,,,,,manish,161.10
+2026-10-09,2026-10-09 18:51:33,2945,Cash,Dine In,LOUNGE,Coke,30.00,1.00,30.00,3.00,0.00,27.00,Success,L1,manish,0,,Drinks ( Beverages ),,,,,,,manish,27.00
+2026-10-09,2026-10-09 18:51:33,2945,Cash,Dine In,LOUNGE,Sizzling Brownie,209.00,1.00,209.00,20.90,0.00,188.10,Success,L1,manish,0,,Shakes & Desserts,,,,,,,manish,188.10
+2026-10-09,2026-10-09 18:50:32,2944,,Dine In,Parcel,Crispy Veg,169.00,2.00,338.00,50.70,0.00,287.30,Success,PARCEL-5,prabha,0,,Starters,,,,,,,prabha,287.30
+2026-10-09,2026-10-09 18:46:12,2943,Online,Delivery(Parcel),Zomato,Paneer Tikka,239.00,1.00,239.00,0.00,0.00,239.00,Success,,Autoaccept,0,,Starters,,,,Riddhi Sheth Kurani, Nagpur India,,,239.00
+2026-10-09,2026-10-09 18:35:05,2942,Online,Delivery(Parcel),Zomato,Paneer Tikka Masala,329.00,1.00,329.00,92.92,0.00,236.08,Success,,Autoaccept,0,,Paneer Main course,,,,Anjali Padole, Nagpur India,,,236.08
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Classic Lassi,79.00,1.00,79.00,0.00,0.00,79.00,Success,S1,prabha,0,,Drinks ( Beverages ),,,,,,,prabha,79.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Water Bottle,20.00,5.00,100.00,0.00,0.00,100.00,Success,S1,prabha,0,,Drinks ( Beverages ),,,,,,,prabha,100.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Chilly Paneer (Semi Gravy),199.00,4.00,796.00,0.00,0.00,796.00,Success,S1,prabha,0,Semi Gravy,Starters,,,,,,,prabha,796.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Cheese Corn Sandwich,129.00,4.00,516.00,0.00,0.00,516.00,Success,S1,prabha,0,,Burgers & Sandwiches,,,,,,,prabha,516.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Crispy Veg,169.00,4.00,676.00,0.00,0.00,676.00,Success,S1,prabha,0,,Starters,,,,,,,prabha,676.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Chilly Mushroom,209.00,1.00,209.00,0.00,0.00,209.00,Success,S1,prabha,0,,Starters,,,,,,,prabha,209.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Water Bottle,20.00,5.00,100.00,0.00,0.00,100.00,Success,S1,prabha,0,,Drinks ( Beverages ),,,,,,,prabha,100.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Butter Milk,59.00,1.00,59.00,0.00,0.00,59.00,Success,S1,prabha,0,,Salad - Papad - Raita,,,,,,,prabha,59.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Water Bottle,20.00,4.00,80.00,0.00,0.00,80.00,Success,S1,prabha,0,,Drinks ( Beverages ),,,,,,,prabha,80.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Cheese Corn Sandwich,129.00,3.00,387.00,0.00,0.00,387.00,Success,S1,prabha,0,,Burgers & Sandwiches,,,,,,,prabha,387.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Cappuccino,69.00,10.00,690.00,0.00,0.00,690.00,Success,S1,prabha,0,,Hot Coffee,,,,,,,prabha,690.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Butter Milk,59.00,4.00,236.00,0.00,0.00,236.00,Success,S1,prabha,0,,Salad - Papad - Raita,,,,,,,prabha,236.00
+2026-10-09,2026-10-09 18:20:22,2941,Cash,Dine In,Sofa,Fanta,30.00,1.00,30.00,0.00,0.00,30.00,Success,S1,prabha,0,,Drinks ( Beverages ),,,,,,,prabha,30.00
+2026-10-09,2026-10-09 18:12:11,2940,Cash,Dine In,Parcel,Paneer Butter Masala,249.00,1.00,249.00,0.00,0.00,249.00,Success,PARCEL-1,biller,0,,Paneer Main course,,,,,,,manish,249.00
+2026-10-09,2026-10-09 18:02:26,2939,Online,Delivery(Parcel),Zomato,Veg Fried Rice.,189.00,1.00,189.00,113.40,0.00,75.60,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,Nandan Puse," Shikshak Colony, Dighori, Nagpur, Maharashtra Nagpur India",,,75.60
+2026-10-09,2026-10-09 18:00:01,2938,Cash,Dine In,Dining,Water Bottle,20.00,1.00,20.00,2.00,0.00,18.00,Success,D2,prabha,0,,Drinks ( Beverages ),,,,,,,prabha,18.00
+2026-10-09,2026-10-09 18:00:01,2938,Cash,Dine In,Dining,Fast Track Delux Mini Meal / Special Thali,249.00,1.00,249.00,24.90,0.00,224.10,Success,D2,prabha,0,,MEALS,,,,,,,prabha,224.10
+2026-10-09,2026-10-09 18:00:01,2938,Cash,Dine In,Dining,Manchurian (Gravy),199.00,1.00,199.00,19.90,0.00,179.10,Success,D2,prabha,0,Gravy,Starters,,,,,,,prabha,179.10
+2026-10-09,2026-10-09 17:48:30,2937,Online,Delivery(Parcel),Zomato,Hara Bhara Kebab,199.00,1.00,199.00,0.00,0.00,199.00,Success,,Autoaccept,0,,Starters,,,,RahulMahajan," Devi Nagar, Pardi, Nagpur, Maharashtra Nagpur India",,,199.00
+2026-10-09,2026-10-09 17:46:23,2936,Online,Delivery(Parcel),Zomato,Chole Kulche,199.00,1.00,199.00,80.00,0.00,119.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Shriya, Nagpur India,,,119.00
+2026-10-09,2026-10-09 17:46:23,2936,Online,Delivery(Parcel),Zomato,Hara Bhara Kebab,199.00,1.00,199.00,80.00,0.00,119.00,Success,,Autoaccept,0,,Starters,,,,Shriya, Nagpur India,,,119.00
+2026-10-09,2026-10-09 17:44:24,2935,Online,Delivery(Parcel),Swiggy,Skywalk Special Veg Thali,349.00,1.00,349.00,35.00,0.00,314.00,Success,,Autoaccept,0,,MEALS,,,,Rajesh Shahu,,,,314.00
+2026-10-09,2026-10-09 17:18:36,2934,Online,Delivery(Parcel),Zomato,Manchurian (Dry),219.00,1.00,219.00,60.00,0.00,159.00,Success,,Autoaccept,0,Dry,Starters,,,,Susmita, Nagpur India,,,159.00
+2026-10-09,2026-10-09 17:03:00,2933,Online,Delivery(Parcel),Zomato,Hara Bhara Kebab,199.00,2.00,398.00,95.21,0.00,302.79,Success,,Autoaccept,0,,Starters,,,,Ayush Kshatriya., Nagpur India,,,302.79
+2026-10-09,2026-10-09 17:03:00,2933,Online,Delivery(Parcel),Zomato,Manchurian Noodles,229.00,1.00,229.00,54.78,0.00,174.22,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,Ayush Kshatriya., Nagpur India,,,174.22
+2026-10-09,2026-10-09 16:53:49,2932,Online,Delivery(Parcel),Zomato,Chole Bhature,199.00,1.00,199.00,120.00,0.00,79.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,manish, Nagpur India,,,79.00
+2026-10-09,2026-10-09 16:47:39,2931,Online,Delivery(Parcel),Zomato,Veg Fried Rice.,189.00,1.00,189.00,18.90,0.00,170.10,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,Anshuman Rai, Nagpur India,,,170.10
+2026-10-09,2026-10-09 16:44:56,2930,Online,Delivery(Parcel),Zomato,Veg Biryani,229.00,1.00,229.00,100.00,0.00,129.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Rakshanda Khan," Kharbi, Nagpur, Maharashtra Nagpur India",,,129.00
+2026-10-09,2026-10-09 16:39:35,2929,Part Payment,Dine In,Parcel,Masala Dal Khichdi,179.00,1.00,179.00,0.00,0.00,179.00,Success,PARCEL-1,biller,0,,Breads / Dal / Rice,,,,,,,manish,179.00
+2026-10-09,2026-10-09 16:37:45,2928,Online,Delivery(Parcel),Zomato,Garlic Butter Naan,69.00,2.00,138.00,55.20,0.00,82.80,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,vaibhav shinde," Hasanbag, New Sahakar Nagar, Kharbi, Nagpur, Maharashtra Nagpur India",,,82.80
+2026-10-09,2026-10-09 16:37:45,2928,Online,Delivery(Parcel),Zomato,Butter Naan,45.00,2.00,90.00,36.00,0.00,54.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,vaibhav shinde," Hasanbag, New Sahakar Nagar, Kharbi, Nagpur, Maharashtra Nagpur India",,,54.00
+2026-10-09,2026-10-09 16:13:11,2927,,Dine In,BAR,Water Bottle,20.00,1.00,20.00,2.00,0.00,18.00,Success,C2,manish,0,,Drinks ( Beverages ),,,,,,,manish,18.00
+2026-10-09,2026-10-09 16:13:11,2927,,Dine In,BAR,Aloo Gobi Mutter,149.00,1.00,149.00,14.90,0.00,134.10,Success,C2,manish,0,,Veg Main Course,,,,,,,manish,134.10
+2026-10-09,2026-10-09 16:13:11,2927,,Dine In,BAR,Paneer Tikka,199.00,1.00,199.00,19.90,0.00,179.10,Success,C2,manish,0,,Starters,,,,,,,manish,179.10
+2026-10-09,2026-10-09 16:13:11,2927,,Dine In,BAR,Butter Tandoori Roti,30.00,2.00,60.00,6.00,0.00,54.00,Success,C2,manish,0,,Breads / Dal / Rice,,,,,,,manish,54.00
+2026-10-09,2026-10-09 16:11:46,2926,Cash,Dine In,Dining,Paneer Angara,279.00,1.00,279.00,0.00,0.00,279.00,Success,D2,manish,0,,Paneer Main course,,,,,,,manish,279.00
+2026-10-09,2026-10-09 16:11:46,2926,Cash,Dine In,Dining,Butter Naan,40.00,2.00,80.00,0.00,0.00,80.00,Success,D2,manish,0,,Breads / Dal / Rice,,,,,,,manish,80.00
+2026-10-09,2026-10-09 16:11:46,2926,Cash,Dine In,Dining,Jeera Rice,149.00,1.00,149.00,0.00,0.00,149.00,Success,D2,manish,0,,Breads / Dal / Rice,,,,,,,manish,149.00
+2026-10-09,2026-10-09 16:11:46,2926,Cash,Dine In,Dining,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,D2,manish,0,,Drinks ( Beverages ),,,,,,,manish,20.00
+2026-10-09,2026-10-09 16:11:46,2926,Cash,Dine In,Dining,Virgin Mojito,109.00,1.00,109.00,0.00,0.00,109.00,Success,D2,manish,0,,Drinks ( Beverages ),,,,,,,manish,109.00
+2026-10-09,2026-10-09 16:11:46,2926,Cash,Dine In,Dining,Container 2,20.00,1.00,20.00,0.00,0.00,20.00,Success,D2,manish,0,,OTHERS,,,,,,,manish,20.00
+2026-10-09,2026-10-09 15:41:36,2925,,Dine In,Sofa,Strawberry Shake,129.00,1.00,129.00,0.00,0.00,129.00,Success,S3,NIKITA,0,,Cold Coffee,,,,,,,NIKITA,129.00
+2026-10-09,2026-10-09 15:41:36,2925,,Dine In,Sofa,Cold Coffee,129.00,1.00,129.00,0.00,0.00,129.00,Success,S3,NIKITA,0,,Cold Coffee,,,,,,,NIKITA,129.00
+2026-10-09,2026-10-09 15:41:36,2925,,Dine In,Sofa,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,S3,NIKITA,0,,Drinks ( Beverages ),,,,,,,NIKITA,20.00
+2026-10-09,2026-10-09 15:26:13,2924,,Dine In,Parcel,Hakka Noodles,179.00,1.00,179.00,0.00,0.00,179.00,Success,PARCEL-1,Ravi,0,,Noodles & Fried Rice,,,,,,,Ravi,179.00
+2026-10-09,2026-10-09 15:26:13,2924,,Dine In,Parcel,Paneer Makhani Pizza,199.00,1.00,199.00,0.00,0.00,199.00,Success,PARCEL-1,Ravi,0,,Pasta & Pizzas,,,,,,,Ravi,199.00
+2026-10-09,2026-10-09 15:24:39,2923,Cash,Dine In,Dining,Water Bottle,20.00,2.00,40.00,0.00,0.00,40.00,Success,D4,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,40.00
+2026-10-09,2026-10-09 15:16:32,2922,Online,Delivery(Parcel),Swiggy,Veg Fried Rice.,208.00,1.00,208.00,20.80,0.00,187.20,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,chandani deogade,,,,187.20
+2026-10-09,2026-10-09 15:16:27,2921,,Dine In,Sofa,Veg Keema Kasturi,219.00,4.00,876.00,43.80,0.00,832.20,Success,S1,Ravi,0,,Veg Main Course,,,,,,,Ravi,832.20
+2026-10-09,2026-10-09 15:16:27,2921,,Dine In,Sofa,Dal Tadka,179.00,3.00,537.00,26.85,0.00,510.15,Success,S1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,510.15
+2026-10-09,2026-10-09 15:16:27,2921,,Dine In,Sofa,Jeera Rice,149.00,4.00,596.00,29.80,0.00,566.20,Success,S1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,566.20
+2026-10-09,2026-10-09 15:16:27,2921,,Dine In,Sofa,Water Bottle,20.00,8.00,160.00,8.00,0.00,152.00,Success,S1,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,152.00
+2026-10-09,2026-10-09 15:16:27,2921,,Dine In,Sofa,Butter Milk,59.00,1.00,59.00,2.95,0.00,56.05,Success,S1,Ravi,0,,Salad - Papad - Raita,,,,,,,Ravi,56.05
+2026-10-09,2026-10-09 15:16:27,2921,,Dine In,Sofa,Butter Naan,40.00,1.00,40.00,2.00,0.00,38.00,Success,S1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,38.00
+2026-10-09,2026-10-09 15:16:27,2921,,Dine In,Sofa,Tandoori Roti,25.00,11.00,275.00,13.75,0.00,261.25,Success,S1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,261.25
+2026-10-09,2026-10-09 15:16:27,2921,,Dine In,Sofa,Classic Lassi,79.00,1.00,79.00,3.95,0.00,75.05,Success,S1,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,75.05
+2026-10-09,2026-10-09 15:16:27,2921,,Dine In,Sofa,Butter Tandoori Roti,30.00,12.00,360.00,18.00,0.00,342.00,Success,S1,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,342.00
+2026-10-09,2026-10-09 15:16:27,2921,,Dine In,Sofa,Container 2,20.00,1.00,20.00,1.00,0.00,19.00,Success,S1,Ravi,0,,OTHERS,,,,,,,Ravi,19.00
+2026-10-09,2026-10-09 14:50:47,2920,Online,Delivery(Parcel),Swiggy,Crispy Veg,199.00,1.00,199.00,60.00,0.00,139.00,Success,,Autoaccept,0,,Starters,,,,mayuri,,,,139.00
+2026-10-09,2026-10-09 14:50:47,2920,Online,Delivery(Parcel),Swiggy,Classic French Fries,139.00,1.00,139.00,30.00,0.00,109.00,Success,,Autoaccept,0,,"Snacks ( Fries ,Nachos & Maggi)",,,,mayuri,,,,109.00
+2026-10-09,2026-10-09 14:46:53,2919,Online,Delivery(Parcel),Zomato,Tandoori Roti,30.00,2.00,60.00,0.00,0.00,60.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Chandrakant Patne, Nagpur India,,,60.00
+2026-10-09,2026-10-09 14:46:53,2919,Online,Delivery(Parcel),Zomato,Skywalk Special Veg Thali,389.00,1.00,389.00,0.00,0.00,389.00,Success,,Autoaccept,0,,MEALS,,,,Chandrakant Patne, Nagpur India,,,389.00
+2026-10-09,2026-10-09 14:28:15,2918,Online,Delivery(Parcel),Zomato,Chole Kulche,199.00,1.00,199.00,139.30,0.00,59.70,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Aastha Agrawal, Nagpur India,,,59.70
+2026-10-09,2026-10-09 14:26:22,2917,Online,Delivery(Parcel),Zomato,Crispy Veg,199.00,1.00,199.00,139.30,0.00,59.70,Success,,Autoaccept,0,,Starters,,,,Manjiri Harshe, Nagpur India,,,59.70
+2026-10-09,2026-10-09 14:24:48,2916,Online,Delivery(Parcel),Zomato,Veg Pizza (Regular),269.00,1.00,269.00,0.00,0.00,269.00,Success,,Autoaccept,0,,Pasta & Pizzas,,,,pramod, Nagpur India,,,269.00
+2026-10-09,2026-10-09 13:45:16,2915,Online,Delivery(Parcel),Zomato,Chole Kulche,199.00,1.00,199.00,139.30,0.00,59.70,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Kshitij Patil," Gadge Baba Nagar, New Sahakar Nagar, Kharbi, Nagpur, Maharashtra Nagpur India",,,59.70
+2026-10-09,2026-10-09 13:43:17,2914,Online,Delivery(Parcel),Swiggy,Mix Veg,199.00,1.00,199.00,19.89,0.00,179.11,Success,,Autoaccept,0,,Veg Main Course,,,,Om Chaurasiya,,,,179.11
+2026-10-09,2026-10-09 13:43:17,2914,Online,Delivery(Parcel),Swiggy,Dal Tadka,189.00,1.00,189.00,18.90,0.00,170.10,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Om Chaurasiya,,,,170.10
+2026-10-09,2026-10-09 13:42:42,2913,Online,Delivery(Parcel),Zomato,Paneer Butter Masala,289.00,1.00,289.00,121.09,0.00,167.91,Success,,Autoaccept,0,,Paneer Main course,,,,isha, Nagpur India,,,167.91
+2026-10-09,2026-10-09 13:42:42,2913,Online,Delivery(Parcel),Zomato,Garlic Butter Naan,69.00,1.00,69.00,28.91,0.00,40.09,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,isha, Nagpur India,,,40.09
+2026-10-09,2026-10-09 13:30:31,2912,Online,Delivery(Parcel),Zomato,Crispy Veg,199.00,1.00,199.00,139.30,0.00,59.70,Success,,Autoaccept,0,,Starters,,,,surbhi," Narsala, Maharashtra Nagpur India",,,59.70
+2026-10-09,2026-10-09 13:29:21,2911,Online,Delivery(Parcel),Zomato,Paneer Butter Masala Bowl,229.00,1.00,229.00,120.00,0.00,109.00,Success,,Autoaccept,0,,MEALS,,,,Aryan, Nagpur India,,,109.00
+2026-10-09,2026-10-09 13:29:03,2910,Cash,Dine In,Garden,Cold Coffee,129.00,1.00,129.00,0.00,0.00,129.00,Success,G1,NIKITA,0,,Cold Coffee,,,,,,,NIKITA,129.00
+2026-10-09,2026-10-09 13:27:16,2909,Online,Delivery(Parcel),Zomato,Chole Kulche,199.00,1.00,199.00,100.00,0.00,99.00,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,Himanshu Bopche," Hasanbag, New Sahakar Nagar, Kharbi, Nagpur, Maharashtra Nagpur India",,,99.00
+2026-10-09,2026-10-09 13:21:07,2908,,Dine In,Dining,Chocolate Oreo Shake,139.00,1.00,139.00,13.90,0.00,125.10,Success,D2,Ravi,0,,Cold Coffee,,,,,,,Ravi,125.10
+2026-10-09,2026-10-09 13:21:07,2908,,Dine In,Dining,Cold Coffee,129.00,1.00,129.00,12.90,0.00,116.10,Success,D2,Ravi,0,,Cold Coffee,,,,,,,Ravi,116.10
+2026-10-09,2026-10-09 13:21:07,2908,,Dine In,Dining,Salted Fries,109.00,1.00,109.00,10.90,0.00,98.10,Success,D2,Ravi,0,,"Snacks ( Fries ,Nachos & Maggi)",,,,,,,Ravi,98.10
+2026-10-09,2026-10-09 13:21:07,2908,,Dine In,Dining,Paneer Angara,279.00,1.00,279.00,27.90,0.00,251.10,Success,D2,Ravi,0,,Paneer Main course,,,,,,,Ravi,251.10
+2026-10-09,2026-10-09 13:21:07,2908,,Dine In,Dining,Water Bottle,20.00,1.00,20.00,2.00,0.00,18.00,Success,D2,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,18.00
+2026-10-09,2026-10-09 13:21:07,2908,,Dine In,Dining,Butter Naan,40.00,4.00,160.00,16.00,0.00,144.00,Success,D2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,144.00
+2026-10-09,2026-10-09 13:21:07,2908,,Dine In,Dining,Butter Naan,40.00,3.00,120.00,12.00,0.00,108.00,Success,D2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,108.00
+2026-10-09,2026-10-09 13:21:07,2908,,Dine In,Dining,Paneer Butter Masala,249.00,1.00,249.00,24.90,0.00,224.10,Success,D2,Ravi,0,,Paneer Main course,,,,,,,Ravi,224.10
+2026-10-09,2026-10-09 13:21:07,2908,,Dine In,Dining,Coke,30.00,1.00,30.00,3.00,0.00,27.00,Success,D2,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,27.00
+2026-10-09,2026-10-09 13:21:07,2908,,Dine In,Dining,Butter Naan,40.00,1.00,40.00,4.00,0.00,36.00,Success,D2,Ravi,0,,Breads / Dal / Rice,,,,,,,Ravi,36.00
+2026-10-09,2026-10-09 13:18:45,2907,Cash,Dine In,Garden,Diet Coke 300 Ml,60.00,1.00,60.00,0.00,0.00,60.00,Success,G2,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,60.00
+2026-10-09,2026-10-09 13:18:45,2907,Cash,Dine In,Garden,Water Bottle,20.00,1.00,20.00,0.00,0.00,20.00,Success,G2,Ravi,0,,Drinks ( Beverages ),,,,,,,Ravi,20.00
+2026-10-09,2026-10-09 13:11:03,2906,Online,Delivery(Parcel),Zomato,Paneer Tikka Sandwich,308.00,1.00,308.00,0.00,0.00,308.00,Success,,Autoaccept,0,,Burgers & Sandwiches,,,,Aditya Dhok, Nagpur India,,,308.00
+2026-10-09,2026-10-09 13:11:03,2906,Online,Delivery(Parcel),Zomato,Crispy Veg,318.00,1.00,318.00,0.00,0.00,318.00,Success,,Autoaccept,0,,Starters,,,,Aditya Dhok, Nagpur India,,,318.00
+2026-10-09,2026-10-09 13:11:03,2906,Online,Delivery(Parcel),Zomato,Paneer Makhani Pizza (Regular),438.00,1.00,438.00,0.00,0.00,438.00,Success,,Autoaccept,0,,Pasta & Pizzas,,,,Aditya Dhok, Nagpur India,,,438.00
+2026-10-09,2026-10-09 13:03:40,2905,Online,Delivery(Parcel),Zomato,Butter Naan,45.00,3.00,135.00,0.00,0.00,135.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Aswin, Nagpur India,,,135.00
+2026-10-09,2026-10-09 13:02:27,2904,,Dine In,LOUNGE,Paneer Butter Masala Rice,199.00,1.00,199.00,0.00,0.00,199.00,Success,L1,NIKITA,0,,MEALS,,,,,,,NIKITA,199.00
+2026-10-09,2026-10-09 12:55:12,2903,Online,Delivery(Parcel),Zomato,Classic French Fries,139.00,1.00,139.00,0.00,0.00,139.00,Success,,Autoaccept,0,,"Snacks ( Fries ,Nachos & Maggi)",,,,prajwal khandekar," Bhandewadi, Mahajanpura, Nagpur, Maharashtra Nagpur India",,,139.00
+2026-10-09,2026-10-09 12:55:12,2903,Online,Delivery(Parcel),Zomato,Cheese Burger,169.00,1.00,169.00,0.00,0.00,169.00,Success,,Autoaccept,0,,Burgers & Sandwiches,,,,prajwal khandekar," Bhandewadi, Mahajanpura, Nagpur, Maharashtra Nagpur India",,,169.00
+2026-10-09,2026-10-09 12:47:27,2902,Online,Delivery(Parcel),Zomato,Paneer Butter Masala,338.00,1.00,338.00,0.00,0.00,338.00,Success,,Autoaccept,0,,Paneer Main course,,,,leena rathod," Ishwar Nagar, Nagpur, Maharashtra Nagpur India",,,338.00
+2026-10-09,2026-10-09 12:47:27,2902,Online,Delivery(Parcel),Zomato,Butter Tandoori Roti,35.00,4.00,140.00,0.00,0.00,140.00,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,leena rathod," Ishwar Nagar, Nagpur, Maharashtra Nagpur India",,,140.00
+2026-10-09,2026-10-09 12:46:06,2901,Part Payment,Dine In,Sofa,Brownie Cold Coffee,139.00,2.00,278.00,0.00,0.00,278.00,Success,S2,NIKITA,0,,Cold Coffee,,,,,,,NIKITA,278.00
+2026-10-09,2026-10-09 12:46:06,2901,Part Payment,Dine In,Sofa,Small Water,12.00,1.00,12.00,0.00,0.00,12.00,Success,S2,NIKITA,0,,Drinks ( Beverages ),,,,,,,NIKITA,12.00
+2026-10-09,2026-10-09 12:44:54,2900,Online,Delivery(Parcel),Zomato,Schezwan Noodles,219.00,1.00,219.00,0.00,0.00,219.00,Success,,Autoaccept,0,,Noodles & Fried Rice,,,,PRACHI LUTE," Jijamata Society, Chandrakiran Nagar, Nagpur, Maharashtra Nagpur India",,,219.00
+2026-10-09,2026-10-09 12:43:07,2899,Online,Delivery(Parcel),Zomato,Peri Peri Fries,149.00,1.00,149.00,13.96,0.00,135.04,Success,,Autoaccept,0,,"Snacks ( Fries ,Nachos & Maggi)",,,,vaibhav maske, Nagpur India,,,135.04
+2026-10-09,2026-10-09 12:43:07,2899,Online,Delivery(Parcel),Zomato,Chole Kulche,199.00,1.00,199.00,18.65,0.00,180.35,Success,,Autoaccept,0,,North Indian (Chole Bhature & Parathas n more),,,,vaibhav maske, Nagpur India,,,180.35
+2026-10-09,2026-10-09 12:43:07,2899,Online,Delivery(Parcel),Zomato,Paneer Tikka Sandwich,189.00,1.00,189.00,17.71,0.00,171.29,Success,,Autoaccept,0,,Burgers & Sandwiches,,,,vaibhav maske, Nagpur India,,,171.29
+2026-10-09,2026-10-09 12:39:08,2898,Online,Delivery(Parcel),Zomato,Alfredo Pasta (white Sause),239.00,1.00,239.00,0.00,0.00,239.00,Success,,Autoaccept,0,,Pasta & Pizzas,,,,Saish Dongre," Shikshak Colony, Dighori, Nagpur, Maharashtra Nagpur India",,,239.00
+2026-10-09,2026-10-09 12:38:08,2897,Online,Delivery(Parcel),Zomato,Tandoori Roti,30.00,1.00,30.00,0.02,0.00,29.98,Success,,Autoaccept,0,,Breads / Dal / Rice,,,,Karan singh," Wardhaman Nagar, Nagpur Nagpur India",,,29.98
+2026-10-09,2026-10-09 12:38:08,2897,Online,Delivery(Parcel),Zomato,Paneer Butter Masala,289.00,1.00,289.00,0.16,0.00,288.84,Success,,Autoaccept,0,,Paneer Main course,,,,Karan singh," Wardhaman Nagar, Nagpur Nagpur India",,,288.84

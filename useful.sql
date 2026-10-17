@@ -227,3 +227,89 @@ INNER JOIN public.orders o ON o.id = oi.order_id
 -- WHERE TRIM(o.billno) = 'YOUR_BILL_NO'
 --   AND o.dt = '2025-09-30'::date
 ORDER BY o.dt, o.billno, oi.id;
+
+
+--Connect to server (host localhost, port 5433, user poc, DB poc).
+-- Right-click dish_cost_staging → Import/Export → import CSV, header on, null string NULL.
+-- Or: ./scripts/dish_cost_import_and_clean.sh data/dishCostFromQueryTabCounterDb.csv
+--     → dish_cost_cleaned_up table + data/*_cleaned.csv
+--     Docs: scripts/useful_queries/dish_cost_staging_clean.md
+-- Seed v1 from cleaned CSV: ./scripts/dish_cost_seed_v1.sh data/dishCostFromQueryTabCounterDb_cleaned.csv
+-- Run the INSERT + DROP staging in the Query Tool.
+
+
+--latest dish cost from staging
+BEGIN;
+
+TRUNCATE public.dish_cost;
+
+INSERT INTO public.dish_cost (
+    row_kind,
+    dish_code,
+    dishname,
+    dish_case,
+    line_kind,
+    itemname,
+    "pgNo_or_dishCode",
+    receipescoop,
+    qty,
+    destination_unit,
+    scoop_factor,
+    rate,
+    line_cost,
+    is_usable_in_other_dish,
+    out_scoop,
+    qty_of_scoops,
+    out_unit,
+    out_factor,
+    dish_cost,
+    cost_of_one_scoop,
+    rate_per_destination_unit,
+    incomplete,
+    cost_calculation
+)
+SELECT DISTINCT ON (UPPER(TRIM(s.dish_code)))
+    'dish_total',
+    NULLIF(TRIM(s.dish_code), ''),
+    NULLIF(TRIM(s.dishname), ''),
+    NULLIF(TRIM(s.dish_case), ''),
+    NULLIF(TRIM(s.line_kind), ''),
+    NULLIF(TRIM(s.itemname), ''),
+    NULLIF(TRIM(s."pgNo_or_dishCode"), ''),
+    NULLIF(TRIM(s.receipescoop), ''),
+    NULLIF(TRIM(s.qty), '')::numeric,
+    NULLIF(TRIM(s.destination_unit), ''),
+    NULLIF(TRIM(s.scoop_factor), '')::numeric,
+    NULLIF(TRIM(s.rate), '')::numeric,
+    NULLIF(TRIM(s.line_cost), '')::numeric,
+    CASE
+        WHEN s.is_usable_in_other_dish IS NULL OR TRIM(s.is_usable_in_other_dish) = '' THEN NULL
+        WHEN UPPER(TRIM(s.is_usable_in_other_dish)) IN ('TRUE', 'T', '1', 'YES') THEN true
+        ELSE false
+    END,
+    NULLIF(TRIM(s.out_scoop), ''),
+    NULLIF(TRIM(s.qty_of_scoops), '')::numeric,
+    NULLIF(TRIM(s.out_unit), ''),
+    NULLIF(TRIM(s.out_factor), '')::numeric,
+    NULLIF(TRIM(s.dish_cost), '')::numeric,
+    NULLIF(TRIM(s.cost_of_one_scoop), '')::numeric,
+    NULLIF(TRIM(s.rate_per_destination_unit), '')::numeric,
+    CASE
+        WHEN s.incomplete IS NULL OR TRIM(s.incomplete) = '' THEN NULL
+        WHEN UPPER(TRIM(s.incomplete)) IN ('TRUE', 'T', '1', 'YES') THEN true
+        ELSE false
+    END,
+    NULLIF(TRIM(s.cost_calculation), '')
+FROM public.dish_cost_staging s
+WHERE LOWER(TRIM(s.row_kind)) = 'dish_total'
+  AND TRIM(COALESCE(s.dish_code, '')) <> ''
+ORDER BY
+    UPPER(TRIM(s.dish_code)),
+    s.ctid DESC;   -- if you import twice into staging, keeps last row per dish
+
+COMMIT;
+
+
+----create backup table
+CREATE TABLE dish_cost_staging_after_version AS
+SELECT * FROM dish_cost_staging;

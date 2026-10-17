@@ -74,6 +74,8 @@ services:
       - ./dbqueries.js:/app/dbqueries.js:ro
       - ./package.json:/app/package.json:ro
       - ./index.html:/app/index.html:ro
+      - ./excelToCSV.html:/app/excelToCSV.html:ro
+      - ./excelToCsv.js:/app/excelToCsv.js:ro
       - ./recreateFromPgDump.html:/app/recreateFromPgDump.html:ro
       - ./report.js:/app/report.js:ro
       - ./recipeCost.js:/app/recipeCost.js:ro
@@ -85,6 +87,9 @@ services:
       - ./itemdetails.js:/app/itemdetails.js:ro
       - ./rawmaterials.js:/app/rawmaterials.js:ro
       - ./dishes.js:/app/dishes.js:ro
+      - ./itemReport.js:/app/itemReport.js:ro
+      - ./itemReportCsv.js:/app/itemReportCsv.js:ro
+      - ./excelToCsvTab.js:/app/excelToCsvTab.js:ro
       - ./scoopUnitDefaultsBuilder.js:/app/scoopUnitDefaultsBuilder.js:ro
       - ./catalog.js:/app/catalog.js:ro
       - ./scoop_config_catalog.js:/app/scoop_config_catalog.js:ro
@@ -114,14 +119,23 @@ services:
         condition: service_healthy
     command: sh -c "apk add --no-cache postgresql16-client && npm install --omit=dev && node server.js"
 
-  # ADD THIS NEW SERVICE BELOW
-  tunnel:
-    image: cloudflare/cloudflared:latest
-    container_name: poc_tunnel
+  excel-csv:
+    image: docker.io/nginx:alpine
+    container_name: excel_csv
     restart: unless-stopped
-    command: tunnel --url http://app:3000
-    depends_on:
-      - app
+    ports:
+      - "3051:80"
+    volumes:
+      - ./excel-csv/site:/usr/share/nginx/html:ro
+
+  # ADD THIS NEW SERVICE BELOW
+#  tunnel:
+#    image: cloudflare/cloudflared:latest
+#    container_name: poc_tunnel
+#    restart: unless-stopped
+#    command: tunnel --url http://app:3000
+#    depends_on:
+#      - app
 
 volumes:
   pg_data:

@@ -269,3 +269,7 @@ Load the sample, then run the cost query (both against poc_db):
 docker exec -i poc_db psql -U poc -d poc -v ON_ERROR_STOP=1 \
   -f - < scripts/useful_queries/dish_cost_cases_sample.sql
 ```
+
+### Clean dish-cost CSV exports
+
+Full Query-tab CSV exports (repeated child-dish blocks, stale lines): see **[`dish_cost_staging_clean.md`](dish_cost_staging_clean.md)** and `./scripts/dish_cost_import_and_clean.sh`.
