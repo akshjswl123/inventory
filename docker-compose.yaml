@@ -99,6 +99,13 @@ services:
       - ./scoopDishLoader.js:/app/scoopDishLoader.js:ro
       - ./staticDataFetcher.js:/app/staticDataFetcher.js:ro
       - ./staticDataQueries.js:/app/staticDataQueries.js:ro
+      - ./rawMaterialEstimator.js:/app/rawMaterialEstimator.js:ro
+      - ./recipeWalkShared.js:/app/recipeWalkShared.js:ro
+      - ./rawMaterialEstimatorCsv.js:/app/rawMaterialEstimatorCsv.js:ro
+      - ./rawMaterialEstimatorTab.js:/app/rawMaterialEstimatorTab.js:ro
+      - ./static_seed_core.js:/app/static_seed_core.js:ro
+      - ./static_seed_materials.js:/app/static_seed_materials.js:ro
+      - ./data:/app/data:ro
       - ./scripts:/app/scripts:ro
       - ./dumps:/dumps
       - node_modules:/app/node_modules

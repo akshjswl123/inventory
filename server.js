@@ -26,6 +26,7 @@ const {
     loadRecipeByDishcode,
     runRecipeCostForDish,
     runDishCostValidation,
+    runRawMaterialEstimator,
     listDishesForCostCalculation,
     ensureItemReportTable,
     upsertItemReportLines,
@@ -214,6 +215,23 @@ app.get('/api/recipes/dish-cost', async (req, res) => {
         }
         console.error('GET /api/recipes/dish-cost error:', err);
         res.status(500).json({ error: 'Database error', detail: err.message, doneSoFar: [] });
+    }
+});
+
+/*
+ * POST /api/raw-material-estimator — dish lines [{ dishname?, dishcode?, qty }] → material totals
+ */
+app.post('/api/raw-material-estimator', async (req, res) => {
+    const lines = req.body && req.body.lines;
+    if (!Array.isArray(lines) || !lines.length) {
+        return res.status(400).json({ error: 'body.lines must be a non-empty array' });
+    }
+    try {
+        const result = await runRawMaterialEstimator(lines);
+        res.json(result);
+    } catch (err) {
+        console.error('POST /api/raw-material-estimator error:', err);
+        res.status(500).json({ error: 'Database error', detail: err.message });
     }
 });
 

@@ -96,6 +96,13 @@
     #rawMaterialsMsg { font-size: 12px; color: #666; }
     #rawMaterialsMsg.ok { color: #198754; }
     #rawMaterialsMsg.err { color: #dc3545; }
+    #rmeMsg { font-size: 12px; color: #666; margin-left: 8px; }
+    #rmeMsg.ok { color: #198754; }
+    #rmeMsg.warn { color: #b45309; }
+    #rmeMsg.err { color: #dc3545; }
+    #rmeGrandTotalsWrap { margin-top: 18px; }
+    #rmePerDishToolbar { margin: 14px 0 8px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    #rmePerDishWrap { margin-top: 8px; }
     #itemReportMsg { font-size: 12px; color: #666; margin-left: 8px; }
     #itemReportMsg.ok { color: #198754; }
     #itemReportMsg.warn { color: #b45309; }
@@ -160,6 +167,7 @@
     #excelToCsvStatus { margin-top: 16px; overflow-wrap: anywhere; font-size: 13px; color: #444; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 </head>
 <body>
 
@@ -172,6 +180,7 @@
     <button class="tab-btn" onclick="switchTab(event, 'itemDetailsTab')">Scoop</button>
     <button class="tab-btn" onclick="switchTab(event, 'rawMaterialsTab')">Raw Materials</button>
     <button class="tab-btn" onclick="switchTab(event, 'itemReportTab')">Item Report</button>
+    <button class="tab-btn" onclick="switchTab(event, 'rawMaterialEstimatorTab')">Raw Material Estimator</button>
     <button class="tab-btn" onclick="switchTab(event, 'excelToCsvTab')">Excel → CSV</button>
     <button class="tab-btn" onclick="switchTab(event, 'queryTab')">Query</button>
   </div>
@@ -759,6 +768,77 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
     </div>
   </div>
 
+  <!-- TAB: RAW MATERIAL ESTIMATOR -->
+  <div id="rawMaterialEstimatorTab" class="tab-pane">
+    <h2>Raw Material Estimator</h2>
+    <p class="hint" style="margin-top:0;">
+      Enter dishes and order quantities (name match is case-insensitive). Import CSV with
+      <strong>dishname</strong> + <strong>qty</strong>, or a POS Item Report export (aggregates by item name).
+      See <code>data/raw_material_estimation_guide.md</code> for recursive processed breakdown.
+    </p>
+    <datalist id="rmeDishList"></datalist>
+    <table>
+      <thead>
+      <tr>
+        <th>Dish name</th>
+        <th class="num">Qty</th>
+        <th style="width:48px;"></th>
+      </tr>
+      </thead>
+      <tbody id="rmeBody"></tbody>
+    </table>
+    <div class="actions">
+      <button type="button" class="plain" id="rmeAddRowBtn">+ Add row</button>
+      <input type="file" id="rmeFile" accept=".csv,text/csv" hidden />
+      <button type="button" class="import" id="rmeImportBtn">Import CSV</button>
+      <button type="button" class="plain" id="rmeSampleBtn" title="Sample POS item report">Import sample CSV</button>
+      <button type="button" class="primary" id="rmeCalculateBtn">Estimate materials</button>
+      <button type="button" class="success" id="rmeExportBtn" disabled title="Run estimate first">Export CSVs (ZIP)</button>
+      <span id="rmeMsg"></span>
+    </div>
+
+    <div id="rmeNotFoundWrap" hidden>
+      <h3 style="font-size:15px; margin:18px 0 8px;">Dishes not found</h3>
+      <table>
+        <thead><tr><th>Dish name</th><th class="num">Qty</th></tr></thead>
+        <tbody id="rmeNotFoundBody"></tbody>
+      </table>
+    </div>
+
+    <div id="rmeWarningsWrap" hidden style="margin-top:14px; padding:10px 12px; background:#fff8e6; border:1px solid #e0a800; border-radius:6px; font-size:13px;">
+      <strong>Warnings</strong>
+      <ul id="rmeWarningsList" style="margin:6px 0 0 1.2em;"></ul>
+    </div>
+
+    <div id="rmeGrandTotalsWrap" hidden>
+      <h3 style="font-size:15px; margin:0 0 8px;">Grand totals (all dishes)</h3>
+      <p class="hint" style="margin:0 0 8px;"><strong>1.</strong> Direct raw materials</p>
+      <table>
+        <thead><tr><th>Item</th><th>pgNo</th><th>Unit</th><th class="num">Qty</th></tr></thead>
+        <tbody id="rmeGrandDirectBody"></tbody>
+      </table>
+      <p class="hint" style="margin:12px 0 8px;"><strong>2.</strong> Processed items</p>
+      <table>
+        <thead><tr><th>Item</th><th>Code</th><th>Unit</th><th class="num">Qty</th></tr></thead>
+        <tbody id="rmeGrandProcessedBody"></tbody>
+      </table>
+      <p class="hint" style="margin:12px 0 8px;"><strong>3.</strong> All raw materials (processed expanded)</p>
+      <table>
+        <thead><tr><th>Item</th><th>pgNo</th><th>Unit</th><th class="num">Qty</th></tr></thead>
+        <tbody id="rmeGrandAllBody"></tbody>
+      </table>
+      <div id="rmePerDishToolbar" hidden>
+        <button type="button" class="plain" id="rmeTogglePerDishBtn" aria-expanded="false">Show per-dish breakdown</button>
+        <span class="hint" style="margin:0;">Each dish name, order qty, and material tables</span>
+      </div>
+    </div>
+
+    <div id="rmePerDishWrap" hidden>
+      <h3 style="font-size:15px; margin:0 0 10px;">Per-dish breakdown</h3>
+      <div id="rmeDishSections"></div>
+    </div>
+  </div>
+
   <!-- TAB: EXCEL → CSV -->
   <div id="excelToCsvTab" class="tab-pane">
     <h2>Excel → CSV Converter</h2>
@@ -862,6 +942,8 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
 <script src="dishes.js"></script>
 <script src="itemReportCsv.js"></script>
 <script src="itemReport.js"></script>
+<script src="rawMaterialEstimatorCsv.js"></script>
+<script src="rawMaterialEstimatorTab.js"></script>
 <script src="excelToCsvTab.js"></script>
 
 <script>

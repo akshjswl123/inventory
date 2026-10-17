@@ -956,6 +956,7 @@ async function loadScoopConfigByDishCode(dishCode) {
 const { fetchStaticDataBundle } = require('./staticDataQueries');
 const { runRecipeCostQuery } = require('./recipeCostQueries');
 const { validateAndQueryDishCost } = require('./dishCostWalk');
+const { estimateRawMaterials } = require('./rawMaterialEstimator');
 
 async function fetchStaticData() {
     return fetchStaticDataBundle(pool);
@@ -1102,6 +1103,10 @@ async function runRecipeCostForDish(options) {
 
 async function runDishCostValidation(dishcode, dishname) {
     return validateAndQueryDishCost(pool, { dishcode, dishname });
+}
+
+async function runRawMaterialEstimator(lines) {
+    return estimateRawMaterials(pool, lines);
 }
 
 /** Dishes with a saved recipe, same order as Dishes tab (dish_name), then recipe-only codes. */
@@ -1385,6 +1390,7 @@ module.exports = {
     loadRecipeByDishcode,
     runRecipeCostForDish,
     runDishCostValidation,
+    runRawMaterialEstimator,
     listDishesForCostCalculation,
     ensureItemReportTable,
     upsertItemReportLines,
