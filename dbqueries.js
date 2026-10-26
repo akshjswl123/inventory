@@ -311,7 +311,8 @@ async function saveOrder(orderData) {
             created,
             updated: !created,
             removedDuplicates,
-            rawMaterialsCostCount: costRes.rowCount || 0
+            rawMaterialsCostCount: costRes.rowCount || 0,
+            rawMaterialsCostSkippedCount: costRes.skippedCount || 0
         };
     } catch (e) {
         await client.query('ROLLBACK');
@@ -396,21 +397,10 @@ async function loadOrderByBillNo(billNo, dt) {
 
 
 /**
- * Append a new raw_materials_cost snapshot for one bill (after bump_item_version).
- * Does NOT update older versions — history is kept for comparison.
- * Unique key: ("pgNo", version) — see scripts/17_raw_materials_cost_version_unique.sql
+ * Compute raw_materials_cost rows for one order (same logic as insert).
+ * Optional $2: text[] of pgNo keys (uppercase); NULL = all pgNos on the bill.
  */
-const INSERT_RAW_MATERIALS_COST_FOR_ORDER_SQL = `
-INSERT INTO public.raw_materials_cost (
-    "pgNo",
-    item_names,
-    ratepergram,
-    rateperml,
-    rateperpiece,
-    based_on_billno,
-    comments,
-    version
-)
+const RAW_MATERIALS_COST_FOR_ORDER_COMPUTE_SQL = `
 WITH purchases AS (
     SELECT
         TRIM(oi.itemname) AS itemname,
@@ -542,7 +532,29 @@ SELECT
                 THEN 'rateperpiece from latest piece purchase on ' || p.purchase_dt::text
             END
         ))
-    END AS comments,
+    END AS comments
+FROM bill_pg bp
+INNER JOIN name_agg n ON n.pgno = bp.pgno
+LEFT JOIN latest_gm g ON g.pgno = bp.pgno
+LEFT JOIN latest_ml m ON m.pgno = bp.pgno
+LEFT JOIN latest_piece p ON p.pgno = bp.pgno
+WHERE ($2::text[] IS NULL OR UPPER(TRIM(bp.pgno)) = ANY($2::text[]))
+`;
+
+const INSERT_RAW_MATERIALS_COST_FOR_ORDER_SQL = `
+INSERT INTO public.raw_materials_cost (
+    "pgNo",
+    item_names,
+    ratepergram,
+    rateperml,
+    rateperpiece,
+    based_on_billno,
+    comments,
+    version
+)
+${RAW_MATERIALS_COST_FOR_ORDER_COMPUTE_SQL.replace(
+    /END AS comments\nFROM bill_pg bp/,
+    `END AS comments,
     (
         SELECT iv.version
         FROM public.item_versions iv
@@ -550,29 +562,94 @@ SELECT
           AND iv.item_code = UPPER(TRIM(bp.pgno))
         LIMIT 1
     ) AS version
-FROM bill_pg bp
-INNER JOIN name_agg n ON n.pgno = bp.pgno
-LEFT JOIN latest_gm g ON g.pgno = bp.pgno
-LEFT JOIN latest_ml m ON m.pgno = bp.pgno
-LEFT JOIN latest_piece p ON p.pgno = bp.pgno
+FROM bill_pg bp`
+)}
 `;
 
+const LATEST_RAW_MATERIALS_COST_FOR_PGNOS_SQL = `
+    SELECT DISTINCT ON (UPPER(TRIM(r."pgNo")))
+        UPPER(TRIM(r."pgNo")) AS pgno_key,
+        r.ratepergram,
+        r.rateperml,
+        r.rateperpiece
+    FROM public.raw_materials_cost r
+    WHERE UPPER(TRIM(r."pgNo")) = ANY($1::text[])
+      AND r.version = COALESCE(
+          (
+              SELECT iv.version
+              FROM public.item_versions iv
+              WHERE iv.item_type = 'raw_materials_cost'
+                AND iv.item_code = UPPER(TRIM(r."pgNo"))
+              LIMIT 1
+          ),
+          1
+      )
+    ORDER BY UPPER(TRIM(r."pgNo")), r.last_updated_at DESC NULLS LAST, r.id DESC
+`;
+
+function rawMaterialRatesDiffer(candidate, existing) {
+    const fields = ['ratepergram', 'rateperml', 'rateperpiece'];
+    for (const field of fields) {
+        const a = candidate[field] == null || candidate[field] === ''
+            ? null
+            : Number(candidate[field]);
+        const b = existing && existing[field] != null && existing[field] !== ''
+            ? Number(existing[field])
+            : null;
+        if (a == null && b == null) continue;
+        if (a == null || b == null) return true;
+        if (Math.abs(a - b) > 0.0001) return true;
+    }
+    return false;
+}
+
+/**
+ * Insert raw_materials_cost only for pgNos whose computed rates differ from current version.
+ */
 async function upsertRawMaterialsCostForOrder(client, orderId) {
-    const pgRes = await client.query(
-        `SELECT DISTINCT TRIM(oi.pgno) AS pgno
-         FROM public.order_items oi
-         WHERE oi.order_id = $1
-           AND oi.pgno IS NOT NULL
-           AND TRIM(oi.pgno) <> ''`,
-        [orderId]
+    const candRes = await client.query(
+        `SELECT * FROM (${RAW_MATERIALS_COST_FOR_ORDER_COMPUTE_SQL}) calc`,
+        [orderId, null]
     );
-    for (const row of pgRes.rows) {
+    const candidates = candRes.rows || [];
+    if (!candidates.length) {
+        return { rowCount: 0, skippedCount: 0, changedPgNos: [] };
+    }
+
+    const pgKeys = candidates.map((row) => String(row.pgNo || '').trim().toUpperCase()).filter(Boolean);
+    const latestRes = await client.query(LATEST_RAW_MATERIALS_COST_FOR_PGNOS_SQL, [pgKeys]);
+    const latestByPg = new Map(latestRes.rows.map((row) => [row.pgno_key, row]));
+
+    const changedPgNos = [];
+    for (const row of candidates) {
+        const key = String(row.pgNo || '').trim().toUpperCase();
+        if (!key) continue;
+        const prev = latestByPg.get(key);
+        if (!prev || rawMaterialRatesDiffer(row, prev)) {
+            changedPgNos.push(key);
+        }
+    }
+
+    if (!changedPgNos.length) {
+        return { rowCount: 0, skippedCount: candidates.length, changedPgNos: [] };
+    }
+
+    for (const pgno of changedPgNos) {
         await client.query(
             'SELECT public.bump_item_version($1, $2)',
-            [row.pgno, 'raw_materials_cost']
+            [pgno, 'raw_materials_cost']
         );
     }
-    return client.query(INSERT_RAW_MATERIALS_COST_FOR_ORDER_SQL, [orderId]);
+
+    const insertRes = await client.query(INSERT_RAW_MATERIALS_COST_FOR_ORDER_SQL, [
+        orderId,
+        changedPgNos
+    ]);
+    return {
+        rowCount: insertRes.rowCount || 0,
+        skippedCount: candidates.length - changedPgNos.length,
+        changedPgNos
+    };
 }
 
 async function saveInventoryOut(data) {
@@ -683,7 +760,12 @@ async function saveRecipe(data) {
         }
 
         await client.query('COMMIT');
-        return { id: lastId, count: data.rows.length };
+        return {
+            id: lastId,
+            count: data.rows.length,
+            version: recipeVersion,
+            dishcode: dishcodeForVersion
+        };
     } catch (err) {
         await client.query('ROLLBACK');
         throw err;
@@ -916,22 +998,32 @@ async function saveScoopConfig(data) {
     }
 }
 
+/** One row per scoop_name: highest version, then newest id (historical rows kept in table). */
+const SCOOP_CONFIG_LATEST_SELECT = `
+    SELECT DISTINCT ON (LOWER(TRIM(scoop_name)))
+           id, scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor,
+           conversion_chain, qty_in_grams, qty_in_ml, qty_in_piece, unused, version,
+           created_at, last_updated_at
+    FROM scoop_config`;
+
+const SCOOP_CONFIG_LATEST_ORDER = `
+    ORDER BY LOWER(TRIM(scoop_name)), version DESC, id DESC`;
+
 async function loadScoopConfig(scoopItemName = null) {
     const name = typeof scoopItemName === 'string' ? scoopItemName.trim() : '';
-    const baseSql = `
-        SELECT id, scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor,
-               conversion_chain, qty_in_grams, qty_in_ml, qty_in_piece, unused,
-               created_at, last_updated_at
-        FROM scoop_config`;
     const res = name
         ? await pool.query(
-            `${baseSql}
-        WHERE LOWER(TRIM(scoop_item_name)) = LOWER(TRIM($1))
-        ORDER BY id`,
+            `${SCOOP_CONFIG_LATEST_SELECT}
+             WHERE LOWER(TRIM(scoop_item_name)) = LOWER(TRIM($1))
+               AND scoop_name IS NOT NULL AND TRIM(scoop_name) <> ''
+             ${SCOOP_CONFIG_LATEST_ORDER}`,
             [name]
         )
-        : await pool.query(`${baseSql}
-        ORDER BY id`);
+        : await pool.query(
+            `${SCOOP_CONFIG_LATEST_SELECT}
+             WHERE scoop_name IS NOT NULL AND TRIM(scoop_name) <> ''
+             ${SCOOP_CONFIG_LATEST_ORDER}`
+        );
     return res.rows;
 }
 
@@ -940,14 +1032,10 @@ async function loadScoopConfigByDishCode(dishCode) {
     const code = typeof dishCode === 'string' ? dishCode.trim() : '';
     if (!code) return [];
     const res = await pool.query(
-        `
-        SELECT DISTINCT ON (LOWER(TRIM(scoop_name)))
-               id, scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor,
-               conversion_chain, qty_in_grams, qty_in_ml, qty_in_piece, unused,
-               created_at, last_updated_at
-        FROM scoop_config
-        WHERE LOWER(TRIM(scoop_item_id)) = LOWER(TRIM($1))
-        ORDER BY LOWER(TRIM(scoop_name)), unused ASC, id DESC`,
+        `${SCOOP_CONFIG_LATEST_SELECT}
+         WHERE LOWER(TRIM(scoop_item_id)) = LOWER(TRIM($1))
+           AND scoop_name IS NOT NULL AND TRIM(scoop_name) <> ''
+         ${SCOOP_CONFIG_LATEST_ORDER}`,
         [code]
     );
     return res.rows;
@@ -955,7 +1043,12 @@ async function loadScoopConfigByDishCode(dishCode) {
 
 const { fetchStaticDataBundle } = require('./staticDataQueries');
 const { runRecipeCostQuery } = require('./recipeCostQueries');
-const { validateAndQueryDishCost } = require('./dishCostWalk');
+const {
+    validateAndQueryDishCost,
+    runDishCostAllToStaging,
+    runDishCostRecalculateChangedToStaging,
+    runDishCostDishToStaging
+} = require('./dishCostWalk');
 const { estimateRawMaterials } = require('./rawMaterialEstimator');
 
 async function fetchStaticData() {
@@ -976,12 +1069,46 @@ const UPSERT_RMC_FROM_ORDERS_SQL_PATH = path.join(
     'scripts/useful_queries/raw_materials_cost_insert_from_orders.sql'
 );
 
+const UPSERT_DISH_COST_FROM_STAGING_SQL_PATH = path.join(
+    __dirname,
+    'scripts/useful_queries/upsert_dish_cost_from_staging.sql'
+);
+
 const RAW_MATERIALS_COST_PREVIEW_SQL = `
 SELECT id, "pgNo", item_names, ratepergram, rateperml, rateperpiece,
        based_on_billno, comments, created_at, last_updated_at
 FROM public.raw_materials_cost
 ORDER BY last_updated_at DESC NULLS LAST, created_at DESC NULLS LAST, id DESC
 LIMIT 500`;
+
+const DISH_COST_PREVIEW_SQL = `
+SELECT id, row_kind, dish_code, dishname, dish_cost, incomplete,
+       cost_calculation, created_at, last_updated_at
+FROM public.dish_cost
+ORDER BY dishname NULLS LAST, dish_code NULLS LAST, id
+LIMIT 500`;
+
+/** Latest dish_total per dish_code (max dish_cost_version) from staging → dish_cost (ON CONFLICT dish_code). */
+async function upsertDishCostFromStaging() {
+    const upsertSql = fs.readFileSync(UPSERT_DISH_COST_FROM_STAGING_SQL_PATH, 'utf8');
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        const upsertRes = await client.query(upsertSql);
+        const previewRes = await client.query(DISH_COST_PREVIEW_SQL);
+        await client.query('COMMIT');
+        return {
+            upserted: upsertRes.rowCount || 0,
+            columns: previewRes.fields ? previewRes.fields.map((f) => f.name) : [],
+            rows: previewRes.rows || []
+        };
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+}
 
 /** Upsert raw_materials_cost from all order_items (ON CONFLICT pgNo + bill). */
 async function upsertRawMaterialsCostFromOrders() {
@@ -1103,6 +1230,18 @@ async function runRecipeCostForDish(options) {
 
 async function runDishCostValidation(dishcode, dishname) {
     return validateAndQueryDishCost(pool, { dishcode, dishname });
+}
+
+async function calculateAllDishCostsToStaging() {
+    return runDishCostAllToStaging(pool);
+}
+
+async function recalculateChangedDishCostsToStaging() {
+    return runDishCostRecalculateChangedToStaging(pool);
+}
+
+async function calculateDishCostToStagingForDish(dishcode) {
+    return runDishCostDishToStaging(pool, dishcode);
 }
 
 async function runRawMaterialEstimator(lines) {
@@ -1276,10 +1415,84 @@ async function upsertItemReportLines(rows) {
 }
 
 function normalizeItemReportChannel(raw) {
-    const c = String(raw || 'swiggy').trim().toLowerCase();
+    const c = String(raw || 'zomato').trim().toLowerCase();
     if (c === 'zomato') return 'zomato';
     if (c === 'dinein' || c === 'dine_in' || c === 'dine-in') return 'dinein';
-    return 'swiggy';
+    if (c === 'swiggy') return 'swiggy';
+    throw new Error('channel is required: zomato, swiggy, or dinein');
+}
+
+function itemReportAreaFilterSql(channel) {
+    const ch = normalizeItemReportChannel(channel);
+    if (ch === 'swiggy') return `UPPER(TRIM(area)) = 'SWIGGY'`;
+    if (ch === 'zomato') return `UPPER(TRIM(area)) = 'ZOMATO'`;
+    return `UPPER(TRIM(area)) NOT IN ('SWIGGY', 'ZOMATO')`;
+}
+
+const DINEIN_MENU_ENSURE_SQL = fs.readFileSync(
+    path.join(__dirname, 'scripts', '26_dinein_menu.sql'),
+    'utf8'
+);
+
+async function ensureDineinMenuTable() {
+    await pool.query(DINEIN_MENU_ENSURE_SQL);
+}
+
+const ITEM_REPORT_ANALYSIS_SQL_TEMPLATE = fs.readFileSync(
+    path.join(__dirname, 'scripts', 'itemReportSummary.sql'),
+    'utf8'
+);
+
+const ITEM_REPORT_ANALYSIS_AREA_PLACEHOLDER = `      AND (
+          UPPER(TRIM($3)) = 'ALL'
+          OR area ILIKE TRIM($3)
+      )`;
+
+function buildItemReportAnalysisSql(channel) {
+    const areaFilter = itemReportAreaFilterSql(channel);
+    if (!ITEM_REPORT_ANALYSIS_SQL_TEMPLATE.includes(ITEM_REPORT_ANALYSIS_AREA_PLACEHOLDER)) {
+        throw new Error('itemReportSummary.sql area filter block changed; update dbqueries.js');
+    }
+    return ITEM_REPORT_ANALYSIS_SQL_TEMPLATE.replace(
+        ITEM_REPORT_ANALYSIS_AREA_PLACEHOLDER,
+        `      AND (${areaFilter})`
+    );
+}
+
+async function getItemReportDateBounds() {
+    await ensureItemReportTable();
+    const res = await pool.query(
+        `SELECT MIN(report_date)::text AS min_date, MAX(report_date)::text AS max_date
+         FROM public.item_report_lines`
+    );
+    const row = res.rows[0] || {};
+    return { min_date: row.min_date || null, max_date: row.max_date || null };
+}
+
+async function getItemReportAnalysis(opts) {
+    opts = opts || {};
+    await ensureItemReportTable();
+    await ensureDineinMenuTable();
+    const channel = normalizeItemReportChannel(opts.channel);
+    const startDate = opts.startDate;
+    const endDate = opts.endDate;
+    if (!startDate || !endDate) {
+        throw new Error('startDate and endDate are required (YYYY-MM-DD)');
+    }
+    const sql = buildItemReportAnalysisSql(channel);
+    const res = await pool.query(sql, [startDate, endDate]);
+    const chLabel = channel === 'swiggy'
+        ? 'Swiggy'
+        : channel === 'zomato'
+            ? 'Zomato'
+            : 'Dine-in';
+    return {
+        channel,
+        channel_label: chLabel,
+        start_date: startDate,
+        end_date: endDate,
+        rows: res.rows || []
+    };
 }
 
 async function getItemReportSummary(channel) {
@@ -1294,28 +1507,87 @@ async function getItemReportSummary(channel) {
     const res = await pool.query(
         `
         WITH lines AS (
-            SELECT item_name, report_date, qty
+            SELECT id, item_name, report_date, qty, area
             FROM public.item_report_lines
             WHERE ${areaFilter}
         ),
-        grouped AS (
+        lines_enriched AS (
             SELECT
                 l.item_name,
                 l.report_date,
-                SUM(l.qty)::numeric AS sum_qty,
+                l.qty,
+                l.id,
+                dc.dish_cost
+            FROM lines l
+            LEFT JOIN LATERAL (
+                SELECT m.dishcode
+                FROM public.dinein_menu m
+                WHERE (
+                    UPPER(TRIM(l.area)) IN ('ZOMATO', 'SWIGGY')
+                    AND (
+                        (
+                            TRIM(COALESCE(m.online_display_name, '')) <> ''
+                            AND LOWER(TRIM(m.online_display_name)) = LOWER(TRIM(l.item_name))
+                        )
+                        OR LOWER(TRIM(m.dishname)) = LOWER(TRIM(l.item_name))
+                        OR public.normalize_pos_item_name(m.online_display_name)
+                            = public.normalize_pos_item_name(l.item_name)
+                        OR public.normalize_pos_item_name(m.dishname)
+                            = public.normalize_pos_item_name(l.item_name)
+                    )
+                )
+                OR (
+                    UPPER(TRIM(l.area)) NOT IN ('ZOMATO', 'SWIGGY')
+                    AND LOWER(TRIM(m.dishname)) = LOWER(TRIM(l.item_name))
+                )
+                ORDER BY
+                    CASE
+                        WHEN UPPER(TRIM(l.area)) IN ('ZOMATO', 'SWIGGY')
+                         AND TRIM(COALESCE(m.online_display_name, '')) <> ''
+                         AND LOWER(TRIM(m.online_display_name)) = LOWER(TRIM(l.item_name))
+                        THEN 0
+                        WHEN UPPER(TRIM(l.area)) IN ('ZOMATO', 'SWIGGY')
+                         AND TRIM(COALESCE(m.online_display_name, '')) <> ''
+                         AND public.normalize_pos_item_name(m.online_display_name)
+                             = public.normalize_pos_item_name(l.item_name)
+                        THEN 1
+                        WHEN UPPER(TRIM(l.area)) IN ('ZOMATO', 'SWIGGY')
+                         AND LOWER(TRIM(m.dishname)) = LOWER(TRIM(l.item_name))
+                        THEN 2
+                        WHEN UPPER(TRIM(l.area)) IN ('ZOMATO', 'SWIGGY')
+                         AND public.normalize_pos_item_name(m.dishname)
+                             = public.normalize_pos_item_name(l.item_name)
+                        THEN 3
+                        ELSE 4
+                    END,
+                    m.version DESC,
+                    m.last_updated_at DESC NULLS LAST,
+                    m.id DESC
+                LIMIT 1
+            ) menu ON TRUE
+            LEFT JOIN LATERAL (
+                SELECT d.dish_cost
+                FROM public.dish_cost d
+                WHERE UPPER(TRIM(d.dish_code)) = UPPER(TRIM(menu.dishcode))
+                  AND TRIM(COALESCE(menu.dishcode, '')) <> ''
+                ORDER BY d.last_updated_at DESC NULLS LAST, d.id DESC
+                LIMIT 1
+            ) dc ON TRUE
+        ),
+        grouped AS (
+            SELECT
+                item_name,
+                report_date,
+                SUM(qty)::numeric AS sum_qty,
                 COALESCE(
                     (
-                        SELECT dc.dish_cost::numeric
-                        FROM public.dish_cost dc
-                        WHERE LOWER(TRIM(dc.row_kind)) = 'dish_total'
-                          AND LOWER(TRIM(dc.dishname)) = LOWER(TRIM(l.item_name))
-                        ORDER BY dc.last_updated_at DESC NULLS LAST, dc.id DESC
-                        LIMIT 1
-                    ),
+                        array_agg(dish_cost ORDER BY qty DESC NULLS LAST, id DESC)
+                        FILTER (WHERE dish_cost IS NOT NULL)
+                    )[1],
                     0::numeric
                 ) AS dish_cost
-            FROM lines l
-            GROUP BY l.item_name, l.report_date
+            FROM lines_enriched
+            GROUP BY item_name, report_date
         )
         SELECT
             item_name,
@@ -1382,6 +1654,7 @@ module.exports = {
     fetchStaticData,
     runQuery,
     upsertRawMaterialsCostFromOrders,
+    upsertDishCostFromStaging,
     waitForDb,
     runSeedData,
     getDbInfo,
@@ -1390,10 +1663,15 @@ module.exports = {
     loadRecipeByDishcode,
     runRecipeCostForDish,
     runDishCostValidation,
+    calculateAllDishCostsToStaging,
+    recalculateChangedDishCostsToStaging,
+    calculateDishCostToStagingForDish,
     runRawMaterialEstimator,
     listDishesForCostCalculation,
     ensureItemReportTable,
     upsertItemReportLines,
     listItemReportLines,
-    getItemReportSummary
+    getItemReportSummary,
+    getItemReportAnalysis,
+    getItemReportDateBounds
 };

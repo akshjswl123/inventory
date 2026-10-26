@@ -87,7 +87,8 @@
     .chain-row .contains { color: #666; }
     .chain-arrow { text-align: center; color: #888; font-size: 18px; margin: 4px 0; }
     .base-badge { color: #198754; font-weight: bold; font-size: 12px; }
-    .scoop-name { font-family: monospace; font-size: 12px; background: #f4f4f4; padding: 4px 8px; border-radius: 3px; min-height: 18px; }
+    .scoop-name { font-family: monospace; font-size: 12px; background: #f4f4f4; padding: 4px 8px; border-radius: 3px; min-height: 18px; white-space: pre-wrap; }
+    select.scoop-multi { min-height: 88px; min-width: 180px; vertical-align: top; }
     .item-details-unused { background: #fff0f0; }
     button.save { background: #0d6efd; color: #fff; }
     #itemDetailsMsg { font-size: 12px; color: #666; }
@@ -107,6 +108,15 @@
     #itemReportMsg.ok { color: #198754; }
     #itemReportMsg.warn { color: #b45309; }
     #itemReportMsg.err { color: #dc3545; }
+    #itemReportAnalysisScroll { overflow-x: auto; max-width: 100%; margin-top: 8px; }
+    #itemReportAnalysisTable { font-size: 12px; }
+    #itemReportAnalysisTable input.item-report-edit {
+      width: 5.5em; max-width: 100%; text-align: right; font-size: 12px; padding: 2px 4px;
+    }
+    #itemReportAnalysisTable tfoot th {
+      font-size: 12px; background: #f1f3f5; border-top: 2px solid #adb5bd;
+    }
+    #itemReportAnalysisTable tfoot td { font-weight: 600; }
     #dishesMsg { font-size: 12px; color: #666; }
     #dishesMsg.ok { color: #198754; }
     #dishesMsg.err { color: #dc3545; }
@@ -532,6 +542,7 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
 
     <div id="itemDetailsScoopPanel" class="item-details-section" style="display:none;">
       <h3>Select Scoops</h3>
+      <p class="hint">Choose one or more chain units per row (Ctrl/Cmd+click or Shift+click for multiple).</p>
       <table class="item-details-table">
         <thead>
         <tr>
@@ -543,17 +554,17 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
         <tbody>
         <tr>
           <td><strong>IN</strong><div class="hint">arrives</div></td>
-          <td><select id="itemDetailsScoopIn"><option value="">-- pick --</option></select></td>
+          <td><select id="itemDetailsScoopIn" class="scoop-multi" multiple size="4"></select></td>
           <td><div class="scoop-name" id="itemDetailsScoopInName">&nbsp;</div></td>
         </tr>
         <tr>
           <td><strong>OUT</strong><div class="hint">issued</div></td>
-          <td><select id="itemDetailsScoopOut"><option value="">-- pick --</option></select></td>
+          <td><select id="itemDetailsScoopOut" class="scoop-multi" multiple size="4"></select></td>
           <td><div class="scoop-name" id="itemDetailsScoopOutName">&nbsp;</div></td>
         </tr>
         <tr>
           <td><strong>RECIPE</strong><div class="hint">recipe</div></td>
-          <td><select id="itemDetailsScoopRecipe"><option value="">-- pick --</option></select></td>
+          <td><select id="itemDetailsScoopRecipe" class="scoop-multi" multiple size="4"></select></td>
           <td><div class="scoop-name" id="itemDetailsScoopRecipeName">&nbsp;</div></td>
         </tr>
         </tbody>
@@ -691,38 +702,33 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
     </div>
     <p class="hint" id="itemReportMeta"></p>
 
-    <div class="query-import-bar" style="margin-top:12px;">
-      <label for="itemReportChannel">Channel (by Area)</label>
+    <div class="query-import-bar" style="margin-top:12px; flex-wrap: wrap;">
+      <label for="itemReportStartDate">Start date</label>
+      <input type="date" id="itemReportStartDate" />
+      <label for="itemReportEndDate">End date</label>
+      <input type="date" id="itemReportEndDate" />
+      <label for="itemReportChannel">Area / channel</label>
       <select id="itemReportChannel">
+        <option value="zomato" selected>Zomato</option>
         <option value="swiggy">Swiggy</option>
-        <option value="zomato">Zomato</option>
         <option value="dinein">Dine-in (not Swiggy/Zomato)</option>
       </select>
-      <button type="button" class="plain" id="itemReportSummaryRefreshBtn">Refresh summary</button>
+      <button type="button" class="plain" id="itemReportSummaryRefreshBtn">Run report</button>
+      <button type="button" class="plain" id="itemReportExportBtn">Export CSV</button>
     </div>
 
-    <h3 style="font-size:15px; margin:18px 0 8px;">Summary by item &amp; date</h3>
-    <p class="hint" id="itemReportSummaryMeta"></p>
-    <table>
-      <thead>
-      <tr>
-        <th>Date</th>
-        <th>Item Name</th>
-        <th class="num">Sum Qty</th>
-        <th class="num">Dish cost</th>
-        <th class="num">Total dish cost</th>
-      </tr>
-      </thead>
-      <tbody id="itemReportSummaryBody"></tbody>
-      <tfoot>
-      <tr>
-        <td colspan="2" style="text-align:right;font-weight:600;">Totals</td>
-        <td class="num" id="itemReportSummaryTotalQty">0</td>
-        <td></td>
-        <td class="num" id="itemReportSummaryTotalCost">0</td>
-      </tr>
-      </tfoot>
-    </table>
+    <h3 style="font-size:15px; margin:18px 0 8px;">Item report summary</h3>
+    <p class="hint" id="itemReportSummaryMeta">
+      Aggregated by item name for the date range (<code>scripts/itemReportSummary.sql</code>).
+      Edit highlighted cells to adjust values; totals row sums numeric columns.
+    </p>
+    <div id="itemReportAnalysisScroll">
+      <table id="itemReportAnalysisTable">
+        <thead id="itemReportAnalysisHead"></thead>
+        <tbody id="itemReportSummaryBody"></tbody>
+        <tfoot id="itemReportAnalysisFoot"></tfoot>
+      </table>
+    </div>
 
     <div id="itemReportFailedWrap" hidden>
       <h3 style="font-size:15px; margin:18px 0 8px;">Unsuccessful lines</h3>
@@ -883,9 +889,24 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
       <button type="button" class="import" id="queryRmcUpsertBtn" onclick="Query.upsertRawMaterialsCost()">Upsert raw_materials_cost</button>
       <button type="button" class="primary" id="queryDishCostAllBtn" onclick="Query.calculateAllDishCosts()">Calculate cost (all dishes)</button>
       <button type="button" class="success" id="queryDishCostExportBtn" onclick="Query.calculateAllDishCostsAndExport()">Calculate &amp; export CSV</button>
+      <button type="button" class="plain" id="queryDishCostRecalcBtn" onclick="Query.recalculateChangedDishCosts()">Re-calculate cost (changed only)</button>
+      <button type="button" class="import" id="queryDishCostUpsertBtn" onclick="Query.upsertDishCostFromStaging()">Upsert dish_cost from staging</button>
       <label style="font-size:13px; margin-left:4px;">
         <input type="checkbox" id="queryDishCostShowLines" checked /> Show line breakdown (same as Recipe Maker)
       </label>
+      <p class="hint" style="margin:8px 0 0 0; max-width:820px;">
+        <strong>Calculate cost (all)</strong> runs <code>dish_cost_cases.sql</code> with the latest recipe,
+        raw-material, and scoop version per item, appends every dish to <code>dish_cost_staging</code>
+        (shared <code>dish_cost_version</code> run #), and bumps <code>item_versions</code>
+        <code>item_type = dish_cost_staging</code> per dish.
+        <strong>Re-calculate cost</strong> does the same calc but only inserts dishes whose
+        <code>dish_total</code> differs from the latest row in staging for that code.
+        <strong>Upsert dish_cost from staging</strong> copies the latest <code>dish_total</code> per
+        <code>dish_code</code> (highest <code>dish_cost_version</code> in staging) into
+        <code>dish_cost</code> (one row per code; used by item reports).
+        Recipe versions (<code>item_type = dishes</code>) bump on Recipe Maker <strong>Save to DB</strong> only.
+        Published cost (<code>dish_cost_staging</code> in <code>item_versions</code> + staging rows) is updated only from this Query tab.
+      </p>
       <button id="queryRunBtn" class="primary" onclick="Query.run()">Run Query</button>
       <button class="success" onclick="Query.currentStock()">Current Stock</button>
       <button id="pgDumpButton" class="plain" onclick="Query.pgDump()">PG Dump</button>
@@ -2315,7 +2336,10 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
       window.inBillSourceOrderIds=null;
       let msg="Order "+(d.updated?"updated":"saved")+" in DB. ID: "+d.id;
       if(d.removedDuplicates)msg+=" | removed "+d.removedDuplicates+" duplicate bill row(s)";
-      if(d.rawMaterialsCostCount!=null)msg+=" | raw_materials_cost: "+d.rawMaterialsCostCount+" row(s)";
+      if(d.rawMaterialsCostCount!=null) {
+        msg+=" | raw_materials_cost: "+d.rawMaterialsCostCount+" row(s) inserted";
+        if(d.rawMaterialsCostSkippedCount) msg+=" ("+d.rawMaterialsCostSkippedCount+" unchanged, skipped)";
+      }
       alert(msg);
       await loadStockMap();
     }catch(e){alert("Save to DB failed: "+e.message);}
@@ -2337,7 +2361,9 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
     }
     try {
       const d = await postJSON("/api/recipes", payload);
-      alert("Recipe saved to DB. " + d.count + " row(s), last ID: " + d.id);
+      let msg = "Recipe saved to DB. " + d.count + " row(s), last ID: " + d.id;
+      if (d.version != null) msg += ", recipe version " + d.version + ".";
+      alert(msg);
       if (typeof refreshStaticData === "function") await refreshStaticData();
     } catch (e) {
       alert("Save to DB failed: " + e.message);

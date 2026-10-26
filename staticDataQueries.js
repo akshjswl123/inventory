@@ -25,17 +25,23 @@ const SQL = {
         ORDER BY dish_name
     `,
     scoopNames: `
-        SELECT DISTINCT scoop_name
-        FROM scoop_config
-        WHERE scoop_name IS NOT NULL AND TRIM(scoop_name) <> ''
+        SELECT scoop_name
+        FROM (
+            SELECT DISTINCT ON (LOWER(TRIM(scoop_name)))
+                   scoop_name
+            FROM scoop_config
+            WHERE scoop_name IS NOT NULL AND TRIM(scoop_name) <> ''
+            ORDER BY LOWER(TRIM(scoop_name)), version DESC, id DESC
+        ) latest
         ORDER BY scoop_name
     `,
     scoopRows: `
-        SELECT scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor,
+        SELECT DISTINCT ON (LOWER(TRIM(scoop_name)))
+               scoop_item_name, scoop_item_id, destination_unit, scoop_name, factor,
                conversion_chain, qty_in_grams, qty_in_ml, qty_in_piece, unused
         FROM scoop_config
         WHERE scoop_name IS NOT NULL AND TRIM(scoop_name) <> ''
-        ORDER BY scoop_item_name, scoop_name
+        ORDER BY LOWER(TRIM(scoop_name)), version DESC, id DESC
     `,
     vendorItems: `
         SELECT v.vendor_name, rm.itemname AS item_name, rm."pgNo" AS pg_no

@@ -330,6 +330,201 @@ CREATE TRIGGER dishes_touch_last_updated_at
     BEFORE UPDATE ON public.dishes
     FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
 
+-- Menu grouping (many-to-many with dishes; not public.categories for inventory_out)
+CREATE TABLE IF NOT EXISTS public.menu_categories
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    menu_category_id integer NOT NULL,
+    menu_category_name text COLLATE pg_catalog."default" NOT NULL,
+    display_order integer,
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT menu_categories_pkey PRIMARY KEY (id),
+    CONSTRAINT menu_categories_menu_category_id_key UNIQUE (menu_category_id),
+    CONSTRAINT menu_categories_menu_category_name_key UNIQUE (menu_category_name)
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.menu_categories OWNER TO poc;
+GRANT ALL ON TABLE public.menu_categories TO poc;
+
+DROP TRIGGER IF EXISTS menu_categories_touch_last_updated_at ON public.menu_categories;
+CREATE TRIGGER menu_categories_touch_last_updated_at
+    BEFORE UPDATE ON public.menu_categories
+    FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
+
+CREATE TABLE IF NOT EXISTS public.dish_menu_category
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    dish_code text COLLATE pg_catalog."default" NOT NULL,
+    menu_category_id integer NOT NULL,
+    sort_order integer,
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT dish_menu_category_pkey PRIMARY KEY (id),
+    CONSTRAINT dish_menu_category_dish_category_key UNIQUE (dish_code, menu_category_id),
+    CONSTRAINT dish_menu_category_dish_code_fkey
+        FOREIGN KEY (dish_code) REFERENCES public.dishes (dish_code)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT dish_menu_category_menu_category_id_fkey
+        FOREIGN KEY (menu_category_id) REFERENCES public.menu_categories (menu_category_id)
+        ON UPDATE CASCADE ON DELETE RESTRICT
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.dish_menu_category OWNER TO poc;
+GRANT ALL ON TABLE public.dish_menu_category TO poc;
+
+DROP TRIGGER IF EXISTS dish_menu_category_touch_last_updated_at ON public.dish_menu_category;
+CREATE TRIGGER dish_menu_category_touch_last_updated_at
+    BEFORE UPDATE ON public.dish_menu_category
+    FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
+
+-- Dine-in menu prices (POS / in-restaurant)
+CREATE TABLE IF NOT EXISTS public.dinein_menu
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    dishcode text COLLATE pg_catalog."default" NOT NULL,
+    dishname text COLLATE pg_catalog."default" NOT NULL,
+    petpooja_item_id text COLLATE pg_catalog."default",
+    online_display_name text COLLATE pg_catalog."default",
+    price numeric(12,4),
+    version integer NOT NULL DEFAULT 1,
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT dinein_menu_pkey PRIMARY KEY (id),
+    CONSTRAINT dinein_menu_dishcode_dishname_version_key UNIQUE (dishcode, dishname, version)
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.dinein_menu OWNER TO poc;
+GRANT ALL ON TABLE public.dinein_menu TO poc;
+
+DROP TRIGGER IF EXISTS dinein_menu_touch_last_updated_at ON public.dinein_menu;
+CREATE TRIGGER dinein_menu_touch_last_updated_at
+    BEFORE UPDATE ON public.dinein_menu
+    FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
+
+-- Aggregator menu prices (Zomato / Swiggy)
+CREATE TABLE IF NOT EXISTS public.zomato_menu
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    dishcode text COLLATE pg_catalog."default" NOT NULL,
+    dishname text COLLATE pg_catalog."default" NOT NULL,
+    petpooja_item_id text COLLATE pg_catalog."default",
+    price numeric(12,4),
+    version integer NOT NULL DEFAULT 1,
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT zomato_menu_pkey PRIMARY KEY (id),
+    CONSTRAINT zomato_menu_dishcode_dishname_version_key UNIQUE (dishcode, dishname, version)
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.zomato_menu OWNER TO poc;
+GRANT ALL ON TABLE public.zomato_menu TO poc;
+
+DROP TRIGGER IF EXISTS zomato_menu_touch_last_updated_at ON public.zomato_menu;
+CREATE TRIGGER zomato_menu_touch_last_updated_at
+    BEFORE UPDATE ON public.zomato_menu
+    FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
+
+CREATE TABLE IF NOT EXISTS public.swiggy_menu
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    dishcode text COLLATE pg_catalog."default" NOT NULL,
+    dishname text COLLATE pg_catalog."default" NOT NULL,
+    petpooja_item_id text COLLATE pg_catalog."default",
+    price numeric(12,4),
+    version integer NOT NULL DEFAULT 1,
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT swiggy_menu_pkey PRIMARY KEY (id),
+    CONSTRAINT swiggy_menu_dishcode_dishname_version_key UNIQUE (dishcode, dishname, version)
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.swiggy_menu OWNER TO poc;
+GRANT ALL ON TABLE public.swiggy_menu TO poc;
+
+DROP TRIGGER IF EXISTS swiggy_menu_touch_last_updated_at ON public.swiggy_menu;
+CREATE TRIGGER swiggy_menu_touch_last_updated_at
+    BEFORE UPDATE ON public.swiggy_menu
+    FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
+
+-- PetPooja POS menu export (see scripts/petpooja_menu_import.sh)
+CREATE TABLE IF NOT EXISTS public.petpooja_menu
+(
+    item_id bigint NOT NULL,
+    category_name text COLLATE pg_catalog."default",
+    item_name text COLLATE pg_catalog."default" NOT NULL,
+    sap_code text COLLATE pg_catalog."default",
+    item_short_code text COLLATE pg_catalog."default",
+    item_short_code1 text COLLATE pg_catalog."default",
+    item_description text COLLATE pg_catalog."default",
+    expose_to_online text COLLATE pg_catalog."default",
+    online_display_name text COLLATE pg_catalog."default",
+    is_favorite text COLLATE pg_catalog."default",
+    item_base_price numeric(12,4),
+    container_charge numeric(12,4),
+    dietary text COLLATE pg_catalog."default",
+    home_delivery_price numeric(12,4),
+    home_delivery_available text COLLATE pg_catalog."default",
+    garden_price numeric(12,4),
+    garden_available text COLLATE pg_catalog."default",
+    dining_price numeric(12,4),
+    dining_available text COLLATE pg_catalog."default",
+    bar_price numeric(12,4),
+    bar_available text COLLATE pg_catalog."default",
+    sofa_price numeric(12,4),
+    sofa_available text COLLATE pg_catalog."default",
+    lounge_price numeric(12,4),
+    lounge_available text COLLATE pg_catalog."default",
+    parcel_price numeric(12,4),
+    parcel_available text COLLATE pg_catalog."default",
+    zomato_price numeric(12,4),
+    zomato_available text COLLATE pg_catalog."default",
+    swiggy_price numeric(12,4),
+    swiggy_available text COLLATE pg_catalog."default",
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT petpooja_menu_pkey PRIMARY KEY (item_id)
+) TABLESPACE pg_default;
+
+CREATE OR REPLACE VIEW public.v_menu_categories_and_dishes AS
+SELECT
+    mc.menu_category_id,
+    mc.menu_category_name,
+    mc.display_order AS menu_category_display_order,
+    dmc.sort_order AS dish_sort_order,
+    d.dish_code,
+    d.dish_name
+FROM public.menu_categories mc
+LEFT JOIN public.dish_menu_category dmc
+    ON dmc.menu_category_id = mc.menu_category_id
+LEFT JOIN public.dishes d
+    ON d.dish_code = dmc.dish_code;
+
+ALTER VIEW public.v_menu_categories_and_dishes OWNER TO poc;
+GRANT SELECT ON public.v_menu_categories_and_dishes TO poc;
+
+CREATE OR REPLACE VIEW public.v_dishes_with_menu_categories AS
+SELECT
+    d.dish_code,
+    d.dish_name,
+    COALESCE(
+        array_agg(mc.menu_category_id ORDER BY mc.menu_category_id)
+            FILTER (WHERE mc.menu_category_id IS NOT NULL),
+        '{}'::integer[]
+    ) AS menu_category_ids,
+    COALESCE(
+        array_agg(mc.menu_category_name ORDER BY mc.menu_category_name)
+            FILTER (WHERE mc.menu_category_name IS NOT NULL),
+        '{}'::text[]
+    ) AS menu_category_names
+FROM public.dishes d
+LEFT JOIN public.dish_menu_category dmc ON dmc.dish_code = d.dish_code
+LEFT JOIN public.menu_categories mc ON mc.menu_category_id = dmc.menu_category_id
+GROUP BY d.dish_code, d.dish_name;
+
+ALTER VIEW public.v_dishes_with_menu_categories OWNER TO poc;
+GRANT SELECT ON public.v_dishes_with_menu_categories TO poc;
+
 -- CSV import staging for dish cost export (see useful.sql: load into dish_cost)
 CREATE TABLE IF NOT EXISTS public.dish_cost_staging
 (
@@ -355,7 +550,10 @@ CREATE TABLE IF NOT EXISTS public.dish_cost_staging
     cost_of_one_scoop text COLLATE pg_catalog."default",
     rate_per_destination_unit text COLLATE pg_catalog."default",
     incomplete text COLLATE pg_catalog."default",
-    cost_calculation text COLLATE pg_catalog."default"
+    cost_calculation text COLLATE pg_catalog."default",
+    dish_cost_version text COLLATE pg_catalog."default" DEFAULT '1',
+    recipe_version text COLLATE pg_catalog."default",
+    cost_version text COLLATE pg_catalog."default"
 ) TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.dish_cost_staging OWNER TO poc;
@@ -449,7 +647,10 @@ CREATE TRIGGER item_report_lines_touch_last_updated_at
     BEFORE UPDATE ON public.item_report_lines
     FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
 
--- item_type = table name: dishes, raw_materials_cost, scoop_config (see normalize_item_version_code)
+-- item_versions: one row per (item_code, item_type).
+-- Per dish code (UPPER): item_type 'dishes' = recipe version (Recipe Maker Save to DB);
+-- item_type 'dish_cost_staging' = published cost version (append / recalc to dish_cost_staging).
+-- Also: raw_materials_cost, scoop_config (see normalize_item_version_code).
 CREATE TABLE IF NOT EXISTS public.item_versions
 (
     id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -461,7 +662,7 @@ CREATE TABLE IF NOT EXISTS public.item_versions
     CONSTRAINT item_versions_pkey PRIMARY KEY (id),
     CONSTRAINT item_versions_code_type_key UNIQUE (item_code, item_type),
     CONSTRAINT item_versions_item_type_check CHECK (
-        item_type IN ('dishes', 'raw_materials_cost', 'scoop_config')
+        item_type IN ('dishes', 'raw_materials_cost', 'scoop_config', 'dish_cost_staging')
     ),
     CONSTRAINT item_versions_version_positive CHECK (version >= 1)
 ) TABLESPACE pg_default;
@@ -513,8 +714,8 @@ BEGIN
     IF v_code IS NULL OR v_code = '' THEN
         RAISE EXCEPTION 'item_code is required';
     END IF;
-    IF v_type IS NULL OR v_type NOT IN ('dishes', 'raw_materials_cost', 'scoop_config') THEN
-        RAISE EXCEPTION 'item_type must be dishes, raw_materials_cost, or scoop_config';
+    IF v_type IS NULL OR v_type NOT IN ('dishes', 'raw_materials_cost', 'scoop_config', 'dish_cost_staging') THEN
+        RAISE EXCEPTION 'item_type must be dishes, raw_materials_cost, scoop_config, or dish_cost_staging';
     END IF;
 
     INSERT INTO public.item_versions (item_code, item_type, version)
@@ -530,3 +731,29 @@ END;
 $$;
 
 ALTER FUNCTION public.bump_item_version(text, text) OWNER TO poc;
+
+CREATE OR REPLACE VIEW public.v_dish_recipe_and_cost_versions AS
+WITH dish_codes AS (
+    SELECT DISTINCT UPPER(TRIM(dishcode)) AS dish_code
+    FROM public.recipe_entries
+    WHERE dishcode IS NOT NULL AND TRIM(dishcode) <> ''
+    UNION
+    SELECT iv.item_code AS dish_code
+    FROM public.item_versions iv
+    WHERE iv.item_type IN ('dishes', 'dish_cost_staging')
+)
+SELECT
+    dc.dish_code,
+    COALESCE(rv.version, 1) AS recipe_version,
+    rv.last_updated_at AS recipe_version_updated_at,
+    COALESCE(cv.version, 1) AS dish_cost_version,
+    cv.last_updated_at AS dish_cost_version_updated_at
+FROM dish_codes dc
+LEFT JOIN public.item_versions rv
+    ON rv.item_code = dc.dish_code AND rv.item_type = 'dishes'
+LEFT JOIN public.item_versions cv
+    ON cv.item_code = dc.dish_code AND cv.item_type = 'dish_cost_staging'
+ORDER BY dc.dish_code;
+
+ALTER VIEW public.v_dish_recipe_and_cost_versions OWNER TO poc;
+GRANT SELECT ON public.v_dish_recipe_and_cost_versions TO poc;

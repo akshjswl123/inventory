@@ -19,7 +19,8 @@ ALTER TABLE public.recipe_entries
 ALTER TABLE public.recipe_entries
     ALTER COLUMN version SET NOT NULL;
 
--- 2. item_versions: one row per dish code at version 1 (existing recipes)
+-- 2. item_versions: one row per dish code at version 1 (recipe / item_type dishes)
+-- Published cost counter (item_type dish_cost_staging): scripts/20_item_versions_dish_cost.sql
 INSERT INTO public.item_versions (item_code, item_type, version)
 SELECT DISTINCT UPPER(TRIM(dishcode)), 'dishes', 1
 FROM public.recipe_entries

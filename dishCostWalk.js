@@ -23,6 +23,10 @@ function money(value) {
     return Number(value).toFixed(4);
 }
 
+function normalizeDishCode(value) {
+    return String(value == null ? '' : value).trim().toUpperCase();
+}
+
 function sqlLiteral(value) {
     if (value == null || String(value).trim() === '') return 'NULL';
     return `'${String(value).trim().replace(/'/g, "''")}'`;
@@ -694,6 +698,422 @@ async function validateAndQueryDishCost(pool, { dishcode, dishname, basedOnBilln
     };
 }
 
+const FIND_AFFECTED_DISHES_SQL = `
+WITH RECURSIVE
+recipe_current_version AS (
+    SELECT iv.item_code AS dish_code, iv.version AS current_version
+    FROM public.item_versions iv
+    WHERE iv.item_type = 'dishes'
+),
+recipe_scope AS (
+    SELECT re.*
+    FROM public.recipe_entries re
+    WHERE re.dishcode IS NOT NULL
+      AND TRIM(re.dishcode) <> ''
+      AND re.version = COALESCE(
+          (
+              SELECT cv.current_version
+              FROM recipe_current_version cv
+              WHERE cv.dish_code = UPPER(TRIM(re.dishcode))
+              LIMIT 1
+          ),
+          (
+              SELECT MAX(sub.version)
+              FROM public.recipe_entries sub
+              WHERE UPPER(TRIM(sub.dishcode)) = UPPER(TRIM(re.dishcode))
+          ),
+          1
+      )
+),
+recipe_dish_codes AS (
+    SELECT DISTINCT UPPER(TRIM(dishcode)) AS dish_code
+    FROM recipe_scope
+),
+affected AS (
+    SELECT UPPER(TRIM($1::text)) AS dish_code
+    UNION
+    SELECT DISTINCT UPPER(TRIM(parent.dishcode)) AS dish_code
+    FROM recipe_scope parent
+    INNER JOIN affected child ON UPPER(TRIM(parent."pgNo")) = child.dish_code
+    INNER JOIN recipe_dish_codes rd ON rd.dish_code = child.dish_code
+    WHERE parent.dishcode IS NOT NULL
+      AND TRIM(parent.dishcode) <> ''
+      AND UPPER(TRIM(parent.dishcode)) <> child.dish_code
+      AND LOWER(TRIM(parent.reciepeitemname)) NOT IN (
+          'dish_out', 'totalingredientsqty', 'totalprocessedqty'
+      )
+      AND parent.qty IS NOT NULL
+      AND parent.qty > 0
+)
+SELECT dish_code FROM affected ORDER BY dish_code
+`;
+
+const STAGING_RECIPE_VERSION_EXPR = `
+    COALESCE(
+        (
+            SELECT iv.version::text
+            FROM public.item_versions iv
+            WHERE iv.item_type = 'dishes'
+              AND iv.item_code = UPPER(TRIM(calc.dish_code))
+            LIMIT 1
+        ),
+        (
+            SELECT MAX(sub.version)::text
+            FROM public.recipe_entries sub
+            WHERE UPPER(TRIM(sub.dishcode)) = UPPER(TRIM(calc.dish_code))
+        ),
+        '1'
+    )
+`;
+
+const STAGING_COST_VERSION_EXPR = `
+    COALESCE(
+        (
+            SELECT iv.version::text
+            FROM public.item_versions iv
+            WHERE iv.item_type = 'dish_cost_staging'
+              AND iv.item_code = UPPER(TRIM(calc.dish_code))
+            LIMIT 1
+        ),
+        '1'
+    )
+`;
+
+function buildStagingInsertSql(costSql, dishCodes) {
+    const filter = Array.isArray(dishCodes) && dishCodes.length > 0;
+    const outerWhere = filter
+        ? 'WHERE UPPER(TRIM(calc.dish_code)) = ANY($2::text[])'
+        : '';
+    return `
+        INSERT INTO public.dish_cost_staging (
+            row_kind, dish_code, dishname, dish_case, line_kind, itemname,
+            "pgNo_or_dishCode", receipescoop, qty, destination_unit, scoop_factor,
+            rate, line_cost, is_usable_in_other_dish, out_scoop, qty_of_scoops,
+            out_unit, out_factor, dish_cost, cost_of_one_scoop,
+            rate_per_destination_unit, incomplete, cost_calculation,
+            dish_cost_version, recipe_version, cost_version
+        )
+        SELECT
+            calc.row_kind::text,
+            calc.dish_code::text,
+            calc.dishname::text,
+            calc.dish_case::text,
+            calc.line_kind::text,
+            calc.itemname::text,
+            calc."pgNo_or_dishCode"::text,
+            calc.receipescoop::text,
+            calc.qty::text,
+            calc.destination_unit::text,
+            calc.scoop_factor::text,
+            calc.rate::text,
+            calc.line_cost::text,
+            calc.is_usable_in_other_dish::text,
+            calc.out_scoop::text,
+            calc.qty_of_scoops::text,
+            calc.out_unit::text,
+            calc.out_factor::text,
+            calc.dish_cost::text,
+            calc.cost_of_one_scoop::text,
+            calc.rate_per_destination_unit::text,
+            calc.incomplete::text,
+            calc.cost_calculation::text,
+            $1::text,
+            (${STAGING_RECIPE_VERSION_EXPR}),
+            (${STAGING_COST_VERSION_EXPR})
+        FROM (
+            ${costSql}
+        ) calc
+        ${outerWhere}
+    `;
+}
+
+function stagingIncompleteFlag(value) {
+    if (value === true || value === 't') return true;
+    return String(value || '').toLowerCase() === 'true';
+}
+
+async function distinctDishCodesFromCostSql(client, costSql) {
+    const res = await client.query(
+        `
+        SELECT DISTINCT UPPER(TRIM(dish_code)) AS dish_code
+        FROM (${costSql}) calc
+        WHERE TRIM(COALESCE(dish_code, '')) <> ''
+        ORDER BY dish_code
+        `
+    );
+    return res.rows.map((row) => row.dish_code);
+}
+
+async function bumpDishCostVersions(client, dishCodes) {
+    const codes = [...new Set((dishCodes || []).map((c) => normalizeDishCode(c)).filter(Boolean))].sort();
+    for (const code of codes) {
+        await client.query('SELECT public.bump_item_version($1, $2)', [code, 'dish_cost_staging']);
+    }
+    return codes;
+}
+
+const LATEST_STAGING_DISH_TOTALS_SQL = `
+    SELECT DISTINCT ON (UPPER(TRIM(dish_code)))
+        UPPER(TRIM(dish_code)) AS dish_code,
+        NULLIF(TRIM(dish_cost), '')::numeric AS dish_cost,
+        incomplete
+    FROM public.dish_cost_staging
+    WHERE LOWER(TRIM(COALESCE(row_kind, ''))) = 'dish_total'
+      AND TRIM(COALESCE(dish_code, '')) <> ''
+    ORDER BY UPPER(TRIM(dish_code)),
+             NULLIF(TRIM(dish_cost_version), '')::integer DESC NULLS LAST,
+             ctid DESC
+`;
+
+function dishCostsDiffer(freshCost, prevCost, freshIncomplete, prevIncomplete) {
+    if (stagingIncompleteFlag(freshIncomplete) !== stagingIncompleteFlag(prevIncomplete)) {
+        return true;
+    }
+    if (freshCost == null && prevCost == null) return false;
+    if (freshCost == null || prevCost == null) return true;
+    return Math.abs(Number(freshCost) - Number(prevCost)) > 0.0001;
+}
+
+async function appendCostCalcToStaging(pool, {
+    costSql,
+    dishCodes = null,
+    previewDishCodes = null
+} = {}) {
+    const filter = Array.isArray(dishCodes) && dishCodes.length > 0
+        ? dishCodes.map((c) => normalizeDishCode(c)).filter(Boolean)
+        : null;
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        const codesToBump = filter || await distinctDishCodesFromCostSql(client, costSql);
+        await bumpDishCostVersions(client, codesToBump);
+        const nextVersion = await allocateNextStagingVersion(client);
+        const versionText = String(nextVersion);
+        const insertParams = filter ? [versionText, filter] : [versionText];
+        const insertRes = await client.query(buildStagingInsertSql(costSql, filter), insertParams);
+        await client.query('COMMIT');
+
+        const previewCodes = previewDishCodes || filter || codesToBump;
+        const preview = await pool.query(
+            `
+            SELECT *
+            FROM public.dish_cost_staging
+            WHERE dish_cost_version = $1
+              AND UPPER(TRIM(dish_code)) = ANY($2::text[])
+            ORDER BY dishname, dish_code, row_kind DESC, itemname NULLS LAST
+            `,
+            [versionText, previewCodes]
+        );
+
+        const dishTotals = preview.rows.filter((r) =>
+            String(r.row_kind || '').toLowerCase() === 'dish_total'
+        );
+        const columns = preview.fields
+            ? preview.fields.map((field) => field.name)
+            : Object.keys(preview.rows[0] || {});
+
+        return {
+            version: nextVersion,
+            rowCount: insertRes.rowCount,
+            dishTotalCount: dishTotals.length,
+            bumpedDishCostCount: codesToBump.length,
+            columns,
+            rows: preview.rows,
+            dishTotals
+        };
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+}
+
+async function allocateNextStagingVersion(client) {
+    const verRes = await client.query(`
+        SELECT COALESCE(MAX(NULLIF(TRIM(dish_cost_version), '')::integer), 0) + 1 AS next_version
+        FROM public.dish_cost_staging
+    `);
+    return Number(verRes.rows[0].next_version);
+}
+
+async function findDishesAffectedByProcessedSave(pool, rootDishCode) {
+    const code = String(rootDishCode || '').trim().toUpperCase();
+    if (!code) return [];
+    const res = await pool.query(FIND_AFFECTED_DISHES_SQL, [code]);
+    return res.rows.map((row) => row.dish_code);
+}
+
+async function insertDishCostCalcToStaging(pool, { dishcode, dishname, basedOnBillno } = {}) {
+    const costSql = buildCostSql({ dishcode, dishname, basedOnBillno }).trim().replace(/;\s*$/, '');
+    const dishCodeKey = dishcode ? normalizeDishCode(dishcode) : null;
+    const batch = await appendCostCalcToStaging(pool, {
+        costSql,
+        dishCodes: null,
+        previewDishCodes: dishCodeKey ? [dishCodeKey] : null
+    });
+
+    const rootTotal = dishCodeKey
+        ? batch.dishTotals.find((r) => normalizeDishCode(r.dish_code) === dishCodeKey)
+        : batch.dishTotals[0];
+
+    return {
+        version: batch.version,
+        dishcode: dishCodeKey || dishcode || null,
+        affectedDishes: dishCodeKey ? [dishCodeKey] : null,
+        rowCount: batch.rowCount,
+        dishTotalCount: batch.dishTotalCount,
+        bumpedDishCostCount: batch.bumpedDishCostCount,
+        dishCost: rootTotal && rootTotal.dish_cost != null
+            ? Number(rootTotal.dish_cost)
+            : null,
+        incomplete: rootTotal ? rootTotal.incomplete : null,
+        columns: batch.columns,
+        rows: batch.rows
+    };
+}
+
+async function runDishCostAllToStaging(pool) {
+    const costSql = buildCostSql({}).trim().replace(/;\s*$/, '');
+    const batch = await appendCostCalcToStaging(pool, { costSql });
+    const preview = await pool.query(
+        `
+        SELECT *
+        FROM public.dish_cost_staging
+        WHERE dish_cost_version = $1
+        ORDER BY dishname, dish_code, row_kind DESC, itemname NULLS LAST
+        `,
+        [String(batch.version)]
+    );
+    return {
+        version: batch.version,
+        rowCount: batch.rowCount,
+        dishTotalCount: batch.dishTotalCount,
+        bumpedDishCostCount: batch.bumpedDishCostCount,
+        columns: preview.fields
+            ? preview.fields.map((field) => field.name)
+            : Object.keys(preview.rows[0] || {}),
+        rows: preview.rows
+    };
+}
+
+/**
+ * Re-calculate all dishes (latest recipes/rates), compare dish_total to latest staging per dish;
+ * append staging + bump item_versions (dish_cost_staging) only where cost or incomplete flag changed.
+ */
+async function runDishCostRecalculateChangedToStaging(pool) {
+    const costSql = buildCostSql({}).trim().replace(/;\s*$/, '');
+    const freshRes = await pool.query(
+        `
+        SELECT
+            UPPER(TRIM(dish_code)) AS dish_code,
+            dish_cost::numeric AS dish_cost,
+            incomplete
+        FROM (${costSql}) calc
+        WHERE LOWER(TRIM(COALESCE(row_kind, ''))) = 'dish_total'
+          AND TRIM(COALESCE(dish_code, '')) <> ''
+        `
+    );
+
+    const latestRes = await pool.query(LATEST_STAGING_DISH_TOTALS_SQL);
+    const latestByCode = new Map(latestRes.rows.map((row) => [row.dish_code, row]));
+
+    const changedCodes = [];
+    const unchangedCodes = [];
+    for (const row of freshRes.rows) {
+        const prev = latestByCode.get(row.dish_code);
+        if (!prev) {
+            changedCodes.push(row.dish_code);
+            continue;
+        }
+        if (dishCostsDiffer(row.dish_cost, prev.dish_cost, row.incomplete, prev.incomplete)) {
+            changedCodes.push(row.dish_code);
+        } else {
+            unchangedCodes.push(row.dish_code);
+        }
+    }
+
+    if (!changedCodes.length) {
+        return {
+            version: null,
+            rowCount: 0,
+            dishTotalCount: 0,
+            changedDishCount: 0,
+            unchangedDishCount: unchangedCodes.length,
+            bumpedDishCostCount: 0,
+            changedDishCodes: [],
+            columns: [],
+            rows: []
+        };
+    }
+
+    const batch = await appendCostCalcToStaging(pool, {
+        costSql,
+        dishCodes: changedCodes,
+        previewDishCodes: changedCodes
+    });
+
+    return {
+        version: batch.version,
+        rowCount: batch.rowCount,
+        dishTotalCount: batch.dishTotalCount,
+        changedDishCount: changedCodes.length,
+        unchangedDishCount: unchangedCodes.length,
+        bumpedDishCostCount: batch.bumpedDishCostCount,
+        changedDishCodes: changedCodes,
+        columns: batch.columns,
+        rows: batch.rows
+    };
+}
+
+/**
+ * Saved processed dish + every parent dish that uses it (transitively).
+ * One dish_cost_version for the whole batch.
+ */
+async function runDishCostCascadeToStaging(pool, rootDishCode) {
+    const root = String(rootDishCode || '').trim().toUpperCase();
+    if (!root) {
+        throw new Error('dishcode is required for dish cost staging');
+    }
+
+    const affectedDishes = await findDishesAffectedByProcessedSave(pool, root);
+    const dishCodes = affectedDishes.length ? affectedDishes : [root];
+
+    const costSql = buildCostSql({}).trim().replace(/;\s*$/, '');
+    const batch = await appendCostCalcToStaging(pool, {
+        costSql,
+        dishCodes,
+        previewDishCodes: dishCodes
+    });
+
+    const rootTotal = batch.dishTotals.find((r) => normalizeDishCode(r.dish_code) === root);
+
+    return {
+        version: batch.version,
+        dishcode: root,
+        affectedDishes: dishCodes,
+        parentDishCount: Math.max(0, dishCodes.length - 1),
+        rowCount: batch.rowCount,
+        dishTotalCount: batch.dishTotalCount,
+        bumpedDishCostCount: batch.bumpedDishCostCount,
+        dishCost: rootTotal && rootTotal.dish_cost != null
+            ? Number(rootTotal.dish_cost)
+            : null,
+        incomplete: rootTotal ? rootTotal.incomplete : null,
+        columns: batch.columns,
+        rows: batch.rows
+    };
+}
+
+async function runDishCostDishToStaging(pool, dishcode) {
+    return runDishCostCascadeToStaging(pool, dishcode);
+}
+
 module.exports = {
-    validateAndQueryDishCost
+    validateAndQueryDishCost,
+    runDishCostAllToStaging,
+    runDishCostRecalculateChangedToStaging,
+    runDishCostDishToStaging,
+    runDishCostCascadeToStaging,
+    findDishesAffectedByProcessedSave
 };

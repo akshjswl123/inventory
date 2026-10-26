@@ -1,0 +1,177 @@
+dish_code,dishname,recipe_version,dish_case,dish_cost,incomplete,cost_calculation
+P8,AATA PROCESSED,5,case2,36.8000,f,dish_cost 36.8000 | cost of one scoop = dish_cost ÷ 3000 = 0.0123 | rate per gm = that ÷ 1 = 0.012267
+D10201,ADDON GHEE,1,case1,24.5000,f,dish_cost 24.5000
+D057,ALOO GOBI MATAR,1,case3,30.3336,f,dish_cost 30.3336
+D008,ALOO LEHSUNI PARATHA,1,case3,9.9814,f,dish_cost 9.9814
+D006,ALOO PARATHA,1,case3,3.0267,f,dish_cost 3.0267
+D146,ALOO TIKKI BURGER,1,case1,26.9200,f,dish_cost 26.9200
+D159,Alfredo Pasta,1,case3,97.7797,f,dish_cost 97.7797
+D160,Arrabiata Pasta,1,case3,107.9732,f,dish_cost 107.9732
+D086,BOONDI RAITA,1,case2,23.7000,f,dish_cost 23.7000 | cost of one scoop = dish_cost ÷ 1 = 23.7000 | rate per piece = that ÷ 1 = 23.700000
+D076,BUTTER NAAN,1,case3,5.9167,f,dish_cost 5.9167
+D074,BUTTER TANDOORI ROTI,1,case3,3.7314,f,dish_cost 3.7314
+D124,Blue Ocean Mojito,1,case1,31.1260,f,dish_cost 31.1260
+D137,Blueberry Shake,1,case1,44.3800,f,dish_cost 44.3800
+D157,Bombay Sandwich,1,case1,45.8160,f,dish_cost 45.8160
+D129,Brownie Cold Coffee,1,case1,74.7000,f,dish_cost 74.7000
+D147,CHEESE  BURGER,1,case1,26.6000,f,dish_cost 26.6000
+D164,CHEESE CORN MAGGI,1,case1,44.9200,f,dish_cost 44.9200
+D025,CHILLY GARLIC NOODLES,1,case3,30.3971,f,dish_cost 30.3971
+D182,CHILLY MUSHROOM,1,case3,40.1000,f,dish_cost 40.1000
+D013,CHILLY PANEER,1,case3,42.7000,f,dish_cost 42.7000 | cost of one scoop = dish_cost ÷ 1 = 42.7000 | rate per piece = that ÷ 1 = 42.700000
+CH8,CHINESE MASALA,1,case2,0.2200,f,dish_cost 0.2200 | cost of one scoop = dish_cost ÷ 1 = 0.2200 | rate per gm = that ÷ 1 = 0.220000
+CH5,CHINESE SAUCES,1,case2,0.1300,f,dish_cost 0.1300 | cost of one scoop = dish_cost ÷ 1 = 0.1300 | rate per gm = that ÷ 1 = 0.130000
+DD8,CHINESE STARTER MOOD,1,case3,147.7626,f,dish_cost 147.7626
+CH2,CHINESE VEGGIES,1,case2,1.1000,f,dish_cost 1.1000 | cost of one scoop = dish_cost ÷ 20 = 0.0550 | rate per gm = that ÷ 1 = 0.055000
+D001,CHOLE  KULCHE,1,case3,7.7741,f,dish_cost 7.7741
+D002,CHOLE BHATURE,1,case3,25.2029,f,dish_cost 25.2029
+D176,COCKTAIL NOODLES,1,case3,29.7400,f,dish_cost 29.7400
+D032,COCKTAIL RICE,1,case3,39.1947,f,dish_cost 39.1947
+D015,CRISPY CORN,1,case3,19.9200,f,dish_cost 19.9200
+D010,CRISPY VEG,1,case3,76.3814,f,dish_cost 76.3814 | cost of one scoop = dish_cost ÷ 1 = 76.3814 | rate per piece = that ÷ 1 = 76.381400
+D084,CURD,1,case1,21.6000,f,dish_cost 21.6000
+D141,Cheese Corn Pizza,1,case1,110.7230,f,dish_cost 110.7230
+D153,Cheese Corn Sandwich,1,case1,43.1440,f,dish_cost 43.1440
+D113,Cheese Fries,1,case1,47.7000,f,dish_cost 47.7000
+D134,Chocolate Brownie Shake,1,case1,99.8000,f,dish_cost 99.8000
+D132,Chocolate Oreo Shake,1,case1,68.3000,t,"dish_cost 68.3000 (incomplete — a line has no price, so no per-unit rate)"
+D170,Chola Masala Rice Bowl,1,case3,45.1404,f,dish_cost 45.1404
+P10,Chop masala,1,case2,777.4050,f,dish_cost 777.4050 | cost of one scoop = dish_cost ÷ 5000 = 0.1555 | rate per gm = that ÷ 1 = 0.155481
+P12,Chop veggie,1,case2,0.0000,t,"dish_cost 0.0000 (incomplete — a line has no price, so no per-unit rate)"
+D101,Classic Choco Brownie,1,case1,4.5300,f,dish_cost 4.5300
+D131,Classic Chocolate Shake,1,case1,68.3000,f,dish_cost 68.3000
+D122,Coke Float,1,case1,25.2500,f,dish_cost 25.2500
+D083,DAHI KACHUMBER,1,case1,30.7000,f,dish_cost 30.7000
+D062,DAL  fry,1,case3,27.4532,f,dish_cost 27.4532
+D061,DAL  makhani,1,case1,28.6200,f,dish_cost 28.6200
+D063,DAL tadka,1,case3,30.1132,f,dish_cost 30.1132 | cost of one scoop = dish_cost ÷ 1 = 30.1132 | rate per piece = that ÷ 1 = 30.113200
+D004,EXTRA  KULCHA,1,case1,61.2500,f,dish_cost 61.2500
+DD21,FAMILY VEG FEAST,1,case3,148.9997,f,dish_cost 148.9997
+CH6,FRIED NOODLES PROCESSED,1,case2,0.1500,f,dish_cost 0.1500 | cost of one scoop = dish_cost ÷ 1 = 0.1500 | rate per gm = that ÷ 1 = 0.150000
+D066,FRIED PAPAD,1,case1,0.0000,t,"dish_cost 0.0000 (incomplete — a line has no price, so no per-unit rate)"
+DD48,Friends starter box (for 2),1,case3,108.8312,f,dish_cost 108.8312
+D077,GARLIC NAAN,1,case3,7.1227,f,dish_cost 7.1227
+D081,GREEN SALAD,1,case1,45.0000,f,dish_cost 45.0000
+D103,GULAB JAMUN,1,case3,35.0000,f,dish_cost 35.0000
+D105,GULAB JAMUN + ICE CREAM,1,case3,47.5000,f,dish_cost 47.5000
+D027,HAKKA NOODLES,1,case3,34.8971,f,dish_cost 34.8971
+DD4,HALF DAL FRY,1,case3,20.5899,f,dish_cost 20.5899
+D017,HARA BHARA KABAB,1,case3,184.7814,f,dish_cost 184.7814
+CN1,HERBS,1,case2,0.2800,f,dish_cost 0.2800 | cost of one scoop = dish_cost ÷ 1 = 0.2800 | rate per gm = that ÷ 1 = 0.280000
+D012,HONEY CHILLY POTATO,1,case3,69.7000,f,dish_cost 69.7000
+D022,HOT AND SOUR SOUP,1,case1,16.2200,f,dish_cost 16.2200
+D102,HOT BROWNIE + ICECREAM,1,case1,79.4000,f,dish_cost 79.4000
+D104,ICE CREAM Scoop,1,case1,33.8500,f,dish_cost 33.8500
+MA1,INDIAN MASALA,1,case2,0.0000,f,dish_cost 0.0000 | cost of one scoop = dish_cost ÷ 1 = 0.0000 | rate per gm = that ÷ 1 = 0.000000
+D093,JEERA GARLIC RICE,1,case3,40.0700,f,dish_cost 40.0700
+D092,JEERA RICE,1,case3,18.7200,f,dish_cost 18.7200
+D082,KACHUMBER SALAD,1,case1,40.8500,f,dish_cost 40.8500
+D040,KADHAI PANEER,1,case3,57.5343,f,dish_cost 57.5343 | cost of one scoop = dish_cost ÷ 1 = 57.5343 | rate per piece = that ÷ 1 = 57.534300
+D072,KAJU CURRY,1,case3,177.3070,f,dish_cost 177.3070
+P6,KAJU MAGAJ GREAVY,1,case2,1004.0000,f,dish_cost 1004.0000 | cost of one scoop = dish_cost ÷ 4000 = 0.2510 | rate per gm = that ÷ 1 = 0.251000
+D191,KITKAT SHAKE,1,case1,87.1096,f,dish_cost 87.1096
+D079,LACHHA PARATHA,1,case3,2.8767,f,dish_cost 2.8767 | cost of one scoop = dish_cost ÷ 1 = 2.8767 | rate per piece = that ÷ 1 = 2.876700
+D046,LEHSUNI PANEERPALAK PANEER,1,case3,32.4683,f,dish_cost 32.4683
+D088,LEMON SODA,1,case1,13.0000,f,dish_cost 13.0000
+D150,MAHARAJA BURGER,1,case3,75.6400,f,dish_cost 75.6400
+P9,MAIDA PROCESSED,1,case2,38.0000,f,dish_cost 38.0000 | cost of one scoop = dish_cost ÷ 1200 = 0.0317 | rate per gm = that ÷ 1 = 0.031667
+D071,MALAI KOFTA,1,case3,81.6800,f,dish_cost 81.6800
+D023,MANCHOW SOUP,1,case1,17.0600,f,dish_cost 17.0600
+D011,MANCHURIAN,1,case3,71.3812,f,dish_cost 71.3812 | cost of one scoop = dish_cost ÷ 1 = 71.3812 | rate per piece = that ÷ 1 = 71.381200
+D037,MANCHURIAN FRIED RICE,1,case3,56.0706,f,dish_cost 56.0706
+D031,MANCHURIAN NOODLES,1,case3,40.8694,f,dish_cost 40.8694
+CH7,MANCHURIAN PROCESSED,1,case2,558.8000,f,dish_cost 558.8000 | cost of one scoop = dish_cost ÷ 850 = 0.6574 | rate per gm = that ÷ 1 = 0.657412
+D096,MASALA DAL KHICHDI,1,case3,21.2280,f,dish_cost 21.2280
+D067,MASALA PAPAD,1,case1,16.4900,f,dish_cost 16.4900
+D049,MATAR PANEER,1,case3,70.0887,f,dish_cost 70.0887 | cost of one scoop = dish_cost ÷ 1 = 70.0887 | rate per piece = that ÷ 1 = 70.088700
+DD1,MATAR PULAO,1,case3,22.8700,f,dish_cost 22.8700
+D070,METHI MALAI MATAR,1,case3,11.9410,f,dish_cost 11.9410
+D085,MIX RAITA,1,case1,35.8500,f,dish_cost 35.8500
+D007,MIX VEG PARATHA,1,case3,29.7514,f,dish_cost 29.7514
+D059,MIX veg,1,case3,64.4358,f,dish_cost 64.4358 | cost of one scoop = dish_cost ÷ 1 = 64.4358 | rate per piece = that ÷ 1 = 64.435800
+D138,Mango Shake,1,case1,65.8800,f,dish_cost 65.8800
+D142,Margherita Pizza,1,case1,105.4070,f,dish_cost 105.4070
+DD45,NORTH INDIAN CRAVING COMBO,1,case3,97.2727,f,dish_cost 97.2727
+P5,ONION GREAVY,1,case2,3382.4700,f,dish_cost 3382.4700 | cost of one scoop = dish_cost ÷ 16000 = 0.2114 | rate per gm = that ÷ 1 = 0.211404
+D005,ONION PARATHA,1,case3,12.3684,f,dish_cost 12.3684
+D174,OTHER,1,case3,,t,ALOO GOBI MATAR (D057): child has no per-unit rate
+D039,PANEER  BUTTER MASALA,1,case3,71.5520,f,dish_cost 71.5520
+D014,PANEER 65,1,case3,40.6800,f,dish_cost 40.6800
+D051,PANEER ANGARA,1,case3,46.9084,f,dish_cost 46.9084
+DD46,PANEER CRAVING,1,case3,86.5000,f,dish_cost 86.5000
+D036,PANEER FRIED RICE,1,case3,39.2000,f,dish_cost 39.2000
+D047,PANEER KOLHAPURI,1,case3,75.5104,f,dish_cost 75.5104
+D041,PANEER LABABDAR,1,case3,101.7443,f,dish_cost 101.7443
+D009,PANEER PARATHA,1,case3,26.5814,f,dish_cost 26.5814
+DD2,PANEER PULAO,1,case3,35.8200,f,dish_cost 35.8200
+D045,PANEER PUNJABI,1,case3,75.2904,f,dish_cost 75.2904 | cost of one scoop = dish_cost ÷ 1 = 75.2904 | rate per piece = that ÷ 1 = 75.290400
+D185,PANEER SCHEZWAN FRIED RICE,1,case3,50.2000,f,dish_cost 50.2000
+D050,PANEER TAWA MASALA,1,case1,74.5200,f,dish_cost 74.5200
+D018,PANEER TIKKA,1,case1,80.8000,f,dish_cost 80.8000
+D042,PANEER TIKKA MASALA,1,case3,74.8637,f,dish_cost 74.8637
+P7,PASTA PROCESSED,1,case2,117.0000,f,dish_cost 117.0000 | cost of one scoop = dish_cost ÷ 2359 = 0.0496 | rate per gm = that ÷ 1 = 0.049597
+D163,PERI PERI MAGGI,1,case3,49.2000,f,dish_cost 49.2000
+D003,PINDI  CHOLE,1,case1,0.2200,f,dish_cost 0.2200
+D162,PLAIN MAGGI,1,case1,31.0000,f,dish_cost 31.0000
+D1023,PLAIN NAAN,1,case3,3.8000,f,dish_cost 3.8000 | cost of one scoop = dish_cost ÷ 1 = 3.8000 | rate per piece = that ÷ 1 = 3.800000
+C100,PROCESSED CRISPY VEG,1,case2,204.5100,f,dish_cost 204.5100 | cost of one scoop = dish_cost ÷ 700 = 0.2922 | rate per gm = that ÷ 1 = 0.292157
+P2,PROCESSED DAL,1,case2,411.8000,f,dish_cost 411.8000 | cost of one scoop = dish_cost ÷ 6000 = 0.0686 | rate per gm = that ÷ 1 = 0.068633
+P11,PROCESSED GULAB JAMUN,1,case2,1400.0000,f,dish_cost 1400.0000 | cost of one scoop = dish_cost ÷ 80 = 17.5000 | rate per piece = that ÷ 1 = 17.500000
+P1010,PROCESSED HARA BHARA KEBAB,1,case2,202.0900,f,dish_cost 202.0900 | cost of one scoop = dish_cost ÷ 800 = 0.2526 | rate per gm = that ÷ 1 = 0.252613
+P208,PROCESSED MIX VEG,1,case2,0.2000,f,dish_cost 0.2000 | cost of one scoop = dish_cost ÷ 3 = 0.0667 | rate per gm = that ÷ 1 = 0.066667
+P3,PROCESSED NOODLES,1,case2,150.0000,f,dish_cost 150.0000 | cost of one scoop = dish_cost ÷ 1275 = 0.1176 | rate per gm = that ÷ 1 = 0.117647
+P1,PROCESSED RICE,1,case2,156.0000,f,dish_cost 156.0000 | cost of one scoop = dish_cost ÷ 2500 = 0.0624 | rate per gm = that ÷ 1 = 0.062400
+D166,PUNJABI MAGGI,1,case1,59.8400,f,dish_cost 59.8400
+D064,PUNJabi DAL TADKA,1,case3,24.0583,f,dish_cost 24.0583
+D075,PYAZ KULCHA (ROTI),1,case3,6.1067,f,dish_cost 6.1067
+D167,Paneer Butter Masala Rice BOWL,1,case3,28.6842,f,dish_cost 28.6842
+D140,Paneer Makhani Pizza,1,case1,143.4310,f,dish_cost 143.4310
+D145,Paneer Schezwan Pizza,1,case1,84.3010,f,dish_cost 84.3010
+D156,Paneer Schezwan Sandwich,1,case3,39.9920,f,dish_cost 39.9920
+D112,Peri Peri Fries,1,case1,50.6000,f,dish_cost 50.6000
+D143,Peri Peri Pizza,1,case1,53.2760,f,dish_cost 53.2760
+D161,Pink SauCE Pasta,1,case3,105.7322,f,dish_cost 105.7322
+D158,Pizza Sandwich,1,case3,75.4635,f,dish_cost 75.4635
+D065,ROASTED PAPAD,1,case1,0.0000,t,"dish_cost 0.0000 (incomplete — a line has no price, so no per-unit rate)"
+SS-AATA,SAMPLE AATA PROCESSED,1,case3,,t,SAMPLE MAIDA PROCESSED (SS-BASE): child has no per-unit rate
+SS-ROTI,SAMPLE BUTTER ROTI,1,case3,,t,SAMPLE AATA PROCESSED (SS-AATA): child has no per-unit rate
+SS-BASE,SAMPLE MAIDA PROCESSED,1,case2,0.0000,t,"dish_cost 0.0000 (incomplete — a line has no price, so no per-unit rate)"
+SS-GJ,SAMPLE PROCESSED GULAB JAMUN,1,case1,0.0000,t,"dish_cost 0.0000 (incomplete — a line has no price, so no per-unit rate)"
+D035,SCHEZWAN FRIED RICE,1,case3,34.2000,f,dish_cost 34.2000
+D029,SCHEZWAN NOODLES,1,case3,41.3971,f,dish_cost 41.3971
+D058,SEV TAMATAR,1,case3,52.7270,f,dish_cost 52.7270
+D106,SIZZLING BROWNIE,1,case1,78.0250,f,dish_cost 78.0250
+D109,SKYWALK SPECIAL THALI,1,case3,69.7903,f,dish_cost 69.7903
+D091,STEAM RICE,1,case3,15.6000,f,dish_cost 15.6000
+D114,Salted Fries,1,case2,43.8000,f,dish_cost 43.8000 | cost of one scoop = dish_cost ÷ 1 = 43.8000 | rate per piece = that ÷ 1 = 43.800000
+D136,Strawberry Shake,1,case1,35.3800,f,dish_cost 35.3800
+D073,TANDOORI ROTI,1,case3,0.9814,f,dish_cost 0.9814 | cost of one scoop = dish_cost ÷ 1 = 0.9814 | rate per piece = that ÷ 1 = 0.981400
+P4,TOMATO GREAVY,1,case2,1449.0500,f,dish_cost 1449.0500 | cost of one scoop = dish_cost ÷ 22000 = 0.0659 | rate per gm = that ÷ 1 = 0.065866
+D021,TOMATO SOUP,1,case1,26.2880,f,dish_cost 26.2880
+D053,VEG ANGARA,1,case3,46.9084,f,dish_cost 46.9084
+D097,VEG BIRYANI,1,case3,31.3850,f,dish_cost 31.3850
+D034,VEG FRIED RICE,1,case3,37.4500,f,dish_cost 37.4500 | cost of one scoop = dish_cost ÷ 1 = 37.4500 | rate per piece = that ÷ 1 = 37.450000
+D052,VEG KADHAI,1,case3,72.0204,f,dish_cost 72.0204 | cost of one scoop = dish_cost ÷ 1 = 72.0204 | rate per piece = that ÷ 1 = 72.020400
+D056,VEG KEEMA KASTURI,1,case3,64.4608,f,dish_cost 64.4608
+D054,VEG KOFTA,1,case3,51.1497,f,dish_cost 51.1497
+D026,VEG NOODLES,1,case3,30.3971,f,dish_cost 30.3971
+D094,VEG PULAO,1,case3,28.1934,f,dish_cost 28.1934
+D095,VEG TAWA PULAO,1,case3,30.0534,f,dish_cost 30.0534
+D060,VEG kolhapuri,1,case3,47.8904,f,dish_cost 47.8904
+D165,VEGETABLE MAGGI,1,case1,41.4600,f,dish_cost 41.4600
+CN2,VEGGIES C.,1,case2,2.4000,f,dish_cost 2.4000 | cost of one scoop = dish_cost ÷ 60 = 0.0400 | rate per gm = that ÷ 1 = 0.040000
+D139,Veg Pizza,1,case1,106.0180,f,dish_cost 106.0180
+D152,Vegetable Sandwich,1,case3,31.7200,f,dish_cost 31.7200
+D123,Virgin Mojito,1,case1,36.2100,f,dish_cost 36.2100
+D128,choco cold coffee,1,case1,69.0000,f,dish_cost 69.0000
+D127,classic cold coffee,1,case1,39.3000,f,dish_cost 39.3000
+D130,hazelnut cold coffee,1,case1,45.3000,f,dish_cost 45.3000
+D144,loaded pizza,1,case1,117.4025,f,dish_cost 117.4025
+D151,makhani sandwich,1,case1,38.5400,f,dish_cost 38.5400
+D154,mexican sandwich,1,case3,37.1500,f,dish_cost 37.1500
+D155,paneer tikka sandwich,1,case1,57.1300,f,dish_cost 57.1300
+D148,peri peri burger,1,case3,29.4600,f,dish_cost 29.4600
+P105,processed chola,1,case2,70.0000,f,dish_cost 70.0000 | cost of one scoop = dish_cost ÷ 1000 = 0.0700 | rate per gm = that ÷ 1 = 0.070000
+D048,shahi PANEER,1,case3,64.4608,f,dish_cost 64.4608
+DD6,thick cold coffee,1,case1,47.0500,f,dish_cost 47.0500
+D149,veggie burger,1,case1,27.9700,f,dish_cost 27.9700

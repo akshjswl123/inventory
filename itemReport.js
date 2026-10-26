@@ -3,10 +3,40 @@
   'use strict';
 
   const API = '/api/item-report';
-  const SUMMARY_API = '/api/item-report/summary';
+  const ANALYSIS_API = '/api/item-report/analysis';
+  const DATE_BOUNDS_API = '/api/item-report/date-bounds';
   const SAMPLE_CSV_URL =
     '/data/Item_Report_With_CustomerOrder_Details_2026_10_10_15_03_36_Report.csv';
   const LINES_HIDDEN_KEY = 'itemReportLinesHidden';
+
+  const ANALYSIS_COLUMNS = [
+    { key: 'min_date', label: 'Min date' },
+    { key: 'max_date', label: 'Max date' },
+    { key: 'dish_code', label: 'Dish code' },
+    { key: 'item_name', label: 'Item name' },
+    { key: 'sum_qty', label: 'Sum qty', numeric: true },
+    { key: 'max_price', label: 'Max price', numeric: true },
+    { key: 'avg_price', label: 'Avg price', numeric: true },
+    { key: 'max_discount', label: 'Max discount', numeric: true },
+    { key: 'avg_discount', label: 'Avg discount', numeric: true },
+    { key: 'total_discount', label: 'Total discount', numeric: true },
+    { key: 'max_sub_total', label: 'Max sub total', numeric: true },
+    { key: 'avg_sub_total', label: 'Avg sub total', numeric: true },
+    { key: 'received_without_discount', label: 'Received w/o discount', numeric: true, editable: true },
+    { key: 'max_final_total', label: 'Max final total', numeric: true },
+    { key: 'avg_final_total', label: 'Avg final total', numeric: true },
+    { key: 'received_with_discount', label: 'Received w/ discount', numeric: true, editable: true },
+    { key: 'dish_cost', label: 'Dish cost', numeric: true, editable: true },
+    { key: 'total_dish_cost', label: 'Total dish cost', numeric: true, editable: true },
+    { key: 'dinein_menu_price', label: 'Dine-in menu price', numeric: true, editable: true },
+    { key: 'total_dinein_menu_price', label: 'Total dine-in menu price', numeric: true },
+    { key: 'margin_before_discounts', label: 'Margin before discounts', numeric: true },
+    { key: 'margin_after_discounts', label: 'Margin after discounts', numeric: true }
+  ];
+
+  /** @type {object[]} */
+  let analysisRows = [];
+  let analysisMeta = {};
 
   function escHtml(s) {
     return String(s == null ? '' : s)
@@ -48,15 +78,268 @@
     });
   }
 
-  function formatNum(n) {
+  function round4(n) {
     const x = Number(n);
-    if (!Number.isFinite(x)) return '0';
-    return String(Math.round(x * 10000) / 10000);
+    if (!Number.isFinite(x)) return 0;
+    return Math.round(x * 10000) / 10000;
   }
 
-  function getChannel() {
-    const sel = document.getElementById('itemReportChannel');
-    return sel ? sel.value : 'swiggy';
+  function formatNum(n) {
+    const x = Number(n);
+    if (!Number.isFinite(x)) return '';
+    return String(round4(x));
+  }
+
+  function parseNumInput(v) {
+    if (v == null || v === '') return 0;
+    const n = Number(String(v).replace(/,/g, '').trim());
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  function normalizeAnalysisRow(row) {
+    const r = Object.assign({}, row);
+    ANALYSIS_COLUMNS.forEach(col => {
+      if (col.numeric && r[col.key] != null && r[col.key] !== '') {
+        r[col.key] = Number(r[col.key]);
+      }
+    });
+    return recalculateDerived(r);
+  }
+
+  function recalculateDerived(row) {
+    const qty = Number(row.sum_qty) || 0;
+    if (row._autoTotalDishCost) {
+      row.total_dish_cost = round4((Number(row.dish_cost) || 0) * qty);
+    }
+    if (row._autoDineinTotal) {
+      row.total_dinein_menu_price = round4((Number(row.dinein_menu_price) || 0) * qty);
+    }
+    const totalDish = Number(row.total_dish_cost) || 0;
+    row.margin_before_discounts = round4(
+      (Number(row.received_without_discount) || 0) - totalDish
+    );
+    row.margin_after_discounts = round4(
+      (Number(row.received_with_discount) || 0) - totalDish
+    );
+    return row;
+  }
+
+  function onEditableChange(rowIndex, key, rawValue) {
+    const row = analysisRows[rowIndex];
+    if (!row) return;
+    const val = parseNumInput(rawValue);
+    row[key] = val;
+    if (key === 'dish_cost') {
+      row._autoTotalDishCost = true;
+    } else if (key === 'total_dish_cost') {
+      row._autoTotalDishCost = false;
+    } else if (key === 'dinein_menu_price') {
+      row._autoDineinTotal = true;
+    }
+    recalculateDerived(row);
+    renderAnalysisTable();
+  }
+
+  function computeTotalsRow(rows) {
+    const totals = {};
+    ANALYSIS_COLUMNS.forEach(col => {
+      if (!col.numeric) {
+        totals[col.key] = '';
+        return;
+      }
+      totals[col.key] = round4(
+        rows.reduce((sum, r) => sum + (Number(r[col.key]) || 0), 0)
+      );
+    });
+    totals.item_name = 'Totals';
+    totals.min_date = '';
+    totals.max_date = '';
+    totals.dish_code = '';
+    return totals;
+  }
+
+  function analysisColumnLabelsRow(cellTag) {
+    const tag = cellTag === 'th' ? 'th' : 'td';
+    return (
+      '<tr>' +
+      ANALYSIS_COLUMNS.map(col => {
+        const cls = col.numeric ? ' class="num"' : '';
+        const scope = tag === 'th' ? ' scope="col"' : '';
+        return '<' + tag + scope + cls + '>' + escHtml(col.label) + '</' + tag + '>';
+      }).join('') +
+      '</tr>'
+    );
+  }
+
+  function renderAnalysisHead() {
+    const head = document.getElementById('itemReportAnalysisHead');
+    if (!head) return;
+    head.innerHTML = analysisColumnLabelsRow('th');
+  }
+
+  function analysisTotalsRowHtml(totals) {
+    return (
+      '<tr>' +
+      ANALYSIS_COLUMNS.map(col => {
+        const cls = col.numeric ? ' class="num"' : '';
+        if (col.key === 'item_name') {
+          return '<td' + cls + ' style="text-align:right;font-weight:600;">Totals</td>';
+        }
+        if (!col.numeric) return '<td></td>';
+        return '<td' + cls + '>' + escHtml(formatNum(totals[col.key])) + '</td>';
+      }).join('') +
+      '</tr>'
+    );
+  }
+
+  function cellContent(row, col, rowIndex) {
+    const val = row[col.key];
+    if (col.editable) {
+      const v = val == null || val === '' ? '' : formatNum(val);
+      return (
+        '<input type="text" class="item-report-edit" data-row="' + rowIndex +
+        '" data-key="' + escHtml(col.key) + '" value="' + escHtml(v) + '" />'
+      );
+    }
+    if (col.numeric) return escHtml(formatNum(val));
+    if (val == null) return '';
+    if (val instanceof Date) return escHtml(String(val).slice(0, 10));
+    const s = String(val);
+    if (/^\d{4}-\d{2}-\d{2}/.test(s)) return escHtml(s.slice(0, 10));
+    return escHtml(s);
+  }
+
+  function renderAnalysisTable() {
+    const tbody = document.getElementById('itemReportSummaryBody');
+    const tfoot = document.getElementById('itemReportAnalysisFoot');
+    const meta = document.getElementById('itemReportSummaryMeta');
+    if (!tbody || !tfoot) return;
+
+    tbody.innerHTML = '';
+    analysisRows.forEach((row, rowIndex) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = ANALYSIS_COLUMNS.map(col => {
+        const cls = col.numeric ? ' class="num"' : '';
+        return '<td' + cls + '>' + cellContent(row, col, rowIndex) + '</td>';
+      }).join('');
+      tbody.appendChild(tr);
+    });
+
+    tbody.querySelectorAll('input.item-report-edit').forEach(input => {
+      input.addEventListener('change', () => {
+        const idx = Number(input.getAttribute('data-row'));
+        const key = input.getAttribute('data-key');
+        onEditableChange(idx, key, input.value);
+      });
+    });
+
+    const totals = computeTotalsRow(analysisRows);
+    tfoot.innerHTML =
+      analysisColumnLabelsRow('th') + analysisTotalsRowHtml(totals);
+
+    if (meta && analysisMeta.channel_label) {
+      meta.textContent =
+        analysisMeta.channel_label +
+        ' — ' + (analysisMeta.start_date || '') + ' to ' + (analysisMeta.end_date || '') +
+        ' — ' + analysisRows.length + ' item(s).';
+    }
+  }
+
+  function getFilterParams() {
+    const startEl = document.getElementById('itemReportStartDate');
+    const endEl = document.getElementById('itemReportEndDate');
+    const ch = document.getElementById('itemReportChannel');
+    return {
+      startDate: startEl ? startEl.value : '',
+      endDate: endEl ? endEl.value : '',
+      channel: ch ? ch.value : 'zomato'
+    };
+  }
+
+  async function ensureDateBounds() {
+    const startEl = document.getElementById('itemReportStartDate');
+    const endEl = document.getElementById('itemReportEndDate');
+    if (!startEl || !endEl) return;
+    if (startEl.value && endEl.value) return;
+    try {
+      const res = await fetch(DATE_BOUNDS_API);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || data.detail || res.statusText);
+      if (data.min_date) startEl.value = data.min_date;
+      if (data.max_date) endEl.value = data.max_date;
+    } catch (e) {
+      /* ignore — user can set dates manually */
+    }
+  }
+
+  async function loadAnalysis() {
+    await ensureDateBounds();
+    const params = getFilterParams();
+    if (!params.startDate || !params.endDate) {
+      const meta = document.getElementById('itemReportSummaryMeta');
+      if (meta) meta.textContent = 'Set start and end date, then click Run report.';
+      return;
+    }
+    const meta = document.getElementById('itemReportSummaryMeta');
+    if (meta) meta.textContent = 'Loading…';
+    try {
+      const qs =
+        'startDate=' + encodeURIComponent(params.startDate) +
+        '&endDate=' + encodeURIComponent(params.endDate) +
+        '&channel=' + encodeURIComponent(params.channel);
+      const res = await fetch(ANALYSIS_API + '?' + qs);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || data.detail || res.statusText);
+      analysisMeta = {
+        channel_label: data.channel_label,
+        start_date: data.start_date,
+        end_date: data.end_date
+      };
+      analysisRows = (data.rows || []).map(r => {
+        const row = normalizeAnalysisRow(r);
+        row._autoTotalDishCost = true;
+        row._autoDineinTotal = true;
+        return recalculateDerived(row);
+      });
+      renderAnalysisTable();
+    } catch (e) {
+      if (meta) meta.textContent = e.message;
+    }
+  }
+
+  function exportAnalysisCsv() {
+    const C = global.Csv;
+    if (!C || !C.rowsToCsv || !C.download) {
+      setMsg('csv.js is not loaded.', 'err');
+      return;
+    }
+    if (!analysisRows.length) {
+      setMsg('No rows to export. Run report first.', 'warn');
+      return;
+    }
+    const headers = ANALYSIS_COLUMNS.map(c => c.label);
+    const dataRows = analysisRows.map(row =>
+      ANALYSIS_COLUMNS.map(col => {
+        const v = row[col.key];
+        if (col.numeric) return formatNum(v);
+        if (v == null) return '';
+        const s = String(v);
+        if (col.key === 'min_date' || col.key === 'max_date') {
+          return /^\d{4}-\d{2}-\d{2}/.test(s) ? s.slice(0, 10) : s;
+        }
+        return s;
+      })
+    );
+    const totals = computeTotalsRow(analysisRows);
+    const totalRow = ANALYSIS_COLUMNS.map(col => {
+      if (col.key === 'item_name') return 'Totals';
+      if (!col.numeric) return '';
+      return formatNum(totals[col.key]);
+    });
+    dataRows.push(totalRow);
+    const text = C.rowsToCsv(headers, dataRows);
+    const stamp = new Date().toISOString().slice(0, 10);
+    C.download(text, 'item_report_summary_' + stamp + '.csv');
   }
 
   function setLinesHidden(hidden) {
@@ -75,49 +358,6 @@
       hidden = localStorage.getItem(LINES_HIDDEN_KEY) === '1';
     } catch (e) { /* ignore */ }
     setLinesHidden(hidden);
-  }
-
-  function renderSummary(data) {
-    const tbody = document.getElementById('itemReportSummaryBody');
-    const meta = document.getElementById('itemReportSummaryMeta');
-    const totalQty = document.getElementById('itemReportSummaryTotalQty');
-    const totalCost = document.getElementById('itemReportSummaryTotalCost');
-    if (!tbody) return;
-    tbody.innerHTML = '';
-    const rows = (data && data.rows) || [];
-    rows.forEach(r => {
-      const tr = document.createElement('tr');
-      tr.innerHTML =
-        '<td>' + escHtml(r.report_date) + '</td>' +
-        '<td>' + escHtml(r.item_name) + '</td>' +
-        '<td class="num">' + escHtml(formatNum(r.sum_qty)) + '</td>' +
-        '<td class="num">' + escHtml(formatNum(r.dish_cost)) + '</td>' +
-        '<td class="num">' + escHtml(formatNum(r.total_dish_cost)) + '</td>';
-      tbody.appendChild(tr);
-    });
-    if (meta) {
-      meta.textContent = (data && data.channel_label ? data.channel_label : 'Channel')
-        + ' — ' + rows.length + ' row(s). Dish cost from dish_cost (name match) or 0.';
-    }
-    if (totalQty && data && data.totals) {
-      totalQty.textContent = formatNum(data.totals.sum_qty);
-    }
-    if (totalCost && data && data.totals) {
-      totalCost.textContent = formatNum(data.totals.total_dish_cost);
-    }
-  }
-
-  async function loadSummary() {
-    const ch = getChannel();
-    try {
-      const res = await fetch(SUMMARY_API + '?channel=' + encodeURIComponent(ch));
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || data.detail || res.statusText);
-      renderSummary(data);
-    } catch (e) {
-      const meta = document.getElementById('itemReportSummaryMeta');
-      if (meta) meta.textContent = e.message;
-    }
   }
 
   function renderRows(rows) {
@@ -155,7 +395,7 @@
           + ' of ' + (data.total || 0) + ' rows. Upsert key: invoice + date + item + area.';
       }
       setMsg('', '');
-      await loadSummary();
+      await loadAnalysis();
     } catch (e) {
       setMsg(e.message, 'err');
     }
@@ -230,7 +470,7 @@
     const refreshBtn = document.getElementById('itemReportRefreshBtn');
     const sampleBtn = document.getElementById('itemReportSampleBtn');
     const summaryRefreshBtn = document.getElementById('itemReportSummaryRefreshBtn');
-    const channelSel = document.getElementById('itemReportChannel');
+    const exportBtn = document.getElementById('itemReportExportBtn');
     const toggleLinesBtn = document.getElementById('itemReportToggleLinesBtn');
 
     if (importBtn && fileInput) {
@@ -246,8 +486,8 @@
         loadFromDb();
       });
     }
-    if (summaryRefreshBtn) summaryRefreshBtn.addEventListener('click', loadSummary);
-    if (channelSel) channelSel.addEventListener('change', loadSummary);
+    if (summaryRefreshBtn) summaryRefreshBtn.addEventListener('click', loadAnalysis);
+    if (exportBtn) exportBtn.addEventListener('click', exportAnalysisCsv);
     if (toggleLinesBtn) {
       toggleLinesBtn.addEventListener('click', () => {
         const table = document.getElementById('itemReportLinesTable');
@@ -269,11 +509,12 @@
     }
   }
 
-  function init() {
+  async function init() {
+    renderAnalysisHead();
     bindUi();
     applyLinesHiddenFromStorage();
-    loadFromDb();
-    loadSummary();
+    await ensureDateBounds();
+    await loadFromDb();
   }
 
   if (document.readyState === 'loading') {
@@ -282,5 +523,11 @@
     init();
   }
 
-  global.ItemReport = { loadFromDb, loadSummary, importCsvFile, importCsvText };
+  global.ItemReport = {
+    loadFromDb,
+    loadAnalysis,
+    importCsvFile,
+    importCsvText,
+    exportAnalysisCsv
+  };
 })(typeof window !== 'undefined' ? window : global);

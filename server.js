@@ -17,6 +17,7 @@ const {
     loadScoopConfigByDishCode,
     runQuery,
     upsertRawMaterialsCostFromOrders,
+    upsertDishCostFromStaging,
     fetchStaticData,
     waitForDb,
     runSeedData,
@@ -26,12 +27,16 @@ const {
     loadRecipeByDishcode,
     runRecipeCostForDish,
     runDishCostValidation,
+    calculateAllDishCostsToStaging,
+    recalculateChangedDishCostsToStaging,
     runRawMaterialEstimator,
     listDishesForCostCalculation,
     ensureItemReportTable,
     upsertItemReportLines,
     listItemReportLines,
-    getItemReportSummary
+    getItemReportSummary,
+    getItemReportAnalysis,
+    getItemReportDateBounds
 } = require('./dbqueries');
 const { excelBufferToCsv } = require('./excelToCsv');
 
@@ -185,6 +190,34 @@ app.get('/api/recipes/cost-dish-list', async (req, res) => {
 });
 
 /*
+ * POST /api/dish-cost/calculate-all-to-staging
+ * One dish_cost_cases.sql run (all dishes, versioned recipes/rates) → dish_cost_staging with dish_cost_version + 1.
+ */
+app.post('/api/dish-cost/calculate-all-to-staging', async (req, res) => {
+    try {
+        const result = await calculateAllDishCostsToStaging();
+        res.json(result);
+    } catch (err) {
+        console.error('POST /api/dish-cost/calculate-all-to-staging error:', err);
+        res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
+ * POST /api/dish-cost/recalculate-changed-to-staging
+ * Latest dish_cost_cases vs latest dish_total per dish in staging; insert + bump dish_cost_staging only if changed.
+ */
+app.post('/api/dish-cost/recalculate-changed-to-staging', async (req, res) => {
+    try {
+        const result = await recalculateChangedDishCostsToStaging();
+        res.json(result);
+    } catch (err) {
+        console.error('POST /api/dish-cost/recalculate-changed-to-staging error:', err);
+        res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
  * GET /api/recipes/dish-cost?dishcode=&dishname=
  * Recursive step checks (one query per record), then dish_cost_cases.sql unchanged.
  * Registered before /api/recipes/:dishname so "dish-cost" is not treated as a dish name.
@@ -288,7 +321,13 @@ app.post('/api/recipes', async (req, res) => {
 
     try {
         const result = await saveRecipe(req.body);
-        res.status(201).json({ id: result.id, count: result.count, message: 'Recipe saved' });
+        res.status(201).json({
+            id: result.id,
+            count: result.count,
+            version: result.version,
+            dishcode: result.dishcode,
+            message: 'Recipe saved'
+        });
     } catch (err) {
         console.error('POST /api/recipes error:', err);
         res.status(500).json({ error: 'Database error', detail: err.message });
@@ -408,6 +447,22 @@ app.post('/api/raw-materials-cost/upsert-from-orders', async (req, res) => {
         });
     } catch (err) {
         console.error('POST /api/raw-materials-cost/upsert-from-orders error:', err);
+        res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
+ * POST /api/dish-cost/upsert-from-staging — latest dish_total per dish_code (highest dish_cost_version) → dish_cost
+ */
+app.post('/api/dish-cost/upsert-from-staging', async (req, res) => {
+    try {
+        const result = await upsertDishCostFromStaging();
+        res.json({
+            message: `Upserted ${result.upserted} dish_cost row(s) from dish_cost_staging`,
+            ...result
+        });
+    } catch (err) {
+        console.error('POST /api/dish-cost/upsert-from-staging error:', err);
         res.status(500).json({ error: 'Database error', detail: err.message });
     }
 });
@@ -535,6 +590,37 @@ app.get('/api/item-report/summary', async (req, res) => {
     } catch (err) {
         console.error('GET /api/item-report/summary error:', err);
         res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
+ * GET /api/item-report/date-bounds — min/max report_date in item_report_lines
+ */
+app.get('/api/item-report/date-bounds', async (req, res) => {
+    try {
+        const data = await getItemReportDateBounds();
+        res.json(data);
+    } catch (err) {
+        console.error('GET /api/item-report/date-bounds error:', err);
+        res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
+ * GET /api/item-report/analysis?startDate=&endDate=&channel=zomato|swiggy|dinein
+ * Aggregated item report (scripts/itemReportSummary.sql).
+ */
+app.get('/api/item-report/analysis', async (req, res) => {
+    try {
+        const data = await getItemReportAnalysis({
+            startDate: req.query.startDate,
+            endDate: req.query.endDate,
+            channel: req.query.channel
+        });
+        res.json(data);
+    } catch (err) {
+        console.error('GET /api/item-report/analysis error:', err);
+        res.status(400).json({ error: err.message || 'Analysis failed', detail: err.message });
     }
 });
 

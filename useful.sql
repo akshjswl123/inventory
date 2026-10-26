@@ -229,6 +229,10 @@ INNER JOIN public.orders o ON o.id = oi.order_id
 ORDER BY o.dt, o.billno, oi.id;
 
 
+-- Processed-dish cascade (find parents when saving P8 etc.):
+--   scripts/useful_queries/dish_cost_processed_cascade.sql
+--   scripts/useful_queries/dish_cost_processed_cascade.md
+
 --Connect to server (host localhost, port 5433, user poc, DB poc).
 -- Right-click dish_cost_staging → Import/Export → import CSV, header on, null string NULL.
 -- Or: ./scripts/dish_cost_import_and_clean.sh data/dishCostFromQueryTabCounterDb.csv
@@ -238,7 +242,12 @@ ORDER BY o.dt, o.billno, oi.id;
 -- Run the INSERT + DROP staging in the Query Tool.
 
 
---latest dish cost from staging
+-- Latest dish_total from staging → dish_cost (upsert, no truncate):
+--   Query tab → "Upsert dish_cost from staging"
+--   or: psql -f scripts/useful_queries/upsert_dish_cost_from_staging.sql
+-- One-time on existing DBs (if constraint was composite): psql -f scripts/25_dish_cost_dish_code_unique.sql
+
+--legacy: full replace (truncate + insert by dish_code only)
 BEGIN;
 
 TRUNCATE public.dish_cost;

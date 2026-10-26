@@ -161,13 +161,55 @@
     return fullChain;
   }
 
+  function scoopUnitList(val) {
+    if (val == null || val === "") return [];
+    if (Array.isArray(val)) return val.map(u => String(u).trim()).filter(Boolean);
+    return [String(val).trim()].filter(Boolean);
+  }
+
   function unitSelectedAsScoop(unit, r) {
-    return [r.scoop_in, r.scoop_out, r.scoop_recipe].some(u =>
-      u && (unitsMatch(u, unit) || u === unit)
+    return ["scoop_in", "scoop_out", "scoop_recipe"].some(key =>
+      scoopUnitList(r[key]).some(u => unitsMatch(u, unit) || u === unit)
     );
   }
 
-  /** Flat display/export rows: 3 selected scoops + auto rows for unused chain roots. */
+  function factorForSelectedUnit(unit, r, parsed, dest) {
+    for (let i = 0; i < parsed.length; i++) {
+      const f = factorForUnit(unit, parsed[i].rows, dest);
+      if (f != null) return f;
+    }
+    const ins = scoopUnitList(r.scoop_in);
+    const outs = scoopUnitList(r.scoop_out);
+    const recipes = scoopUnitList(r.scoop_recipe);
+    if (ins.length === 1 && (unitsMatch(unit, ins[0]) || ins[0] === unit)) {
+      const f = parseFloat(r.scoop_in_factor);
+      if (!isNaN(f) && f > 0) return f;
+    }
+    if (outs.length === 1 && (unitsMatch(unit, outs[0]) || outs[0] === unit)) {
+      const f = parseFloat(r.scoop_out_factor);
+      if (!isNaN(f) && f > 0) return f;
+    }
+    if (recipes.length === 1 && (unitsMatch(unit, recipes[0]) || recipes[0] === unit)) {
+      const f = parseFloat(r.scoop_recipe_factor);
+      if (!isNaN(f) && f > 0) return f;
+    }
+    return null;
+  }
+
+  function savedNameForKind(r, kind, unit) {
+    if (kind === "in" && r.scoop_in_saved && scoopUnitList(r.scoop_in).length === 1) {
+      return r.scoop_in_saved;
+    }
+    if (kind === "out" && r.scoop_out_saved && scoopUnitList(r.scoop_out).length === 1) {
+      return r.scoop_out_saved;
+    }
+    if (kind === "recipe" && r.scoop_recipe_saved && scoopUnitList(r.scoop_recipe).length === 1) {
+      return r.scoop_recipe_saved;
+    }
+    return scoopComputedName(r.itemname, kind, unit);
+  }
+
+  /** Flat display/export rows: selected IN/OUT/RECIPE scoops + auto rows for unused chain roots. */
   function expandConfigToDisplayRows(r) {
     normalizeConfigRow(r);
     const fullChain = r.conversion_chain || "";
@@ -176,31 +218,22 @@
     const rows = [];
 
     [
-      {
-        unit: r.scoop_in,
-        saved: r.scoop_in_saved || scoopComputedName(r.itemname, "in", r.scoop_in),
-        factor: r.scoop_in_factor
-      },
-      {
-        unit: r.scoop_out,
-        saved: r.scoop_out_saved || scoopComputedName(r.itemname, "out", r.scoop_out),
-        factor: r.scoop_out_factor
-      },
-      {
-        unit: r.scoop_recipe,
-        saved: r.scoop_recipe_saved || scoopComputedName(r.itemname, "recipe", r.scoop_recipe),
-        factor: r.scoop_recipe_factor
-      }
-    ].forEach(sc => {
-      if (!sc.unit) return;
-      rows.push({
-        itemname: r.itemname,
-        pgNo: r.pgNo || resolveEntityId(r.itemname, ""),
-        base_unit: dest,
-        saved: sc.saved,
-        factor: sc.factor,
-        chain: chainForUnit(sc.unit, parsed, dest, fullChain),
-        unused: false
+      { kind: "in", units: scoopUnitList(r.scoop_in) },
+      { kind: "out", units: scoopUnitList(r.scoop_out) },
+      { kind: "recipe", units: scoopUnitList(r.scoop_recipe) }
+    ].forEach(({ kind, units }) => {
+      units.forEach(unit => {
+        const factor = factorForSelectedUnit(unit, r, parsed, dest);
+        if (factor == null) return;
+        rows.push({
+          itemname: r.itemname,
+          pgNo: r.pgNo || resolveEntityId(r.itemname, ""),
+          base_unit: dest,
+          saved: savedNameForKind(r, kind, unit),
+          factor: factor,
+          chain: chainForUnit(unit, parsed, dest, fullChain),
+          unused: false
+        });
       });
     });
 
@@ -330,22 +363,33 @@
     return out;
   }
 
-  function buildConfigFromForm(item, destUnit, si, so, sr, sif, sof, srf) {
+  function scoopFieldFromList(list) {
+    if (!list.length) return "";
+    return list.length === 1 ? list[0] : list.slice();
+  }
+
+  function buildConfigFromForm(item, destUnit, siList, soList, srList) {
     return {
       itemname: item,
       pgNo: getEntityId(),
       base_unit: destUnit,
-      scoop_in: si,
-      scoop_in_factor: sif,
-      scoop_out: so,
-      scoop_out_factor: sof,
-      scoop_recipe: sr,
-      scoop_recipe_factor: srf,
-      conversion_chain: chainsToString(),
-      scoop_in_saved: scoopComputedName(item, "in", si),
-      scoop_out_saved: scoopComputedName(item, "out", so),
-      scoop_recipe_saved: scoopComputedName(item, "recipe", sr)
+      scoop_in: scoopFieldFromList(siList),
+      scoop_out: scoopFieldFromList(soList),
+      scoop_recipe: scoopFieldFromList(srList),
+      conversion_chain: chainsToString()
     };
+  }
+
+  function getMultiSelectValues(id) {
+    const sel = document.getElementById(id);
+    if (!sel) return [];
+    return Array.from(sel.selectedOptions).map(o => o.value).filter(Boolean);
+  }
+
+  function normalizeScoopDefaultList(def, fallback) {
+    if (Array.isArray(def)) return def.filter(u => u);
+    if (def) return [def];
+    return fallback ? [fallback] : [];
   }
 
   function unitFromSavedAs(saved, itemname, kind) {
@@ -355,6 +399,94 @@
     const prefix = itemname + "_";
     if (!s.startsWith(prefix)) return "";
     return s.slice(prefix.length, -suffix.length);
+  }
+
+  /** Map scoop_name slug (e.g. kg, gm) back to a chain unit label. */
+  function unitLabelFromScoopSlug(slug, unitsInChain) {
+    const s = String(slug || "").trim().toLowerCase();
+    if (!s) return "";
+    for (let i = 0; i < unitsInChain.length; i++) {
+      const u = unitsInChain[i];
+      if (unitToScoopSlug(u) === s || normUnit(u) === normUnit(s) || String(u).trim().toLowerCase() === s) {
+        return u;
+      }
+    }
+    return String(slug).replace(/_/g, " ");
+  }
+
+  function uniqueChainsFromListRows(rows) {
+    const seen = new Set();
+    const out = [];
+    (rows || []).forEach(r => {
+      const raw = String(r.chain || r.conversion_chain || "").trim();
+      if (!raw) return;
+      parseChainStrings(raw).forEach(ch => {
+        const key = chainToString(ch);
+        if (!key || seen.has(key)) return;
+        seen.add(key);
+        out.push({
+          rows: ch.rows.map(row => ({
+            thisUnit: row.thisUnit || "",
+            qty: row.qty != null ? String(row.qty) : "",
+            next: row.next || ""
+          })),
+          done: true
+        });
+      });
+    });
+    return out;
+  }
+
+  /** After Load: rebuild conversion chains + IN/OUT/RECIPE picks from flat list rows. */
+  function populateEditorFromListRows(rows) {
+    const item = getItem();
+    if (!rows || !rows.length) {
+      resetChains();
+      return;
+    }
+
+    const dest = rows[0].base_unit || "";
+    if (dest) {
+      const destSel = document.getElementById("itemDetailsDestUnit");
+      if (destSel) {
+        const match = Array.from(destSel.options).find(
+          o => o.value === dest || unitsMatch(o.value, dest)
+        );
+        if (match) destSel.value = match.value;
+      }
+    }
+    destUnit = getDestUnit();
+
+    chains = uniqueChainsFromListRows(rows);
+    activeChainIdx = chains.length ? chains.length - 1 : -1;
+
+    const unitsInChain = chainUnits();
+    const inUnits = [];
+    const outUnits = [];
+    const recipeUnits = [];
+
+    rows.forEach(row => {
+      if (row.unused || isUnusedScoopName(row.saved, row.itemname)) return;
+      const kind = savedAsKind(row.saved);
+      if (!kind) return;
+      const slug = unitFromSavedAs(row.saved, row.itemname, kind);
+      const unit = unitLabelFromScoopSlug(slug, unitsInChain) || slug;
+      if (!unit) return;
+      const exists = (list, u) => list.some(x => unitsMatch(x, u) || x === u);
+      if (kind === "in" && !exists(inUnits, unit)) inUnits.push(unit);
+      if (kind === "out" && !exists(outUnits, unit)) outUnits.push(unit);
+      if (kind === "recipe" && !exists(recipeUnits, unit)) recipeUnits.push(unit);
+    });
+
+    const ready = !!(item && destUnit);
+    document.getElementById("itemDetailsScoopPanel").style.display = ready ? "block" : "none";
+    document.getElementById("itemDetailsChainSection").style.display = ready ? "block" : "none";
+
+    renderAllChains();
+    if (ready) {
+      buildScoopOptions(inUnits, outUnits, recipeUnits);
+    }
+    updateChainButtons();
   }
 
   function flatRowToExportCsvRow(r) {
@@ -514,8 +646,7 @@
     });
     ["itemDetailsScoopIn", "itemDetailsScoopOut", "itemDetailsScoopRecipe"].forEach(id => {
       const sel = document.getElementById(id);
-      sel.innerHTML = '<option value="">-- pick --</option>';
-      sel.value = "";
+      sel.innerHTML = "";
     });
 
     updateChainButtons();
@@ -737,39 +868,46 @@
   function buildScoopOptions(defIn, defOut, defRecipe) {
     const units = chainUnits();
     const defs = {
-      itemDetailsScoopIn: defIn,
-      itemDetailsScoopOut: defOut,
-      itemDetailsScoopRecipe: defRecipe
+      itemDetailsScoopIn: normalizeScoopDefaultList(defIn, destUnit),
+      itemDetailsScoopOut: normalizeScoopDefaultList(defOut, destUnit),
+      itemDetailsScoopRecipe: normalizeScoopDefaultList(defRecipe, destUnit)
     };
 
     ["itemDetailsScoopIn", "itemDetailsScoopOut", "itemDetailsScoopRecipe"].forEach(id => {
       const sel = document.getElementById(id);
-      let cur = sel.value;
-      if (!units.includes(cur)) cur = defs[id] || destUnit || "";
-      sel.innerHTML = '<option value="">-- pick --</option>';
+      const prev = getMultiSelectValues(id);
+      const selected = new Set(
+        prev.filter(u => units.includes(u)).concat(defs[id].filter(u => units.includes(u)))
+      );
+      sel.innerHTML = "";
       units.forEach(u => {
         const o = document.createElement("option");
         o.value = u;
         o.textContent = u;
-        if (u === cur) o.selected = true;
+        if (selected.has(u)) o.selected = true;
         sel.appendChild(o);
       });
     });
     onScoopChange();
   }
 
+  function formatScoopSavedNames(item, kind, units) {
+    if (!units.length) return "\u00a0";
+    return units.map(u => scoopComputedName(item, kind, u)).join("\n");
+  }
+
   function onScoopChange() {
     const item = getItem();
-    const si = document.getElementById("itemDetailsScoopIn").value;
-    const so = document.getElementById("itemDetailsScoopOut").value;
-    const sr = document.getElementById("itemDetailsScoopRecipe").value;
+    const siList = getMultiSelectValues("itemDetailsScoopIn");
+    const soList = getMultiSelectValues("itemDetailsScoopOut");
+    const srList = getMultiSelectValues("itemDetailsScoopRecipe");
 
     document.getElementById("itemDetailsScoopInName").textContent =
-      si ? scoopComputedName(item, "in", si) : "\u00a0";
+      formatScoopSavedNames(item, "in", siList);
     document.getElementById("itemDetailsScoopOutName").textContent =
-      so ? scoopComputedName(item, "out", so) : "\u00a0";
+      formatScoopSavedNames(item, "out", soList);
     document.getElementById("itemDetailsScoopRecipeName").textContent =
-      sr ? scoopComputedName(item, "recipe", sr) : "\u00a0";
+      formatScoopSavedNames(item, "recipe", srList);
     renderPreview();
   }
 
@@ -829,23 +967,31 @@
     renderAllChains();
     buildScoopOptions();
 
-    const si = document.getElementById("itemDetailsScoopIn").value;
-    const so = document.getElementById("itemDetailsScoopOut").value;
-    const sr = document.getElementById("itemDetailsScoopRecipe").value;
+    const siList = getMultiSelectValues("itemDetailsScoopIn");
+    const soList = getMultiSelectValues("itemDetailsScoopOut");
+    const srList = getMultiSelectValues("itemDetailsScoopRecipe");
     const units = chainUnits();
 
-    if (!si || !units.includes(si)) { alert("Pick Scoop IN from the chain units."); return; }
-    if (!so || !units.includes(so)) { alert("Pick Scoop OUT from the chain units."); return; }
-    if (!sr || !units.includes(sr)) { alert("Pick Scoop RECIPE from the chain units."); return; }
+    if (!siList.length) { alert("Pick at least one Scoop IN unit from the chain."); return; }
+    if (!soList.length) { alert("Pick at least one Scoop OUT unit from the chain."); return; }
+    if (!srList.length) { alert("Pick at least one Scoop RECIPE unit from the chain."); return; }
 
-    const sif = factorFor(si);
-    const sof = factorFor(so);
-    const srf = factorFor(sr);
-    if (sif == null) { alert("Cannot compute IN factor for \"" + si + "\"."); return; }
-    if (sof == null) { alert("Cannot compute OUT factor for \"" + so + "\"."); return; }
-    if (srf == null) { alert("Cannot compute RECIPE factor for \"" + sr + "\"."); return; }
+    for (const si of siList) {
+      if (!units.includes(si)) { alert("Scoop IN \"" + si + "\" is not in the chain units."); return; }
+      if (factorFor(si) == null) { alert("Cannot compute IN factor for \"" + si + "\"."); return; }
+    }
+    for (const so of soList) {
+      if (!units.includes(so)) { alert("Scoop OUT \"" + so + "\" is not in the chain units."); return; }
+      if (factorFor(so) == null) { alert("Cannot compute OUT factor for \"" + so + "\"."); return; }
+    }
+    for (const sr of srList) {
+      if (!units.includes(sr)) { alert("Scoop RECIPE \"" + sr + "\" is not in the chain units."); return; }
+      if (factorFor(sr) == null) { alert("Cannot compute RECIPE factor for \"" + sr + "\"."); return; }
+    }
 
-    const addedRows = expandConfigToDisplayRows(buildConfigFromForm(item, destUnit, si, so, sr, sif, sof, srf));
+    const addedRows = expandConfigToDisplayRows(
+      buildConfigFromForm(item, destUnit, siList, soList, srList)
+    );
     addedRows.forEach(row => listRows.push(row));
 
     renderList();
@@ -1018,6 +1164,7 @@
         const data = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(data.detail || data.error || res.statusText);
         listRows = listRowsFromApiRows(data.rows);
+        populateEditorFromListRows(listRows);
         renderList();
         renderPreview();
         const label = isDishMode() ? "dish" : "item";
@@ -1040,6 +1187,7 @@
     const catalogRows = scoopConfigRowsForSelection();
     if (catalogRows.length) {
       listRows = listRowsFromApiRows(catalogRows);
+      populateEditorFromListRows(listRows);
       renderList();
       renderPreview();
       const label = isDishMode() ? "dish" : "item";
@@ -1057,6 +1205,7 @@
         return;
       }
       listRows = flattenListRows(JSON.parse(raw));
+      populateEditorFromListRows(listRows);
       renderList();
       renderPreview();
       setMsg("Loaded " + listRows.length + " row(s) from browser storage (catalog had no rows for selection)", "ok");

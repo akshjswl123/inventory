@@ -520,23 +520,53 @@ FROM public.raw_materials_cost
 ORDER BY last_updated_at DESC NULLS LAST, created_at DESC NULLS LAST, id DESC
 LIMIT 500`;
 
-function renderQueryResultTable(columns, rows, metaText) {
+const DISH_COST_PREVIEW_SQL = `
+SELECT id, row_kind, dish_code, dishname, dish_cost, incomplete,
+       cost_calculation, created_at, last_updated_at
+FROM public.dish_cost
+ORDER BY dishname NULLS LAST, dish_code NULLS LAST, id
+LIMIT 500`;
+
+function dishCostGridColumnLabel(key) {
+    if (key === 'dish_cost_version') return 'cost_snapshot_run';
+    if (key === 'recipe_version') return 'recipe_version';
+    return key;
+}
+
+/** Query tab dish-cost grid: show per-dish recipe_version; hide global snapshot id (shown in meta). */
+function prepareDishCostGridColumns(columns) {
+    const list = Array.isArray(columns) ? columns.filter((c) => c !== 'dish_cost_version') : [];
+    const priority = ['dish_code', 'dishname', 'recipe_version', 'cost_version', 'row_kind', 'dish_case', 'dish_cost'];
+    const rank = (c) => {
+        const i = priority.indexOf(c);
+        return i === -1 ? 100 + list.indexOf(c) : i;
+    };
+    return list.slice().sort((a, b) => rank(a) - rank(b));
+}
+
+function renderQueryResultTable(columns, rows, metaText, options) {
     const meta = document.getElementById('queryMeta');
     const table = document.getElementById('queryResult');
     table.innerHTML = '';
     queryLastResult = null;
     setQueryExportEnabled(false);
 
-    if (!columns.length) {
+    const displayKeys = columns;
+    const headerLabels = (options && options.headerLabels) || null;
+
+    if (!displayKeys.length) {
         if (meta) meta.textContent = metaText || 'Done. No rows to display.';
         return;
     }
 
-    queryLastResult = { columns, rows };
+    queryLastResult = { columns: displayKeys, rows };
     setQueryExportEnabled(true);
 
     const thead = document.createElement('thead');
-    thead.innerHTML = '<tr>' + columns.map(c => '<th>' + esc(c) + '</th>').join('') + '</tr>';
+    thead.innerHTML = '<tr>' + displayKeys.map((c) => {
+        const label = headerLabels && headerLabels[c] != null ? headerLabels[c] : c;
+        return '<th>' + esc(label) + '</th>';
+    }).join('') + '</tr>';
     table.appendChild(thead);
 
     const tbody = document.createElement('tbody');
@@ -544,7 +574,7 @@ function renderQueryResultTable(columns, rows, metaText) {
         const tr = document.createElement('tr');
         if (row._dishCostSeparator) tr.className = 'query-dish-cost-sep';
         else if (row.row_kind === 'dish_total') tr.style.fontWeight = '600';
-        tr.innerHTML = columns.map(c => '<td>' + esc(row[c] == null ? '' : row[c]) + '</td>').join('');
+        tr.innerHTML = displayKeys.map(c => '<td>' + esc(row[c] == null ? '' : row[c]) + '</td>').join('');
         tbody.appendChild(tr);
     });
     table.appendChild(tbody);
@@ -640,86 +670,50 @@ async function calculateAllDishCosts(andExport) {
     const t0 = Date.now();
 
     try {
-        const listRes = await fetch(apiUrl('/api/recipes/cost-dish-list'));
-        const listData = await readApiJson(listRes);
-        if (!listRes.ok) {
-            showErr(listData.detail || listData.error || listRes.statusText);
+        renderQueryResultTable([], [], 'Running versioned dish_cost_cases.sql for all dishes…');
+
+        const res = await fetch(apiUrl('/api/dish-cost/calculate-all-to-staging'), { method: 'POST' });
+        const data = await readApiJson(res);
+        if (!res.ok) {
+            showErr(data.detail || data.error || res.statusText);
             return;
         }
 
-        const dishes = listData.dishes || [];
-        if (!dishes.length) {
-            renderQueryResultTable([], [], 'No dishes with saved recipes found.');
-            return;
-        }
-
-        let columns = [];
-        const allRows = [];
-        let okCount = 0;
-        let failCount = 0;
-
-        renderQueryResultTable([], [], 'Loading dish list… ' + dishes.length + ' to calculate.');
-
-        for (let i = 0; i < dishes.length; i++) {
-            const dish = dishes[i];
-            const progressMeta = 'Calculating ' + (i + 1) + '/' + dishes.length
-                + ': ' + (dish.dishname || dish.dishcode) + '…';
-
-            const params = new URLSearchParams();
-            params.set('dishcode', dish.dishcode);
-            const res = await fetch(apiUrl('/api/recipes/dish-cost?' + params.toString()));
-            const data = await readApiJson(res);
-
-            if (!res.ok) {
-                failCount++;
-                if (!columns.length) {
-                    columns = [
-                        'row_kind', 'dish_code', 'dishname', 'dish_case', 'line_kind',
-                        'itemname', 'pgNo_or_dishCode', 'dish_cost', 'incomplete', 'cost_calculation'
-                    ];
-                }
-                if (allRows.length) {
-                    allRows.push(blankDishCostSeparatorRow(columns));
-                }
-                allRows.push(failedDishCostRow(dish, data, columns));
-                renderQueryResultTable(columns, allRows, progressMeta);
-                continue;
-            }
-
-            okCount++;
-            const query = data.query || {};
-            if (!columns.length && query.columns && query.columns.length) {
-                columns = query.columns.slice();
-            }
-
-            let rows = query.rows || [];
-            if (!showLines) {
-                rows = rows.filter(r => r.row_kind === 'dish_total');
-            } else {
-                rows = reorderDishCostBlock(rows);
-            }
-            if (allRows.length && columns.length) {
-                allRows.push(blankDishCostSeparatorRow(columns));
-            }
-            allRows.push(...rows);
-            renderQueryResultTable(columns, allRows, progressMeta);
+        const columns = data.columns || [];
+        let rows = data.rows || [];
+        if (!showLines) {
+            rows = rows.filter((r) => String(r.row_kind || '').toLowerCase() === 'dish_total');
         }
 
         const elapsed = Date.now() - t0;
-        const dishTotals = allRows.filter(r => r.row_kind === 'dish_total');
-        const incompleteN = dishTotals.filter(r =>
-            r.incomplete === true || r.incomplete === 't'
-        ).length;
+        const dishTotals = (data.rows || []).filter((r) =>
+            String(r.row_kind || '').toLowerCase() === 'dish_total'
+        );
+        const incompleteN = dishTotals.filter((r) => {
+            const v = r.incomplete;
+            return v === true || v === 't' || String(v).toLowerCase() === 'true';
+        }).length;
+
+        const snapshotRun = data.version != null ? data.version : '?';
         const metaText =
-            'Dish cost (all dishes): ' + okCount + ' ok, ' + failCount + ' failed'
-            + ' · ' + allRows.length + ' row(s)'
-            + (showLines ? ' (with line breakdown)' : ' (totals only)')
+            'Saved to dish_cost_staging · snapshot run #'
+            + snapshotRun
+            + ' · calc uses latest recipe/rate/scoop versions per dish'
+            + ' · bumped item_versions.dish_cost_staging for '
+            + (data.bumpedDishCostCount != null ? data.bumpedDishCostCount : '?')
+            + ' dish(es) · see recipe_version & cost_version columns'
+            + ' · ' + (data.rowCount != null ? data.rowCount : rows.length) + ' row(s) inserted'
+            + ' · ' + (data.dishTotalCount != null ? data.dishTotalCount : dishTotals.length) + ' dish_total'
+            + (showLines ? ' (showing line breakdown)' : ' (totals only in grid)')
             + (incompleteN ? ' · ' + incompleteN + ' incomplete' : '')
             + ' · ' + elapsed + ' ms. Use Export CSV to download.';
-        renderQueryResultTable(columns, allRows, metaText);
+        const gridColumns = prepareDishCostGridColumns(columns);
+        renderQueryResultTable(gridColumns, rows, metaText);
+        queryLastResult = { columns, rows: showLines ? (data.rows || []) : rows };
+        setQueryExportEnabled(true);
 
         if (andExport) {
-            exportQueryCsv('dish_cost_all');
+            exportQueryCsv('dish_cost_all_v' + (data.version != null ? data.version : ''));
         }
     } catch (err) {
         showErr(err.message);
@@ -731,6 +725,145 @@ async function calculateAllDishCosts(andExport) {
         if (exportBtn) {
             exportBtn.disabled = false;
             exportBtn.textContent = prevExportText || 'Calculate & export CSV';
+        }
+    }
+}
+
+async function recalculateChangedDishCosts(andExport) {
+    const btn = document.getElementById('queryDishCostRecalcBtn');
+    const errBox = document.getElementById('queryError');
+    const meta = document.getElementById('queryMeta');
+
+    if (errBox) {
+        errBox.className = '';
+        errBox.style.display = 'none';
+        errBox.textContent = '';
+    }
+    if (meta) meta.textContent = '';
+
+    if (!canUseQueryApi()) {
+        showErr('Set App server URL above (e.g. http://localhost:3050) or open at http://localhost:3050/recreateFromPgDump.html');
+        return;
+    }
+
+    const showLines = dishCostShowLinesFromUi();
+    const prevText = btn ? btn.textContent : '';
+    if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Comparing…';
+    }
+    setQueryExportEnabled(false);
+    const t0 = Date.now();
+
+    try {
+        renderQueryResultTable([], [], 'Re-calculating costs vs latest staging per dish…');
+
+        const res = await fetch(apiUrl('/api/dish-cost/recalculate-changed-to-staging'), { method: 'POST' });
+        const data = await readApiJson(res);
+        if (!res.ok) {
+            showErr(data.detail || data.error || res.statusText);
+            return;
+        }
+
+        const changedN = data.changedDishCount != null ? data.changedDishCount : 0;
+        const unchangedN = data.unchangedDishCount != null ? data.unchangedDishCount : 0;
+        const elapsed = Date.now() - t0;
+
+        if (!changedN || data.version == null) {
+            const metaText =
+                'No cost changes vs latest dish_cost_staging · '
+                + unchangedN + ' dish(es) unchanged · ' + elapsed + ' ms.';
+            renderQueryResultTable([], [], metaText);
+            return;
+        }
+
+        const columns = data.columns || [];
+        let rows = data.rows || [];
+        if (!showLines) {
+            rows = rows.filter((r) => String(r.row_kind || '').toLowerCase() === 'dish_total');
+        }
+
+        const metaText =
+            'Changed dishes appended · snapshot run #'
+            + data.version
+            + ' · ' + changedN + ' dish(es) updated'
+            + (unchangedN ? ' · ' + unchangedN + ' unchanged' : '')
+            + ' · ' + (data.rowCount != null ? data.rowCount : rows.length) + ' row(s) inserted'
+            + ' · ' + elapsed + ' ms.'
+            + (data.changedDishCodes && data.changedDishCodes.length
+                ? ' Codes: ' + data.changedDishCodes.slice(0, 12).join(', ')
+                    + (data.changedDishCodes.length > 12 ? '…' : '')
+                : '');
+        const gridColumns = prepareDishCostGridColumns(columns);
+        renderQueryResultTable(gridColumns, rows, metaText);
+        queryLastResult = { columns, rows: showLines ? (data.rows || []) : rows };
+        setQueryExportEnabled(true);
+
+        if (andExport) {
+            exportQueryCsv('dish_cost_changed_v' + data.version);
+        }
+    } catch (err) {
+        showErr(err.message);
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = prevText || 'Re-calculate cost (changed only)';
+        }
+    }
+}
+
+async function upsertDishCostFromStaging() {
+    const btn = document.getElementById('queryDishCostUpsertBtn');
+    const errBox = document.getElementById('queryError');
+    const meta = document.getElementById('queryMeta');
+
+    if (errBox) {
+        errBox.className = '';
+        errBox.style.display = 'none';
+        errBox.textContent = '';
+    }
+    if (meta) meta.textContent = '';
+
+    if (!canUseQueryApi()) {
+        showErr('Set App server URL above (e.g. http://localhost:3050) or open at http://localhost:3050/recreateFromPgDump.html');
+        return;
+    }
+
+    const prevText = btn ? btn.textContent : '';
+    if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Upserting…';
+    }
+    const t0 = Date.now();
+
+    try {
+        const res = await fetch(apiUrl('/api/dish-cost/upsert-from-staging'), { method: 'POST' });
+        const data = await readApiJson(res);
+        if (!res.ok) {
+            showErr(data.detail || data.error || res.statusText);
+            return;
+        }
+
+        const elapsed = Date.now() - t0;
+        const { columns = [], rows = [], upserted } = data;
+        const editor = document.getElementById('queryInput');
+        if (editor) {
+            editor.value =
+                '-- Upserted dish_cost from latest dish_total rows in dish_cost_staging\n' +
+                '-- Preview: ORDER BY dishname, dish_code\n' +
+                DISH_COST_PREVIEW_SQL.trim();
+        }
+        renderQueryResultTable(
+            columns,
+            rows,
+            `Upserted ${upserted != null ? upserted : '?'} row(s) into dish_cost; showing ${rows.length} row(s), ordered by dishname (${elapsed} ms).`
+        );
+    } catch (err) {
+        showErr(err.message);
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = prevText || 'Upsert dish_cost from staging';
         }
     }
 }
@@ -813,8 +946,11 @@ window.Query = {
     getApiBase,
     saveApiBaseFromUi,
     upsertRawMaterialsCost,
+    upsertDishCostFromStaging,
     calculateAllDishCosts,
     calculateAllDishCostsAndExport: () => calculateAllDishCosts(true),
+    recalculateChangedDishCosts,
+    recalculateChangedDishCostsAndExport: () => recalculateChangedDishCosts(true),
     pgDump,
     pgRestore,
     translateCsv,
