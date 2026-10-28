@@ -1443,19 +1443,18 @@ const ITEM_REPORT_ANALYSIS_SQL_TEMPLATE = fs.readFileSync(
     'utf8'
 );
 
-const ITEM_REPORT_ANALYSIS_AREA_PLACEHOLDER = `      AND (
-          UPPER(TRIM($3)) = 'ALL'
-          OR area ILIKE TRIM($3)
-      )`;
+/** $3 area block in scripts/itemReportSummary.sql — indentation may vary between copies. */
+const ITEM_REPORT_ANALYSIS_AREA_FILTER_RE =
+    /^(\s*)AND\s*\(\s*\n\s*UPPER\s*\(\s*TRIM\s*\(\s*\$3\s*\)\s*\)\s*=\s*'ALL'\s*\n\s*OR\s+area\s+ILIKE\s+TRIM\s*\(\s*\$3\s*\)\s*\n\s*\)/m;
 
 function buildItemReportAnalysisSql(channel) {
     const areaFilter = itemReportAreaFilterSql(channel);
-    if (!ITEM_REPORT_ANALYSIS_SQL_TEMPLATE.includes(ITEM_REPORT_ANALYSIS_AREA_PLACEHOLDER)) {
+    if (!ITEM_REPORT_ANALYSIS_AREA_FILTER_RE.test(ITEM_REPORT_ANALYSIS_SQL_TEMPLATE)) {
         throw new Error('itemReportSummary.sql area filter block changed; update dbqueries.js');
     }
     return ITEM_REPORT_ANALYSIS_SQL_TEMPLATE.replace(
-        ITEM_REPORT_ANALYSIS_AREA_PLACEHOLDER,
-        `      AND (${areaFilter})`
+        ITEM_REPORT_ANALYSIS_AREA_FILTER_RE,
+        `$1AND (${areaFilter})`
     );
 }
 
