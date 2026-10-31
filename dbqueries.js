@@ -1064,6 +1064,46 @@ async function runQuery(sqlText) {
     };
 }
 
+/** YYYY-MM-DD or null if invalid */
+function parseIsoDateOnly(value) {
+    if (value == null || value === '') return null;
+    const s = String(value).trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
+    const d = new Date(`${s}T12:00:00Z`);
+    if (Number.isNaN(d.getTime())) return null;
+    return s;
+}
+
+/**
+ * Stock by pgNo through end of asOf (see scripts/33_current_stock_by_pgno_as_of.sql).
+ * @param {string} asOfDate YYYY-MM-DD
+ * @param {string|null|undefined} pgNo optional filter
+ */
+async function fetchCurrentStockByPgnoAsOf(asOfDate, pgNo) {
+    const iso = parseIsoDateOnly(asOfDate);
+    if (!iso) {
+        const err = new Error('asOf must be a valid date YYYY-MM-DD');
+        err.statusCode = 400;
+        throw err;
+    }
+    const params = [iso];
+    let sql = 'SELECT * FROM public.current_stock_by_pgno_as_of($1::date)';
+    const pgTrim = pgNo != null ? String(pgNo).trim() : '';
+    if (pgTrim) {
+        sql += ' WHERE "pgNo" = $2';
+        params.push(pgTrim);
+    }
+    sql += ' ORDER BY "pgNo"';
+    const res = await pool.query(sql, params);
+    return {
+        asOf: iso,
+        pgNo: pgTrim || null,
+        columns: res.fields ? res.fields.map(f => f.name) : [],
+        rows: res.rows || [],
+        rowCount: res.rowCount
+    };
+}
+
 const UPSERT_RMC_FROM_ORDERS_SQL_PATH = path.join(
     __dirname,
     'scripts/useful_queries/raw_materials_cost_insert_from_orders.sql'
@@ -1220,7 +1260,12 @@ async function loadRecipeByDishcode(dishcode) {
     const sql = RECIPE_LATEST_BATCH_SQL
         .replace(/\{\{WHERE\}\}/g, 'LOWER(TRIM(r.dishcode)) = LOWER(TRIM($1))')
         .replace(/\{\{WHERE_SUB\}\}/g, 'LOWER(TRIM(sub.dishcode)) = LOWER(TRIM($1))');
-    const res = await pool.query(sql, [dishcode]);
+    let res = await pool.query(sql, [dishcode]);
+    if (!res.rows.length) {
+        const { resolveRecipeDishcodeAlias } = require('./recipeDishResolve');
+        const aliasCode = await resolveRecipeDishcodeAlias(pool, dishcode);
+        if (aliasCode) res = await pool.query(sql, [aliasCode]);
+    }
     return res.rows;
 }
 
@@ -1652,6 +1697,7 @@ module.exports = {
     loadScoopConfigByDishCode,
     fetchStaticData,
     runQuery,
+    fetchCurrentStockByPgnoAsOf,
     upsertRawMaterialsCostFromOrders,
     upsertDishCostFromStaging,
     waitForDb,

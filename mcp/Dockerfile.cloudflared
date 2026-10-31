@@ -1,0 +1,7 @@
+FROM cloudflare/cloudflared:latest AS upstream
+FROM alpine:3.20
+RUN apk add --no-cache grep
+COPY --from=upstream /usr/local/bin/cloudflared /usr/local/bin/cloudflared
+COPY cloudflared-quick-tunnel.sh /usr/local/bin/cloudflared-quick-tunnel.sh
+RUN chmod +x /usr/local/bin/cloudflared-quick-tunnel.sh
+ENTRYPOINT ["/bin/sh", "/usr/local/bin/cloudflared-quick-tunnel.sh"]

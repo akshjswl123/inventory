@@ -16,6 +16,7 @@ const {
     loadScoopConfig,
     loadScoopConfigByDishCode,
     runQuery,
+    fetchCurrentStockByPgnoAsOf,
     upsertRawMaterialsCostFromOrders,
     upsertDishCostFromStaging,
     fetchStaticData,
@@ -464,6 +465,30 @@ app.post('/api/dish-cost/upsert-from-staging', async (req, res) => {
     } catch (err) {
         console.error('POST /api/dish-cost/upsert-from-staging error:', err);
         res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
+ * GET /api/current-stock/by-pgno?asOf=YYYY-MM-DD&pgNo=optional
+ * Dated stock (function current_stock_by_pgno_as_of). View + Inventory In UI unchanged.
+ */
+app.get('/api/current-stock/by-pgno', async (req, res) => {
+    const asOf = (req.query.asOf || req.query.as_of || req.query.date || '').trim();
+    const pgNo = (req.query.pgNo || req.query.pgno || '').trim();
+    if (!asOf) {
+        return res.status(400).json({
+            error: 'Query parameter asOf (YYYY-MM-DD) is required',
+            example: '/api/current-stock/by-pgno?asOf=2025-09-30',
+            optional: 'pgNo=1 filters one catalog page'
+        });
+    }
+    try {
+        const result = await fetchCurrentStockByPgnoAsOf(asOf, pgNo || null);
+        res.json(result);
+    } catch (err) {
+        const status = err.statusCode || 500;
+        if (status >= 500) console.error('GET /api/current-stock/by-pgno error:', err);
+        res.status(status).json({ error: err.message });
     }
 });
 

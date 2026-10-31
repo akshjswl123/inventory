@@ -19,6 +19,7 @@ services:
       - ./scripts/dish_scoops_seed.sql:/docker-entrypoint-initdb.d/03_dish_scoops_seed.sql:ro
       - ./scripts/raw_materials_seed.sql:/docker-entrypoint-initdb.d/04_raw_materials_seed.sql:ro
       - ./scripts/raw_materials_custom_scoops_seed.sql:/docker-entrypoint-initdb.d/05_custom_scoops_seed.sql:ro
+      - ./scripts/28_mcp_reader_role.sql:/docker-entrypoint-initdb.d/06_mcp_reader_role.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U poc -d poc"]
       interval: 5s
@@ -135,14 +136,53 @@ services:
     volumes:
       - ./excel-csv/site:/usr/share/nginx/html:ro
 
-  # ADD THIS NEW SERVICE BELOW
-#  tunnel:
-#    image: cloudflare/cloudflared:latest
-#    container_name: poc_tunnel
-#    restart: unless-stopped
-#    command: tunnel --url http://app:3000
-#    depends_on:
-#      - app
+  # MCP: read-only SQL (Streamable HTTP). Publish: MCP_HTTP_BIND:MCP_HTTP_PORT in .env (see .env.example).
+  postgres-mcp:
+    build:
+      context: ./mcp
+    image: inventory-postgres-mcp:local
+    container_name: postgres-mcp
+    restart: unless-stopped
+    environment:
+      POSTGRES_DSN: postgresql://mcp_reader:${MCP_READER_PASSWORD:-McpReadOnly_ChangeMe2026}@db:5432/poc
+      PG_MCP_TRANSPORT: http
+      PG_MCP_HOST: "0.0.0.0"
+      PG_MCP_PORT: "8000"
+      PG_MCP_READ_ONLY: "true"
+      PG_MCP_MAX_ROWS: "2000"
+      PG_MCP_STATEMENT_TIMEOUT_MS: "60000"
+    ports:
+      - "${MCP_HTTP_BIND:-127.0.0.1}:${MCP_HTTP_PORT:-5000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Cloudflare quick tunnel: ONE public *.trycloudflare.com URL per service below.
+  # App URL does not include MCP — run tunnel-mcp for a second URL, then set MCP_SERVER_URL to https://<that-host>/mcp
+  tunnel:
+    build:
+      context: ./mcp
+      dockerfile: Dockerfile.cloudflared
+    image: inventory-cloudflared-tunnel:local
+    container_name: poc_tunnel
+    restart: unless-stopped
+    command: ["http://app:3000", "/runtime/app-tunnel.url"]
+    volumes:
+      - ./mcp/runtime:/runtime
+    depends_on:
+      - app
+
+  tunnel-mcp:
+    image: inventory-cloudflared-tunnel:local
+    container_name: poc_tunnel_mcp
+    restart: unless-stopped
+    command: ["http://postgres-mcp:8000", "/runtime/mcp-tunnel.url"]
+    volumes:
+      - ./mcp/runtime:/runtime
+    depends_on:
+      - postgres-mcp
+
+  # Named tunnel (custom hostnames, stable URLs): see mcp/cloudflare-ingress.example.yml
 
 volumes:
   pg_data:

@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "inventory-postgres": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--add-host=host.docker.internal:host-gateway",
+        "-e",
+        "POSTGRES_DSN=postgresql://mcp_reader:PASSWORD@host.docker.internal:5433/poc",
+        "inventory-postgres-mcp:local"
+      ]
+    }
+  }
+}

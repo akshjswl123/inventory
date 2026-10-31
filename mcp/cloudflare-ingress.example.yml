@@ -1,0 +1,14 @@
+# Named Cloudflare Tunnel ingress (not the ephemeral `tunnel --url` quick tunnel).
+# Mount as /etc/cloudflared/config.yml and set TUNNEL_TOKEN or credentials.json per Cloudflare docs.
+#
+# Route HTTPS hostnames to services on the compose network (use container port 8000 for MCP, not host 5000).
+
+tunnel: inventorysystem
+credentials-file: /etc/cloudflared/credentials.json
+
+ingress:
+  - hostname: mcp.example.com
+    service: http://postgres-mcp:8000
+  - hostname: app.example.com
+    service: http://app:3000
+  - service: http_status:404

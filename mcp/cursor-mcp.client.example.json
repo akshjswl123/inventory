@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "inventory-postgres": {
+      "url": "http://YOUR-MCP-SERVER-HOST:5000/mcp"
+    }
+  }
+}

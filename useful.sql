@@ -1,9 +1,11 @@
 SELECT menu_name, CONCAT(menu_name, '_1_portion') FROM public.menuexcel;
 
--- Current stock in grams
--- scoopin / scoop_out name contains gm  -> qty already in grams
--- scoopin / scoop_out name contains kg  -> qty * 1000
--- stock = scoopin grams - scoopout grams
+-- Current stock by pgNo (view: scoop_config like 07_raw_materials_cost.sql)
+-- In − out per unit: current_stock_gm, current_stock_ml, current_stock_piece
+SELECT * FROM public.current_stock_by_pgno ORDER BY "pgNo";
+
+-- Legacy itemname + gm-only (order_items ILIKE) — replaced by current_stock_by_pgno
+/*
 WITH qty_in AS (
   SELECT
     TRIM(itemname) AS itemname,
@@ -40,7 +42,7 @@ SELECT
 FROM qty_in i
 FULL OUTER JOIN qty_out o ON i.itemname = o.itemname
 ORDER BY itemname;
-
+*/
 
 SELECT
     sc.scoop_item_name,

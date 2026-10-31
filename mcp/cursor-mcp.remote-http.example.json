@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "inventory-postgres": {
+      "url": "https://YOUR-HOST.trycloudflare.com/mcp"
+    }
+  }
+}

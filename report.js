@@ -176,45 +176,13 @@ function exportQueryCsv(namePrefix) {
     C.download(text, base + '_' + stamp + '.csv');
 }
 
-const STOCK_SQL = `WITH qty_in AS (
-  SELECT
-    TRIM(itemname) AS itemname,
-    SUM(
-      CASE
-        WHEN scoopin ILIKE '%kg%' THEN COALESCE(qty, 0) * 1000
-        WHEN scoopin ILIKE '%gm%' THEN COALESCE(qty, 0)
-        ELSE 0
-      END
-    ) AS scoopin_gm
-  FROM public.order_items
-  WHERE itemname IS NOT NULL AND TRIM(itemname) <> ''
-  GROUP BY TRIM(itemname)
-),
-qty_out AS (
-  SELECT
-    TRIM(itemname) AS itemname,
-    SUM(
-      CASE
-        WHEN scoop_out ILIKE '%kg%' THEN COALESCE(qty, 0) * 1000
-        WHEN scoop_out ILIKE '%gm%' THEN COALESCE(qty, 0)
-        ELSE 0
-      END
-    ) AS scoopout_gm
-  FROM public.inventory_out_items
-  WHERE itemname IS NOT NULL AND TRIM(itemname) <> ''
-  GROUP BY TRIM(itemname)
-)
-SELECT
-  COALESCE(i.itemname, o.itemname) AS itemname,
-  COALESCE(i.scoopin_gm, 0) AS scoopin_gm,
-  COALESCE(o.scoopout_gm, 0) AS scoopout_gm,
-  COALESCE(i.scoopin_gm, 0) - COALESCE(o.scoopout_gm, 0) AS current_stock_gm
-FROM qty_in i
-FULL OUTER JOIN qty_out o ON i.itemname = o.itemname
-ORDER BY itemname;`;
+const STOCK_SQL = `SELECT *
+FROM public.current_stock_by_pgno
+ORDER BY "pgNo";`;
 
 const QUERY_BROWSE_TABLES = [
     'categories',
+    'current_stock_by_pgno',
     'dishes',
     'inventory_out',
     'inventory_out_items',
@@ -272,9 +240,18 @@ async function fetchStockMap() {
         const data = await readApiJson(res);
         const map = {};
         (data.rows || []).forEach(row => {
-            if (!row.itemname) return;
-            const gm = parseFloat(row.current_stock_gm);
-            map[String(row.itemname).trim()] = isNaN(gm) ? 0 : gm;
+            const pg = row.pgNo != null ? String(row.pgNo).trim() : '';
+            if (!pg) return;
+            const num = (k) => {
+                const v = parseFloat(row[k]);
+                return isNaN(v) ? 0 : v;
+            };
+            map[pg] = {
+                gm: num('current_stock_gm'),
+                ml: num('current_stock_ml'),
+                piece: num('current_stock_piece'),
+                itemnames: row.itemnames != null ? String(row.itemnames).trim() : ''
+            };
         });
         return map;
     } catch (e) {

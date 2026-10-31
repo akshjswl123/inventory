@@ -237,7 +237,7 @@
         <th class="num" style="width:100px">Scoop Rate *</th>
         <th class="num" style="width:110px">Item Total *</th>
         <th>Comments</th>
-        <th class="num" style="width:100px">Current Stock</th>
+        <th class="num" style="width:140px">Current Stock</th>
         <th style="width:45px"></th>
       </tr>
       </thead>
@@ -313,7 +313,7 @@
         <th style="width:200px">Scoop Out *</th>
         <th class="num" style="width:100px">Qty *</th>
         <th>Comments</th>
-        <th class="num" style="width:100px">Current Stock</th>
+        <th class="num" style="width:140px">Current Stock</th>
         <th style="width:45px"></th>
       </tr>
       </thead>
@@ -1279,11 +1279,27 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
     }
   }
 
-  window.stockByItem = {};
+  window.stockByPgNo = {};
 
-  function formatStockGm(gm) {
-    if (gm == null || isNaN(gm)) return "—";
-    return Number(gm) + " gm";
+  function formatStockUnits(stock) {
+    if (!stock || typeof stock !== 'object') return "—";
+    const parts = [];
+    const gm = Number(stock.gm);
+    const ml = Number(stock.ml);
+    const pc = Number(stock.piece);
+    if (!isNaN(gm) && gm !== 0) parts.push(gm + " gm");
+    if (!isNaN(ml) && ml !== 0) parts.push(ml + " ml");
+    if (!isNaN(pc) && pc !== 0) parts.push(pc + " pc");
+    if (!parts.length) {
+      if (!isNaN(gm) || !isNaN(ml) || !isNaN(pc)) return "0";
+      return "—";
+    }
+    return parts.join("; ");
+  }
+
+  function stockHasNegative(stock) {
+    if (!stock) return false;
+    return [stock.gm, stock.ml, stock.piece].some(v => typeof v === 'number' && v < 0);
   }
 
   function updateRowStock(tr) {
@@ -1293,20 +1309,30 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
     if (ci === "" || !CATALOG[+ci]) {
       el.textContent = "—";
       el.className = "i-stock num";
+      el.title = "";
       return;
     }
-    const gm = window.stockByItem[CATALOG[+ci].itemname];
-    el.textContent = formatStockGm(gm);
-    el.className = "i-stock num" + (gm > 0 ? " stock-ok" : gm < 0 ? " stock-warn" : "");
+    const pg = String(CATALOG[+ci].pgNo || "").trim();
+    const stock = pg ? window.stockByPgNo[pg] : null;
+    el.textContent = formatStockUnits(stock);
+    const warn = stockHasNegative(stock);
+    const ok = stock && !warn && (stock.gm > 0 || stock.ml > 0 || stock.piece > 0);
+    el.className = "i-stock num" + (warn ? " stock-warn" : ok ? " stock-ok" : "");
+    if (stock) {
+      const names = stock.itemnames ? stock.itemnames + " — " : "";
+      el.title = names + "pgNo " + pg + " — gm: " + stock.gm + ", ml: " + stock.ml + ", piece: " + stock.piece;
+    } else {
+      el.title = pg ? "pgNo " + pg + " — no movements" : "";
+    }
   }
 
   async function loadStockMap() {
     try {
-      window.stockByItem = isServerMode() && window.Query?.fetchStockMap
+      window.stockByPgNo = isServerMode() && window.Query?.fetchStockMap
         ? await window.Query.fetchStockMap()
         : {};
     } catch (e) {
-      window.stockByItem = {};
+      window.stockByPgNo = {};
     }
     document.querySelectorAll("#inBody tr, #outBody tr").forEach(updateRowStock);
   }

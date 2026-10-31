@@ -16,6 +16,21 @@ Unique key: **`("pgNo", based_on_billno)`** — one cost snapshot per item per b
 
 ---
 
+## Current stock (by pgNo)
+
+View **`public.current_stock_by_pgno`**: sums all **in** minus all **out** per **`pgNo`**, using **`scoop_config`** (same base-qty idea as `07_raw_materials_cost.sql`) into **`current_stock_gm`**, **`current_stock_ml`**, **`current_stock_piece`**. Column **`itemnames`** is comma-separated catalog names on that pgNo (`raw_materials`; falls back to names seen in movements).
+
+| File | Purpose |
+|------|---------|
+| [`../32_current_stock_by_pgno.sql`](../32_current_stock_by_pgno.sql) | **CREATE VIEW** on existing DB |
+| [`current_stock_by_pgno.sql`](current_stock_by_pgno.sql) | **SELECT** preview |
+
+Inventory In / Out **Current Stock** column and Query tab **Current Stock** use this view (`report.js`).
+
+**As-of date (API only, UI unchanged):** `GET /api/current-stock/by-pgno?asOf=YYYY-MM-DD` optional `&pgNo=1` — calls `current_stock_by_pgno_as_of(date)` ([`../33_current_stock_by_pgno_as_of.sql`](../33_current_stock_by_pgno_as_of.sql)).
+
+---
+
 ## Data sources
 
 | Table | Role |
