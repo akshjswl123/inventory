@@ -36,6 +36,14 @@
     };
   }
 
+  function filterActiveRows(rows) {
+    const B = global.ScoopStaticBuilders;
+    if (B && typeof B.filterScoopRows === 'function') {
+      return B.filterScoopRows(rows);
+    }
+    return (rows || []).filter(r => !r.unused);
+  }
+
   function uniquePickerRows(pickerRows) {
     const seen = new Set();
     const out = [];
@@ -71,10 +79,11 @@
       const fromStore = store.getRowsForScoopItem(name, code)
         .map(toPickerRow)
         .filter(r => r.scoop_name);
-      if (fromStore.length) return fromStore;
+      const active = filterActiveRows(fromStore);
+      if (active.length) return active;
     }
 
-    const fromMap = rowsFromMap(name, code);
+    const fromMap = filterActiveRows(rowsFromMap(name, code));
     if (fromMap.length) return fromMap;
 
     return [];
@@ -95,9 +104,10 @@
   }
 
   function updateScoopConfigByDishNameMap(dishName, dishCode, pickerRows) {
-    if (!pickerRows.length) return;
+    const active = filterActiveRows(pickerRows);
+    if (!active.length) return;
     if (!global.SCOOP_CONFIG_BY_DISH_NAME) global.SCOOP_CONFIG_BY_DISH_NAME = {};
-    const payload = pickerRows.map(r => ({
+    const payload = active.map(r => ({
       scoop_name: r.scoop_name,
       destination_unit: r.destination_unit,
       factor: r.factor,
@@ -148,7 +158,9 @@
         const data = await res.json().catch(() => ({}));
         if (res.ok && Array.isArray(data.rows)) {
           const apiRows = data.rows;
-          const picker = uniquePickerRows(apiRows.map(toPickerRow).filter(r => r.scoop_name));
+          const picker = uniquePickerRows(
+            filterActiveRows(apiRows.map(toPickerRow).filter(r => r.scoop_name))
+          );
           cache.set(key, { rows: picker, fetchedAt: Date.now() });
           mergeIntoScoopConfigStore(name, code, apiRows);
           updateScoopConfigByDishNameMap(name, code, picker);

@@ -1,0 +1,114 @@
+=== Recipe compare: recipe_entries (DB) vs reciepeentriescounter.csv ===
+Counter rows (unique keys): 1243
+DB rows (unique keys):      1192
+Only in Counter export:   51
+Only in DB:                 0
+Same key, different values: 19
+Match:                      1173
+
+--- Only in Counter export (by line) ---
+  D028 | CHINESE SAUCES | item=CH5 | pgNo=CHINESE SAUCES_gm_reciepe
+  D028 | CHINESE VEGGIES | item=CH2 | pgNo=CHINESE VEGGIES_gm_reciepe
+  D028 | FRIED NOODLES PROCESSED | item=CH6 | pgNo=FRIED NOODLES PROCESSED_gm_reciepe
+  D028 | Garlic | item=V10 | pgNo=Garlic_gm_reciepe
+  D028 | Ginger | item=V3 | pgNo=Ginger_gm_reciepe
+  D028 | Green Chilli | item=V2 | pgNo=Green Chilli_gm_reciepe
+  D028 | Onion | item=V11 | pgNo=Onion_gm_reciepe
+  D028 | PANEER | item=D3 | pgNo=PANEER_gm_reciepe
+  D028 | PROCESSED NOODLES | item=P3 | pgNo=PROCESSED NOODLES_gm_reciepe
+  D028 | dish_out | item= | pgNo=paneer NOODLES    _1_portion
+  D028 | totalingredientsqty | item= | pgNo=
+  D028 | totalprocessedqty | item= | pgNo=
+  D066 | PAPAD | item=34A | pgNo=PAPAD_piece_reciepe
+  D066 | oil tin | item=7 | pgNo=oil tin_gm_reciepe
+  D066 | totalingredientsqty | item= | pgNo=
+  D066 | totalprocessedqty | item= | pgNo=
+  D115 | NACHOS | item=65 | pgNo=NACHOS_gm_reciepe
+  D115 | dish_out | item= | pgNo=
+  D115 | totalingredientsqty | item= | pgNo=
+  D115 | totalprocessedqty | item= | pgNo=
+  D116 | CHEESE BLEND | item=53 | pgNo=CHEESE BLEND _gm_reciepe
+  D116 | Capsicum | item=V1 | pgNo=Capsicum_gm_reciepe
+  D116 | NACHOS | item=65 | pgNo=NACHOS_gm_reciepe
+  D116 | Onion | item=V11 | pgNo=Onion_gm_reciepe
+  D116 | corn | item=80 | pgNo=corn_gm_reciepe
+  D116 | dish_out | item= | pgNo=
+  D116 | jalapeno | item=60B | pgNo=jalapeno_gm_reciepe
+  D116 | thai chilly sauce | item=42B | pgNo=thai chilly sauce_gm_reciepe
+  D116 | tomato sauce | item=37 | pgNo=tomato sauce_gm_reciepe
+  D116 | totalingredientsqty | item= | pgNo=
+  D116 | totalprocessedqty | item= | pgNo=
+  D191 | totalingredientsqty | item= | pgNo=
+  D191 | totalprocessedqty | item= | pgNo=
+  D9021 | ALL SPICES | item=OT1 | pgNo=ALL SPICES_gm_reciepe
+  D9021 | AMUL CREAM | item=76 | pgNo=AMUL CREAM_gm_reciepe
+  D9021 | CHEESE BLEND | item=53 | pgNo=CHEESE BLEND _gm_reciepe
+  D9021 | ONION GREAVY | item=P5 | pgNo=ONION GREAVY_gm_reciepe
+  D9021 | PANEER | item=D3 | pgNo=PANEER_gm_reciepe
+  D9021 | TOMATO GREAVY | item=P4 | pgNo=TOMATO GREAVY_gm_reciepe
+  D9021 | butter | item=73 | pgNo=butter_gm_reciepe
+  D9021 | dish_out | item= | pgNo=
+  D9021 | totalingredientsqty | item= | pgNo=
+  D9021 | totalprocessedqty | item= | pgNo=
+  P1212 | Garlic | item=V10 | pgNo=Garlic_gm_reciepe
+  P1212 | Green Chilli | item=V2 | pgNo=Green Chilli_gm_reciepe
+  P1212 | SPINACH | item=V20 | pgNo=SPINACH_kg_reciepe
+  P1212 | dish_out | item= | pgNo=
+  P1212 | dish_out | item= | pgNo=processed palak_gm_out
+  P1212 | oil tin | item=7 | pgNo=oil tin_kg_reciepe
+  P1212 | totalingredientsqty | item= | pgNo=
+  P1212 | totalprocessedqty | item= | pgNo=
+
+--- Dishes with lines only in Counter ---
+  D028 (12 lines)
+  D116 (11 lines)
+  D9021 (10 lines)
+  P1212 (8 lines)
+  D066 (4 lines)
+  D115 (4 lines)
+  D191 (2 lines)
+
+--- Same key, field differences (counter vs db) ---
+  D066 | PAPAD | 34A | PAPAD_gm_reciepe
+    inGm: '' -> '13'
+  D066 | dish_out |  | FRIED PAPAD_1_portion
+    inGm: '0' -> ''
+    inML: '0' -> ''
+    inPiece: '0' -> ''
+  D140 | Capsicum | V1 | Capsicum_gm_reciepe
+    inGm: '' -> '25'
+  D140 | Coriander | V9 | Coriander_gm_reciepe
+    inGm: '' -> '10'
+  D140 | Onion | V11 | Onion_gm_reciepe
+    inGm: '' -> '40'
+  D140 | PANEER | D3 | PANEER_gm_reciepe
+    inGm: '' -> '80'
+  D140 | PIZZA BASE | B3 | PIZZA BASE_piece_reciepe
+    inPiece: '' -> '1'
+  D140 | metonese | 50 | metonese_gm_reciepe
+    inGm: '' -> '10'
+  D140 | mozerella | 74 | mozerella_gm_reciepe
+    inGm: '' -> '115'
+  D140 | pasta pizza sauce | 48 | pasta pizza sauce_gm_reciepe
+    inGm: '' -> '10'
+  D191 | CHOCO CHIPS | 82B | CHOCO CHIPS_gm_reciepe
+    inGm: '' -> '10'
+  D191 | CHOCOLATE SYRUP | 55 | CHOCOLATE SYRUP_gm_reciepe
+    inGm: '' -> '15'
+  D191 | ICE CREAM CHOCOLATE | 100 | ICE CREAM CHOCOLATE_gm_reciepe
+    inGm: '' -> '200'
+  D191 | KIT KAT CHOCOLATE | 29B | KIT KAT CHOCOLATE_piece_reciepe
+    inPiece: '' -> '2'
+  D191 | MILK | D1 | MILK_gm_reciepe
+    inGm: '' -> '25'
+  D191 | dish_out |  | KITKAT SHAKE_1_portion
+    inGm: '0' -> ''
+    inML: '0' -> ''
+    inPiece: '0' -> ''
+  P8 | dish_out |  | AATA PROCESSED_gm_reciepe
+    inGm: '3000' -> ''
+    usable_processed_scoop: 'AATA PROCESSED_gm_reciepe' -> ''
+  P8 | other3 | other3 | other3_gm_reciepe
+    qty: '1' -> '2'
+  P8 | totalingredientsqty |  | 
+    qty: '2' -> '3'

@@ -90,6 +90,10 @@
     .scoop-name { font-family: monospace; font-size: 12px; background: #f4f4f4; padding: 4px 8px; border-radius: 3px; min-height: 18px; white-space: pre-wrap; }
     select.scoop-multi { min-height: 88px; min-width: 180px; vertical-align: top; }
     .item-details-unused { background: #fff0f0; }
+    .item-details-status-active { font-size: 12px; color: #198754; font-weight: 600; }
+    .item-details-status-retired { font-size: 12px; color: #856404; font-weight: 600; }
+    .item-details-row-actions { white-space: nowrap; }
+    .item-details-row-actions button { margin-right: 4px; font-size: 12px; padding: 4px 8px; }
     button.save { background: #0d6efd; color: #fff; }
     #itemDetailsMsg { font-size: 12px; color: #666; }
     #itemDetailsMsg.ok { color: #198754; }
@@ -595,11 +599,12 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
           <th>Scoop Name</th>
           <th class="num">Factor</th>
           <th>Entire Chain</th>
-          <th></th>
+          <th>Status</th>
+          <th>Actions</th>
         </tr>
         </thead>
         <tbody id="itemDetailsListBody">
-        <tr id="itemDetailsEmptyRow"><td colspan="7" class="item-details-empty">No items added yet</td></tr>
+        <tr id="itemDetailsEmptyRow"><td colspan="8" class="item-details-empty">No items added yet</td></tr>
         </tbody>
       </table>
 
@@ -611,7 +616,7 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
         <button type="button" class="plain" id="itemDetailsClearBtn">Clear List</button>
         <span id="itemDetailsMsg"></span>
       </div>
-      <div class="hint" id="itemDetailsDbHint">Load/Save uses the same shared scoop_config as bill and recipe tabs (DB on server, scoop_config_catalog.js offline).</div>
+      <div class="hint" id="itemDetailsDbHint">Load/Save uses the same shared scoop_config as bill and recipe tabs (DB on server, scoop_config_catalog.js offline). Use <strong>Retire</strong> on IN/OUT/RECIPE rows (e.g. <code>other1_gm_in</code>) then <strong>Save to DB</strong> to hide them from pickers; pink &ldquo;Chain only&rdquo; rows are intermediate units, not bill scoops.</div>
 
       <h3 style="margin-top:18px;">CSV Preview</h3>
       <pre id="itemDetailsPreview">-- add items to see preview --</pre>
@@ -1025,12 +1030,16 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
     return true;
   }
 
-  /** Active rows + custom scoops (e.g. _peda) even when marked unused in Item Details. */
+  /** Active scoops only (+ legacy: custom scoops marked unused in Item Details). */
   function recipeScoopPickerRows(dishName) {
     const name = (dishName || "").trim();
+    const isActive =
+      typeof ScoopStaticBuilders !== "undefined" && ScoopStaticBuilders.isActiveScoopRow
+        ? (row) => ScoopStaticBuilders.isActiveScoopRow(row)
+        : (row) => !row.unused;
     return uniqueScoopPickerRows(scoopsForDishName(name)).filter(row => {
+      if (isActive(row)) return true;
       const scoop = row.scoop_name || "";
-      if (!row.unused) return true;
       return !isDefaultAutoScoopForDish(name, scoop);
     });
   }

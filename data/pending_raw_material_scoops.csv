@@ -1,0 +1,4197 @@
+scoop_item_id,scoop_item_name,scoop_name,destination_unit,version
+112B,AJWAIN,AJWAIN_gm_in,gm,3
+112B,AJWAIN,AJWAIN_gm_inventory,gm,2
+112B,AJWAIN,AJWAIN_gm_out,gm,3
+112B,AJWAIN,AJWAIN_gm_reciepe,gm,3
+112B,AJWAIN,AJWAIN_kg_in,gm,3
+112B,AJWAIN,AJWAIN_kg_out,gm,3
+112B,AJWAIN,AJWAIN_kg_reciepe,gm,3
+112B,AJWAIN,AJWAIN_ltr_reciepe,ml,2
+112B,AJWAIN,AJWAIN_ml_reciepe,ml,2
+112B,AJWAIN,AJWAIN_piece_reciepe,piece,2
+112B,AJWAIN,AJWAIN_pkt_in,gm,3
+112B,AJWAIN,AJWAIN_pkt_out,gm,3
+112B,AJWAIN,AJWAIN_pkt_reciepe,gm,3
+OT1,ALL SPICES,ALL SPICES_gm_in,gm,1
+OT1,ALL SPICES,ALL SPICES_gm_inventory,gm,1
+OT1,ALL SPICES,ALL SPICES_gm_out,gm,1
+OT1,ALL SPICES,ALL SPICES_gm_reciepe,gm,1
+OT1,ALL SPICES,ALL SPICES_kg_in,gm,1
+OT1,ALL SPICES,ALL SPICES_kg_out,gm,1
+OT1,ALL SPICES,ALL SPICES_kg_reciepe,gm,1
+OT1,ALL SPICES,ALL SPICES_ltr_in,,1
+OT1,ALL SPICES,ALL SPICES_ltr_out,,1
+OT1,ALL SPICES,ALL SPICES_ltr_reciepe,ml,1
+OT1,ALL SPICES,ALL SPICES_ml_in,ml,1
+OT1,ALL SPICES,ALL SPICES_ml_out,ml,1
+OT1,ALL SPICES,ALL SPICES_ml_reciepe,ml,1
+OT1,ALL SPICES,ALL SPICES_other_in,other,1
+OT1,ALL SPICES,ALL SPICES_piece_in,piece,1
+OT1,ALL SPICES,ALL SPICES_piece_out,piece,1
+OT1,ALL SPICES,ALL SPICES_piece_reciepe,piece,1
+OT1,ALL SPICES,ALL SPICES_pkt_in,gm,1
+OT1,ALL SPICES,ALL SPICES_pkt_out,gm,1
+OT1,ALL SPICES,ALL SPICES_pkt_reciepe,gm,1
+72,AMUL BUTTER,AMUL BUTTER_1_portion,portion,1
+76,AMUL CREAM,AMUL CREAM_gm_in,gm,1
+76,AMUL CREAM,AMUL CREAM_gm_inventory,gm,1
+76,AMUL CREAM,AMUL CREAM_gm_out,gm,1
+76,AMUL CREAM,AMUL CREAM_gm_reciepe,gm,1
+76,AMUL CREAM,AMUL CREAM_kg_in,gm,1
+76,AMUL CREAM,AMUL CREAM_kg_out,gm,1
+76,AMUL CREAM,AMUL CREAM_kg_reciepe,gm,1
+76,AMUL CREAM,AMUL CREAM_ltr_in,,1
+76,AMUL CREAM,AMUL CREAM_ltr_out,,1
+76,AMUL CREAM,AMUL CREAM_ltr_reciepe,ml,1
+76,AMUL CREAM,AMUL CREAM_ml_in,ml,1
+76,AMUL CREAM,AMUL CREAM_ml_out,ml,1
+76,AMUL CREAM,AMUL CREAM_ml_reciepe,ml,1
+76,AMUL CREAM,AMUL CREAM_other_in,other,1
+76,AMUL CREAM,AMUL CREAM_piece_in,piece,1
+76,AMUL CREAM,AMUL CREAM_piece_out,piece,1
+76,AMUL CREAM,AMUL CREAM_piece_reciepe,piece,1
+76,AMUL CREAM,AMUL CREAM_pkt_in,ml,1
+76,AMUL CREAM,AMUL CREAM_pkt_out,gm,1
+76,AMUL CREAM,AMUL CREAM_pkt_reciepe,gm,1
+33A,BADI ELAICHI,BADI ELAICHI_gm_in,gm,1
+33A,BADI ELAICHI,BADI ELAICHI_gm_inventory,gm,1
+33A,BADI ELAICHI,BADI ELAICHI_gm_out,gm,1
+33A,BADI ELAICHI,BADI ELAICHI_gm_reciepe,gm,1
+33A,BADI ELAICHI,BADI ELAICHI_kg_in,gm,1
+33A,BADI ELAICHI,BADI ELAICHI_kg_out,gm,1
+33A,BADI ELAICHI,BADI ELAICHI_kg_reciepe,gm,1
+33A,BADI ELAICHI,BADI ELAICHI_ltr_in,,1
+33A,BADI ELAICHI,BADI ELAICHI_ltr_out,,1
+33A,BADI ELAICHI,BADI ELAICHI_ltr_reciepe,ml,1
+33A,BADI ELAICHI,BADI ELAICHI_ml_in,ml,1
+33A,BADI ELAICHI,BADI ELAICHI_ml_out,ml,1
+33A,BADI ELAICHI,BADI ELAICHI_ml_reciepe,ml,1
+33A,BADI ELAICHI,BADI ELAICHI_other_in,other,1
+33A,BADI ELAICHI,BADI ELAICHI_piece_in,piece,1
+33A,BADI ELAICHI,BADI ELAICHI_piece_out,piece,1
+33A,BADI ELAICHI,BADI ELAICHI_piece_reciepe,piece,1
+33A,BADI ELAICHI,BADI ELAICHI_pkt_in,gm,1
+33A,BADI ELAICHI,BADI ELAICHI_pkt_out,gm,1
+33A,BADI ELAICHI,BADI ELAICHI_pkt_reciepe,gm,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_gm_in,gm,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_gm_inventory,gm,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_gm_out,gm,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_gm_reciepe,gm,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_kg_in,gm,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_kg_out,gm,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_kg_reciepe,gm,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_ltr_in,,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_ltr_out,,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_ltr_reciepe,ml,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_ml_in,ml,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_ml_out,ml,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_ml_reciepe,ml,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_other_in,other,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_piece_in,piece,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_piece_out,piece,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_piece_reciepe,piece,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_pkt_in,gm,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_pkt_out,gm,1
+17B,BLACK MUNG DAL,BLACK MUNG DAL_pkt_reciepe,gm,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_bottle_in,gm,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_gm_in,gm,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_gm_inventory,gm,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_gm_out,gm,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_gm_reciepe,gm,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_kg_in,gm,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_kg_out,gm,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_kg_reciepe,gm,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_ltr_in,,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_ltr_out,,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_ltr_reciepe,ml,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_ml_in,ml,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_ml_out,ml,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_ml_reciepe,ml,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_other_in,other,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_piece_in,piece,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_piece_out,piece,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_piece_reciepe,piece,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_pkt_in,gm,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_pkt_out,gm,1
+58B,BLUBERRY CRUSH,BLUBERRY CRUSH_pkt_reciepe,gm,1
+B4,BROWNIE,BROWNIE_gm_in,gm,1
+B4,BROWNIE,BROWNIE_gm_inventory,gm,1
+B4,BROWNIE,BROWNIE_gm_out,gm,1
+B4,BROWNIE,BROWNIE_gm_reciepe,gm,1
+B4,BROWNIE,BROWNIE_kg_in,gm,1
+B4,BROWNIE,BROWNIE_kg_out,gm,1
+B4,BROWNIE,BROWNIE_kg_reciepe,gm,1
+B4,BROWNIE,BROWNIE_ltr_in,,1
+B4,BROWNIE,BROWNIE_ltr_out,,1
+B4,BROWNIE,BROWNIE_ltr_reciepe,ml,1
+B4,BROWNIE,BROWNIE_ml_in,ml,1
+B4,BROWNIE,BROWNIE_ml_out,ml,1
+B4,BROWNIE,BROWNIE_ml_reciepe,ml,1
+B4,BROWNIE,BROWNIE_other_in,other,1
+B4,BROWNIE,BROWNIE_piece_in,gm,1
+B4,BROWNIE,BROWNIE_piece_out,piece,1
+B4,BROWNIE,BROWNIE_piece_reciepe,piece,1
+B4,BROWNIE,BROWNIE_pkt_in,gm,1
+B4,BROWNIE,BROWNIE_pkt_out,gm,1
+B4,BROWNIE,BROWNIE_pkt_reciepe,gm,1
+B2,BURGER BUN,BURGER BUN_gm_in,gm,1
+B2,BURGER BUN,BURGER BUN_gm_inventory,gm,1
+B2,BURGER BUN,BURGER BUN_gm_out,gm,1
+B2,BURGER BUN,BURGER BUN_gm_reciepe,gm,1
+B2,BURGER BUN,BURGER BUN_kg_in,gm,1
+B2,BURGER BUN,BURGER BUN_kg_out,gm,1
+B2,BURGER BUN,BURGER BUN_kg_reciepe,gm,1
+B2,BURGER BUN,BURGER BUN_ltr_in,,1
+B2,BURGER BUN,BURGER BUN_ltr_out,,1
+B2,BURGER BUN,BURGER BUN_ltr_reciepe,ml,1
+B2,BURGER BUN,BURGER BUN_ml_in,ml,1
+B2,BURGER BUN,BURGER BUN_ml_out,ml,1
+B2,BURGER BUN,BURGER BUN_ml_reciepe,ml,1
+B2,BURGER BUN,BURGER BUN_other_in,other,1
+B2,BURGER BUN,BURGER BUN_piece_in,piece,1
+B2,BURGER BUN,BURGER BUN_piece_out,piece,1
+B2,BURGER BUN,BURGER BUN_piece_reciepe,piece,1
+B2,BURGER BUN,BURGER BUN_pkt_in,piece,1
+B2,BURGER BUN,BURGER BUN_pkt_out,gm,1
+B2,BURGER BUN,BURGER BUN_pkt_reciepe,gm,1
+V16,Basil,Basil_gm_in,gm,1
+V16,Basil,Basil_gm_inventory,gm,1
+V16,Basil,Basil_gm_out,gm,1
+V16,Basil,Basil_gm_reciepe,gm,1
+V16,Basil,Basil_kg_in,gm,1
+V16,Basil,Basil_kg_out,gm,1
+V16,Basil,Basil_kg_reciepe,gm,1
+V16,Basil,Basil_ltr_in,,1
+V16,Basil,Basil_ltr_out,,1
+V16,Basil,Basil_ltr_reciepe,ml,1
+V16,Basil,Basil_ml_in,ml,1
+V16,Basil,Basil_ml_out,ml,1
+V16,Basil,Basil_ml_reciepe,ml,1
+V16,Basil,Basil_piece_in,piece,1
+V16,Basil,Basil_piece_out,piece,1
+V16,Basil,Basil_piece_reciepe,piece,1
+V16,Basil,Basil_pkt_in,gm,1
+V16,Basil,Basil_pkt_out,gm,1
+V16,Basil,Basil_pkt_reciepe,gm,1
+BL1,Bay leaves,Bay leaves_gm_in,gm,1
+BL1,Bay leaves,Bay leaves_gm_inventory,gm,1
+BL1,Bay leaves,Bay leaves_gm_out,gm,1
+BL1,Bay leaves,Bay leaves_gm_reciepe,gm,1
+BL1,Bay leaves,Bay leaves_kg_in,gm,1
+BL1,Bay leaves,Bay leaves_kg_out,gm,1
+BL1,Bay leaves,Bay leaves_kg_reciepe,gm,1
+BL1,Bay leaves,Bay leaves_ltr_in,,1
+BL1,Bay leaves,Bay leaves_ltr_out,,1
+BL1,Bay leaves,Bay leaves_ltr_reciepe,ml,1
+BL1,Bay leaves,Bay leaves_ml_in,ml,1
+BL1,Bay leaves,Bay leaves_ml_out,ml,1
+BL1,Bay leaves,Bay leaves_ml_reciepe,ml,1
+BL1,Bay leaves,Bay leaves_other_in,other,1
+BL1,Bay leaves,Bay leaves_piece_in,piece,1
+BL1,Bay leaves,Bay leaves_piece_out,piece,1
+BL1,Bay leaves,Bay leaves_piece_reciepe,piece,1
+BL1,Bay leaves,Bay leaves_pkt_in,gm,1
+BL1,Bay leaves,Bay leaves_pkt_out,gm,1
+BL1,Bay leaves,Bay leaves_pkt_reciepe,gm,1
+V5,Beans,Beans_gm_in,gm,1
+V5,Beans,Beans_gm_out,gm,1
+V5,Beans,Beans_gm_reciepe,gm,1
+V5,Beans,Beans_kg_reciepe,gm,1
+V5,Beans,Beans_ltr_in,,1
+V5,Beans,Beans_ltr_out,,1
+V5,Beans,Beans_ltr_reciepe,ml,1
+V5,Beans,Beans_ml_reciepe,ml,1
+V5,Beans,Beans_piece_reciepe,piece,1
+V5,Beans,Beans_pkt_reciepe,gm,1
+V15,Broccoli,Broccoli_gm_in,gm,1
+V15,Broccoli,Broccoli_gm_inventory,gm,1
+V15,Broccoli,Broccoli_gm_out,gm,1
+V15,Broccoli,Broccoli_gm_reciepe,gm,1
+V15,Broccoli,Broccoli_kg_in,gm,1
+V15,Broccoli,Broccoli_kg_out,gm,1
+V15,Broccoli,Broccoli_kg_reciepe,gm,1
+V15,Broccoli,Broccoli_ltr_in,,1
+V15,Broccoli,Broccoli_ltr_out,,1
+V15,Broccoli,Broccoli_ltr_reciepe,ml,1
+V15,Broccoli,Broccoli_ml_in,ml,1
+V15,Broccoli,Broccoli_ml_out,ml,1
+V15,Broccoli,Broccoli_ml_reciepe,ml,1
+V15,Broccoli,Broccoli_piece_in,piece,1
+V15,Broccoli,Broccoli_piece_out,piece,1
+V15,Broccoli,Broccoli_piece_reciepe,piece,1
+V15,Broccoli,Broccoli_pkt_in,gm,1
+V15,Broccoli,Broccoli_pkt_out,gm,1
+V15,Broccoli,Broccoli_pkt_reciepe,gm,1
+53,CHEESE BLEND,CHEESE BLEND _gm_in,gm,1
+53,CHEESE BLEND,CHEESE BLEND _gm_inventory,gm,1
+53,CHEESE BLEND,CHEESE BLEND _gm_out,gm,1
+53,CHEESE BLEND,CHEESE BLEND _gm_reciepe,gm,1
+53,CHEESE BLEND,CHEESE BLEND _kg_in,gm,1
+53,CHEESE BLEND,CHEESE BLEND _kg_out,gm,1
+53,CHEESE BLEND,CHEESE BLEND _ml_in,ml,1
+53,CHEESE BLEND,CHEESE BLEND _ml_out,ml,1
+53,CHEESE BLEND,CHEESE BLEND _other_in,other,1
+53,CHEESE BLEND,CHEESE BLEND _piece_in,piece,1
+53,CHEESE BLEND,CHEESE BLEND _piece_out,piece,1
+53,CHEESE BLEND,CHEESE BLEND _pkt_in,gm,1
+53,CHEESE BLEND,CHEESE BLEND _pkt_out,gm,1
+53,CHEESE BLEND,CHEESE BLEND_gm_in,gm,1
+53,CHEESE BLEND,CHEESE BLEND_gm_inventory,gm,1
+53,CHEESE BLEND,CHEESE BLEND_gm_out,gm,1
+53,CHEESE BLEND,CHEESE BLEND_gm_reciepe,gm,1
+53,CHEESE BLEND,CHEESE BLEND_kg_in,gm,1
+53,CHEESE BLEND,CHEESE BLEND_kg_out,gm,1
+53,CHEESE BLEND,CHEESE BLEND_kg_reciepe,gm,1
+53,CHEESE BLEND,CHEESE BLEND_ltr_in,,1
+53,CHEESE BLEND,CHEESE BLEND_ltr_out,,1
+53,CHEESE BLEND,CHEESE BLEND_ltr_reciepe,ml,1
+53,CHEESE BLEND,CHEESE BLEND_ml_in,ml,1
+53,CHEESE BLEND,CHEESE BLEND_ml_out,ml,1
+53,CHEESE BLEND,CHEESE BLEND_ml_reciepe,ml,1
+53,CHEESE BLEND,CHEESE BLEND_piece_in,piece,1
+53,CHEESE BLEND,CHEESE BLEND_piece_out,piece,1
+53,CHEESE BLEND,CHEESE BLEND_piece_reciepe,piece,1
+53,CHEESE BLEND,CHEESE BLEND_pkt_in,gm,1
+53,CHEESE BLEND,CHEESE BLEND_pkt_out,gm,1
+53,CHEESE BLEND,CHEESE BLEND_pkt_reciepe,gm,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_gm_in,gm,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_gm_inventory,gm,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_gm_out,gm,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_gm_reciepe,gm,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_kg_in,gm,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_kg_out,gm,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_kg_reciepe,gm,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_ltr_in,,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_ltr_out,,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_ltr_reciepe,ml,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_ml_in,ml,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_ml_out,ml,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_ml_reciepe,ml,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_other_in,other,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_piece_in,piece,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_piece_out,piece,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_piece_reciepe,piece,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_pkt_in,gm,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_pkt_out,gm,1
+70A,CHILLY FLAKES SACHET,CHILLY FLAKES SACHET_pkt_reciepe,gm,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_gm_in,gm,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_gm_inventory,gm,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_gm_out,gm,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_gm_reciepe,gm,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_kg_in,gm,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_kg_out,gm,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_kg_reciepe,gm,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_ltr_in,,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_ltr_out,,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_ltr_reciepe,ml,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_ml_in,ml,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_ml_out,ml,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_ml_reciepe,ml,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_other_in,other,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_piece_in,piece,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_piece_out,piece,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_piece_reciepe,piece,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_pkt_in,gm,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_pkt_out,gm,1
+CH3,CHINESE VEGETABLES,CHINESE VEGETABLES_pkt_reciepe,gm,1
+82B,CHOCO CHIPS,CHOCO CHIPS_gm_in,gm,1
+82B,CHOCO CHIPS,CHOCO CHIPS_gm_inventory,gm,1
+82B,CHOCO CHIPS,CHOCO CHIPS_gm_out,gm,1
+82B,CHOCO CHIPS,CHOCO CHIPS_gm_reciepe,gm,1
+82B,CHOCO CHIPS,CHOCO CHIPS_kg_in,gm,1
+82B,CHOCO CHIPS,CHOCO CHIPS_kg_out,gm,1
+82B,CHOCO CHIPS,CHOCO CHIPS_kg_reciepe,gm,1
+82B,CHOCO CHIPS,CHOCO CHIPS_ltr_in,,1
+82B,CHOCO CHIPS,CHOCO CHIPS_ltr_out,,1
+82B,CHOCO CHIPS,CHOCO CHIPS_ltr_reciepe,ml,1
+82B,CHOCO CHIPS,CHOCO CHIPS_ml_in,ml,1
+82B,CHOCO CHIPS,CHOCO CHIPS_ml_out,ml,1
+82B,CHOCO CHIPS,CHOCO CHIPS_ml_reciepe,ml,1
+82B,CHOCO CHIPS,CHOCO CHIPS_other_in,other,1
+82B,CHOCO CHIPS,CHOCO CHIPS_piece_in,piece,1
+82B,CHOCO CHIPS,CHOCO CHIPS_piece_out,piece,1
+82B,CHOCO CHIPS,CHOCO CHIPS_piece_reciepe,piece,1
+82B,CHOCO CHIPS,CHOCO CHIPS_pkt_in,gm,1
+82B,CHOCO CHIPS,CHOCO CHIPS_pkt_out,gm,1
+82B,CHOCO CHIPS,CHOCO CHIPS_pkt_reciepe,gm,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_gm_in,gm,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_gm_inventory,gm,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_gm_out,gm,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_gm_reciepe,gm,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_kg_in,gm,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_kg_out,gm,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_kg_reciepe,gm,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_ltr_in,,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_ltr_out,,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_ltr_reciepe,ml,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_ml_in,ml,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_ml_out,ml,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_ml_reciepe,ml,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_other_in,other,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_piece_in,piece,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_piece_out,piece,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_piece_reciepe,piece,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_pkt_in,gm,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_pkt_out,gm,1
+55,CHOCOLATE SYRUP,CHOCOLATE SYRUP_pkt_reciepe,gm,1
+CN4,CONTI MASALA,CONTI MASALA_gm_in,gm,1
+CN4,CONTI MASALA,CONTI MASALA_gm_inventory,gm,1
+CN4,CONTI MASALA,CONTI MASALA_gm_out,gm,1
+CN4,CONTI MASALA,CONTI MASALA_gm_reciepe,gm,1
+CN4,CONTI MASALA,CONTI MASALA_kg_in,gm,1
+CN4,CONTI MASALA,CONTI MASALA_kg_out,gm,1
+CN4,CONTI MASALA,CONTI MASALA_kg_reciepe,gm,1
+CN4,CONTI MASALA,CONTI MASALA_ltr_in,,1
+CN4,CONTI MASALA,CONTI MASALA_ltr_out,,1
+CN4,CONTI MASALA,CONTI MASALA_ltr_reciepe,ml,1
+CN4,CONTI MASALA,CONTI MASALA_ml_in,ml,1
+CN4,CONTI MASALA,CONTI MASALA_ml_out,ml,1
+CN4,CONTI MASALA,CONTI MASALA_ml_reciepe,ml,1
+CN4,CONTI MASALA,CONTI MASALA_other_in,other,1
+CN4,CONTI MASALA,CONTI MASALA_piece_in,piece,1
+CN4,CONTI MASALA,CONTI MASALA_piece_out,piece,1
+CN4,CONTI MASALA,CONTI MASALA_piece_reciepe,piece,1
+CN4,CONTI MASALA,CONTI MASALA_pkt_in,gm,1
+CN4,CONTI MASALA,CONTI MASALA_pkt_out,gm,1
+CN4,CONTI MASALA,CONTI MASALA_pkt_reciepe,gm,1
+D2,CURD,CURD_gm_in,gm,1
+D2,CURD,CURD_gm_inventory,gm,1
+D2,CURD,CURD_gm_out,gm,1
+D2,CURD,CURD_gm_reciepe,gm,1
+D2,CURD,CURD_kg_in,gm,1
+D2,CURD,CURD_kg_out,gm,1
+D2,CURD,CURD_kg_reciepe,gm,1
+D2,CURD,CURD_ltr_in,,1
+D2,CURD,CURD_ltr_out,,1
+D2,CURD,CURD_ltr_reciepe,ml,1
+D2,CURD,CURD_ml_in,ml,1
+D2,CURD,CURD_ml_out,ml,1
+D2,CURD,CURD_other_in,other,1
+D2,CURD,CURD_piece_in,piece,1
+D2,CURD,CURD_piece_out,piece,1
+D2,CURD,CURD_pkt_in,gm,1
+D2,CURD,CURD_pkt_out,gm,1
+D2,CURD,CURD_pkt_reciepe,gm,1
+V7,Cabbage,Cabbage_gm_in,gm,1
+V7,Cabbage,Cabbage_gm_inventory,gm,1
+V7,Cabbage,Cabbage_gm_out,gm,1
+V7,Cabbage,Cabbage_gm_reciepe,gm,1
+V7,Cabbage,Cabbage_kg_in,gm,1
+V7,Cabbage,Cabbage_kg_out,gm,1
+V7,Cabbage,Cabbage_kg_reciepe,gm,1
+V7,Cabbage,Cabbage_ltr_in,,1
+V7,Cabbage,Cabbage_ltr_out,,1
+V7,Cabbage,Cabbage_ltr_reciepe,ml,1
+V7,Cabbage,Cabbage_ml_in,ml,1
+V7,Cabbage,Cabbage_ml_out,ml,1
+V7,Cabbage,Cabbage_ml_reciepe,ml,1
+V7,Cabbage,Cabbage_piece_in,piece,1
+V7,Cabbage,Cabbage_piece_out,piece,1
+V7,Cabbage,Cabbage_piece_reciepe,piece,1
+V7,Cabbage,Cabbage_pkt_in,gm,1
+V7,Cabbage,Cabbage_pkt_out,gm,1
+V7,Cabbage,Cabbage_pkt_reciepe,gm,1
+V1,Capsicum,Capsicum_gm_in,gm,1
+V1,Capsicum,Capsicum_gm_out,gm,1
+V1,Capsicum,Capsicum_gm_reciepe,gm,1
+V1,Capsicum,Capsicum_kg_reciepe,gm,1
+V1,Capsicum,Capsicum_ltr_in,,1
+V1,Capsicum,Capsicum_ltr_out,,1
+V1,Capsicum,Capsicum_ltr_reciepe,ml,1
+V1,Capsicum,Capsicum_ml_reciepe,ml,1
+V1,Capsicum,Capsicum_piece_reciepe,piece,1
+V1,Capsicum,Capsicum_pkt_reciepe,gm,1
+V4,Carrot,Carrot_gm_in,gm,1
+V4,Carrot,Carrot_gm_out,gm,1
+V4,Carrot,Carrot_gm_reciepe,gm,1
+V4,Carrot,Carrot_kg_reciepe,gm,1
+V4,Carrot,Carrot_ltr_in,,1
+V4,Carrot,Carrot_ltr_out,,1
+V4,Carrot,Carrot_ltr_reciepe,ml,1
+V4,Carrot,Carrot_ml_reciepe,ml,1
+V4,Carrot,Carrot_piece_reciepe,piece,1
+V4,Carrot,Carrot_pkt_reciepe,gm,1
+V6,Cauliflower,Cauliflower_gm_in,gm,1
+V6,Cauliflower,Cauliflower_gm_inventory,gm,1
+V6,Cauliflower,Cauliflower_gm_out,gm,1
+V6,Cauliflower,Cauliflower_gm_reciepe,gm,1
+V6,Cauliflower,Cauliflower_kg_in,gm,1
+V6,Cauliflower,Cauliflower_kg_out,gm,1
+V6,Cauliflower,Cauliflower_kg_reciepe,gm,1
+V6,Cauliflower,Cauliflower_ltr_in,,1
+V6,Cauliflower,Cauliflower_ltr_out,,1
+V6,Cauliflower,Cauliflower_ltr_reciepe,ml,1
+V6,Cauliflower,Cauliflower_ml_in,ml,1
+V6,Cauliflower,Cauliflower_ml_out,ml,1
+V6,Cauliflower,Cauliflower_ml_reciepe,ml,1
+V6,Cauliflower,Cauliflower_piece_in,piece,1
+V6,Cauliflower,Cauliflower_piece_out,piece,1
+V6,Cauliflower,Cauliflower_piece_reciepe,piece,1
+V6,Cauliflower,Cauliflower_pkt_in,gm,1
+V6,Cauliflower,Cauliflower_pkt_out,gm,1
+V6,Cauliflower,Cauliflower_pkt_reciepe,gm,1
+V9,Coriander,Coriander_gm_in,gm,1
+V9,Coriander,Coriander_gm_inventory,gm,1
+V9,Coriander,Coriander_gm_out,gm,1
+V9,Coriander,Coriander_gm_reciepe,gm,1
+V9,Coriander,Coriander_kg_in,gm,1
+V9,Coriander,Coriander_kg_out,gm,1
+V9,Coriander,Coriander_kg_reciepe,gm,1
+V9,Coriander,Coriander_ltr_in,,1
+V9,Coriander,Coriander_ltr_out,,1
+V9,Coriander,Coriander_ltr_reciepe,ml,1
+V9,Coriander,Coriander_ml_in,ml,1
+V9,Coriander,Coriander_ml_out,ml,1
+V9,Coriander,Coriander_ml_reciepe,ml,1
+V9,Coriander,Coriander_piece_in,piece,1
+V9,Coriander,Coriander_piece_out,piece,1
+V9,Coriander,Coriander_piece_reciepe,piece,1
+V9,Coriander,Coriander_pkt_in,gm,1
+V9,Coriander,Coriander_pkt_out,gm,1
+V9,Coriander,Coriander_pkt_reciepe,gm,1
+V12,Cucumber,Cucumber_gm_in,gm,1
+V12,Cucumber,Cucumber_gm_out,gm,1
+V12,Cucumber,Cucumber_gm_reciepe,gm,1
+V12,Cucumber,Cucumber_kg_reciepe,gm,1
+V12,Cucumber,Cucumber_ltr_in,,1
+V12,Cucumber,Cucumber_ltr_out,,1
+V12,Cucumber,Cucumber_ltr_reciepe,ml,1
+V12,Cucumber,Cucumber_ml_reciepe,ml,1
+V12,Cucumber,Cucumber_piece_reciepe,piece,1
+V12,Cucumber,Cucumber_pkt_reciepe,gm,1
+32A,DALCHINI,DALCHINI_gm_in,gm,1
+32A,DALCHINI,DALCHINI_gm_inventory,gm,1
+32A,DALCHINI,DALCHINI_gm_out,gm,1
+32A,DALCHINI,DALCHINI_gm_reciepe,gm,1
+32A,DALCHINI,DALCHINI_kg_in,gm,1
+32A,DALCHINI,DALCHINI_kg_out,gm,1
+32A,DALCHINI,DALCHINI_kg_reciepe,gm,1
+32A,DALCHINI,DALCHINI_ltr_in,,1
+32A,DALCHINI,DALCHINI_ltr_out,,1
+32A,DALCHINI,DALCHINI_ltr_reciepe,ml,1
+32A,DALCHINI,DALCHINI_ml_in,ml,1
+32A,DALCHINI,DALCHINI_ml_out,ml,1
+32A,DALCHINI,DALCHINI_ml_reciepe,ml,1
+32A,DALCHINI,DALCHINI_other_in,other,1
+32A,DALCHINI,DALCHINI_piece_in,piece,1
+32A,DALCHINI,DALCHINI_piece_out,piece,1
+32A,DALCHINI,DALCHINI_piece_reciepe,piece,1
+32A,DALCHINI,DALCHINI_pkt_in,gm,1
+32A,DALCHINI,DALCHINI_pkt_out,gm,1
+32A,DALCHINI,DALCHINI_pkt_reciepe,gm,1
+21A,GHEE,GHEE_gm_in,gm,1
+21A,GHEE,GHEE_gm_inventory,gm,1
+21A,GHEE,GHEE_gm_out,gm,1
+21A,GHEE,GHEE_gm_reciepe,gm,1
+21A,GHEE,GHEE_kg_in,gm,1
+21A,GHEE,GHEE_kg_out,gm,1
+21A,GHEE,GHEE_kg_reciepe,gm,1
+21A,GHEE,GHEE_ltr_in,,1
+21A,GHEE,GHEE_ltr_out,,1
+21A,GHEE,GHEE_ltr_reciepe,ml,1
+21A,GHEE,GHEE_ml_in,ml,1
+21A,GHEE,GHEE_ml_out,ml,1
+21A,GHEE,GHEE_ml_reciepe,ml,1
+21A,GHEE,GHEE_other_in,other,1
+21A,GHEE,GHEE_piece_in,piece,1
+21A,GHEE,GHEE_piece_out,piece,1
+21A,GHEE,GHEE_piece_reciepe,piece,1
+21A,GHEE,GHEE_pkt_in,gm,1
+21A,GHEE,GHEE_pkt_out,gm,1
+21A,GHEE,GHEE_pkt_reciepe,gm,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_gm_in,gm,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_gm_inventory,gm,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_gm_out,gm,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_gm_reciepe,gm,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_kg_in,gm,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_kg_out,gm,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_kg_reciepe,gm,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_ltr_in,,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_ltr_out,,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_ltr_reciepe,ml,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_ml_in,ml,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_ml_out,ml,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_ml_reciepe,ml,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_other_in,other,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_piece_in,piece,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_piece_out,piece,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_piece_reciepe,piece,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_pkt_in,ml,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_pkt_out,gm,1
+43B,GREEN CHILLY SAUCE,GREEN CHILLY SAUCE_pkt_reciepe,gm,1
+28A,GULAB JAMUN,GULAB JAMUN_1_portion,portion,1
+28A,GULAB JAMUN,GULAB JAMUN_gm_in,gm,1
+28A,GULAB JAMUN,GULAB JAMUN_gm_inventory,gm,1
+28A,GULAB JAMUN,GULAB JAMUN_gm_out,gm,1
+28A,GULAB JAMUN,GULAB JAMUN_gm_reciepe,gm,1
+28A,GULAB JAMUN,GULAB JAMUN_kg_in,gm,1
+28A,GULAB JAMUN,GULAB JAMUN_kg_out,gm,1
+28A,GULAB JAMUN,GULAB JAMUN_kg_reciepe,gm,1
+28A,GULAB JAMUN,GULAB JAMUN_ltr_in,,1
+28A,GULAB JAMUN,GULAB JAMUN_ltr_out,,1
+28A,GULAB JAMUN,GULAB JAMUN_ltr_reciepe,ml,1
+28A,GULAB JAMUN,GULAB JAMUN_ml_in,ml,1
+28A,GULAB JAMUN,GULAB JAMUN_ml_out,ml,1
+28A,GULAB JAMUN,GULAB JAMUN_other_in,other,1
+28A,GULAB JAMUN,GULAB JAMUN_piece_in,piece,1
+28A,GULAB JAMUN,GULAB JAMUN_piece_out,piece,1
+28A,GULAB JAMUN,GULAB JAMUN_pkt_in,gm,1
+28A,GULAB JAMUN,GULAB JAMUN_pkt_out,gm,1
+28A,GULAB JAMUN,GULAB JAMUN_pkt_reciepe,gm,1
+V10,Garlic,Garlic_gm_in,gm,1
+V10,Garlic,Garlic_gm_out,gm,1
+V10,Garlic,Garlic_gm_reciepe,gm,1
+V10,Garlic,Garlic_kg_reciepe,gm,1
+V10,Garlic,Garlic_ltr_in,,1
+V10,Garlic,Garlic_ltr_out,,1
+V10,Garlic,Garlic_ltr_reciepe,ml,1
+V10,Garlic,Garlic_ml_reciepe,ml,1
+V10,Garlic,Garlic_piece_reciepe,piece,1
+V10,Garlic,Garlic_pkt_reciepe,gm,1
+V3,Ginger,Ginger_gm_in,gm,1
+V3,Ginger,Ginger_gm_inventory,gm,1
+V3,Ginger,Ginger_gm_out,gm,1
+V3,Ginger,Ginger_gm_reciepe,gm,1
+V3,Ginger,Ginger_kg_in,gm,1
+V3,Ginger,Ginger_kg_out,gm,1
+V3,Ginger,Ginger_kg_reciepe,gm,1
+V3,Ginger,Ginger_ltr_in,,1
+V3,Ginger,Ginger_ltr_out,,1
+V3,Ginger,Ginger_ltr_reciepe,ml,1
+V3,Ginger,Ginger_ml_in,ml,1
+V3,Ginger,Ginger_ml_out,ml,1
+V3,Ginger,Ginger_ml_reciepe,ml,1
+V3,Ginger,Ginger_piece_in,piece,1
+V3,Ginger,Ginger_piece_out,piece,1
+V3,Ginger,Ginger_piece_reciepe,piece,1
+V3,Ginger,Ginger_pkt_in,gm,1
+V3,Ginger,Ginger_pkt_out,gm,1
+V3,Ginger,Ginger_pkt_reciepe,gm,1
+V2,Green Chilli,Green Chilli_gm_in,gm,1
+V2,Green Chilli,Green Chilli_gm_inventory,gm,1
+V2,Green Chilli,Green Chilli_gm_out,gm,1
+V2,Green Chilli,Green Chilli_gm_reciepe,gm,1
+V2,Green Chilli,Green Chilli_kg_in,gm,1
+V2,Green Chilli,Green Chilli_kg_out,gm,1
+V2,Green Chilli,Green Chilli_kg_reciepe,gm,1
+V2,Green Chilli,Green Chilli_ltr_in,,1
+V2,Green Chilli,Green Chilli_ltr_out,,1
+V2,Green Chilli,Green Chilli_ltr_reciepe,ml,1
+V2,Green Chilli,Green Chilli_ml_in,ml,1
+V2,Green Chilli,Green Chilli_ml_out,ml,1
+V2,Green Chilli,Green Chilli_ml_reciepe,ml,1
+V2,Green Chilli,Green Chilli_piece_in,piece,1
+V2,Green Chilli,Green Chilli_piece_out,piece,1
+V2,Green Chilli,Green Chilli_piece_reciepe,piece,1
+V2,Green Chilli,Green Chilli_pkt_in,gm,1
+V2,Green Chilli,Green Chilli_pkt_out,gm,1
+V2,Green Chilli,Green Chilli_pkt_reciepe,gm,1
+33B,HARI ELAICHI,HARI ELAICHI_gm_in,gm,1
+33B,HARI ELAICHI,HARI ELAICHI_gm_inventory,gm,1
+33B,HARI ELAICHI,HARI ELAICHI_gm_out,gm,1
+33B,HARI ELAICHI,HARI ELAICHI_gm_reciepe,gm,1
+33B,HARI ELAICHI,HARI ELAICHI_kg_in,gm,1
+33B,HARI ELAICHI,HARI ELAICHI_kg_out,gm,1
+33B,HARI ELAICHI,HARI ELAICHI_kg_reciepe,gm,1
+33B,HARI ELAICHI,HARI ELAICHI_ltr_in,,1
+33B,HARI ELAICHI,HARI ELAICHI_ltr_out,,1
+33B,HARI ELAICHI,HARI ELAICHI_ltr_reciepe,ml,1
+33B,HARI ELAICHI,HARI ELAICHI_ml_in,ml,1
+33B,HARI ELAICHI,HARI ELAICHI_ml_out,ml,1
+33B,HARI ELAICHI,HARI ELAICHI_ml_reciepe,ml,1
+33B,HARI ELAICHI,HARI ELAICHI_other_in,other,1
+33B,HARI ELAICHI,HARI ELAICHI_piece_in,piece,1
+33B,HARI ELAICHI,HARI ELAICHI_piece_out,piece,1
+33B,HARI ELAICHI,HARI ELAICHI_piece_reciepe,piece,1
+33B,HARI ELAICHI,HARI ELAICHI_pkt_in,gm,1
+33B,HARI ELAICHI,HARI ELAICHI_pkt_out,gm,1
+33B,HARI ELAICHI,HARI ELAICHI_pkt_reciepe,gm,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_bottle_in,ml,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_gm_in,gm,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_gm_inventory,gm,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_gm_out,gm,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_gm_reciepe,gm,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_kg_in,gm,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_kg_out,gm,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_kg_reciepe,gm,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_ltr_in,,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_ltr_out,,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_ltr_reciepe,ml,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_ml_in,ml,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_ml_out,ml,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_ml_reciepe,ml,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_other_in,other,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_piece_in,piece,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_piece_out,piece,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_piece_reciepe,piece,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_pkt_in,gm,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_pkt_out,gm,1
+59B,HAZELNUT SYRUP,HAZELNUT SYRUP_pkt_reciepe,gm,1
+23B,HING,HING_gm_in,gm,1
+23B,HING,HING_gm_inventory,gm,1
+23B,HING,HING_gm_out,gm,1
+23B,HING,HING_gm_reciepe,gm,1
+23B,HING,HING_kg_in,gm,1
+23B,HING,HING_kg_out,gm,1
+23B,HING,HING_kg_reciepe,gm,1
+23B,HING,HING_ltr_in,,1
+23B,HING,HING_ltr_out,,1
+23B,HING,HING_ltr_reciepe,ml,1
+23B,HING,HING_ml_in,ml,1
+23B,HING,HING_ml_out,ml,1
+23B,HING,HING_ml_reciepe,ml,1
+23B,HING,HING_other_in,other,1
+23B,HING,HING_piece_in,piece,1
+23B,HING,HING_piece_out,piece,1
+23B,HING,HING_piece_reciepe,piece,1
+23B,HING,HING_pkt_in,gm,1
+23B,HING,HING_pkt_out,gm,1
+23B,HING,HING_pkt_reciepe,gm,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_gm_in,gm,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_gm_inventory,gm,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_gm_out,gm,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_gm_reciepe,gm,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_kg_in,gm,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_kg_out,gm,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_kg_reciepe,gm,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_ltr_in,,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_ltr_out,,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_ltr_reciepe,ml,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_ml_in,ml,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_ml_out,ml,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_ml_reciepe,ml,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_other_in,other,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_piece_in,piece,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_piece_out,piece,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_piece_reciepe,piece,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_pkt_in,gm,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_pkt_out,gm,1
+100,ICE CREAM CHOCOLATE,ICE CREAM CHOCOLATE_pkt_reciepe,gm,1
+59A,IRISH SYRUP,IRISH SYRUP_bottle_in,ml,1
+59A,IRISH SYRUP,IRISH SYRUP_gm_in,gm,1
+59A,IRISH SYRUP,IRISH SYRUP_gm_inventory,gm,1
+59A,IRISH SYRUP,IRISH SYRUP_gm_out,gm,1
+59A,IRISH SYRUP,IRISH SYRUP_gm_reciepe,gm,1
+59A,IRISH SYRUP,IRISH SYRUP_kg_in,gm,1
+59A,IRISH SYRUP,IRISH SYRUP_kg_out,gm,1
+59A,IRISH SYRUP,IRISH SYRUP_kg_reciepe,gm,1
+59A,IRISH SYRUP,IRISH SYRUP_ltr_in,,1
+59A,IRISH SYRUP,IRISH SYRUP_ltr_out,,1
+59A,IRISH SYRUP,IRISH SYRUP_ltr_reciepe,ml,1
+59A,IRISH SYRUP,IRISH SYRUP_ml_in,ml,1
+59A,IRISH SYRUP,IRISH SYRUP_ml_out,ml,1
+59A,IRISH SYRUP,IRISH SYRUP_ml_reciepe,ml,1
+59A,IRISH SYRUP,IRISH SYRUP_other_in,other,1
+59A,IRISH SYRUP,IRISH SYRUP_piece_in,piece,1
+59A,IRISH SYRUP,IRISH SYRUP_piece_out,piece,1
+59A,IRISH SYRUP,IRISH SYRUP_piece_reciepe,piece,1
+59A,IRISH SYRUP,IRISH SYRUP_pkt_in,gm,1
+59A,IRISH SYRUP,IRISH SYRUP_pkt_out,gm,1
+59A,IRISH SYRUP,IRISH SYRUP_pkt_reciepe,gm,1
+30A,KAJU TUKDA,KAJU TUKDA _gm_in,gm,1
+30A,KAJU TUKDA,KAJU TUKDA _gm_inventory,gm,1
+30A,KAJU TUKDA,KAJU TUKDA _gm_out,gm,1
+30A,KAJU TUKDA,KAJU TUKDA _gm_reciepe,gm,1
+30A,KAJU TUKDA,KAJU TUKDA _kg_in,gm,1
+30A,KAJU TUKDA,KAJU TUKDA _kg_out,gm,1
+30A,KAJU TUKDA,KAJU TUKDA _ml_in,ml,1
+30A,KAJU TUKDA,KAJU TUKDA _ml_out,ml,1
+30A,KAJU TUKDA,KAJU TUKDA _other_in,other,1
+30A,KAJU TUKDA,KAJU TUKDA _piece_in,piece,1
+30A,KAJU TUKDA,KAJU TUKDA _piece_out,piece,1
+30A,KAJU TUKDA,KAJU TUKDA _pkt_in,gm,1
+30A,KAJU TUKDA,KAJU TUKDA _pkt_out,gm,1
+30A,KAJU TUKDA,KAJU TUKDA_gm_in,gm,1
+30A,KAJU TUKDA,KAJU TUKDA_gm_inventory,gm,1
+30A,KAJU TUKDA,KAJU TUKDA_gm_out,gm,1
+30A,KAJU TUKDA,KAJU TUKDA_gm_reciepe,gm,1
+30A,KAJU TUKDA,KAJU TUKDA_kg_in,gm,1
+30A,KAJU TUKDA,KAJU TUKDA_kg_out,gm,1
+30A,KAJU TUKDA,KAJU TUKDA_kg_reciepe,gm,1
+30A,KAJU TUKDA,KAJU TUKDA_ltr_in,,1
+30A,KAJU TUKDA,KAJU TUKDA_ltr_out,,1
+30A,KAJU TUKDA,KAJU TUKDA_ltr_reciepe,ml,1
+30A,KAJU TUKDA,KAJU TUKDA_ml_in,ml,1
+30A,KAJU TUKDA,KAJU TUKDA_ml_out,ml,1
+30A,KAJU TUKDA,KAJU TUKDA_ml_reciepe,ml,1
+30A,KAJU TUKDA,KAJU TUKDA_piece_in,piece,1
+30A,KAJU TUKDA,KAJU TUKDA_piece_out,piece,1
+30A,KAJU TUKDA,KAJU TUKDA_piece_reciepe,piece,1
+30A,KAJU TUKDA,KAJU TUKDA_pkt_in,gm,1
+30A,KAJU TUKDA,KAJU TUKDA_pkt_out,gm,1
+30A,KAJU TUKDA,KAJU TUKDA_pkt_reciepe,gm,1
+30B,KAJUN KANKI,KAJUN KANKI _gm_in,gm,1
+30B,KAJUN KANKI,KAJUN KANKI _gm_inventory,gm,1
+30B,KAJUN KANKI,KAJUN KANKI _gm_out,gm,1
+30B,KAJUN KANKI,KAJUN KANKI _gm_reciepe,gm,1
+30B,KAJUN KANKI,KAJUN KANKI _kg_in,gm,1
+30B,KAJUN KANKI,KAJUN KANKI _kg_out,gm,1
+30B,KAJUN KANKI,KAJUN KANKI _ml_in,ml,1
+30B,KAJUN KANKI,KAJUN KANKI _ml_out,ml,1
+30B,KAJUN KANKI,KAJUN KANKI _other_in,other,1
+30B,KAJUN KANKI,KAJUN KANKI _piece_in,piece,1
+30B,KAJUN KANKI,KAJUN KANKI _piece_out,piece,1
+30B,KAJUN KANKI,KAJUN KANKI _pkt_in,gm,1
+30B,KAJUN KANKI,KAJUN KANKI _pkt_out,gm,1
+30B,KAJUN KANKI,KAJUN KANKI_gm_in,gm,1
+30B,KAJUN KANKI,KAJUN KANKI_gm_inventory,gm,1
+30B,KAJUN KANKI,KAJUN KANKI_gm_out,gm,1
+30B,KAJUN KANKI,KAJUN KANKI_gm_reciepe,gm,1
+30B,KAJUN KANKI,KAJUN KANKI_kg_in,gm,1
+30B,KAJUN KANKI,KAJUN KANKI_kg_out,gm,1
+30B,KAJUN KANKI,KAJUN KANKI_kg_reciepe,gm,1
+30B,KAJUN KANKI,KAJUN KANKI_ltr_in,,1
+30B,KAJUN KANKI,KAJUN KANKI_ltr_out,,1
+30B,KAJUN KANKI,KAJUN KANKI_ltr_reciepe,ml,1
+30B,KAJUN KANKI,KAJUN KANKI_ml_in,ml,1
+30B,KAJUN KANKI,KAJUN KANKI_ml_out,ml,1
+30B,KAJUN KANKI,KAJUN KANKI_ml_reciepe,ml,1
+30B,KAJUN KANKI,KAJUN KANKI_piece_in,piece,1
+30B,KAJUN KANKI,KAJUN KANKI_piece_out,piece,1
+30B,KAJUN KANKI,KAJUN KANKI_piece_reciepe,piece,1
+30B,KAJUN KANKI,KAJUN KANKI_pkt_in,gm,1
+30B,KAJUN KANKI,KAJUN KANKI_pkt_out,gm,1
+30B,KAJUN KANKI,KAJUN KANKI_pkt_reciepe,gm,1
+27B,KALA NAMAK,KALA NAMAK_gm_in,gm,1
+27B,KALA NAMAK,KALA NAMAK_gm_inventory,gm,1
+27B,KALA NAMAK,KALA NAMAK_gm_out,gm,1
+27B,KALA NAMAK,KALA NAMAK_gm_reciepe,gm,1
+27B,KALA NAMAK,KALA NAMAK_kg_in,gm,1
+27B,KALA NAMAK,KALA NAMAK_kg_out,gm,1
+27B,KALA NAMAK,KALA NAMAK_kg_reciepe,gm,1
+27B,KALA NAMAK,KALA NAMAK_ltr_in,,1
+27B,KALA NAMAK,KALA NAMAK_ltr_out,,1
+27B,KALA NAMAK,KALA NAMAK_ltr_reciepe,ml,1
+27B,KALA NAMAK,KALA NAMAK_ml_in,ml,1
+27B,KALA NAMAK,KALA NAMAK_ml_out,ml,1
+27B,KALA NAMAK,KALA NAMAK_ml_reciepe,ml,1
+27B,KALA NAMAK,KALA NAMAK_other_in,other,1
+27B,KALA NAMAK,KALA NAMAK_piece_in,piece,1
+27B,KALA NAMAK,KALA NAMAK_piece_out,piece,1
+27B,KALA NAMAK,KALA NAMAK_piece_reciepe,piece,1
+27B,KALA NAMAK,KALA NAMAK_pkt_in,gm,1
+27B,KALA NAMAK,KALA NAMAK_pkt_out,gm,1
+27B,KALA NAMAK,KALA NAMAK_pkt_reciepe,gm,1
+112A,KALAUNJI,KALAUNJI_gm_in,gm,1
+112A,KALAUNJI,KALAUNJI_gm_inventory,gm,1
+112A,KALAUNJI,KALAUNJI_gm_out,gm,1
+112A,KALAUNJI,KALAUNJI_gm_reciepe,gm,1
+112A,KALAUNJI,KALAUNJI_kg_in,gm,1
+112A,KALAUNJI,KALAUNJI_kg_out,gm,1
+112A,KALAUNJI,KALAUNJI_kg_reciepe,gm,1
+112A,KALAUNJI,KALAUNJI_ltr_in,,1
+112A,KALAUNJI,KALAUNJI_ltr_out,,1
+112A,KALAUNJI,KALAUNJI_ltr_reciepe,ml,1
+112A,KALAUNJI,KALAUNJI_ml_in,ml,1
+112A,KALAUNJI,KALAUNJI_ml_out,ml,1
+112A,KALAUNJI,KALAUNJI_ml_reciepe,ml,1
+112A,KALAUNJI,KALAUNJI_other_in,other,1
+112A,KALAUNJI,KALAUNJI_piece_in,piece,1
+112A,KALAUNJI,KALAUNJI_piece_out,piece,1
+112A,KALAUNJI,KALAUNJI_piece_reciepe,piece,1
+112A,KALAUNJI,KALAUNJI_pkt_in,gm,1
+112A,KALAUNJI,KALAUNJI_pkt_out,gm,1
+112A,KALAUNJI,KALAUNJI_pkt_reciepe,gm,1
+25B,KEVDA JAL,KEVDA JAL _gm_in,gm,1
+25B,KEVDA JAL,KEVDA JAL _gm_inventory,gm,1
+25B,KEVDA JAL,KEVDA JAL _gm_out,gm,1
+25B,KEVDA JAL,KEVDA JAL _gm_reciepe,gm,1
+25B,KEVDA JAL,KEVDA JAL _kg_in,gm,1
+25B,KEVDA JAL,KEVDA JAL _kg_out,gm,1
+25B,KEVDA JAL,KEVDA JAL _ml_in,ml,1
+25B,KEVDA JAL,KEVDA JAL _ml_out,ml,1
+25B,KEVDA JAL,KEVDA JAL _other_in,other,1
+25B,KEVDA JAL,KEVDA JAL _piece_in,piece,1
+25B,KEVDA JAL,KEVDA JAL _piece_out,piece,1
+25B,KEVDA JAL,KEVDA JAL _pkt_in,gm,1
+25B,KEVDA JAL,KEVDA JAL _pkt_out,gm,1
+25B,KEVDA JAL,KEVDA JAL_gm_in,gm,1
+25B,KEVDA JAL,KEVDA JAL_gm_inventory,gm,1
+25B,KEVDA JAL,KEVDA JAL_gm_out,gm,1
+25B,KEVDA JAL,KEVDA JAL_gm_reciepe,gm,1
+25B,KEVDA JAL,KEVDA JAL_kg_in,gm,1
+25B,KEVDA JAL,KEVDA JAL_kg_out,gm,1
+25B,KEVDA JAL,KEVDA JAL_kg_reciepe,gm,1
+25B,KEVDA JAL,KEVDA JAL_ltr_in,,1
+25B,KEVDA JAL,KEVDA JAL_ltr_out,,1
+25B,KEVDA JAL,KEVDA JAL_ltr_reciepe,ml,1
+25B,KEVDA JAL,KEVDA JAL_ml_in,ml,1
+25B,KEVDA JAL,KEVDA JAL_ml_out,ml,1
+25B,KEVDA JAL,KEVDA JAL_ml_reciepe,ml,1
+25B,KEVDA JAL,KEVDA JAL_piece_in,piece,1
+25B,KEVDA JAL,KEVDA JAL_piece_out,piece,1
+25B,KEVDA JAL,KEVDA JAL_piece_reciepe,piece,1
+25B,KEVDA JAL,KEVDA JAL_pkt_in,gm,1
+25B,KEVDA JAL,KEVDA JAL_pkt_out,gm,1
+25B,KEVDA JAL,KEVDA JAL_pkt_reciepe,gm,1
+22B,KISMIS,KISMIS_gm_in,gm,1
+22B,KISMIS,KISMIS_gm_inventory,gm,1
+22B,KISMIS,KISMIS_gm_out,gm,1
+22B,KISMIS,KISMIS_gm_reciepe,gm,1
+22B,KISMIS,KISMIS_kg_in,gm,1
+22B,KISMIS,KISMIS_kg_out,gm,1
+22B,KISMIS,KISMIS_kg_reciepe,gm,1
+22B,KISMIS,KISMIS_ltr_in,,1
+22B,KISMIS,KISMIS_ltr_out,,1
+22B,KISMIS,KISMIS_ltr_reciepe,ml,1
+22B,KISMIS,KISMIS_ml_in,ml,1
+22B,KISMIS,KISMIS_ml_out,ml,1
+22B,KISMIS,KISMIS_ml_reciepe,ml,1
+22B,KISMIS,KISMIS_other_in,other,1
+22B,KISMIS,KISMIS_piece_in,piece,1
+22B,KISMIS,KISMIS_piece_out,piece,1
+22B,KISMIS,KISMIS_piece_reciepe,piece,1
+22B,KISMIS,KISMIS_pkt_in,gm,1
+22B,KISMIS,KISMIS_pkt_out,gm,1
+22B,KISMIS,KISMIS_pkt_reciepe,gm,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_box_in,piece,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_gm_in,gm,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_gm_inventory,gm,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_gm_out,gm,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_gm_reciepe,gm,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_kg_in,gm,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_kg_out,gm,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_kg_reciepe,gm,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_ltr_in,,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_ltr_out,,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_ltr_reciepe,ml,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_ml_in,ml,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_ml_out,ml,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_ml_reciepe,ml,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_other_in,other,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_piece_in,piece,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_piece_out,piece,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_piece_reciepe,piece,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_pkt_in,gm,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_pkt_out,gm,1
+29B,KIT KAT CHOCOLATE,KIT KAT CHOCOLATE_pkt_reciepe,gm,1
+V19,Kadi Patta,Kadi Patta_gm_in,gm,1
+V19,Kadi Patta,Kadi Patta_gm_inventory,gm,1
+V19,Kadi Patta,Kadi Patta_gm_out,gm,1
+V19,Kadi Patta,Kadi Patta_gm_reciepe,gm,1
+V19,Kadi Patta,Kadi Patta_kg_in,gm,1
+V19,Kadi Patta,Kadi Patta_kg_out,gm,1
+V19,Kadi Patta,Kadi Patta_kg_reciepe,gm,1
+V19,Kadi Patta,Kadi Patta_ltr_in,,1
+V19,Kadi Patta,Kadi Patta_ltr_out,,1
+V19,Kadi Patta,Kadi Patta_ltr_reciepe,ml,1
+V19,Kadi Patta,Kadi Patta_ml_in,ml,1
+V19,Kadi Patta,Kadi Patta_ml_out,ml,1
+V19,Kadi Patta,Kadi Patta_ml_reciepe,ml,1
+V19,Kadi Patta,Kadi Patta_piece_in,piece,1
+V19,Kadi Patta,Kadi Patta_piece_out,piece,1
+V19,Kadi Patta,Kadi Patta_piece_reciepe,piece,1
+V19,Kadi Patta,Kadi Patta_pkt_in,gm,1
+V19,Kadi Patta,Kadi Patta_pkt_out,gm,1
+V19,Kadi Patta,Kadi Patta_pkt_reciepe,gm,1
+46B,LEMON ICE TEA,LEMON ICE TEA_gm_in,gm,1
+46B,LEMON ICE TEA,LEMON ICE TEA_gm_inventory,gm,1
+46B,LEMON ICE TEA,LEMON ICE TEA_gm_out,gm,1
+46B,LEMON ICE TEA,LEMON ICE TEA_gm_reciepe,gm,1
+46B,LEMON ICE TEA,LEMON ICE TEA_kg_in,gm,1
+46B,LEMON ICE TEA,LEMON ICE TEA_kg_out,gm,1
+46B,LEMON ICE TEA,LEMON ICE TEA_kg_reciepe,gm,1
+46B,LEMON ICE TEA,LEMON ICE TEA_ltr_in,,1
+46B,LEMON ICE TEA,LEMON ICE TEA_ltr_out,,1
+46B,LEMON ICE TEA,LEMON ICE TEA_ltr_reciepe,ml,1
+46B,LEMON ICE TEA,LEMON ICE TEA_ml_in,ml,1
+46B,LEMON ICE TEA,LEMON ICE TEA_ml_out,ml,1
+46B,LEMON ICE TEA,LEMON ICE TEA_ml_reciepe,ml,1
+46B,LEMON ICE TEA,LEMON ICE TEA_other_in,other,1
+46B,LEMON ICE TEA,LEMON ICE TEA_piece_in,piece,1
+46B,LEMON ICE TEA,LEMON ICE TEA_piece_out,piece,1
+46B,LEMON ICE TEA,LEMON ICE TEA_piece_reciepe,piece,1
+46B,LEMON ICE TEA,LEMON ICE TEA_pkt_in,gm,1
+46B,LEMON ICE TEA,LEMON ICE TEA_pkt_out,gm,1
+46B,LEMON ICE TEA,LEMON ICE TEA_pkt_reciepe,gm,1
+31B,LOUNG,LOUNG_gm_in,gm,1
+31B,LOUNG,LOUNG_gm_inventory,gm,1
+31B,LOUNG,LOUNG_gm_out,gm,1
+31B,LOUNG,LOUNG_gm_reciepe,gm,1
+31B,LOUNG,LOUNG_kg_in,gm,1
+31B,LOUNG,LOUNG_kg_out,gm,1
+31B,LOUNG,LOUNG_kg_reciepe,gm,1
+31B,LOUNG,LOUNG_ltr_in,,1
+31B,LOUNG,LOUNG_ltr_out,,1
+31B,LOUNG,LOUNG_ltr_reciepe,ml,1
+31B,LOUNG,LOUNG_ml_in,ml,1
+31B,LOUNG,LOUNG_ml_out,ml,1
+31B,LOUNG,LOUNG_ml_reciepe,ml,1
+31B,LOUNG,LOUNG_other_in,other,1
+31B,LOUNG,LOUNG_piece_in,piece,1
+31B,LOUNG,LOUNG_piece_out,piece,1
+31B,LOUNG,LOUNG_piece_reciepe,piece,1
+31B,LOUNG,LOUNG_pkt_in,gm,1
+31B,LOUNG,LOUNG_pkt_out,gm,1
+31B,LOUNG,LOUNG_pkt_reciepe,gm,1
+V13,Lemon,Lemon_gm_in,gm,1
+V13,Lemon,Lemon_gm_out,gm,1
+V13,Lemon,Lemon_gm_reciepe,gm,1
+V13,Lemon,Lemon_kg_reciepe,gm,1
+V13,Lemon,Lemon_ltr_in,,1
+V13,Lemon,Lemon_ltr_out,,1
+V13,Lemon,Lemon_ltr_reciepe,ml,1
+V13,Lemon,Lemon_ml_reciepe,ml,1
+V13,Lemon,Lemon_piece_reciepe,piece,1
+V13,Lemon,Lemon_pkt_reciepe,gm,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_gm_in,gm,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_gm_inventory,gm,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_gm_out,gm,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_gm_reciepe,gm,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_kg_in,gm,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_kg_out,gm,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_kg_reciepe,gm,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_ltr_in,,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_ltr_out,,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_ltr_reciepe,ml,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_ml_in,ml,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_ml_out,ml,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_ml_reciepe,ml,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_other_in,other,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_piece_in,piece,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_piece_out,piece,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_piece_reciepe,piece,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_pkt_in,gm,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_pkt_out,gm,1
+B5,MACE (JAVITRI),MACE (JAVITRI)_pkt_reciepe,gm,1
+20,MAGAJ,MAGAJ_gm_in,gm,1
+20,MAGAJ,MAGAJ_gm_inventory,gm,1
+20,MAGAJ,MAGAJ_gm_out,gm,1
+20,MAGAJ,MAGAJ_gm_reciepe,gm,1
+20,MAGAJ,MAGAJ_kg_in,gm,1
+20,MAGAJ,MAGAJ_kg_out,gm,1
+20,MAGAJ,MAGAJ_kg_reciepe,gm,1
+20,MAGAJ,MAGAJ_ltr_in,,1
+20,MAGAJ,MAGAJ_ltr_out,,1
+20,MAGAJ,MAGAJ_ltr_reciepe,ml,1
+20,MAGAJ,MAGAJ_ml_in,ml,1
+20,MAGAJ,MAGAJ_ml_out,ml,1
+20,MAGAJ,MAGAJ_ml_reciepe,ml,1
+20,MAGAJ,MAGAJ_other_in,other,1
+20,MAGAJ,MAGAJ_piece_in,piece,1
+20,MAGAJ,MAGAJ_piece_out,piece,1
+20,MAGAJ,MAGAJ_piece_reciepe,piece,1
+20,MAGAJ,MAGAJ_pkt_in,gm,1
+20,MAGAJ,MAGAJ_pkt_out,gm,1
+20,MAGAJ,MAGAJ_pkt_reciepe,gm,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_gm_in,gm,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_gm_inventory,gm,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_gm_out,gm,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_gm_reciepe,gm,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_kg_in,gm,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_kg_out,gm,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_kg_reciepe,gm,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_ltr_in,,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_ltr_out,,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_ltr_reciepe,ml,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_ml_in,ml,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_ml_out,ml,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_ml_reciepe,ml,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_other_in,other,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_piece_in,piece,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_piece_out,piece,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_piece_reciepe,piece,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_pkt_in,gm,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_pkt_out,gm,1
+101,MANGO ICE CREAM,MANGO ICE CREAM_pkt_reciepe,gm,1
+68,MANGO PULP,MANGO PULP_gm_in,gm,1
+68,MANGO PULP,MANGO PULP_gm_inventory,gm,1
+68,MANGO PULP,MANGO PULP_gm_out,gm,1
+68,MANGO PULP,MANGO PULP_gm_reciepe,gm,1
+68,MANGO PULP,MANGO PULP_kg_in,gm,1
+68,MANGO PULP,MANGO PULP_kg_out,gm,1
+68,MANGO PULP,MANGO PULP_kg_reciepe,gm,1
+68,MANGO PULP,MANGO PULP_ltr_in,,1
+68,MANGO PULP,MANGO PULP_ltr_out,,1
+68,MANGO PULP,MANGO PULP_ltr_reciepe,ml,1
+68,MANGO PULP,MANGO PULP_ml_in,ml,1
+68,MANGO PULP,MANGO PULP_ml_out,ml,1
+68,MANGO PULP,MANGO PULP_ml_reciepe,ml,1
+68,MANGO PULP,MANGO PULP_other_in,other,1
+68,MANGO PULP,MANGO PULP_piece_in,piece,1
+68,MANGO PULP,MANGO PULP_piece_out,piece,1
+68,MANGO PULP,MANGO PULP_piece_reciepe,piece,1
+68,MANGO PULP,MANGO PULP_pkt_in,gm,1
+68,MANGO PULP,MANGO PULP_pkt_out,gm,1
+68,MANGO PULP,MANGO PULP_pkt_reciepe,gm,1
+46A,MASALA TEA,MASALA TEA_gm_in,gm,1
+46A,MASALA TEA,MASALA TEA_gm_inventory,gm,1
+46A,MASALA TEA,MASALA TEA_gm_out,gm,1
+46A,MASALA TEA,MASALA TEA_gm_reciepe,gm,1
+46A,MASALA TEA,MASALA TEA_kg_in,gm,1
+46A,MASALA TEA,MASALA TEA_kg_out,gm,1
+46A,MASALA TEA,MASALA TEA_kg_reciepe,gm,1
+46A,MASALA TEA,MASALA TEA_ltr_in,,1
+46A,MASALA TEA,MASALA TEA_ltr_out,,1
+46A,MASALA TEA,MASALA TEA_ltr_reciepe,ml,1
+46A,MASALA TEA,MASALA TEA_ml_in,ml,1
+46A,MASALA TEA,MASALA TEA_ml_out,ml,1
+46A,MASALA TEA,MASALA TEA_ml_reciepe,ml,1
+46A,MASALA TEA,MASALA TEA_other_in,other,1
+46A,MASALA TEA,MASALA TEA_piece_in,piece,1
+46A,MASALA TEA,MASALA TEA_piece_out,piece,1
+46A,MASALA TEA,MASALA TEA_piece_reciepe,piece,1
+46A,MASALA TEA,MASALA TEA_pkt_in,gm,1
+46A,MASALA TEA,MASALA TEA_pkt_out,gm,1
+46A,MASALA TEA,MASALA TEA_pkt_reciepe,gm,1
+19A,MASUR DAL,MASUR DAL_gm_in,gm,1
+19A,MASUR DAL,MASUR DAL_gm_inventory,gm,1
+19A,MASUR DAL,MASUR DAL_gm_out,gm,1
+19A,MASUR DAL,MASUR DAL_gm_reciepe,gm,1
+19A,MASUR DAL,MASUR DAL_kg_in,gm,1
+19A,MASUR DAL,MASUR DAL_kg_out,gm,1
+19A,MASUR DAL,MASUR DAL_kg_reciepe,gm,1
+19A,MASUR DAL,MASUR DAL_ltr_in,,1
+19A,MASUR DAL,MASUR DAL_ltr_out,,1
+19A,MASUR DAL,MASUR DAL_ltr_reciepe,ml,1
+19A,MASUR DAL,MASUR DAL_ml_in,ml,1
+19A,MASUR DAL,MASUR DAL_ml_out,ml,1
+19A,MASUR DAL,MASUR DAL_ml_reciepe,ml,1
+19A,MASUR DAL,MASUR DAL_other_in,other,1
+19A,MASUR DAL,MASUR DAL_piece_in,piece,1
+19A,MASUR DAL,MASUR DAL_piece_out,piece,1
+19A,MASUR DAL,MASUR DAL_piece_reciepe,piece,1
+19A,MASUR DAL,MASUR DAL_pkt_in,gm,1
+19A,MASUR DAL,MASUR DAL_pkt_out,gm,1
+19A,MASUR DAL,MASUR DAL_pkt_reciepe,gm,1
+71A,MEYONESE SACHET,MEYONESE SACHET_gm_in,gm,1
+71A,MEYONESE SACHET,MEYONESE SACHET_gm_inventory,gm,1
+71A,MEYONESE SACHET,MEYONESE SACHET_gm_out,gm,1
+71A,MEYONESE SACHET,MEYONESE SACHET_gm_reciepe,gm,1
+71A,MEYONESE SACHET,MEYONESE SACHET_kg_in,gm,1
+71A,MEYONESE SACHET,MEYONESE SACHET_kg_out,gm,1
+71A,MEYONESE SACHET,MEYONESE SACHET_kg_reciepe,gm,1
+71A,MEYONESE SACHET,MEYONESE SACHET_ltr_in,,1
+71A,MEYONESE SACHET,MEYONESE SACHET_ltr_out,,1
+71A,MEYONESE SACHET,MEYONESE SACHET_ltr_reciepe,ml,1
+71A,MEYONESE SACHET,MEYONESE SACHET_ml_in,ml,1
+71A,MEYONESE SACHET,MEYONESE SACHET_ml_out,ml,1
+71A,MEYONESE SACHET,MEYONESE SACHET_ml_reciepe,ml,1
+71A,MEYONESE SACHET,MEYONESE SACHET_other_in,other,1
+71A,MEYONESE SACHET,MEYONESE SACHET_piece_in,piece,1
+71A,MEYONESE SACHET,MEYONESE SACHET_piece_out,piece,1
+71A,MEYONESE SACHET,MEYONESE SACHET_piece_reciepe,piece,1
+71A,MEYONESE SACHET,MEYONESE SACHET_pkt_in,gm,1
+71A,MEYONESE SACHET,MEYONESE SACHET_pkt_out,gm,1
+71A,MEYONESE SACHET,MEYONESE SACHET_pkt_reciepe,gm,1
+D1,MILK,MILK_gm_in,gm,1
+D1,MILK,MILK_gm_inventory,gm,1
+D1,MILK,MILK_gm_out,gm,1
+D1,MILK,MILK_gm_reciepe,gm,1
+D1,MILK,MILK_kg_in,gm,1
+D1,MILK,MILK_kg_out,gm,1
+D1,MILK,MILK_kg_reciepe,gm,1
+D1,MILK,MILK_ltr_in,,1
+D1,MILK,MILK_ltr_out,,1
+D1,MILK,MILK_ltr_reciepe,ml,1
+D1,MILK,MILK_ml_in,ml,1
+D1,MILK,MILK_ml_out,ml,1
+D1,MILK,MILK_ml_reciepe,ml,1
+D1,MILK,MILK_other_in,other,1
+D1,MILK,MILK_piece_in,piece,1
+D1,MILK,MILK_piece_out,piece,1
+D1,MILK,MILK_piece_reciepe,piece,1
+D1,MILK,MILK_pkt_in,gm,1
+D1,MILK,MILK_pkt_out,gm,1
+D1,MILK,MILK_pkt_reciepe,gm,1
+45,MILK POWDER,MILK POWDER_gm_in,gm,1
+45,MILK POWDER,MILK POWDER_gm_inventory,gm,1
+45,MILK POWDER,MILK POWDER_gm_out,gm,1
+45,MILK POWDER,MILK POWDER_gm_reciepe,gm,1
+45,MILK POWDER,MILK POWDER_kg_in,gm,1
+45,MILK POWDER,MILK POWDER_kg_out,gm,1
+45,MILK POWDER,MILK POWDER_kg_reciepe,gm,1
+45,MILK POWDER,MILK POWDER_ltr_in,,1
+45,MILK POWDER,MILK POWDER_ltr_out,,1
+45,MILK POWDER,MILK POWDER_ltr_reciepe,ml,1
+45,MILK POWDER,MILK POWDER_ml_in,ml,1
+45,MILK POWDER,MILK POWDER_ml_out,ml,1
+45,MILK POWDER,MILK POWDER_ml_reciepe,ml,1
+45,MILK POWDER,MILK POWDER_other_in,other,1
+45,MILK POWDER,MILK POWDER_piece_in,piece,1
+45,MILK POWDER,MILK POWDER_piece_out,piece,1
+45,MILK POWDER,MILK POWDER_piece_reciepe,piece,1
+45,MILK POWDER,MILK POWDER_pkt_in,gm,1
+45,MILK POWDER,MILK POWDER_pkt_out,gm,1
+45,MILK POWDER,MILK POWDER_pkt_reciepe,gm,1
+50,MYONESE,MYONESE_gm_reciepe,gm,1
+50,MYONESE,MYONESE_gm_reciepe,gm,1
+50,MYONESE,MYONESE_kg_reciepe,gm,1
+50,MYONESE,MYONESE_kg_reciepe,gm,1
+50,MYONESE,MYONESE_ltr_in,,1
+50,MYONESE,MYONESE_ltr_in,,1
+50,MYONESE,MYONESE_ltr_out,,1
+50,MYONESE,MYONESE_ltr_out,,1
+50,MYONESE,MYONESE_ltr_reciepe,ml,1
+50,MYONESE,MYONESE_ltr_reciepe,ml,1
+50,MYONESE,MYONESE_piece_reciepe,piece,1
+50,MYONESE,MYONESE_piece_reciepe,piece,1
+50,MYONESE,MYONESE_pkt_reciepe,gm,1
+50,MYONESE,MYONESE_pkt_reciepe,gm,1
+V17,Mint Leaves,Mint Leaves_gm_in,gm,1
+V17,Mint Leaves,Mint Leaves_gm_out,gm,1
+V17,Mint Leaves,Mint Leaves_gm_reciepe,gm,1
+V17,Mint Leaves,Mint Leaves_kg_reciepe,gm,1
+V17,Mint Leaves,Mint Leaves_ltr_in,,1
+V17,Mint Leaves,Mint Leaves_ltr_out,,1
+V17,Mint Leaves,Mint Leaves_ltr_reciepe,ml,1
+V17,Mint Leaves,Mint Leaves_ml_reciepe,ml,1
+V17,Mint Leaves,Mint Leaves_piece_reciepe,piece,1
+V17,Mint Leaves,Mint Leaves_pkt_reciepe,gm,1
+65,NACHOS,NACHOS_box_in,gm,1
+65,NACHOS,NACHOS_gm_in,gm,1
+65,NACHOS,NACHOS_gm_inventory,gm,1
+65,NACHOS,NACHOS_gm_out,gm,1
+65,NACHOS,NACHOS_gm_reciepe,gm,1
+65,NACHOS,NACHOS_kg_in,gm,1
+65,NACHOS,NACHOS_kg_out,gm,1
+65,NACHOS,NACHOS_kg_reciepe,gm,1
+65,NACHOS,NACHOS_ltr_in,,1
+65,NACHOS,NACHOS_ltr_out,,1
+65,NACHOS,NACHOS_ltr_reciepe,ml,1
+65,NACHOS,NACHOS_ml_in,ml,1
+65,NACHOS,NACHOS_ml_out,ml,1
+65,NACHOS,NACHOS_ml_reciepe,ml,1
+65,NACHOS,NACHOS_other_in,other,1
+65,NACHOS,NACHOS_piece_in,piece,1
+65,NACHOS,NACHOS_piece_out,piece,1
+65,NACHOS,NACHOS_piece_reciepe,piece,1
+65,NACHOS,NACHOS_pkt_in,gm,1
+65,NACHOS,NACHOS_pkt_out,gm,1
+65,NACHOS,NACHOS_pkt_reciepe,gm,1
+70B,OREGANO SACHET,OREGANO SACHET_gm_in,gm,1
+70B,OREGANO SACHET,OREGANO SACHET_gm_inventory,gm,1
+70B,OREGANO SACHET,OREGANO SACHET_gm_out,gm,1
+70B,OREGANO SACHET,OREGANO SACHET_gm_reciepe,gm,1
+70B,OREGANO SACHET,OREGANO SACHET_kg_in,gm,1
+70B,OREGANO SACHET,OREGANO SACHET_kg_out,gm,1
+70B,OREGANO SACHET,OREGANO SACHET_kg_reciepe,gm,1
+70B,OREGANO SACHET,OREGANO SACHET_ltr_in,,1
+70B,OREGANO SACHET,OREGANO SACHET_ltr_out,,1
+70B,OREGANO SACHET,OREGANO SACHET_ltr_reciepe,ml,1
+70B,OREGANO SACHET,OREGANO SACHET_ml_in,ml,1
+70B,OREGANO SACHET,OREGANO SACHET_ml_out,ml,1
+70B,OREGANO SACHET,OREGANO SACHET_ml_reciepe,ml,1
+70B,OREGANO SACHET,OREGANO SACHET_other_in,other,1
+70B,OREGANO SACHET,OREGANO SACHET_piece_in,piece,1
+70B,OREGANO SACHET,OREGANO SACHET_piece_out,piece,1
+70B,OREGANO SACHET,OREGANO SACHET_piece_reciepe,piece,1
+70B,OREGANO SACHET,OREGANO SACHET_pkt_in,gm,1
+70B,OREGANO SACHET,OREGANO SACHET_pkt_out,gm,1
+70B,OREGANO SACHET,OREGANO SACHET_pkt_reciepe,gm,1
+V11,Onion,Onion_gm_in,gm,1
+V11,Onion,Onion_gm_out,gm,1
+V11,Onion,Onion_gm_reciepe,gm,1
+V11,Onion,Onion_kg_reciepe,gm,1
+V11,Onion,Onion_ltr_in,,1
+V11,Onion,Onion_ltr_out,,1
+V11,Onion,Onion_ltr_reciepe,ml,1
+V11,Onion,Onion_ml_reciepe,ml,1
+V11,Onion,Onion_piece_reciepe,piece,1
+V11,Onion,Onion_pkt_reciepe,gm,1
+35,Oreo biscuit,Oreo biscuit_gm_in,gm,1
+35,Oreo biscuit,Oreo biscuit_gm_inventory,gm,1
+35,Oreo biscuit,Oreo biscuit_gm_out,gm,1
+35,Oreo biscuit,Oreo biscuit_gm_reciepe,gm,1
+35,Oreo biscuit,Oreo biscuit_kg_in,gm,1
+35,Oreo biscuit,Oreo biscuit_kg_out,gm,1
+35,Oreo biscuit,Oreo biscuit_kg_reciepe,gm,1
+35,Oreo biscuit,Oreo biscuit_ltr_in,,1
+35,Oreo biscuit,Oreo biscuit_ltr_out,,1
+35,Oreo biscuit,Oreo biscuit_ltr_reciepe,ml,1
+35,Oreo biscuit,Oreo biscuit_ml_in,ml,1
+35,Oreo biscuit,Oreo biscuit_ml_out,ml,1
+35,Oreo biscuit,Oreo biscuit_ml_reciepe,ml,1
+35,Oreo biscuit,Oreo biscuit_other_in,other,1
+35,Oreo biscuit,Oreo biscuit_piece_in,piece,1
+35,Oreo biscuit,Oreo biscuit_piece_out,piece,1
+35,Oreo biscuit,Oreo biscuit_piece_reciepe,piece,1
+35,Oreo biscuit,Oreo biscuit_pkt_in,gm,1
+35,Oreo biscuit,Oreo biscuit_pkt_out,gm,1
+35,Oreo biscuit,Oreo biscuit_pkt_reciepe,gm,1
+D3,PANEER,PANEER_gm_in,gm,1
+D3,PANEER,PANEER_gm_inventory,gm,1
+D3,PANEER,PANEER_gm_out,gm,1
+D3,PANEER,PANEER_gm_reciepe,gm,1
+D3,PANEER,PANEER_kg_in,gm,1
+D3,PANEER,PANEER_kg_out,gm,1
+D3,PANEER,PANEER_kg_reciepe,gm,1
+D3,PANEER,PANEER_ltr_in,,1
+D3,PANEER,PANEER_ltr_out,,1
+D3,PANEER,PANEER_ltr_reciepe,ml,1
+D3,PANEER,PANEER_ml_in,ml,1
+D3,PANEER,PANEER_ml_out,ml,1
+D3,PANEER,PANEER_ml_reciepe,ml,1
+D3,PANEER,PANEER_other_in,other,1
+D3,PANEER,PANEER_piece_in,piece,1
+D3,PANEER,PANEER_piece_out,piece,1
+D3,PANEER,PANEER_piece_reciepe,piece,1
+D3,PANEER,PANEER_pkt_in,gm,1
+D3,PANEER,PANEER_pkt_out,gm,1
+D3,PANEER,PANEER_pkt_reciepe,gm,1
+34A,PAPAD,PAPAD_gm_in,gm,1
+34A,PAPAD,PAPAD_gm_inventory,gm,1
+34A,PAPAD,PAPAD_gm_out,gm,1
+34A,PAPAD,PAPAD_gm_reciepe,gm,1
+34A,PAPAD,PAPAD_kg_in,gm,1
+34A,PAPAD,PAPAD_kg_out,gm,1
+34A,PAPAD,PAPAD_kg_reciepe,gm,1
+34A,PAPAD,PAPAD_ltr_in,,1
+34A,PAPAD,PAPAD_ltr_out,,1
+34A,PAPAD,PAPAD_ltr_reciepe,ml,1
+34A,PAPAD,PAPAD_ml_in,ml,1
+34A,PAPAD,PAPAD_ml_out,ml,1
+34A,PAPAD,PAPAD_ml_reciepe,ml,1
+34A,PAPAD,PAPAD_other_in,other,1
+34A,PAPAD,PAPAD_piece_in,piece,1
+34A,PAPAD,PAPAD_piece_out,piece,1
+34A,PAPAD,PAPAD_piece_reciepe,piece,1
+34A,PAPAD,PAPAD_pkt_in,gm,1
+34A,PAPAD,PAPAD_pkt_out,gm,1
+34A,PAPAD,PAPAD_pkt_reciepe,gm,1
+B3,PIZZA BASE,PIZZA BASE_gm_in,gm,1
+B3,PIZZA BASE,PIZZA BASE_gm_inventory,gm,1
+B3,PIZZA BASE,PIZZA BASE_gm_out,gm,1
+B3,PIZZA BASE,PIZZA BASE_gm_reciepe,gm,1
+B3,PIZZA BASE,PIZZA BASE_kg_in,gm,1
+B3,PIZZA BASE,PIZZA BASE_kg_out,gm,1
+B3,PIZZA BASE,PIZZA BASE_kg_reciepe,gm,1
+B3,PIZZA BASE,PIZZA BASE_ltr_in,,1
+B3,PIZZA BASE,PIZZA BASE_ltr_out,,1
+B3,PIZZA BASE,PIZZA BASE_ltr_reciepe,ml,1
+B3,PIZZA BASE,PIZZA BASE_ml_in,ml,1
+B3,PIZZA BASE,PIZZA BASE_ml_out,ml,1
+B3,PIZZA BASE,PIZZA BASE_ml_reciepe,ml,1
+B3,PIZZA BASE,PIZZA BASE_other_in,other,1
+B3,PIZZA BASE,PIZZA BASE_piece_in,piece,1
+B3,PIZZA BASE,PIZZA BASE_piece_out,piece,1
+B3,PIZZA BASE,PIZZA BASE_piece_reciepe,piece,1
+B3,PIZZA BASE,PIZZA BASE_pkt_in,gm,1
+B3,PIZZA BASE,PIZZA BASE_pkt_out,gm,1
+B3,PIZZA BASE,PIZZA BASE_pkt_reciepe,gm,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_gm_inventory,gm,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_kg_in,gm,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_kg_out,gm,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_kg_reciepe,gm,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_ltr_in,,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_ltr_out,,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_ltr_reciepe,ml,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_ml_in,ml,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_ml_out,ml,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_piece_in,piece,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_piece_out,piece,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_pkt_in,gm,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_pkt_out,gm,1
+P102031,PROCESSED CHOLA,PROCESSED CHOLA_pkt_reciepe,gm,1
+18B,RAJMA,RAJMA _gm_in,gm,1
+18B,RAJMA,RAJMA _gm_inventory,gm,1
+18B,RAJMA,RAJMA _gm_out,gm,1
+18B,RAJMA,RAJMA _gm_reciepe,gm,1
+18B,RAJMA,RAJMA _kg_in,gm,1
+18B,RAJMA,RAJMA _kg_out,gm,1
+18B,RAJMA,RAJMA _ml_in,ml,1
+18B,RAJMA,RAJMA _ml_out,ml,1
+18B,RAJMA,RAJMA _other_in,other,1
+18B,RAJMA,RAJMA _piece_in,piece,1
+18B,RAJMA,RAJMA _piece_out,piece,1
+18B,RAJMA,RAJMA _pkt_in,gm,1
+18B,RAJMA,RAJMA _pkt_out,gm,1
+18B,RAJMA,RAJMA_gm_in,gm,1
+18B,RAJMA,RAJMA_gm_inventory,gm,1
+18B,RAJMA,RAJMA_gm_out,gm,1
+18B,RAJMA,RAJMA_gm_reciepe,gm,1
+18B,RAJMA,RAJMA_kg_in,gm,1
+18B,RAJMA,RAJMA_kg_out,gm,1
+18B,RAJMA,RAJMA_kg_reciepe,gm,1
+18B,RAJMA,RAJMA_ltr_in,,1
+18B,RAJMA,RAJMA_ltr_out,,1
+18B,RAJMA,RAJMA_ltr_reciepe,ml,1
+18B,RAJMA,RAJMA_ml_in,ml,1
+18B,RAJMA,RAJMA_ml_out,ml,1
+18B,RAJMA,RAJMA_ml_reciepe,ml,1
+18B,RAJMA,RAJMA_piece_in,piece,1
+18B,RAJMA,RAJMA_piece_out,piece,1
+18B,RAJMA,RAJMA_piece_reciepe,piece,1
+18B,RAJMA,RAJMA_pkt_in,gm,1
+18B,RAJMA,RAJMA_pkt_out,gm,1
+18B,RAJMA,RAJMA_pkt_reciepe,gm,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_gm_in,gm,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_gm_inventory,gm,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_gm_out,gm,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_gm_reciepe,gm,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_kg_in,gm,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_kg_out,gm,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_kg_reciepe,gm,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_ltr_in,,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_ltr_out,,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_ltr_reciepe,ml,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_ml_in,ml,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_ml_out,ml,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_ml_reciepe,ml,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_other_in,other,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_piece_in,piece,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_piece_out,piece,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_piece_reciepe,piece,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_pkt_in,gm,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_pkt_out,gm,1
+75,RICH COOKING CREAM,RICH COOKING CREAM_pkt_reciepe,gm,1
+25A,ROSE WATER,ROSE WATER_gm_in,gm,1
+25A,ROSE WATER,ROSE WATER_gm_inventory,gm,1
+25A,ROSE WATER,ROSE WATER_gm_out,gm,1
+25A,ROSE WATER,ROSE WATER_gm_reciepe,gm,1
+25A,ROSE WATER,ROSE WATER_kg_in,gm,1
+25A,ROSE WATER,ROSE WATER_kg_out,gm,1
+25A,ROSE WATER,ROSE WATER_kg_reciepe,gm,1
+25A,ROSE WATER,ROSE WATER_ltr_in,,1
+25A,ROSE WATER,ROSE WATER_ltr_out,,1
+25A,ROSE WATER,ROSE WATER_ltr_reciepe,ml,1
+25A,ROSE WATER,ROSE WATER_ml_in,ml,1
+25A,ROSE WATER,ROSE WATER_ml_out,ml,1
+25A,ROSE WATER,ROSE WATER_ml_reciepe,ml,1
+25A,ROSE WATER,ROSE WATER_other_in,other,1
+25A,ROSE WATER,ROSE WATER_piece_in,piece,1
+25A,ROSE WATER,ROSE WATER_piece_out,piece,1
+25A,ROSE WATER,ROSE WATER_piece_reciepe,piece,1
+25A,ROSE WATER,ROSE WATER_pkt_in,gm,1
+25A,ROSE WATER,ROSE WATER_pkt_out,gm,1
+25A,ROSE WATER,ROSE WATER_pkt_reciepe,gm,1
+V14,Red Bell Pepper,Red Bell Pepper_gm_in,gm,1
+V14,Red Bell Pepper,Red Bell Pepper_gm_inventory,gm,1
+V14,Red Bell Pepper,Red Bell Pepper_gm_out,gm,1
+V14,Red Bell Pepper,Red Bell Pepper_gm_reciepe,gm,1
+V14,Red Bell Pepper,Red Bell Pepper_kg_in,gm,1
+V14,Red Bell Pepper,Red Bell Pepper_kg_out,gm,1
+V14,Red Bell Pepper,Red Bell Pepper_kg_reciepe,gm,1
+V14,Red Bell Pepper,Red Bell Pepper_ltr_in,,1
+V14,Red Bell Pepper,Red Bell Pepper_ltr_out,,1
+V14,Red Bell Pepper,Red Bell Pepper_ltr_reciepe,ml,1
+V14,Red Bell Pepper,Red Bell Pepper_ml_in,ml,1
+V14,Red Bell Pepper,Red Bell Pepper_ml_out,ml,1
+V14,Red Bell Pepper,Red Bell Pepper_ml_reciepe,ml,1
+V14,Red Bell Pepper,Red Bell Pepper_piece_in,piece,1
+V14,Red Bell Pepper,Red Bell Pepper_piece_out,piece,1
+V14,Red Bell Pepper,Red Bell Pepper_piece_reciepe,piece,1
+V14,Red Bell Pepper,Red Bell Pepper_pkt_in,gm,1
+V14,Red Bell Pepper,Red Bell Pepper_pkt_out,gm,1
+V14,Red Bell Pepper,Red Bell Pepper_pkt_reciepe,gm,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_gm_in,gm,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_gm_inventory,gm,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_gm_out,gm,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_gm_reciepe,gm,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_kg_in,gm,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_kg_out,gm,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_kg_reciepe,gm,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_ltr_in,,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_ltr_out,,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_ltr_reciepe,ml,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_ml_in,ml,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_ml_out,ml,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_ml_reciepe,ml,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_piece_in,piece,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_piece_out,piece,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_piece_reciepe,piece,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_pkt_in,gm,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_pkt_out,gm,1
+SSB,SAMPLE BUTTER,SAMPLE BUTTER_pkt_reciepe,gm,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_gm_in,gm,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_gm_inventory,gm,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_gm_out,gm,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_gm_reciepe,gm,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_kg_in,gm,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_kg_out,gm,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_kg_reciepe,gm,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_ltr_in,,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_ltr_out,,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_ltr_reciepe,ml,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_ml_in,ml,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_ml_out,ml,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_ml_reciepe,ml,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_piece_in,piece,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_piece_out,piece,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_piece_reciepe,piece,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_pkt_in,gm,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_pkt_out,gm,1
+SSF,SAMPLE FLOUR,SAMPLE FLOUR_pkt_reciepe,gm,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_gm_in,gm,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_gm_inventory,gm,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_gm_out,gm,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_gm_reciepe,gm,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_kg_in,gm,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_kg_out,gm,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_kg_reciepe,gm,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_ltr_in,,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_ltr_out,,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_ltr_reciepe,ml,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_ml_in,ml,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_ml_out,ml,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_ml_reciepe,ml,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_piece_in,piece,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_piece_out,piece,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_piece_reciepe,piece,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_pkt_in,gm,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_pkt_out,gm,1
+SSM,SAMPLE MAIDA,SAMPLE MAIDA_pkt_reciepe,gm,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_gm_in,gm,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_gm_inventory,gm,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_gm_out,gm,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_gm_reciepe,gm,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_kg_in,gm,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_kg_out,gm,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_kg_reciepe,gm,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_ltr_in,,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_ltr_out,,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_ltr_reciepe,ml,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_ml_in,ml,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_ml_out,ml,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_ml_reciepe,ml,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_piece_in,piece,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_piece_out,piece,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_piece_reciepe,piece,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_pkt_in,gm,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_pkt_out,gm,1
+SS6,SAMPLE SUGAR,SAMPLE SUGAR_pkt_reciepe,gm,1
+103,SAUNF,SAUNF_gm_in,gm,1
+103,SAUNF,SAUNF_gm_inventory,gm,1
+103,SAUNF,SAUNF_gm_out,gm,1
+103,SAUNF,SAUNF_gm_reciepe,gm,1
+103,SAUNF,SAUNF_kg_in,gm,1
+103,SAUNF,SAUNF_kg_out,gm,1
+103,SAUNF,SAUNF_kg_reciepe,gm,1
+103,SAUNF,SAUNF_ltr_in,,1
+103,SAUNF,SAUNF_ltr_out,,1
+103,SAUNF,SAUNF_ltr_reciepe,ml,1
+103,SAUNF,SAUNF_ml_in,ml,1
+103,SAUNF,SAUNF_ml_out,ml,1
+103,SAUNF,SAUNF_ml_reciepe,ml,1
+103,SAUNF,SAUNF_other_in,other,1
+103,SAUNF,SAUNF_piece_in,piece,1
+103,SAUNF,SAUNF_piece_out,piece,1
+103,SAUNF,SAUNF_piece_reciepe,piece,1
+103,SAUNF,SAUNF_pkt_in,gm,1
+103,SAUNF,SAUNF_pkt_out,gm,1
+103,SAUNF,SAUNF_pkt_reciepe,gm,1
+98,SOFT DRINK,SOFT DRINK_1_portion,portion,1
+19B,SOYABEAN WADI,SOYABEAN WADI_gm_in,gm,1
+19B,SOYABEAN WADI,SOYABEAN WADI_gm_inventory,gm,1
+19B,SOYABEAN WADI,SOYABEAN WADI_gm_out,gm,1
+19B,SOYABEAN WADI,SOYABEAN WADI_gm_reciepe,gm,1
+19B,SOYABEAN WADI,SOYABEAN WADI_kg_in,gm,1
+19B,SOYABEAN WADI,SOYABEAN WADI_kg_out,gm,1
+19B,SOYABEAN WADI,SOYABEAN WADI_kg_reciepe,gm,1
+19B,SOYABEAN WADI,SOYABEAN WADI_ltr_in,,1
+19B,SOYABEAN WADI,SOYABEAN WADI_ltr_out,,1
+19B,SOYABEAN WADI,SOYABEAN WADI_ltr_reciepe,ml,1
+19B,SOYABEAN WADI,SOYABEAN WADI_ml_in,ml,1
+19B,SOYABEAN WADI,SOYABEAN WADI_ml_out,ml,1
+19B,SOYABEAN WADI,SOYABEAN WADI_ml_reciepe,ml,1
+19B,SOYABEAN WADI,SOYABEAN WADI_other_in,other,1
+19B,SOYABEAN WADI,SOYABEAN WADI_piece_in,piece,1
+19B,SOYABEAN WADI,SOYABEAN WADI_piece_out,piece,1
+19B,SOYABEAN WADI,SOYABEAN WADI_piece_reciepe,piece,1
+19B,SOYABEAN WADI,SOYABEAN WADI_pkt_in,gm,1
+19B,SOYABEAN WADI,SOYABEAN WADI_pkt_out,gm,1
+19B,SOYABEAN WADI,SOYABEAN WADI_pkt_reciepe,gm,1
+V20,SPINACH,SPINACH_gm_in,gm,1
+V20,SPINACH,SPINACH_gm_inventory,gm,1
+V20,SPINACH,SPINACH_gm_out,gm,1
+V20,SPINACH,SPINACH_gm_reciepe,gm,1
+V20,SPINACH,SPINACH_kg_in,gm,1
+V20,SPINACH,SPINACH_kg_out,gm,1
+V20,SPINACH,SPINACH_kg_reciepe,gm,1
+V20,SPINACH,SPINACH_ltr_in,,1
+V20,SPINACH,SPINACH_ltr_out,,1
+V20,SPINACH,SPINACH_ltr_reciepe,ml,1
+V20,SPINACH,SPINACH_ml_in,ml,1
+V20,SPINACH,SPINACH_ml_out,ml,1
+V20,SPINACH,SPINACH_ml_reciepe,ml,1
+V20,SPINACH,SPINACH_piece_in,piece,1
+V20,SPINACH,SPINACH_piece_out,piece,1
+V20,SPINACH,SPINACH_piece_reciepe,piece,1
+V20,SPINACH,SPINACH_pkt_in,gm,1
+V20,SPINACH,SPINACH_pkt_out,gm,1
+V20,SPINACH,SPINACH_pkt_reciepe,gm,1
+31A,STARFOOL,STARFOOL_gm_in,gm,1
+31A,STARFOOL,STARFOOL_gm_inventory,gm,1
+31A,STARFOOL,STARFOOL_gm_out,gm,1
+31A,STARFOOL,STARFOOL_gm_reciepe,gm,1
+31A,STARFOOL,STARFOOL_kg_in,gm,1
+31A,STARFOOL,STARFOOL_kg_out,gm,1
+31A,STARFOOL,STARFOOL_kg_reciepe,gm,1
+31A,STARFOOL,STARFOOL_ltr_in,,1
+31A,STARFOOL,STARFOOL_ltr_out,,1
+31A,STARFOOL,STARFOOL_ltr_reciepe,ml,1
+31A,STARFOOL,STARFOOL_ml_in,ml,1
+31A,STARFOOL,STARFOOL_ml_out,ml,1
+31A,STARFOOL,STARFOOL_ml_reciepe,ml,1
+31A,STARFOOL,STARFOOL_other_in,other,1
+31A,STARFOOL,STARFOOL_piece_in,piece,1
+31A,STARFOOL,STARFOOL_piece_out,piece,1
+31A,STARFOOL,STARFOOL_piece_reciepe,piece,1
+31A,STARFOOL,STARFOOL_pkt_in,gm,1
+31A,STARFOOL,STARFOOL_pkt_out,gm,1
+31A,STARFOOL,STARFOOL_pkt_reciepe,gm,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_gm_in,gm,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_gm_inventory,gm,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_gm_out,gm,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_gm_reciepe,gm,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_kg_in,gm,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_kg_out,gm,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_kg_reciepe,gm,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_ltr_in,,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_ltr_out,,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_ltr_reciepe,ml,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_ml_in,ml,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_ml_out,ml,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_ml_reciepe,ml,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_other_in,other,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_piece_in,piece,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_piece_out,piece,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_piece_reciepe,piece,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_pkt_in,gm,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_pkt_out,gm,1
+58A,STRAWBERRY CRUSH,STRAWBERRY CRUSH_pkt_reciepe,gm,1
+69A,SUGAR SACHET,SUGAR SACHET_gm_in,gm,1
+69A,SUGAR SACHET,SUGAR SACHET_gm_inventory,gm,1
+69A,SUGAR SACHET,SUGAR SACHET_gm_out,gm,1
+69A,SUGAR SACHET,SUGAR SACHET_gm_reciepe,gm,1
+69A,SUGAR SACHET,SUGAR SACHET_kg_in,gm,1
+69A,SUGAR SACHET,SUGAR SACHET_kg_out,gm,1
+69A,SUGAR SACHET,SUGAR SACHET_kg_reciepe,gm,1
+69A,SUGAR SACHET,SUGAR SACHET_ltr_in,,1
+69A,SUGAR SACHET,SUGAR SACHET_ltr_out,,1
+69A,SUGAR SACHET,SUGAR SACHET_ltr_reciepe,ml,1
+69A,SUGAR SACHET,SUGAR SACHET_ml_in,ml,1
+69A,SUGAR SACHET,SUGAR SACHET_ml_out,ml,1
+69A,SUGAR SACHET,SUGAR SACHET_ml_reciepe,ml,1
+69A,SUGAR SACHET,SUGAR SACHET_other_in,other,1
+69A,SUGAR SACHET,SUGAR SACHET_piece_in,piece,1
+69A,SUGAR SACHET,SUGAR SACHET_piece_out,piece,1
+69A,SUGAR SACHET,SUGAR SACHET_piece_reciepe,piece,1
+69A,SUGAR SACHET,SUGAR SACHET_pkt_in,gm,1
+69A,SUGAR SACHET,SUGAR SACHET_pkt_out,gm,1
+69A,SUGAR SACHET,SUGAR SACHET_pkt_reciepe,gm,1
+V8,Spring Onion,Spring Onion_gm_in,gm,1
+V8,Spring Onion,Spring Onion_gm_inventory,gm,1
+V8,Spring Onion,Spring Onion_gm_out,gm,1
+V8,Spring Onion,Spring Onion_gm_reciepe,gm,1
+V8,Spring Onion,Spring Onion_kg_in,gm,1
+V8,Spring Onion,Spring Onion_kg_out,gm,1
+V8,Spring Onion,Spring Onion_kg_reciepe,gm,1
+V8,Spring Onion,Spring Onion_ltr_in,,1
+V8,Spring Onion,Spring Onion_ltr_out,,1
+V8,Spring Onion,Spring Onion_ltr_reciepe,ml,1
+V8,Spring Onion,Spring Onion_ml_in,ml,1
+V8,Spring Onion,Spring Onion_ml_out,ml,1
+V8,Spring Onion,Spring Onion_ml_reciepe,ml,1
+V8,Spring Onion,Spring Onion_piece_in,piece,1
+V8,Spring Onion,Spring Onion_piece_out,piece,1
+V8,Spring Onion,Spring Onion_piece_reciepe,piece,1
+V8,Spring Onion,Spring Onion_pkt_in,gm,1
+V8,Spring Onion,Spring Onion_pkt_out,gm,1
+V8,Spring Onion,Spring Onion_pkt_reciepe,gm,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_gm_in,gm,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_gm_inventory,gm,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_gm_out,gm,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_gm_reciepe,gm,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_kg_in,gm,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_kg_out,gm,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_kg_reciepe,gm,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_ltr_in,,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_ltr_out,,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_ltr_reciepe,ml,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_ml_in,ml,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_ml_out,ml,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_ml_reciepe,ml,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_other_in,other,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_piece_in,piece,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_piece_out,piece,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_piece_reciepe,piece,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_pkt_in,gm,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_pkt_out,gm,1
+51B,TOM MAKHAN SAUCE,TOM MAKHAN SAUCE_pkt_reciepe,gm,1
+71B,TOMATO KETCHUP,TOMATO KETCHUP_ml_reciepe,ml,1
+71B,TOMATO KETCHUP,TOMATO KETCHUP_piece_reciepe,piece,1
+71B,TOMATO KETCHUP,TOMATO KETCHUP_pkt_reciepe,gm,1
+71B,TOMATO KETCHUP,tomato ketchup_pkt_in,gm,1
+V18,Tomato,Tomato_gm_in,gm,1
+V18,Tomato,Tomato_gm_out,gm,1
+V18,Tomato,Tomato_ltr_in,,1
+V18,Tomato,Tomato_ltr_out,,1
+V18,Tomato,Tomato_ltr_reciepe,ml,1
+V18,Tomato,Tomato_ml_reciepe,ml,1
+V18,Tomato,Tomato_piece_reciepe,piece,1
+V18,Tomato,Tomato_pkt_reciepe,gm,1
+18A,UDAD SAL,UDAD SAL_gm_in,gm,1
+18A,UDAD SAL,UDAD SAL_gm_inventory,gm,1
+18A,UDAD SAL,UDAD SAL_gm_out,gm,1
+18A,UDAD SAL,UDAD SAL_gm_reciepe,gm,1
+18A,UDAD SAL,UDAD SAL_kg_in,gm,1
+18A,UDAD SAL,UDAD SAL_kg_out,gm,1
+18A,UDAD SAL,UDAD SAL_kg_reciepe,gm,1
+18A,UDAD SAL,UDAD SAL_ltr_in,,1
+18A,UDAD SAL,UDAD SAL_ltr_out,,1
+18A,UDAD SAL,UDAD SAL_ltr_reciepe,ml,1
+18A,UDAD SAL,UDAD SAL_ml_in,ml,1
+18A,UDAD SAL,UDAD SAL_ml_out,ml,1
+18A,UDAD SAL,UDAD SAL_ml_reciepe,ml,1
+18A,UDAD SAL,UDAD SAL_other_in,other,1
+18A,UDAD SAL,UDAD SAL_piece_in,piece,1
+18A,UDAD SAL,UDAD SAL_piece_out,piece,1
+18A,UDAD SAL,UDAD SAL_piece_reciepe,piece,1
+18A,UDAD SAL,UDAD SAL_pkt_in,gm,1
+18A,UDAD SAL,UDAD SAL_pkt_out,gm,1
+18A,UDAD SAL,UDAD SAL_pkt_reciepe,gm,1
+44,VINAGER,VINAGER_gm_in,gm,1
+44,VINAGER,VINAGER_gm_inventory,gm,1
+44,VINAGER,VINAGER_gm_out,gm,1
+44,VINAGER,VINAGER_gm_reciepe,gm,1
+44,VINAGER,VINAGER_kg_in,gm,1
+44,VINAGER,VINAGER_kg_out,gm,1
+44,VINAGER,VINAGER_kg_reciepe,gm,1
+44,VINAGER,VINAGER_ltr_in,,1
+44,VINAGER,VINAGER_ltr_out,,1
+44,VINAGER,VINAGER_ltr_reciepe,ml,1
+44,VINAGER,VINAGER_ml_in,ml,1
+44,VINAGER,VINAGER_ml_out,ml,1
+44,VINAGER,VINAGER_ml_reciepe,ml,1
+44,VINAGER,VINAGER_other_in,other,1
+44,VINAGER,VINAGER_piece_in,piece,1
+44,VINAGER,VINAGER_piece_out,piece,1
+44,VINAGER,VINAGER_piece_reciepe,piece,1
+44,VINAGER,VINAGER_pkt_in,gm,1
+44,VINAGER,VINAGER_pkt_out,gm,1
+44,VINAGER,VINAGER_pkt_reciepe,gm,1
+B1,WHITE BREAD,WHITE BREAD_gm_in,gm,1
+B1,WHITE BREAD,WHITE BREAD_gm_inventory,gm,1
+B1,WHITE BREAD,WHITE BREAD_gm_out,gm,1
+B1,WHITE BREAD,WHITE BREAD_gm_reciepe,gm,1
+B1,WHITE BREAD,WHITE BREAD_kg_in,gm,1
+B1,WHITE BREAD,WHITE BREAD_kg_out,gm,1
+B1,WHITE BREAD,WHITE BREAD_kg_reciepe,gm,1
+B1,WHITE BREAD,WHITE BREAD_ltr_in,,1
+B1,WHITE BREAD,WHITE BREAD_ltr_out,,1
+B1,WHITE BREAD,WHITE BREAD_ltr_reciepe,ml,1
+B1,WHITE BREAD,WHITE BREAD_ml_in,ml,1
+B1,WHITE BREAD,WHITE BREAD_ml_out,ml,1
+B1,WHITE BREAD,WHITE BREAD_ml_reciepe,ml,1
+B1,WHITE BREAD,WHITE BREAD_other_in,other,1
+B1,WHITE BREAD,WHITE BREAD_piece_in,piece,1
+B1,WHITE BREAD,WHITE BREAD_piece_out,piece,1
+B1,WHITE BREAD,WHITE BREAD_piece_reciepe,piece,1
+B1,WHITE BREAD,WHITE BREAD_pkt_in,gm,1
+B1,WHITE BREAD,WHITE BREAD_pkt_out,gm,1
+B1,WHITE BREAD,WHITE BREAD_pkt_reciepe,gm,1
+1,aaata,aaata_gm_in,gm,1
+1,aaata,aaata_gm_inventory,gm,1
+1,aaata,aaata_gm_out,gm,1
+1,aaata,aaata_gm_reciepe,gm,1
+1,aaata,aaata_kg_in,gm,1
+1,aaata,aaata_kg_out,gm,1
+1,aaata,aaata_kg_reciepe,gm,1
+1,aaata,aaata_ltr_in,,1
+1,aaata,aaata_ltr_out,,1
+1,aaata,aaata_ltr_reciepe,ml,1
+1,aaata,aaata_ml_in,ml,1
+1,aaata,aaata_ml_out,ml,1
+1,aaata,aaata_ml_reciepe,ml,1
+1,aaata,aaata_other_in,other,1
+1,aaata,aaata_piece_in,piece,1
+1,aaata,aaata_piece_out,piece,1
+1,aaata,aaata_piece_reciepe,piece,1
+1,aaata,aaata_pkt_in,gm,1
+1,aaata,aaata_pkt_out,gm,1
+1,aaata,aaata_pkt_reciepe,gm,1
+1,aata,aata_bag_in,gm,1
+1,aata,aata_gm_in,gm,1
+1,aata,aata_gm_inventory,gm,1
+1,aata,aata_gm_out,gm,1
+1,aata,aata_gm_reciepe,gm,1
+1,aata,aata_kg_in,gm,1
+1,aata,aata_kg_out,gm,1
+1,aata,aata_kg_reciepe,gm,1
+1,aata,aata_ltr_in,,1
+1,aata,aata_ltr_out,,1
+1,aata,aata_ltr_reciepe,ml,1
+1,aata,aata_ml_in,ml,1
+1,aata,aata_ml_out,ml,1
+1,aata,aata_ml_reciepe,ml,1
+1,aata,aata_other_in,other,1
+1,aata,aata_piece_in,piece,1
+1,aata,aata_piece_out,piece,1
+1,aata,aata_piece_reciepe,piece,1
+1,aata,aata_pkt_in,gm,1
+1,aata,aata_pkt_out,gm,1
+1,aata,aata_pkt_reciepe,gm,1
+40,ajinomoto,ajinomoto_gm_in,gm,2
+40,ajinomoto,ajinomoto_gm_inventory,gm,1
+40,ajinomoto,ajinomoto_gm_out,gm,2
+40,ajinomoto,ajinomoto_gm_reciepe,gm,2
+40,ajinomoto,ajinomoto_kg_in,gm,2
+40,ajinomoto,ajinomoto_kg_out,gm,2
+40,ajinomoto,ajinomoto_kg_reciepe,gm,2
+40,ajinomoto,ajinomoto_ltr_reciepe,ml,1
+40,ajinomoto,ajinomoto_ml_reciepe,ml,1
+40,ajinomoto,ajinomoto_piece_reciepe,piece,1
+40,ajinomoto,ajinomoto_pkt_in,gm,2
+40,ajinomoto,ajinomoto_pkt_out,gm,2
+40,ajinomoto,ajinomoto_pkt_reciepe,gm,2
+77A,aloo tikki,aloo tikki_gm_in,gm,1
+77A,aloo tikki,aloo tikki_gm_inventory,gm,1
+77A,aloo tikki,aloo tikki_gm_out,gm,1
+77A,aloo tikki,aloo tikki_gm_reciepe,gm,1
+77A,aloo tikki,aloo tikki_kg_in,gm,1
+77A,aloo tikki,aloo tikki_kg_out,gm,1
+77A,aloo tikki,aloo tikki_kg_reciepe,gm,1
+77A,aloo tikki,aloo tikki_ltr_in,,1
+77A,aloo tikki,aloo tikki_ltr_out,,1
+77A,aloo tikki,aloo tikki_ltr_reciepe,ml,1
+77A,aloo tikki,aloo tikki_ml_in,ml,1
+77A,aloo tikki,aloo tikki_ml_out,ml,1
+77A,aloo tikki,aloo tikki_ml_reciepe,ml,1
+77A,aloo tikki,aloo tikki_other_in,other,1
+77A,aloo tikki,aloo tikki_piece_in,piece,1
+77A,aloo tikki,aloo tikki_piece_out,piece,1
+77A,aloo tikki,aloo tikki_piece_reciepe,piece,1
+77A,aloo tikki,aloo tikki_pkt_in,piece,1
+77A,aloo tikki,aloo tikki_pkt_out,gm,1
+77A,aloo tikki,aloo tikki_pkt_reciepe,gm,1
+72,amul butter,amul butter_gm_in,gm,1
+72,amul butter,amul butter_gm_inventory,gm,1
+72,amul butter,amul butter_gm_out,gm,1
+72,amul butter,amul butter_kg_in,gm,1
+72,amul butter,amul butter_kg_out,gm,1
+72,amul butter,amul butter_kg_reciepe,gm,1
+72,amul butter,amul butter_ltr_in,,1
+72,amul butter,amul butter_ltr_out,,1
+72,amul butter,amul butter_ltr_reciepe,ml,1
+72,amul butter,amul butter_ml_in,ml,1
+72,amul butter,amul butter_ml_out,ml,1
+72,amul butter,amul butter_other_in,other,1
+72,amul butter,amul butter_pkt_in,gm,1
+72,amul butter,amul butter_pkt_out,gm,1
+72,amul butter,amul butter_pkt_reciepe,gm,1
+39B,black pepper,black pepper_gm_in,gm,1
+39B,black pepper,black pepper_gm_inventory,gm,1
+39B,black pepper,black pepper_gm_out,gm,1
+39B,black pepper,black pepper_gm_reciepe,gm,1
+39B,black pepper,black pepper_kg_in,gm,1
+39B,black pepper,black pepper_kg_out,gm,1
+39B,black pepper,black pepper_kg_reciepe,gm,1
+39B,black pepper,black pepper_ltr_in,,1
+39B,black pepper,black pepper_ltr_out,,1
+39B,black pepper,black pepper_ltr_reciepe,ml,1
+39B,black pepper,black pepper_ml_in,ml,1
+39B,black pepper,black pepper_ml_out,ml,1
+39B,black pepper,black pepper_ml_reciepe,ml,1
+39B,black pepper,black pepper_other_in,other,1
+39B,black pepper,black pepper_piece_in,piece,1
+39B,black pepper,black pepper_piece_out,piece,1
+39B,black pepper,black pepper_piece_reciepe,piece,1
+39B,black pepper,black pepper_pkt_in,gm,1
+39B,black pepper,black pepper_pkt_out,gm,1
+39B,black pepper,black pepper_pkt_reciepe,gm,1
+57B,blue coroco,blue coroco_gm_in,gm,2
+57B,blue coroco,blue coroco_gm_inventory,gm,2
+57B,blue coroco,blue coroco_gm_out,gm,2
+57B,blue coroco,blue coroco_gm_reciepe,gm,2
+57B,blue coroco,blue coroco_kg_in,gm,2
+57B,blue coroco,blue coroco_kg_out,gm,2
+57B,blue coroco,blue coroco_kg_reciepe,gm,2
+57B,blue coroco,blue coroco_ltr_in,,2
+57B,blue coroco,blue coroco_ltr_out,,2
+57B,blue coroco,blue coroco_ltr_reciepe,ml,2
+57B,blue coroco,blue coroco_ml_in,ml,2
+57B,blue coroco,blue coroco_ml_out,ml,2
+57B,blue coroco,blue coroco_ml_reciepe,ml,2
+57B,blue coroco,blue coroco_other_in,other,2
+57B,blue coroco,blue coroco_piece_in,ml,2
+57B,blue coroco,blue coroco_piece_out,piece,2
+57B,blue coroco,blue coroco_piece_reciepe,piece,2
+57B,blue coroco,blue coroco_pkt_in,gm,2
+57B,blue coroco,blue coroco_pkt_out,gm,2
+57B,blue coroco,blue coroco_pkt_reciepe,gm,2
+28B,boondi,boondi_gm_in,gm,1
+28B,boondi,boondi_gm_inventory,gm,1
+28B,boondi,boondi_gm_out,gm,1
+28B,boondi,boondi_gm_reciepe,gm,1
+28B,boondi,boondi_kg_in,gm,1
+28B,boondi,boondi_kg_out,gm,1
+28B,boondi,boondi_kg_reciepe,gm,1
+28B,boondi,boondi_ltr_in,,1
+28B,boondi,boondi_ltr_out,,1
+28B,boondi,boondi_ltr_reciepe,ml,1
+28B,boondi,boondi_ml_in,ml,1
+28B,boondi,boondi_ml_out,ml,1
+28B,boondi,boondi_ml_reciepe,ml,1
+28B,boondi,boondi_other_in,other,1
+28B,boondi,boondi_piece_in,gm,1
+28B,boondi,boondi_piece_out,piece,1
+28B,boondi,boondi_piece_reciepe,piece,1
+28B,boondi,boondi_pkt_in,gm,1
+28B,boondi,boondi_pkt_out,gm,1
+28B,boondi,boondi_pkt_reciepe,gm,1
+29A,bread crum,bread crum_gm_in,gm,1
+29A,bread crum,bread crum_gm_inventory,gm,1
+29A,bread crum,bread crum_gm_out,gm,1
+29A,bread crum,bread crum_gm_reciepe,gm,1
+29A,bread crum,bread crum_kg_in,gm,1
+29A,bread crum,bread crum_kg_out,gm,1
+29A,bread crum,bread crum_kg_reciepe,gm,1
+29A,bread crum,bread crum_ltr_in,,1
+29A,bread crum,bread crum_ltr_out,,1
+29A,bread crum,bread crum_ltr_reciepe,ml,1
+29A,bread crum,bread crum_ml_in,ml,1
+29A,bread crum,bread crum_ml_out,ml,1
+29A,bread crum,bread crum_ml_reciepe,ml,1
+29A,bread crum,bread crum_other_in,other,1
+29A,bread crum,bread crum_piece_in,gm,1
+29A,bread crum,bread crum_piece_out,piece,1
+29A,bread crum,bread crum_piece_reciepe,piece,1
+29A,bread crum,bread crum_pkt_in,gm,1
+29A,bread crum,bread crum_pkt_out,gm,1
+29A,bread crum,bread crum_pkt_reciepe,gm,1
+29A,bread crums,bread crums_gm_in,gm,1
+29A,bread crums,bread crums_gm_inventory,gm,1
+29A,bread crums,bread crums_gm_out,gm,1
+29A,bread crums,bread crums_gm_reciepe,gm,1
+29A,bread crums,bread crums_kg_in,gm,1
+29A,bread crums,bread crums_kg_out,gm,1
+29A,bread crums,bread crums_kg_reciepe,gm,1
+29A,bread crums,bread crums_ltr_in,,1
+29A,bread crums,bread crums_ltr_out,,1
+29A,bread crums,bread crums_ltr_reciepe,ml,1
+29A,bread crums,bread crums_ml_in,ml,1
+29A,bread crums,bread crums_ml_out,ml,1
+29A,bread crums,bread crums_ml_reciepe,ml,1
+29A,bread crums,bread crums_other_in,other,1
+29A,bread crums,bread crums_piece_in,piece,1
+29A,bread crums,bread crums_piece_out,piece,1
+29A,bread crums,bread crums_piece_reciepe,piece,1
+29A,bread crums,bread crums_pkt_in,gm,1
+29A,bread crums,bread crums_pkt_out,gm,1
+29A,bread crums,bread crums_pkt_reciepe,gm,1
+73,butter,butter_gm_in,gm,1
+73,butter,butter_gm_inventory,gm,1
+73,butter,butter_gm_out,gm,1
+73,butter,butter_gm_reciepe,gm,1
+73,butter,butter_kg_in,gm,1
+73,butter,butter_kg_out,gm,1
+73,butter,butter_kg_reciepe,gm,1
+73,butter,butter_ltr_in,,1
+73,butter,butter_ltr_out,,1
+73,butter,butter_ltr_reciepe,ml,1
+73,butter,butter_ml_in,ml,1
+73,butter,butter_ml_out,ml,1
+73,butter,butter_ml_reciepe,ml,1
+73,butter,butter_other_in,other,1
+73,butter,butter_piece_in,gm,1
+73,butter,butter_piece_out,piece,1
+73,butter,butter_piece_reciepe,piece,1
+73,butter,butter_pkt_in,gm,1
+73,butter,butter_pkt_out,gm,1
+73,butter,butter_pkt_reciepe,gm,1
+21B,chaat masala,chaat masala_gm_in,gm,1
+21B,chaat masala,chaat masala_gm_inventory,gm,1
+21B,chaat masala,chaat masala_gm_out,gm,1
+21B,chaat masala,chaat masala_gm_reciepe,gm,1
+21B,chaat masala,chaat masala_kg_in,gm,1
+21B,chaat masala,chaat masala_kg_out,gm,1
+21B,chaat masala,chaat masala_kg_reciepe,gm,1
+21B,chaat masala,chaat masala_ltr_in,,1
+21B,chaat masala,chaat masala_ltr_out,,1
+21B,chaat masala,chaat masala_ltr_reciepe,ml,1
+21B,chaat masala,chaat masala_ml_in,ml,1
+21B,chaat masala,chaat masala_ml_out,ml,1
+21B,chaat masala,chaat masala_ml_reciepe,ml,1
+21B,chaat masala,chaat masala_other_in,other,1
+21B,chaat masala,chaat masala_piece_in,piece,1
+21B,chaat masala,chaat masala_piece_out,piece,1
+21B,chaat masala,chaat masala_piece_reciepe,piece,1
+21B,chaat masala,chaat masala_pkt_in,gm,1
+21B,chaat masala,chaat masala_pkt_out,gm,1
+21B,chaat masala,chaat masala_pkt_reciepe,gm,1
+17A,chana dal,chana dal_gm_in,gm,1
+17A,chana dal,chana dal_gm_inventory,gm,1
+17A,chana dal,chana dal_gm_out,gm,1
+17A,chana dal,chana dal_gm_reciepe,gm,1
+17A,chana dal,chana dal_kg_in,gm,1
+17A,chana dal,chana dal_kg_out,gm,1
+17A,chana dal,chana dal_kg_reciepe,gm,1
+17A,chana dal,chana dal_ltr_in,,1
+17A,chana dal,chana dal_ltr_out,,1
+17A,chana dal,chana dal_ltr_reciepe,ml,1
+17A,chana dal,chana dal_ml_in,ml,1
+17A,chana dal,chana dal_ml_out,ml,1
+17A,chana dal,chana dal_ml_reciepe,ml,1
+17A,chana dal,chana dal_other_in,other,1
+17A,chana dal,chana dal_piece_in,piece,1
+17A,chana dal,chana dal_piece_out,piece,1
+17A,chana dal,chana dal_piece_reciepe,piece,1
+17A,chana dal,chana dal_pkt_in,gm,1
+17A,chana dal,chana dal_pkt_out,gm,1
+17A,chana dal,chana dal_pkt_reciepe,gm,1
+21B,chat amsala,chat amsala_gm_in,gm,1
+21B,chat amsala,chat amsala_gm_inventory,gm,1
+21B,chat amsala,chat amsala_gm_out,gm,1
+21B,chat amsala,chat amsala_gm_reciepe,gm,1
+21B,chat amsala,chat amsala_kg_in,gm,1
+21B,chat amsala,chat amsala_kg_out,gm,1
+21B,chat amsala,chat amsala_kg_reciepe,gm,1
+21B,chat amsala,chat amsala_ltr_in,,1
+21B,chat amsala,chat amsala_ltr_out,,1
+21B,chat amsala,chat amsala_ltr_reciepe,ml,1
+21B,chat amsala,chat amsala_ml_in,ml,1
+21B,chat amsala,chat amsala_ml_out,ml,1
+21B,chat amsala,chat amsala_ml_reciepe,ml,1
+21B,chat amsala,chat amsala_other_in,other,1
+21B,chat amsala,chat amsala_piece_in,piece,1
+21B,chat amsala,chat amsala_piece_out,piece,1
+21B,chat amsala,chat amsala_piece_reciepe,piece,1
+21B,chat amsala,chat amsala_pkt_in,gm,1
+21B,chat amsala,chat amsala_pkt_out,gm,1
+21B,chat amsala,chat amsala_pkt_reciepe,gm,1
+21B,chat masala,chat masala_gm_in,gm,1
+21B,chat masala,chat masala_gm_inventory,gm,1
+21B,chat masala,chat masala_gm_out,gm,1
+21B,chat masala,chat masala_gm_reciepe,gm,1
+21B,chat masala,chat masala_kg_in,gm,1
+21B,chat masala,chat masala_kg_out,gm,1
+21B,chat masala,chat masala_kg_reciepe,gm,1
+21B,chat masala,chat masala_ltr_in,,1
+21B,chat masala,chat masala_ltr_out,,1
+21B,chat masala,chat masala_ltr_reciepe,ml,1
+21B,chat masala,chat masala_ml_in,ml,1
+21B,chat masala,chat masala_ml_out,ml,1
+21B,chat masala,chat masala_ml_reciepe,ml,1
+21B,chat masala,chat masala_other_in,other,1
+21B,chat masala,chat masala_piece_in,piece,1
+21B,chat masala,chat masala_piece_out,piece,1
+21B,chat masala,chat masala_piece_reciepe,piece,1
+21B,chat masala,chat masala_pkt_in,gm,1
+21B,chat masala,chat masala_pkt_out,gm,1
+21B,chat masala,chat masala_pkt_reciepe,gm,1
+82A,cheese 1pc,cheese 1pc_gm_in,gm,1
+82A,cheese 1pc,cheese 1pc_gm_inventory,gm,1
+82A,cheese 1pc,cheese 1pc_gm_out,gm,1
+82A,cheese 1pc,cheese 1pc_gm_reciepe,gm,1
+82A,cheese 1pc,cheese 1pc_kg_in,gm,1
+82A,cheese 1pc,cheese 1pc_kg_out,gm,1
+82A,cheese 1pc,cheese 1pc_kg_reciepe,gm,1
+82A,cheese 1pc,cheese 1pc_ltr_in,,1
+82A,cheese 1pc,cheese 1pc_ltr_out,,1
+82A,cheese 1pc,cheese 1pc_ltr_reciepe,ml,1
+82A,cheese 1pc,cheese 1pc_ml_in,ml,1
+82A,cheese 1pc,cheese 1pc_ml_out,ml,1
+82A,cheese 1pc,cheese 1pc_ml_reciepe,ml,1
+82A,cheese 1pc,cheese 1pc_other_in,other,1
+82A,cheese 1pc,cheese 1pc_piece_in,piece,1
+82A,cheese 1pc,cheese 1pc_piece_out,piece,1
+82A,cheese 1pc,cheese 1pc_piece_reciepe,piece,1
+82A,cheese 1pc,cheese 1pc_pkt_in,gm,1
+82A,cheese 1pc,cheese 1pc_pkt_out,gm,1
+82A,cheese 1pc,cheese 1pc_pkt_reciepe,gm,1
+81,cheese processed,cheese processed_gm_in,gm,1
+81,cheese processed,cheese processed_gm_inventory,gm,1
+81,cheese processed,cheese processed_gm_out,gm,1
+81,cheese processed,cheese processed_gm_reciepe,gm,1
+81,cheese processed,cheese processed_kg_in,gm,1
+81,cheese processed,cheese processed_kg_out,gm,1
+81,cheese processed,cheese processed_kg_reciepe,gm,1
+81,cheese processed,cheese processed_ltr_in,,1
+81,cheese processed,cheese processed_ltr_out,,1
+81,cheese processed,cheese processed_ltr_reciepe,ml,1
+81,cheese processed,cheese processed_ml_in,ml,1
+81,cheese processed,cheese processed_ml_out,ml,1
+81,cheese processed,cheese processed_ml_reciepe,ml,1
+81,cheese processed,cheese processed_other_in,other,1
+81,cheese processed,cheese processed_piece_in,piece,1
+81,cheese processed,cheese processed_piece_out,piece,1
+81,cheese processed,cheese processed_piece_reciepe,piece,1
+81,cheese processed,cheese processed_pkt_in,piece,1
+81,cheese processed,cheese processed_pkt_out,gm,1
+81,cheese processed,cheese processed_pkt_reciepe,gm,1
+82A,cheese slice,cheese slice_gm_in,gm,1
+82A,cheese slice,cheese slice_gm_inventory,gm,1
+82A,cheese slice,cheese slice_gm_out,gm,1
+82A,cheese slice,cheese slice_gm_reciepe,gm,1
+82A,cheese slice,cheese slice_kg_in,gm,1
+82A,cheese slice,cheese slice_kg_out,gm,1
+82A,cheese slice,cheese slice_kg_reciepe,gm,1
+82A,cheese slice,cheese slice_ltr_in,,1
+82A,cheese slice,cheese slice_ltr_out,,1
+82A,cheese slice,cheese slice_ltr_reciepe,ml,1
+82A,cheese slice,cheese slice_ml_in,ml,1
+82A,cheese slice,cheese slice_ml_out,ml,1
+82A,cheese slice,cheese slice_ml_reciepe,ml,1
+82A,cheese slice,cheese slice_piece_in,piece,1
+82A,cheese slice,cheese slice_piece_out,piece,1
+82A,cheese slice,cheese slice_piece_reciepe,gm,1
+82A,cheese slice,cheese slice_pkt_in,gm,1
+82A,cheese slice,cheese slice_pkt_out,gm,1
+82A,cheese slice,cheese slice_pkt_reciepe,gm,1
+16B,chhola,chhola_gm_in,gm,1
+16B,chhola,chhola_gm_inventory,gm,1
+16B,chhola,chhola_gm_out,gm,1
+16B,chhola,chhola_gm_reciepe,gm,1
+16B,chhola,chhola_kg_in,gm,1
+16B,chhola,chhola_kg_out,gm,1
+16B,chhola,chhola_kg_reciepe,gm,1
+16B,chhola,chhola_ltr_in,,1
+16B,chhola,chhola_ltr_out,,1
+16B,chhola,chhola_ltr_reciepe,ml,1
+16B,chhola,chhola_ml_in,ml,1
+16B,chhola,chhola_ml_out,ml,1
+16B,chhola,chhola_ml_reciepe,ml,1
+16B,chhola,chhola_other_in,other,1
+16B,chhola,chhola_piece_in,piece,1
+16B,chhola,chhola_piece_out,piece,1
+16B,chhola,chhola_piece_reciepe,piece,1
+16B,chhola,chhola_pkt_in,gm,1
+16B,chhola,chhola_pkt_out,gm,1
+16B,chhola,chhola_pkt_reciepe,gm,1
+61,chilli flake,chilli flake_gm_in,gm,1
+61,chilli flake,chilli flake_gm_inventory,gm,1
+61,chilli flake,chilli flake_gm_out,gm,1
+61,chilli flake,chilli flake_gm_reciepe,gm,1
+61,chilli flake,chilli flake_kg_in,gm,1
+61,chilli flake,chilli flake_kg_out,gm,1
+61,chilli flake,chilli flake_kg_reciepe,gm,1
+61,chilli flake,chilli flake_ltr_in,,1
+61,chilli flake,chilli flake_ltr_out,,1
+61,chilli flake,chilli flake_ltr_reciepe,ml,1
+61,chilli flake,chilli flake_ml_in,ml,1
+61,chilli flake,chilli flake_ml_out,ml,1
+61,chilli flake,chilli flake_ml_reciepe,ml,1
+61,chilli flake,chilli flake_other_in,other,1
+61,chilli flake,chilli flake_piece_in,piece,1
+61,chilli flake,chilli flake_piece_out,piece,1
+61,chilli flake,chilli flake_piece_reciepe,piece,1
+61,chilli flake,chilli flake_pkt_in,gm,1
+61,chilli flake,chilli flake_pkt_out,gm,1
+61,chilli flake,chilli flake_pkt_reciepe,gm,1
+61 62,chilli oregano,chilli oregano_gm_in,gm,1
+61 62,chilli oregano,chilli oregano_gm_inventory,gm,1
+61 62,chilli oregano,chilli oregano_gm_out,gm,1
+61 62,chilli oregano,chilli oregano_gm_reciepe,gm,1
+61 62,chilli oregano,chilli oregano_kg_in,gm,1
+61 62,chilli oregano,chilli oregano_kg_out,gm,1
+61 62,chilli oregano,chilli oregano_kg_reciepe,gm,1
+61 62,chilli oregano,chilli oregano_ltr_in,,1
+61 62,chilli oregano,chilli oregano_ltr_out,,1
+61 62,chilli oregano,chilli oregano_ltr_reciepe,ml,1
+61 62,chilli oregano,chilli oregano_ml_in,ml,1
+61 62,chilli oregano,chilli oregano_ml_out,ml,1
+61 62,chilli oregano,chilli oregano_ml_reciepe,ml,1
+61 62,chilli oregano,chilli oregano_other_in,other,1
+61 62,chilli oregano,chilli oregano_piece_in,piece,1
+61 62,chilli oregano,chilli oregano_piece_out,piece,1
+61 62,chilli oregano,chilli oregano_piece_reciepe,piece,1
+61 62,chilli oregano,chilli oregano_pkt_in,gm,1
+61 62,chilli oregano,chilli oregano_pkt_out,gm,1
+61 62,chilli oregano,chilli oregano_pkt_reciepe,gm,1
+61,chillly flakes,chillly flakes_gm_in,gm,1
+61,chillly flakes,chillly flakes_gm_inventory,gm,1
+61,chillly flakes,chillly flakes_gm_out,gm,1
+61,chillly flakes,chillly flakes_gm_reciepe,gm,1
+61,chillly flakes,chillly flakes_kg_in,gm,1
+61,chillly flakes,chillly flakes_kg_out,gm,1
+61,chillly flakes,chillly flakes_kg_reciepe,gm,1
+61,chillly flakes,chillly flakes_ltr_in,,1
+61,chillly flakes,chillly flakes_ltr_out,,1
+61,chillly flakes,chillly flakes_ltr_reciepe,ml,1
+61,chillly flakes,chillly flakes_ml_in,ml,1
+61,chillly flakes,chillly flakes_ml_out,ml,1
+61,chillly flakes,chillly flakes_ml_reciepe,ml,1
+61,chillly flakes,chillly flakes_other_in,other,1
+61,chillly flakes,chillly flakes_piece_in,piece,1
+61,chillly flakes,chillly flakes_piece_out,piece,1
+61,chillly flakes,chillly flakes_piece_reciepe,piece,1
+61,chillly flakes,chillly flakes_pkt_in,gm,1
+61,chillly flakes,chillly flakes_pkt_out,gm,1
+61,chillly flakes,chillly flakes_pkt_reciepe,gm,1
+61 62,chilly + oregano,chilly + oregano_gm_in,gm,1
+61 62,chilly + oregano,chilly + oregano_gm_inventory,gm,1
+61 62,chilly + oregano,chilly + oregano_gm_out,gm,1
+61 62,chilly + oregano,chilly + oregano_gm_reciepe,gm,1
+61 62,chilly + oregano,chilly + oregano_kg_in,gm,1
+61 62,chilly + oregano,chilly + oregano_kg_out,gm,1
+61 62,chilly + oregano,chilly + oregano_kg_reciepe,gm,1
+61 62,chilly + oregano,chilly + oregano_ltr_in,,1
+61 62,chilly + oregano,chilly + oregano_ltr_out,,1
+61 62,chilly + oregano,chilly + oregano_ltr_reciepe,ml,1
+61 62,chilly + oregano,chilly + oregano_ml_in,ml,1
+61 62,chilly + oregano,chilly + oregano_ml_out,ml,1
+61 62,chilly + oregano,chilly + oregano_ml_reciepe,ml,1
+61 62,chilly + oregano,chilly + oregano_other_in,other,1
+61 62,chilly + oregano,chilly + oregano_piece_in,piece,1
+61 62,chilly + oregano,chilly + oregano_piece_out,piece,1
+61 62,chilly + oregano,chilly + oregano_piece_reciepe,piece,1
+61 62,chilly + oregano,chilly + oregano_pkt_in,gm,1
+61 62,chilly + oregano,chilly + oregano_pkt_out,gm,1
+61 62,chilly + oregano,chilly + oregano_pkt_reciepe,gm,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_gm_in,gm,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_gm_inventory,gm,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_gm_out,gm,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_gm_reciepe,gm,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_kg_in,gm,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_kg_out,gm,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_kg_reciepe,gm,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_ltr_in,,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_ltr_out,,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_ltr_reciepe,ml,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_ml_in,ml,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_ml_out,ml,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_ml_reciepe,ml,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_other_in,other,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_piece_in,piece,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_piece_out,piece,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_piece_reciepe,piece,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_pkt_in,gm,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_pkt_out,gm,1
+61  62,chilly flakes+oregano,chilly flakes+oregano_pkt_reciepe,gm,1
+10,chilly powder,chilly powder_gm_in,gm,1
+10,chilly powder,chilly powder_gm_inventory,gm,1
+10,chilly powder,chilly powder_gm_out,gm,1
+10,chilly powder,chilly powder_gm_reciepe,gm,1
+10,chilly powder,chilly powder_kg_in,gm,1
+10,chilly powder,chilly powder_kg_out,gm,1
+10,chilly powder,chilly powder_kg_reciepe,gm,1
+10,chilly powder,chilly powder_ltr_in,,1
+10,chilly powder,chilly powder_ltr_out,,1
+10,chilly powder,chilly powder_ltr_reciepe,ml,1
+10,chilly powder,chilly powder_ml_in,ml,1
+10,chilly powder,chilly powder_ml_out,ml,1
+10,chilly powder,chilly powder_ml_reciepe,ml,1
+10,chilly powder,chilly powder_other_in,other,1
+10,chilly powder,chilly powder_piece_in,piece,1
+10,chilly powder,chilly powder_piece_out,piece,1
+10,chilly powder,chilly powder_piece_reciepe,piece,1
+10,chilly powder,chilly powder_pkt_in,gm,1
+10,chilly powder,chilly powder_pkt_out,gm,1
+10,chilly powder,chilly powder_pkt_reciepe,gm,1
+61 62,chilly+oregano,chilly+oregano_gm_in,gm,1
+61 62,chilly+oregano,chilly+oregano_gm_inventory,gm,1
+61 62,chilly+oregano,chilly+oregano_gm_out,gm,1
+61 62,chilly+oregano,chilly+oregano_gm_reciepe,gm,1
+61 62,chilly+oregano,chilly+oregano_kg_in,gm,1
+61 62,chilly+oregano,chilly+oregano_kg_out,gm,1
+61 62,chilly+oregano,chilly+oregano_kg_reciepe,gm,1
+61 62,chilly+oregano,chilly+oregano_ltr_in,,1
+61 62,chilly+oregano,chilly+oregano_ltr_out,,1
+61 62,chilly+oregano,chilly+oregano_ltr_reciepe,ml,1
+61 62,chilly+oregano,chilly+oregano_ml_in,ml,1
+61 62,chilly+oregano,chilly+oregano_ml_out,ml,1
+61 62,chilly+oregano,chilly+oregano_ml_reciepe,ml,1
+61 62,chilly+oregano,chilly+oregano_other_in,other,1
+61 62,chilly+oregano,chilly+oregano_piece_in,piece,1
+61 62,chilly+oregano,chilly+oregano_piece_out,piece,1
+61 62,chilly+oregano,chilly+oregano_piece_reciepe,piece,1
+61 62,chilly+oregano,chilly+oregano_pkt_in,gm,1
+61 62,chilly+oregano,chilly+oregano_pkt_out,gm,1
+61 62,chilly+oregano,chilly+oregano_pkt_reciepe,gm,1
+47,coffee powder,coffee powder_gm_in,gm,1
+47,coffee powder,coffee powder_gm_inventory,gm,1
+47,coffee powder,coffee powder_gm_out,gm,1
+47,coffee powder,coffee powder_gm_reciepe,gm,1
+47,coffee powder,coffee powder_kg_in,gm,1
+47,coffee powder,coffee powder_kg_out,gm,1
+47,coffee powder,coffee powder_kg_reciepe,gm,1
+47,coffee powder,coffee powder_ltr_in,,1
+47,coffee powder,coffee powder_ltr_out,,1
+47,coffee powder,coffee powder_ltr_reciepe,ml,1
+47,coffee powder,coffee powder_ml_in,ml,1
+47,coffee powder,coffee powder_ml_out,ml,1
+47,coffee powder,coffee powder_ml_reciepe,ml,1
+47,coffee powder,coffee powder_piece_in,piece,1
+47,coffee powder,coffee powder_piece_out,piece,1
+47,coffee powder,coffee powder_piece_reciepe,piece,1
+47,coffee powder,coffee powder_pkt_in,gm,1
+47,coffee powder,coffee powder_pkt_out,gm,1
+47,coffee powder,coffee powder_pkt_reciepe,gm,1
+98,coke,coke_gm_in,gm,1
+98,coke,coke_gm_inventory,gm,1
+98,coke,coke_gm_out,gm,1
+98,coke,coke_gm_reciepe,gm,1
+98,coke,coke_kg_in,gm,1
+98,coke,coke_kg_out,gm,1
+98,coke,coke_kg_reciepe,gm,1
+98,coke,coke_ltr_in,,1
+98,coke,coke_ltr_out,,1
+98,coke,coke_ltr_reciepe,ml,1
+98,coke,coke_ml_in,ml,1
+98,coke,coke_ml_out,ml,1
+98,coke,coke_ml_reciepe,ml,1
+98,coke,coke_other_in,other,1
+98,coke,coke_piece_in,piece,1
+98,coke,coke_piece_out,piece,1
+98,coke,coke_piece_reciepe,piece,1
+98,coke,coke_pkt_in,gm,1
+98,coke,coke_pkt_out,gm,1
+98,coke,coke_pkt_reciepe,gm,1
+80,corn,corn_gm_in,gm,1
+80,corn,corn_gm_inventory,gm,1
+80,corn,corn_gm_out,gm,1
+80,corn,corn_gm_reciepe,gm,1
+80,corn,corn_kg_in,gm,1
+80,corn,corn_kg_out,gm,1
+80,corn,corn_kg_reciepe,gm,1
+80,corn,corn_ltr_in,,1
+80,corn,corn_ltr_out,,1
+80,corn,corn_ltr_reciepe,ml,1
+80,corn,corn_ml_in,ml,1
+80,corn,corn_ml_out,ml,1
+80,corn,corn_ml_reciepe,ml,1
+80,corn,corn_other_in,other,1
+80,corn,corn_piece_in,piece,1
+80,corn,corn_piece_out,piece,1
+80,corn,corn_piece_reciepe,piece,1
+80,corn,corn_pkt_in,gm,1
+80,corn,corn_pkt_out,gm,1
+80,corn,corn_pkt_reciepe,gm,1
+36A,corn floor,corn floor_gm_in,gm,1
+36A,corn floor,corn floor_gm_inventory,gm,1
+36A,corn floor,corn floor_gm_out,gm,1
+36A,corn floor,corn floor_gm_reciepe,gm,1
+36A,corn floor,corn floor_kg_in,gm,1
+36A,corn floor,corn floor_kg_out,gm,1
+36A,corn floor,corn floor_kg_reciepe,gm,1
+36A,corn floor,corn floor_ltr_in,,1
+36A,corn floor,corn floor_ltr_out,,1
+36A,corn floor,corn floor_ltr_reciepe,ml,1
+36A,corn floor,corn floor_ml_in,ml,1
+36A,corn floor,corn floor_ml_out,ml,1
+36A,corn floor,corn floor_ml_reciepe,ml,1
+36A,corn floor,corn floor_other_in,other,1
+36A,corn floor,corn floor_piece_in,piece,1
+36A,corn floor,corn floor_piece_out,piece,1
+36A,corn floor,corn floor_piece_reciepe,piece,1
+36A,corn floor,corn floor_pkt_in,gm,1
+36A,corn floor,corn floor_pkt_out,gm,1
+36A,corn floor,corn floor_pkt_reciepe,gm,1
+36A,corn flor,corn flor_gm_in,gm,1
+36A,corn flor,corn flor_gm_inventory,gm,1
+36A,corn flor,corn flor_gm_out,gm,1
+36A,corn flor,corn flor_gm_reciepe,gm,1
+36A,corn flor,corn flor_kg_in,gm,1
+36A,corn flor,corn flor_kg_out,gm,1
+36A,corn flor,corn flor_kg_reciepe,gm,1
+36A,corn flor,corn flor_ltr_in,,1
+36A,corn flor,corn flor_ltr_out,,1
+36A,corn flor,corn flor_ltr_reciepe,ml,1
+36A,corn flor,corn flor_ml_in,ml,1
+36A,corn flor,corn flor_ml_out,ml,1
+36A,corn flor,corn flor_ml_reciepe,ml,1
+36A,corn flor,corn flor_other_in,other,1
+36A,corn flor,corn flor_piece_in,piece,1
+36A,corn flor,corn flor_piece_out,piece,1
+36A,corn flor,corn flor_piece_reciepe,piece,1
+36A,corn flor,corn flor_pkt_in,gm,1
+36A,corn flor,corn flor_pkt_out,gm,1
+36A,corn flor,corn flor_pkt_reciepe,gm,1
+75,cream,cream_gm_in,gm,1
+75,cream,cream_gm_inventory,gm,1
+75,cream,cream_gm_out,gm,1
+75,cream,cream_gm_reciepe,gm,1
+75,cream,cream_kg_in,gm,1
+75,cream,cream_kg_out,gm,1
+75,cream,cream_kg_reciepe,gm,1
+75,cream,cream_ltr_in,,1
+75,cream,cream_ltr_out,,1
+75,cream,cream_ltr_reciepe,ml,1
+75,cream,cream_ml_in,ml,1
+75,cream,cream_ml_out,ml,1
+75,cream,cream_ml_reciepe,ml,1
+75,cream,cream_other_in,other,1
+75,cream,cream_piece_in,piece,1
+75,cream,cream_piece_out,piece,1
+75,cream,cream_piece_reciepe,piece,1
+75,cream,cream_pkt_in,gm,1
+75,cream,cream_pkt_out,gm,1
+75,cream,cream_pkt_reciepe,gm,1
+75,cream 30,cream 30_gm_in,gm,1
+75,cream 30,cream 30_gm_inventory,gm,1
+75,cream 30,cream 30_gm_out,gm,1
+75,cream 30,cream 30_gm_reciepe,gm,1
+75,cream 30,cream 30_kg_in,gm,1
+75,cream 30,cream 30_kg_out,gm,1
+75,cream 30,cream 30_kg_reciepe,gm,1
+75,cream 30,cream 30_ltr_in,,1
+75,cream 30,cream 30_ltr_out,,1
+75,cream 30,cream 30_ltr_reciepe,ml,1
+75,cream 30,cream 30_ml_in,ml,1
+75,cream 30,cream 30_ml_out,ml,1
+75,cream 30,cream 30_ml_reciepe,ml,1
+75,cream 30,cream 30_other_in,other,1
+75,cream 30,cream 30_piece_in,piece,1
+75,cream 30,cream 30_piece_out,piece,1
+75,cream 30,cream 30_piece_reciepe,piece,1
+75,cream 30,cream 30_pkt_in,gm,1
+75,cream 30,cream 30_pkt_out,gm,1
+75,cream 30,cream 30_pkt_reciepe,gm,1
+62,cregano,cregano_gm_in,gm,1
+62,cregano,cregano_gm_inventory,gm,1
+62,cregano,cregano_gm_out,gm,1
+62,cregano,cregano_gm_reciepe,gm,1
+62,cregano,cregano_kg_in,gm,1
+62,cregano,cregano_kg_out,gm,1
+62,cregano,cregano_kg_reciepe,gm,1
+62,cregano,cregano_ltr_in,,1
+62,cregano,cregano_ltr_out,,1
+62,cregano,cregano_ltr_reciepe,ml,1
+62,cregano,cregano_ml_in,ml,1
+62,cregano,cregano_ml_out,ml,1
+62,cregano,cregano_ml_reciepe,ml,1
+62,cregano,cregano_other_in,other,1
+62,cregano,cregano_piece_in,piece,1
+62,cregano,cregano_piece_out,piece,1
+62,cregano,cregano_piece_reciepe,piece,1
+62,cregano,cregano_pkt_in,gm,1
+62,cregano,cregano_pkt_out,gm,1
+62,cregano,cregano_pkt_reciepe,gm,1
+5,dal,dal_gm_in,gm,1
+5,dal,dal_gm_inventory,gm,1
+5,dal,dal_gm_out,gm,1
+5,dal,dal_gm_reciepe,gm,1
+5,dal,dal_kg_in,gm,1
+5,dal,dal_kg_out,gm,1
+5,dal,dal_kg_reciepe,gm,1
+5,dal,dal_ltr_in,,1
+5,dal,dal_ltr_out,,1
+5,dal,dal_ltr_reciepe,ml,1
+5,dal,dal_ml_in,ml,1
+5,dal,dal_ml_out,ml,1
+5,dal,dal_ml_reciepe,ml,1
+5,dal,dal_other_in,other,1
+5,dal,dal_piece_in,piece,1
+5,dal,dal_piece_out,piece,1
+5,dal,dal_piece_reciepe,piece,1
+5,dal,dal_pkt_in,gm,1
+5,dal,dal_pkt_out,gm,1
+5,dal,dal_pkt_reciepe,gm,1
+12,"degi ,mirch","degi ,mirch_gm_in",gm,1
+12,"degi ,mirch","degi ,mirch_gm_inventory",gm,1
+12,"degi ,mirch","degi ,mirch_gm_out",gm,1
+12,"degi ,mirch","degi ,mirch_gm_reciepe",gm,1
+12,"degi ,mirch","degi ,mirch_kg_in",gm,1
+12,"degi ,mirch","degi ,mirch_kg_out",gm,1
+12,"degi ,mirch","degi ,mirch_kg_reciepe",gm,1
+12,"degi ,mirch","degi ,mirch_ltr_in",,1
+12,"degi ,mirch","degi ,mirch_ltr_out",,1
+12,"degi ,mirch","degi ,mirch_ltr_reciepe",ml,1
+12,"degi ,mirch","degi ,mirch_ml_in",ml,1
+12,"degi ,mirch","degi ,mirch_ml_out",ml,1
+12,"degi ,mirch","degi ,mirch_ml_reciepe",ml,1
+12,"degi ,mirch","degi ,mirch_other_in",other,1
+12,"degi ,mirch","degi ,mirch_piece_in",piece,1
+12,"degi ,mirch","degi ,mirch_piece_out",piece,1
+12,"degi ,mirch","degi ,mirch_piece_reciepe",piece,1
+12,"degi ,mirch","degi ,mirch_pkt_in",gm,1
+12,"degi ,mirch","degi ,mirch_pkt_out",gm,1
+12,"degi ,mirch","degi ,mirch_pkt_reciepe",gm,1
+12,degi miorch,degi miorch_gm_in,gm,1
+12,degi miorch,degi miorch_gm_inventory,gm,1
+12,degi miorch,degi miorch_gm_out,gm,1
+12,degi miorch,degi miorch_gm_reciepe,gm,1
+12,degi miorch,degi miorch_kg_in,gm,1
+12,degi miorch,degi miorch_kg_out,gm,1
+12,degi miorch,degi miorch_kg_reciepe,gm,1
+12,degi miorch,degi miorch_ltr_in,,1
+12,degi miorch,degi miorch_ltr_out,,1
+12,degi miorch,degi miorch_ltr_reciepe,ml,1
+12,degi miorch,degi miorch_ml_in,ml,1
+12,degi miorch,degi miorch_ml_out,ml,1
+12,degi miorch,degi miorch_ml_reciepe,ml,1
+12,degi miorch,degi miorch_other_in,other,1
+12,degi miorch,degi miorch_piece_in,piece,1
+12,degi miorch,degi miorch_piece_out,piece,1
+12,degi miorch,degi miorch_piece_reciepe,piece,1
+12,degi miorch,degi miorch_pkt_in,gm,1
+12,degi miorch,degi miorch_pkt_out,gm,1
+12,degi miorch,degi miorch_pkt_reciepe,gm,1
+12,degi mirch,degi mirch_gm_in,gm,1
+12,degi mirch,degi mirch_gm_inventory,gm,1
+12,degi mirch,degi mirch_gm_out,gm,1
+12,degi mirch,degi mirch_gm_reciepe,gm,1
+12,degi mirch,degi mirch_kg_in,gm,1
+12,degi mirch,degi mirch_kg_out,gm,1
+12,degi mirch,degi mirch_kg_reciepe,gm,1
+12,degi mirch,degi mirch_ltr_in,,1
+12,degi mirch,degi mirch_ltr_out,,1
+12,degi mirch,degi mirch_ltr_reciepe,ml,1
+12,degi mirch,degi mirch_ml_in,ml,1
+12,degi mirch,degi mirch_ml_out,ml,1
+12,degi mirch,degi mirch_ml_reciepe,ml,1
+12,degi mirch,degi mirch_other_in,other,1
+12,degi mirch,degi mirch_piece_in,piece,1
+12,degi mirch,degi mirch_piece_out,piece,1
+12,degi mirch,degi mirch_piece_reciepe,piece,1
+12,degi mirch,degi mirch_pkt_in,gm,1
+12,degi mirch,degi mirch_pkt_out,gm,1
+12,degi mirch,degi mirch_pkt_reciepe,gm,1
+9,dhaniiya masala,dhaniiya masala_gm_in,gm,1
+9,dhaniiya masala,dhaniiya masala_gm_inventory,gm,1
+9,dhaniiya masala,dhaniiya masala_gm_out,gm,1
+9,dhaniiya masala,dhaniiya masala_gm_reciepe,gm,1
+9,dhaniiya masala,dhaniiya masala_kg_in,gm,1
+9,dhaniiya masala,dhaniiya masala_kg_out,gm,1
+9,dhaniiya masala,dhaniiya masala_kg_reciepe,gm,1
+9,dhaniiya masala,dhaniiya masala_ltr_in,,1
+9,dhaniiya masala,dhaniiya masala_ltr_out,,1
+9,dhaniiya masala,dhaniiya masala_ltr_reciepe,ml,1
+9,dhaniiya masala,dhaniiya masala_ml_in,ml,1
+9,dhaniiya masala,dhaniiya masala_ml_out,ml,1
+9,dhaniiya masala,dhaniiya masala_ml_reciepe,ml,1
+9,dhaniiya masala,dhaniiya masala_other_in,other,1
+9,dhaniiya masala,dhaniiya masala_piece_in,piece,1
+9,dhaniiya masala,dhaniiya masala_piece_out,piece,1
+9,dhaniiya masala,dhaniiya masala_piece_reciepe,piece,1
+9,dhaniiya masala,dhaniiya masala_pkt_in,gm,1
+9,dhaniiya masala,dhaniiya masala_pkt_out,gm,1
+9,dhaniiya masala,dhaniiya masala_pkt_reciepe,gm,1
+9,dhaniya,dhaniya_gm_in,gm,1
+9,dhaniya,dhaniya_gm_inventory,gm,1
+9,dhaniya,dhaniya_gm_out,gm,1
+9,dhaniya,dhaniya_gm_reciepe,gm,1
+9,dhaniya,dhaniya_kg_in,gm,1
+9,dhaniya,dhaniya_kg_out,gm,1
+9,dhaniya,dhaniya_kg_reciepe,gm,1
+9,dhaniya,dhaniya_ltr_in,,1
+9,dhaniya,dhaniya_ltr_out,,1
+9,dhaniya,dhaniya_ltr_reciepe,ml,1
+9,dhaniya,dhaniya_ml_in,ml,1
+9,dhaniya,dhaniya_ml_out,ml,1
+9,dhaniya,dhaniya_ml_reciepe,ml,1
+9,dhaniya,dhaniya_other_in,other,1
+9,dhaniya,dhaniya_piece_in,piece,1
+9,dhaniya,dhaniya_piece_out,piece,1
+9,dhaniya,dhaniya_piece_reciepe,piece,1
+9,dhaniya,dhaniya_pkt_in,gm,1
+9,dhaniya,dhaniya_pkt_out,gm,1
+9,dhaniya,dhaniya_pkt_reciepe,gm,1
+78,fries,fries_gm_in,gm,1
+78,fries,fries_gm_inventory,gm,1
+78,fries,fries_gm_out,gm,1
+78,fries,fries_gm_reciepe,gm,1
+78,fries,fries_kg_in,gm,1
+78,fries,fries_kg_out,gm,1
+78,fries,fries_kg_reciepe,gm,1
+78,fries,fries_ltr_in,,1
+78,fries,fries_ltr_out,,1
+78,fries,fries_ltr_reciepe,ml,1
+78,fries,fries_ml_in,ml,1
+78,fries,fries_ml_out,ml,1
+78,fries,fries_ml_reciepe,ml,1
+78,fries,fries_other_in,other,1
+78,fries,fries_piece_in,piece,1
+78,fries,fries_piece_out,piece,1
+78,fries,fries_piece_reciepe,piece,1
+78,fries,fries_pkt_in,gm,1
+78,fries,fries_pkt_out,gm,1
+78,fries,fries_pkt_reciepe,gm,1
+14,garam masala,garam masala _gm_in,gm,1
+14,garam masala,garam masala _gm_inventory,gm,1
+14,garam masala,garam masala _gm_out,gm,1
+14,garam masala,garam masala _gm_reciepe,gm,1
+14,garam masala,garam masala _kg_in,gm,1
+14,garam masala,garam masala _kg_out,gm,1
+14,garam masala,garam masala _ml_in,ml,1
+14,garam masala,garam masala _ml_out,ml,1
+14,garam masala,garam masala _other_in,other,1
+14,garam masala,garam masala _piece_in,piece,1
+14,garam masala,garam masala _piece_out,piece,1
+14,garam masala,garam masala _pkt_in,gm,1
+14,garam masala,garam masala _pkt_out,gm,1
+14,garam masala,garam masala_gm_in,gm,1
+14,garam masala,garam masala_gm_inventory,gm,1
+14,garam masala,garam masala_gm_out,gm,1
+14,garam masala,garam masala_gm_reciepe,gm,1
+14,garam masala,garam masala_kg_in,gm,1
+14,garam masala,garam masala_kg_out,gm,1
+14,garam masala,garam masala_kg_reciepe,gm,1
+14,garam masala,garam masala_ltr_in,,1
+14,garam masala,garam masala_ltr_out,,1
+14,garam masala,garam masala_ltr_reciepe,ml,1
+14,garam masala,garam masala_ml_in,ml,1
+14,garam masala,garam masala_ml_out,ml,1
+14,garam masala,garam masala_ml_reciepe,ml,1
+14,garam masala,garam masala_piece_in,piece,1
+14,garam masala,garam masala_piece_out,piece,1
+14,garam masala,garam masala_piece_reciepe,piece,1
+14,garam masala,garam masala_pkt_in,gm,1
+14,garam masala,garam masala_pkt_out,gm,1
+14,garam masala,garam masala_pkt_reciepe,gm,1
+79,green peas,green peas_gm_in,gm,1
+79,green peas,green peas_gm_inventory,gm,1
+79,green peas,green peas_gm_out,gm,1
+79,green peas,green peas_gm_reciepe,gm,1
+79,green peas,green peas_kg_in,gm,1
+79,green peas,green peas_kg_out,gm,1
+79,green peas,green peas_kg_reciepe,gm,1
+79,green peas,green peas_ltr_in,,1
+79,green peas,green peas_ltr_out,,1
+79,green peas,green peas_ltr_reciepe,ml,1
+79,green peas,green peas_ml_in,ml,1
+79,green peas,green peas_ml_out,ml,1
+79,green peas,green peas_ml_reciepe,ml,1
+79,green peas,green peas_other_in,other,1
+79,green peas,green peas_piece_in,piece,1
+79,green peas,green peas_piece_out,piece,1
+79,green peas,green peas_piece_reciepe,piece,1
+79,green peas,green peas_pkt_in,gm,1
+79,green peas,green peas_pkt_out,gm,1
+79,green peas,green peas_pkt_reciepe,gm,1
+42,green sauce,green sauce_gm_in,gm,1
+42,green sauce,green sauce_gm_inventory,gm,1
+42,green sauce,green sauce_gm_out,gm,1
+42,green sauce,green sauce_gm_reciepe,gm,1
+42,green sauce,green sauce_kg_in,gm,1
+42,green sauce,green sauce_kg_out,gm,1
+42,green sauce,green sauce_kg_reciepe,gm,1
+42,green sauce,green sauce_ltr_in,,1
+42,green sauce,green sauce_ltr_out,,1
+42,green sauce,green sauce_ltr_reciepe,ml,1
+42,green sauce,green sauce_ml_in,ml,1
+42,green sauce,green sauce_ml_out,ml,1
+42,green sauce,green sauce_ml_reciepe,ml,1
+42,green sauce,green sauce_other_in,other,1
+42,green sauce,green sauce_piece_in,piece,1
+42,green sauce,green sauce_piece_out,piece,1
+42,green sauce,green sauce_piece_reciepe,piece,1
+42,green sauce,green sauce_pkt_in,gm,1
+42,green sauce,green sauce_pkt_out,gm,1
+42,green sauce,green sauce_pkt_reciepe,gm,1
+11,haldi powder,haldi powder_gm_in,gm,1
+11,haldi powder,haldi powder_gm_inventory,gm,1
+11,haldi powder,haldi powder_gm_out,gm,1
+11,haldi powder,haldi powder_gm_reciepe,gm,1
+11,haldi powder,haldi powder_kg_in,gm,1
+11,haldi powder,haldi powder_kg_out,gm,1
+11,haldi powder,haldi powder_kg_reciepe,gm,1
+11,haldi powder,haldi powder_ltr_in,,1
+11,haldi powder,haldi powder_ltr_out,,1
+11,haldi powder,haldi powder_ltr_reciepe,ml,1
+11,haldi powder,haldi powder_ml_in,ml,1
+11,haldi powder,haldi powder_ml_out,ml,1
+11,haldi powder,haldi powder_ml_reciepe,ml,1
+11,haldi powder,haldi powder_other_in,other,1
+11,haldi powder,haldi powder_piece_in,piece,1
+11,haldi powder,haldi powder_piece_out,piece,1
+11,haldi powder,haldi powder_piece_reciepe,piece,1
+11,haldi powder,haldi powder_pkt_in,gm,1
+11,haldi powder,haldi powder_pkt_out,gm,1
+11,haldi powder,haldi powder_pkt_reciepe,gm,1
+99,ice cream,ice cream_gm_in,gm,1
+99,ice cream,ice cream_gm_inventory,gm,1
+99,ice cream,ice cream_gm_out,gm,1
+99,ice cream,ice cream_gm_reciepe,gm,1
+99,ice cream,ice cream_kg_in,gm,1
+99,ice cream,ice cream_kg_out,gm,1
+99,ice cream,ice cream_kg_reciepe,gm,1
+99,ice cream,ice cream_ltr_in,,1
+99,ice cream,ice cream_ltr_out,,1
+99,ice cream,ice cream_ltr_reciepe,ml,1
+99,ice cream,ice cream_ml_in,ml,1
+99,ice cream,ice cream_ml_out,ml,1
+99,ice cream,ice cream_ml_reciepe,ml,1
+99,ice cream,ice cream_other_in,other,1
+99,ice cream,ice cream_piece_in,piece,1
+99,ice cream,ice cream_piece_out,piece,1
+99,ice cream,ice cream_piece_reciepe,piece,1
+99,ice cream,ice cream_pkt_in,gm,1
+99,ice cream,ice cream_pkt_out,gm,1
+99,ice cream,ice cream_pkt_reciepe,gm,1
+99,ice cream vanilla,ice cream vanilla_gm_in,gm,1
+99,ice cream vanilla,ice cream vanilla_gm_inventory,gm,1
+99,ice cream vanilla,ice cream vanilla_gm_out,gm,1
+99,ice cream vanilla,ice cream vanilla_gm_reciepe,gm,1
+99,ice cream vanilla,ice cream vanilla_kg_in,gm,1
+99,ice cream vanilla,ice cream vanilla_kg_out,gm,1
+99,ice cream vanilla,ice cream vanilla_kg_reciepe,gm,1
+99,ice cream vanilla,ice cream vanilla_ltr_in,,1
+99,ice cream vanilla,ice cream vanilla_ltr_out,,1
+99,ice cream vanilla,ice cream vanilla_ltr_reciepe,ml,1
+99,ice cream vanilla,ice cream vanilla_ml_in,ml,1
+99,ice cream vanilla,ice cream vanilla_ml_out,ml,1
+99,ice cream vanilla,ice cream vanilla_ml_reciepe,ml,1
+99,ice cream vanilla,ice cream vanilla_other_in,other,1
+99,ice cream vanilla,ice cream vanilla_piece_in,piece,1
+99,ice cream vanilla,ice cream vanilla_piece_out,piece,1
+99,ice cream vanilla,ice cream vanilla_piece_reciepe,piece,1
+99,ice cream vanilla,ice cream vanilla_pkt_in,gm,1
+99,ice cream vanilla,ice cream vanilla_pkt_out,gm,1
+99,ice cream vanilla,ice cream vanilla_pkt_reciepe,gm,1
+56,imli chatni,imli chatni_gm_in,gm,1
+56,imli chatni,imli chatni_gm_inventory,gm,1
+56,imli chatni,imli chatni_gm_out,gm,1
+56,imli chatni,imli chatni_gm_reciepe,gm,1
+56,imli chatni,imli chatni_kg_in,gm,1
+56,imli chatni,imli chatni_kg_out,gm,1
+56,imli chatni,imli chatni_kg_reciepe,gm,1
+56,imli chatni,imli chatni_ltr_in,,1
+56,imli chatni,imli chatni_ltr_out,,1
+56,imli chatni,imli chatni_ltr_reciepe,ml,1
+56,imli chatni,imli chatni_ml_in,ml,1
+56,imli chatni,imli chatni_ml_out,ml,1
+56,imli chatni,imli chatni_ml_reciepe,ml,1
+56,imli chatni,imli chatni_other_in,other,1
+56,imli chatni,imli chatni_piece_in,ml,1
+56,imli chatni,imli chatni_piece_out,piece,1
+56,imli chatni,imli chatni_piece_reciepe,piece,1
+56,imli chatni,imli chatni_pkt_in,gm,1
+56,imli chatni,imli chatni_pkt_out,gm,1
+56,imli chatni,imli chatni_pkt_reciepe,gm,1
+56,imli chutney,imli chutney_gm_in,gm,1
+56,imli chutney,imli chutney_gm_inventory,gm,1
+56,imli chutney,imli chutney_gm_out,gm,1
+56,imli chutney,imli chutney_gm_reciepe,gm,1
+56,imli chutney,imli chutney_kg_in,gm,1
+56,imli chutney,imli chutney_kg_out,gm,1
+56,imli chutney,imli chutney_kg_reciepe,gm,1
+56,imli chutney,imli chutney_ltr_in,,1
+56,imli chutney,imli chutney_ltr_out,,1
+56,imli chutney,imli chutney_ltr_reciepe,ml,1
+56,imli chutney,imli chutney_ml_in,ml,1
+56,imli chutney,imli chutney_ml_out,ml,1
+56,imli chutney,imli chutney_ml_reciepe,ml,1
+56,imli chutney,imli chutney_other_in,other,1
+56,imli chutney,imli chutney_piece_in,piece,1
+56,imli chutney,imli chutney_piece_out,piece,1
+56,imli chutney,imli chutney_piece_reciepe,piece,1
+56,imli chutney,imli chutney_pkt_in,gm,1
+56,imli chutney,imli chutney_pkt_out,gm,1
+56,imli chutney,imli chutney_pkt_reciepe,gm,1
+60B,jalapeno,jalapeno_gm_in,gm,1
+60B,jalapeno,jalapeno_gm_inventory,gm,1
+60B,jalapeno,jalapeno_gm_out,gm,1
+60B,jalapeno,jalapeno_gm_reciepe,gm,1
+60B,jalapeno,jalapeno_kg_in,gm,1
+60B,jalapeno,jalapeno_kg_out,gm,1
+60B,jalapeno,jalapeno_kg_reciepe,gm,1
+60B,jalapeno,jalapeno_ltr_in,,1
+60B,jalapeno,jalapeno_ltr_out,,1
+60B,jalapeno,jalapeno_ltr_reciepe,ml,1
+60B,jalapeno,jalapeno_ml_in,ml,1
+60B,jalapeno,jalapeno_ml_out,ml,1
+60B,jalapeno,jalapeno_ml_reciepe,ml,1
+60B,jalapeno,jalapeno_other_in,other,1
+60B,jalapeno,jalapeno_piece_in,piece,1
+60B,jalapeno,jalapeno_piece_out,piece,1
+60B,jalapeno,jalapeno_piece_reciepe,piece,1
+60B,jalapeno,jalapeno_pkt_in,gm,1
+60B,jalapeno,jalapeno_pkt_out,gm,1
+60B,jalapeno,jalapeno_pkt_reciepe,gm,1
+15,jeeera,jeeera_gm_in,gm,1
+15,jeeera,jeeera_gm_inventory,gm,1
+15,jeeera,jeeera_gm_out,gm,1
+15,jeeera,jeeera_gm_reciepe,gm,1
+15,jeeera,jeeera_kg_in,gm,1
+15,jeeera,jeeera_kg_out,gm,1
+15,jeeera,jeeera_kg_reciepe,gm,1
+15,jeeera,jeeera_ltr_in,,1
+15,jeeera,jeeera_ltr_out,,1
+15,jeeera,jeeera_ltr_reciepe,ml,1
+15,jeeera,jeeera_ml_in,ml,1
+15,jeeera,jeeera_ml_out,ml,1
+15,jeeera,jeeera_ml_reciepe,ml,1
+15,jeeera,jeeera_other_in,other,1
+15,jeeera,jeeera_piece_in,piece,1
+15,jeeera,jeeera_piece_out,piece,1
+15,jeeera,jeeera_piece_reciepe,piece,1
+15,jeeera,jeeera_pkt_in,gm,1
+15,jeeera,jeeera_pkt_out,gm,1
+15,jeeera,jeeera_pkt_reciepe,gm,1
+15,jeera,jeera_gm_in,gm,1
+15,jeera,jeera_gm_inventory,gm,1
+15,jeera,jeera_gm_out,gm,1
+15,jeera,jeera_gm_reciepe,gm,1
+15,jeera,jeera_kg_in,gm,1
+15,jeera,jeera_kg_out,gm,1
+15,jeera,jeera_kg_reciepe,gm,1
+15,jeera,jeera_ltr_in,,1
+15,jeera,jeera_ltr_out,,1
+15,jeera,jeera_ltr_reciepe,ml,1
+15,jeera,jeera_ml_in,ml,1
+15,jeera,jeera_ml_out,ml,1
+15,jeera,jeera_ml_reciepe,ml,1
+15,jeera,jeera_other_in,other,1
+15,jeera,jeera_piece_in,piece,1
+15,jeera,jeera_piece_out,piece,1
+15,jeera,jeera_piece_reciepe,piece,1
+15,jeera,jeera_pkt_in,gm,1
+15,jeera,jeera_pkt_out,gm,1
+15,jeera,jeera_pkt_reciepe,gm,1
+16 A,jeera masala,jeera masala_gm_in,gm,1
+16 A,jeera masala,jeera masala_gm_inventory,gm,1
+16 A,jeera masala,jeera masala_gm_out,gm,1
+16 A,jeera masala,jeera masala_gm_reciepe,gm,1
+16 A,jeera masala,jeera masala_kg_in,gm,1
+16 A,jeera masala,jeera masala_kg_out,gm,1
+16 A,jeera masala,jeera masala_kg_reciepe,gm,1
+16 A,jeera masala,jeera masala_ltr_in,,1
+16 A,jeera masala,jeera masala_ltr_out,,1
+16 A,jeera masala,jeera masala_ltr_reciepe,ml,1
+16 A,jeera masala,jeera masala_ml_in,ml,1
+16 A,jeera masala,jeera masala_ml_out,ml,1
+16 A,jeera masala,jeera masala_ml_reciepe,ml,1
+16 A,jeera masala,jeera masala_other_in,other,1
+16 A,jeera masala,jeera masala_piece_in,piece,1
+16 A,jeera masala,jeera masala_piece_out,piece,1
+16 A,jeera masala,jeera masala_piece_reciepe,piece,1
+16 A,jeera masala,jeera masala_pkt_in,gm,1
+16 A,jeera masala,jeera masala_pkt_out,gm,1
+16 A,jeera masala,jeera masala_pkt_reciepe,gm,1
+60B,jelipino,jelipino_gm_in,gm,1
+60B,jelipino,jelipino_gm_inventory,gm,1
+60B,jelipino,jelipino_gm_out,gm,1
+60B,jelipino,jelipino_gm_reciepe,gm,1
+60B,jelipino,jelipino_kg_in,gm,1
+60B,jelipino,jelipino_kg_out,gm,1
+60B,jelipino,jelipino_kg_reciepe,gm,1
+60B,jelipino,jelipino_ltr_in,,1
+60B,jelipino,jelipino_ltr_out,,1
+60B,jelipino,jelipino_ltr_reciepe,ml,1
+60B,jelipino,jelipino_ml_in,ml,1
+60B,jelipino,jelipino_ml_out,ml,1
+60B,jelipino,jelipino_ml_reciepe,ml,1
+60B,jelipino,jelipino_other_in,other,1
+60B,jelipino,jelipino_piece_in,piece,1
+60B,jelipino,jelipino_piece_out,piece,1
+60B,jelipino,jelipino_piece_reciepe,piece,1
+60B,jelipino,jelipino_pkt_in,gm,1
+60B,jelipino,jelipino_pkt_out,gm,1
+60B,jelipino,jelipino_pkt_reciepe,gm,1
+22A,kaju,kaju_gm_in,gm,1
+22A,kaju,kaju_gm_inventory,gm,1
+22A,kaju,kaju_gm_out,gm,1
+22A,kaju,kaju_gm_reciepe,gm,1
+22A,kaju,kaju_kg_in,gm,1
+22A,kaju,kaju_kg_out,gm,1
+22A,kaju,kaju_kg_reciepe,gm,1
+22A,kaju,kaju_ltr_in,,1
+22A,kaju,kaju_ltr_out,,1
+22A,kaju,kaju_ltr_reciepe,ml,1
+22A,kaju,kaju_ml_in,ml,1
+22A,kaju,kaju_ml_out,ml,1
+22A,kaju,kaju_ml_reciepe,ml,1
+22A,kaju,kaju_other_in,other,1
+22A,kaju,kaju_piece_in,piece,1
+22A,kaju,kaju_piece_out,piece,1
+22A,kaju,kaju_piece_reciepe,piece,1
+22A,kaju,kaju_pkt_in,gm,1
+22A,kaju,kaju_pkt_out,gm,1
+22A,kaju,kaju_pkt_reciepe,gm,1
+8,kasturi methi,kasturi methi_gm_in,gm,1
+8,kasturi methi,kasturi methi_gm_inventory,gm,1
+8,kasturi methi,kasturi methi_gm_out,gm,1
+8,kasturi methi,kasturi methi_gm_reciepe,gm,1
+8,kasturi methi,kasturi methi_kg_in,gm,1
+8,kasturi methi,kasturi methi_kg_out,gm,1
+8,kasturi methi,kasturi methi_kg_reciepe,gm,1
+8,kasturi methi,kasturi methi_ltr_in,,1
+8,kasturi methi,kasturi methi_ltr_out,,1
+8,kasturi methi,kasturi methi_ltr_reciepe,ml,1
+8,kasturi methi,kasturi methi_ml_in,ml,1
+8,kasturi methi,kasturi methi_ml_out,ml,1
+8,kasturi methi,kasturi methi_ml_reciepe,ml,1
+8,kasturi methi,kasturi methi_other_in,other,1
+8,kasturi methi,kasturi methi_piece_in,piece,1
+8,kasturi methi,kasturi methi_piece_out,piece,1
+8,kasturi methi,kasturi methi_piece_reciepe,piece,1
+8,kasturi methi,kasturi methi_pkt_in,gm,1
+8,kasturi methi,kasturi methi_pkt_out,gm,1
+8,kasturi methi,kasturi methi_pkt_reciepe,gm,1
+13,kitchen king,kitchen king_gm_in,gm,1
+13,kitchen king,kitchen king_gm_inventory,gm,1
+13,kitchen king,kitchen king_gm_out,gm,1
+13,kitchen king,kitchen king_gm_reciepe,gm,1
+13,kitchen king,kitchen king_kg_in,gm,1
+13,kitchen king,kitchen king_kg_out,gm,1
+13,kitchen king,kitchen king_kg_reciepe,gm,1
+13,kitchen king,kitchen king_ltr_in,,1
+13,kitchen king,kitchen king_ltr_out,,1
+13,kitchen king,kitchen king_ltr_reciepe,ml,1
+13,kitchen king,kitchen king_ml_in,ml,1
+13,kitchen king,kitchen king_ml_out,ml,1
+13,kitchen king,kitchen king_ml_reciepe,ml,1
+13,kitchen king,kitchen king_other_in,other,1
+13,kitchen king,kitchen king_piece_in,piece,1
+13,kitchen king,kitchen king_piece_out,piece,1
+13,kitchen king,kitchen king_piece_reciepe,piece,1
+13,kitchen king,kitchen king_pkt_in,gm,1
+13,kitchen king,kitchen king_pkt_out,gm,1
+13,kitchen king,kitchen king_pkt_reciepe,gm,1
+110,lal mirch,lal mirch_gm_in,gm,1
+110,lal mirch,lal mirch_gm_inventory,gm,1
+110,lal mirch,lal mirch_gm_out,gm,1
+110,lal mirch,lal mirch_gm_reciepe,gm,1
+110,lal mirch,lal mirch_kg_in,gm,1
+110,lal mirch,lal mirch_kg_out,gm,1
+110,lal mirch,lal mirch_kg_reciepe,gm,1
+110,lal mirch,lal mirch_ltr_in,,1
+110,lal mirch,lal mirch_ltr_out,,1
+110,lal mirch,lal mirch_ltr_reciepe,ml,1
+110,lal mirch,lal mirch_ml_in,ml,1
+110,lal mirch,lal mirch_ml_out,ml,1
+110,lal mirch,lal mirch_ml_reciepe,ml,1
+110,lal mirch,lal mirch_other_in,other,1
+110,lal mirch,lal mirch_piece_in,piece,1
+110,lal mirch,lal mirch_piece_out,piece,1
+110,lal mirch,lal mirch_piece_reciepe,piece,1
+110,lal mirch,lal mirch_pkt_in,gm,1
+110,lal mirch,lal mirch_pkt_out,gm,1
+110,lal mirch,lal mirch_pkt_reciepe,gm,1
+57A,lemon mojito,lemon mojito_bottle_in,ml,1
+57A,lemon mojito,lemon mojito_gm_in,gm,1
+57A,lemon mojito,lemon mojito_gm_inventory,gm,1
+57A,lemon mojito,lemon mojito_gm_out,gm,1
+57A,lemon mojito,lemon mojito_gm_reciepe,gm,1
+57A,lemon mojito,lemon mojito_kg_in,gm,1
+57A,lemon mojito,lemon mojito_kg_out,gm,1
+57A,lemon mojito,lemon mojito_kg_reciepe,gm,1
+57A,lemon mojito,lemon mojito_ltr_in,,1
+57A,lemon mojito,lemon mojito_ltr_out,,1
+57A,lemon mojito,lemon mojito_ltr_reciepe,ml,1
+57A,lemon mojito,lemon mojito_ml_in,ml,1
+57A,lemon mojito,lemon mojito_ml_out,ml,1
+57A,lemon mojito,lemon mojito_ml_reciepe,ml,1
+57A,lemon mojito,lemon mojito_other_in,other,1
+57A,lemon mojito,lemon mojito_piece_in,piece,1
+57A,lemon mojito,lemon mojito_piece_out,piece,1
+57A,lemon mojito,lemon mojito_piece_reciepe,piece,1
+57A,lemon mojito,lemon mojito_pkt_in,gm,1
+57A,lemon mojito,lemon mojito_pkt_out,gm,1
+57A,lemon mojito,lemon mojito_pkt_reciepe,gm,1
+67,maggi,maggi_box_in,gm,1
+67,maggi,maggi_gm_in,gm,1
+67,maggi,maggi_gm_inventory,gm,1
+67,maggi,maggi_gm_out,gm,1
+67,maggi,maggi_gm_reciepe,gm,1
+67,maggi,maggi_kg_in,gm,1
+67,maggi,maggi_kg_out,gm,1
+67,maggi,maggi_kg_reciepe,gm,1
+67,maggi,maggi_ltr_in,,1
+67,maggi,maggi_ltr_out,,1
+67,maggi,maggi_ltr_reciepe,ml,1
+67,maggi,maggi_ml_in,ml,1
+67,maggi,maggi_ml_out,ml,1
+67,maggi,maggi_ml_reciepe,ml,1
+67,maggi,maggi_other_in,other,1
+67,maggi,maggi_piece_in,piece,1
+67,maggi,maggi_piece_out,piece,1
+67,maggi,maggi_piece_reciepe,piece,1
+67,maggi,maggi_pkt_in,gm,1
+67,maggi,maggi_pkt_out,gm,1
+67,maggi,maggi_pkt_reciepe,gm,1
+66,maggi masala,maggi masala_gm_in,gm,1
+66,maggi masala,maggi masala_gm_inventory,gm,1
+66,maggi masala,maggi masala_gm_out,gm,1
+66,maggi masala,maggi masala_gm_reciepe,gm,1
+66,maggi masala,maggi masala_kg_in,gm,1
+66,maggi masala,maggi masala_kg_out,gm,1
+66,maggi masala,maggi masala_kg_reciepe,gm,1
+66,maggi masala,maggi masala_ltr_in,,1
+66,maggi masala,maggi masala_ltr_out,,1
+66,maggi masala,maggi masala_ltr_reciepe,ml,1
+66,maggi masala,maggi masala_ml_in,ml,1
+66,maggi masala,maggi masala_ml_out,ml,1
+66,maggi masala,maggi masala_ml_reciepe,ml,1
+66,maggi masala,maggi masala_other_in,other,1
+66,maggi masala,maggi masala_piece_in,piece,1
+66,maggi masala,maggi masala_piece_out,piece,1
+66,maggi masala,maggi masala_piece_reciepe,piece,1
+66,maggi masala,maggi masala_pkt_in,gm,1
+66,maggi masala,maggi masala_pkt_out,gm,1
+66,maggi masala,maggi masala_pkt_reciepe,gm,1
+2,maida,maida_gm_in,gm,1
+2,maida,maida_gm_inventory,gm,1
+2,maida,maida_gm_out,gm,1
+2,maida,maida_gm_reciepe,gm,1
+2,maida,maida_kg_in,gm,1
+2,maida,maida_kg_out,gm,1
+2,maida,maida_kg_reciepe,gm,1
+2,maida,maida_ltr_in,,1
+2,maida,maida_ltr_out,,1
+2,maida,maida_ltr_reciepe,ml,1
+2,maida,maida_ml_in,ml,1
+2,maida,maida_ml_out,ml,1
+2,maida,maida_ml_reciepe,ml,1
+2,maida,maida_other_in,other,1
+2,maida,maida_piece_in,piece,1
+2,maida,maida_piece_out,piece,1
+2,maida,maida_piece_reciepe,piece,1
+2,maida,maida_pkt_in,gm,1
+2,maida,maida_pkt_out,gm,1
+2,maida,maida_pkt_reciepe,gm,1
+51A,makhani sauce,makhani sauce_gm_in,gm,1
+51A,makhani sauce,makhani sauce_gm_inventory,gm,1
+51A,makhani sauce,makhani sauce_gm_out,gm,1
+51A,makhani sauce,makhani sauce_gm_reciepe,gm,1
+51A,makhani sauce,makhani sauce_kg_in,gm,1
+51A,makhani sauce,makhani sauce_kg_out,gm,1
+51A,makhani sauce,makhani sauce_kg_reciepe,gm,1
+51A,makhani sauce,makhani sauce_ltr_in,,1
+51A,makhani sauce,makhani sauce_ltr_out,,1
+51A,makhani sauce,makhani sauce_ltr_reciepe,ml,1
+51A,makhani sauce,makhani sauce_ml_in,ml,1
+51A,makhani sauce,makhani sauce_ml_out,ml,1
+51A,makhani sauce,makhani sauce_ml_reciepe,ml,1
+51A,makhani sauce,makhani sauce_other_in,other,1
+51A,makhani sauce,makhani sauce_piece_in,gm,1
+51A,makhani sauce,makhani sauce_piece_out,piece,1
+51A,makhani sauce,makhani sauce_piece_reciepe,piece,1
+51A,makhani sauce,makhani sauce_pkt_in,gm,1
+51A,makhani sauce,makhani sauce_pkt_out,gm,1
+51A,makhani sauce,makhani sauce_pkt_reciepe,gm,1
+13,masala,masala_gm_in,gm,1
+13,masala,masala_gm_inventory,gm,1
+13,masala,masala_gm_out,gm,1
+13,masala,masala_gm_reciepe,gm,1
+13,masala,masala_kg_in,gm,1
+13,masala,masala_kg_out,gm,1
+13,masala,masala_kg_reciepe,gm,1
+13,masala,masala_ltr_in,,1
+13,masala,masala_ltr_out,,1
+13,masala,masala_ltr_reciepe,ml,1
+13,masala,masala_ml_in,ml,1
+13,masala,masala_ml_out,ml,1
+13,masala,masala_ml_reciepe,ml,1
+13,masala,masala_other_in,other,1
+13,masala,masala_piece_in,piece,1
+13,masala,masala_piece_out,piece,1
+13,masala,masala_piece_reciepe,piece,1
+13,masala,masala_pkt_in,gm,1
+13,masala,masala_pkt_out,gm,1
+13,masala,masala_pkt_reciepe,gm,1
+77B,masla fries,masla fries_gm_in,gm,1
+77B,masla fries,masla fries_gm_inventory,gm,1
+77B,masla fries,masla fries_gm_out,gm,1
+77B,masla fries,masla fries_gm_reciepe,gm,1
+77B,masla fries,masla fries_kg_in,gm,1
+77B,masla fries,masla fries_kg_out,gm,1
+77B,masla fries,masla fries_kg_reciepe,gm,1
+77B,masla fries,masla fries_ltr_in,,1
+77B,masla fries,masla fries_ltr_out,,1
+77B,masla fries,masla fries_ltr_reciepe,ml,1
+77B,masla fries,masla fries_ml_in,ml,1
+77B,masla fries,masla fries_ml_out,ml,1
+77B,masla fries,masla fries_ml_reciepe,ml,1
+77B,masla fries,masla fries_other_in,other,1
+77B,masla fries,masla fries_piece_in,piece,1
+77B,masla fries,masla fries_piece_out,piece,1
+77B,masla fries,masla fries_piece_reciepe,piece,1
+77B,masla fries,masla fries_pkt_in,gm,1
+77B,masla fries,masla fries_pkt_out,gm,1
+77B,masla fries,masla fries_pkt_reciepe,gm,1
+79,matar,matar_gm_in,gm,1
+79,matar,matar_gm_inventory,gm,1
+79,matar,matar_gm_out,gm,1
+79,matar,matar_gm_reciepe,gm,1
+79,matar,matar_kg_in,gm,1
+79,matar,matar_kg_out,gm,1
+79,matar,matar_kg_reciepe,gm,1
+79,matar,matar_ltr_in,,1
+79,matar,matar_ltr_out,,1
+79,matar,matar_ltr_reciepe,ml,1
+79,matar,matar_ml_in,ml,1
+79,matar,matar_ml_out,ml,1
+79,matar,matar_ml_reciepe,ml,1
+79,matar,matar_other_in,other,1
+79,matar,matar_piece_in,piece,1
+79,matar,matar_piece_out,piece,1
+79,matar,matar_piece_reciepe,piece,1
+79,matar,matar_pkt_in,gm,1
+79,matar,matar_pkt_out,gm,1
+79,matar,matar_pkt_reciepe,gm,1
+50,metonese,metonese_gm_in,gm,1
+50,metonese,metonese_gm_inventory,gm,1
+50,metonese,metonese_gm_out,gm,1
+50,metonese,metonese_gm_reciepe,gm,1
+50,metonese,metonese_kg_in,gm,1
+50,metonese,metonese_kg_out,gm,1
+50,metonese,metonese_kg_reciepe,gm,1
+50,metonese,metonese_ltr_in,,1
+50,metonese,metonese_ltr_out,,1
+50,metonese,metonese_ltr_reciepe,ml,1
+50,metonese,metonese_ml_in,ml,1
+50,metonese,metonese_ml_out,ml,1
+50,metonese,metonese_ml_reciepe,ml,1
+50,metonese,metonese_other_in,other,1
+50,metonese,metonese_piece_in,piece,1
+50,metonese,metonese_piece_out,piece,1
+50,metonese,metonese_piece_reciepe,piece,1
+50,metonese,metonese_pkt_in,gm,1
+50,metonese,metonese_pkt_out,gm,1
+50,metonese,metonese_pkt_reciepe,gm,1
+50,meyo,meyo_gm_in,gm,1
+50,meyo,meyo_gm_inventory,gm,1
+50,meyo,meyo_gm_out,gm,1
+50,meyo,meyo_gm_reciepe,gm,1
+50,meyo,meyo_kg_in,gm,1
+50,meyo,meyo_kg_out,gm,1
+50,meyo,meyo_kg_reciepe,gm,1
+50,meyo,meyo_ltr_in,,1
+50,meyo,meyo_ltr_out,,1
+50,meyo,meyo_ltr_reciepe,ml,1
+50,meyo,meyo_ml_in,ml,1
+50,meyo,meyo_ml_out,ml,1
+50,meyo,meyo_ml_reciepe,ml,1
+50,meyo,meyo_other_in,other,1
+50,meyo,meyo_piece_in,piece,1
+50,meyo,meyo_piece_out,piece,1
+50,meyo,meyo_piece_reciepe,piece,1
+50,meyo,meyo_pkt_in,gm,1
+50,meyo,meyo_pkt_out,gm,1
+50,meyo,meyo_pkt_reciepe,gm,1
+50,meyo nese,meyo nese_gm_in,gm,1
+50,meyo nese,meyo nese_gm_inventory,gm,1
+50,meyo nese,meyo nese_gm_out,gm,1
+50,meyo nese,meyo nese_gm_reciepe,gm,1
+50,meyo nese,meyo nese_kg_in,gm,1
+50,meyo nese,meyo nese_kg_out,gm,1
+50,meyo nese,meyo nese_kg_reciepe,gm,1
+50,meyo nese,meyo nese_ltr_in,,1
+50,meyo nese,meyo nese_ltr_out,,1
+50,meyo nese,meyo nese_ltr_reciepe,ml,1
+50,meyo nese,meyo nese_ml_in,ml,1
+50,meyo nese,meyo nese_ml_out,ml,1
+50,meyo nese,meyo nese_ml_reciepe,ml,1
+50,meyo nese,meyo nese_other_in,other,1
+50,meyo nese,meyo nese_piece_in,piece,1
+50,meyo nese,meyo nese_piece_out,piece,1
+50,meyo nese,meyo nese_piece_reciepe,piece,1
+50,meyo nese,meyo nese_pkt_in,gm,1
+50,meyo nese,meyo nese_pkt_out,gm,1
+50,meyo nese,meyo nese_pkt_reciepe,gm,1
+50,meyonese,meyonese_gm_in,gm,1
+50,meyonese,meyonese_gm_inventory,gm,1
+50,meyonese,meyonese_gm_out,gm,1
+50,meyonese,meyonese_gm_reciepe,gm,1
+50,meyonese,meyonese_kg_in,gm,1
+50,meyonese,meyonese_kg_out,gm,1
+50,meyonese,meyonese_kg_reciepe,gm,1
+50,meyonese,meyonese_ltr_in,,1
+50,meyonese,meyonese_ltr_out,,1
+50,meyonese,meyonese_ltr_reciepe,ml,1
+50,meyonese,meyonese_ml_in,ml,1
+50,meyonese,meyonese_ml_out,ml,1
+50,meyonese,meyonese_ml_reciepe,ml,1
+50,meyonese,meyonese_other_in,other,1
+50,meyonese,meyonese_piece_in,piece,1
+50,meyonese,meyonese_piece_out,piece,1
+50,meyonese,meyonese_piece_reciepe,piece,1
+50,meyonese,meyonese_pkt_in,gm,1
+50,meyonese,meyonese_pkt_out,gm,1
+50,meyonese,meyonese_pkt_reciepe,gm,1
+50,meyonesse,meyonesse_gm_in,gm,1
+50,meyonesse,meyonesse_gm_inventory,gm,1
+50,meyonesse,meyonesse_gm_out,gm,1
+50,meyonesse,meyonesse_gm_reciepe,gm,1
+50,meyonesse,meyonesse_kg_in,gm,1
+50,meyonesse,meyonesse_kg_out,gm,1
+50,meyonesse,meyonesse_kg_reciepe,gm,1
+50,meyonesse,meyonesse_ltr_in,,1
+50,meyonesse,meyonesse_ltr_out,,1
+50,meyonesse,meyonesse_ltr_reciepe,ml,1
+50,meyonesse,meyonesse_ml_in,ml,1
+50,meyonesse,meyonesse_ml_out,ml,1
+50,meyonesse,meyonesse_ml_reciepe,ml,1
+50,meyonesse,meyonesse_other_in,other,1
+50,meyonesse,meyonesse_piece_in,piece,1
+50,meyonesse,meyonesse_piece_out,piece,1
+50,meyonesse,meyonesse_piece_reciepe,piece,1
+50,meyonesse,meyonesse_pkt_in,gm,1
+50,meyonesse,meyonesse_pkt_out,gm,1
+50,meyonesse,meyonesse_pkt_reciepe,gm,1
+50,meyonse,meyonse_gm_in,gm,1
+50,meyonse,meyonse_gm_inventory,gm,1
+50,meyonse,meyonse_gm_out,gm,1
+50,meyonse,meyonse_gm_reciepe,gm,1
+50,meyonse,meyonse_kg_in,gm,1
+50,meyonse,meyonse_kg_out,gm,1
+50,meyonse,meyonse_kg_reciepe,gm,1
+50,meyonse,meyonse_ltr_in,,1
+50,meyonse,meyonse_ltr_out,,1
+50,meyonse,meyonse_ltr_reciepe,ml,1
+50,meyonse,meyonse_ml_in,ml,1
+50,meyonse,meyonse_ml_out,ml,1
+50,meyonse,meyonse_ml_reciepe,ml,1
+50,meyonse,meyonse_other_in,other,1
+50,meyonse,meyonse_piece_in,piece,1
+50,meyonse,meyonse_piece_out,piece,1
+50,meyonse,meyonse_piece_reciepe,piece,1
+50,meyonse,meyonse_pkt_in,gm,1
+50,meyonse,meyonse_pkt_out,gm,1
+50,meyonse,meyonse_pkt_reciepe,gm,1
+74,mozerella,mozerella_gm_in,gm,1
+74,mozerella,mozerella_gm_inventory,gm,1
+74,mozerella,mozerella_gm_out,gm,1
+74,mozerella,mozerella_gm_reciepe,gm,1
+74,mozerella,mozerella_kg_in,gm,1
+74,mozerella,mozerella_kg_out,gm,1
+74,mozerella,mozerella_kg_reciepe,gm,1
+74,mozerella,mozerella_ltr_in,,1
+74,mozerella,mozerella_ltr_out,,1
+74,mozerella,mozerella_ltr_reciepe,ml,1
+74,mozerella,mozerella_ml_in,ml,1
+74,mozerella,mozerella_ml_out,ml,1
+74,mozerella,mozerella_ml_reciepe,ml,1
+74,mozerella,mozerella_other_in,other,1
+74,mozerella,mozerella_piece_in,piece,1
+74,mozerella,mozerella_piece_out,piece,1
+74,mozerella,mozerella_piece_reciepe,piece,1
+74,mozerella,mozerella_pkt_in,gm,1
+74,mozerella,mozerella_pkt_out,gm,1
+74,mozerella,mozerella_pkt_reciepe,gm,1
+74,mozrella,mozrella_gm_in,gm,1
+74,mozrella,mozrella_gm_inventory,gm,1
+74,mozrella,mozrella_gm_out,gm,1
+74,mozrella,mozrella_gm_reciepe,gm,1
+74,mozrella,mozrella_kg_in,gm,1
+74,mozrella,mozrella_kg_out,gm,1
+74,mozrella,mozrella_kg_reciepe,gm,1
+74,mozrella,mozrella_ltr_in,,1
+74,mozrella,mozrella_ltr_out,,1
+74,mozrella,mozrella_ltr_reciepe,ml,1
+74,mozrella,mozrella_ml_in,ml,1
+74,mozrella,mozrella_ml_out,ml,1
+74,mozrella,mozrella_ml_reciepe,ml,1
+74,mozrella,mozrella_other_in,other,1
+74,mozrella,mozrella_piece_in,piece,1
+74,mozrella,mozrella_piece_out,piece,1
+74,mozrella,mozrella_piece_reciepe,piece,1
+74,mozrella,mozrella_pkt_in,gm,1
+74,mozrella,mozrella_pkt_out,gm,1
+74,mozrella,mozrella_pkt_reciepe,gm,1
+24,mushroom,mushroom_gm_in,gm,1
+24,mushroom,mushroom_gm_inventory,gm,1
+24,mushroom,mushroom_gm_out,gm,1
+24,mushroom,mushroom_gm_reciepe,gm,1
+24,mushroom,mushroom_kg_in,gm,1
+24,mushroom,mushroom_kg_out,gm,1
+24,mushroom,mushroom_kg_reciepe,gm,1
+24,mushroom,mushroom_ltr_in,,1
+24,mushroom,mushroom_ltr_out,,1
+24,mushroom,mushroom_ltr_reciepe,ml,1
+24,mushroom,mushroom_ml_in,ml,1
+24,mushroom,mushroom_ml_out,ml,1
+24,mushroom,mushroom_ml_reciepe,ml,1
+24,mushroom,mushroom_other_in,other,1
+24,mushroom,mushroom_piece_in,piece,1
+24,mushroom,mushroom_piece_out,piece,1
+24,mushroom,mushroom_piece_reciepe,piece,1
+24,mushroom,mushroom_pkt_in,gm,1
+24,mushroom,mushroom_pkt_out,gm,1
+24,mushroom,mushroom_pkt_reciepe,gm,1
+24,mushroom,mushroom_tin_in,gm,1
+50,myonese,myonese_gm_in,gm,1
+50,myonese,myonese_gm_in,gm,1
+50,myonese,myonese_gm_inventory,gm,1
+50,myonese,myonese_gm_inventory,gm,1
+50,myonese,myonese_gm_out,gm,1
+50,myonese,myonese_gm_out,gm,1
+50,myonese,myonese_kg_in,gm,1
+50,myonese,myonese_kg_in,gm,1
+50,myonese,myonese_kg_out,gm,1
+50,myonese,myonese_kg_out,gm,1
+50,myonese,myonese_ml_in,ml,1
+50,myonese,myonese_ml_in,ml,1
+50,myonese,myonese_ml_out,ml,1
+50,myonese,myonese_ml_out,ml,1
+50,myonese,myonese_ml_reciepe,ml,1
+50,myonese,myonese_ml_reciepe,ml,1
+50,myonese,myonese_other_in,other,1
+50,myonese,myonese_other_in,other,1
+50,myonese,myonese_piece_in,piece,1
+50,myonese,myonese_piece_in,piece,1
+50,myonese,myonese_piece_out,piece,1
+50,myonese,myonese_piece_out,piece,1
+50,myonese,myonese_pkt_in,gm,1
+50,myonese,myonese_pkt_in,gm,1
+50,myonese,myonese_pkt_out,gm,1
+50,myonese,myonese_pkt_out,gm,1
+38,noodles,noodles_gm_in,gm,3
+38,noodles,noodles_gm_inventory,gm,1
+38,noodles,noodles_gm_out,gm,3
+38,noodles,noodles_gm_reciepe,gm,3
+38,noodles,noodles_kg_in,gm,3
+38,noodles,noodles_kg_out,gm,3
+38,noodles,noodles_kg_reciepe,gm,3
+38,noodles,noodles_ltr_reciepe,ml,1
+38,noodles,noodles_ml_reciepe,ml,1
+38,noodles,noodles_piece_reciepe,piece,1
+38,noodles,noodles_pkt_in,gm,3
+38,noodles,noodles_pkt_out,gm,3
+38,noodles,noodles_pkt_reciepe,gm,3
+7,oil tin,oil tin_gm_in,gm,1
+7,oil tin,oil tin_gm_inventory,gm,1
+7,oil tin,oil tin_gm_out,gm,1
+7,oil tin,oil tin_gm_reciepe,gm,1
+7,oil tin,oil tin_kg_in,gm,1
+7,oil tin,oil tin_kg_out,gm,1
+7,oil tin,oil tin_kg_reciepe,gm,1
+7,oil tin,oil tin_ltr_in,,1
+7,oil tin,oil tin_ltr_out,,1
+7,oil tin,oil tin_ltr_reciepe,ml,1
+7,oil tin,oil tin_ml_in,ml,1
+7,oil tin,oil tin_ml_out,ml,1
+7,oil tin,oil tin_ml_reciepe,ml,1
+7,oil tin,oil tin_other_in,other,1
+7,oil tin,oil tin_piece_in,piece,1
+7,oil tin,oil tin_piece_out,piece,1
+7,oil tin,oil tin_piece_reciepe,piece,1
+7,oil tin,oil tin_pkt_in,gm,1
+7,oil tin,oil tin_pkt_out,gm,1
+7,oil tin,oil tin_pkt_reciepe,gm,1
+7,oil tin,oil tin_tin_in,ml,1
+35A,olive,olive_gm_in,gm,1
+35A,olive,olive_gm_inventory,gm,1
+35A,olive,olive_gm_out,gm,1
+35A,olive,olive_gm_reciepe,gm,1
+35A,olive,olive_kg_in,gm,1
+35A,olive,olive_kg_out,gm,1
+35A,olive,olive_kg_reciepe,gm,1
+35A,olive,olive_ltr_in,,1
+35A,olive,olive_ltr_out,,1
+35A,olive,olive_ltr_reciepe,ml,1
+35A,olive,olive_ml_in,ml,1
+35A,olive,olive_ml_out,ml,1
+35A,olive,olive_ml_reciepe,ml,1
+35A,olive,olive_other_in,other,1
+35A,olive,olive_piece_in,gm,1
+35A,olive,olive_piece_out,piece,1
+35A,olive,olive_piece_reciepe,piece,1
+35A,olive,olive_pkt_in,gm,1
+35A,olive,olive_pkt_out,gm,1
+35A,olive,olive_pkt_reciepe,gm,1
+35A,olive,olive_tin_in,gm,1
+62,oregano,oregano_gm_in,gm,1
+62,oregano,oregano_gm_inventory,gm,1
+62,oregano,oregano_gm_out,gm,1
+62,oregano,oregano_gm_reciepe,gm,1
+62,oregano,oregano_kg_in,gm,1
+62,oregano,oregano_kg_out,gm,1
+62,oregano,oregano_kg_reciepe,gm,1
+62,oregano,oregano_ltr_in,,1
+62,oregano,oregano_ltr_out,,1
+62,oregano,oregano_ltr_reciepe,ml,1
+62,oregano,oregano_ml_in,ml,1
+62,oregano,oregano_ml_out,ml,1
+62,oregano,oregano_ml_reciepe,ml,1
+62,oregano,oregano_other_in,other,1
+62,oregano,oregano_piece_in,piece,1
+62,oregano,oregano_piece_out,piece,1
+62,oregano,oregano_piece_reciepe,piece,1
+62,oregano,oregano_pkt_in,gm,1
+62,oregano,oregano_pkt_out,gm,1
+62,oregano,oregano_pkt_reciepe,gm,1
+61 62,origano+chilly flakes,origano+chilly flakes_gm_in,gm,1
+61 62,origano+chilly flakes,origano+chilly flakes_gm_inventory,gm,1
+61 62,origano+chilly flakes,origano+chilly flakes_gm_out,gm,1
+61 62,origano+chilly flakes,origano+chilly flakes_gm_reciepe,gm,1
+61 62,origano+chilly flakes,origano+chilly flakes_kg_in,gm,1
+61 62,origano+chilly flakes,origano+chilly flakes_kg_out,gm,1
+61 62,origano+chilly flakes,origano+chilly flakes_kg_reciepe,gm,1
+61 62,origano+chilly flakes,origano+chilly flakes_ltr_in,,1
+61 62,origano+chilly flakes,origano+chilly flakes_ltr_out,,1
+61 62,origano+chilly flakes,origano+chilly flakes_ltr_reciepe,ml,1
+61 62,origano+chilly flakes,origano+chilly flakes_ml_in,ml,1
+61 62,origano+chilly flakes,origano+chilly flakes_ml_out,ml,1
+61 62,origano+chilly flakes,origano+chilly flakes_ml_reciepe,ml,1
+61 62,origano+chilly flakes,origano+chilly flakes_other_in,other,1
+61 62,origano+chilly flakes,origano+chilly flakes_piece_in,piece,1
+61 62,origano+chilly flakes,origano+chilly flakes_piece_out,piece,1
+61 62,origano+chilly flakes,origano+chilly flakes_piece_reciepe,piece,1
+61 62,origano+chilly flakes,origano+chilly flakes_pkt_in,gm,1
+61 62,origano+chilly flakes,origano+chilly flakes_pkt_out,gm,1
+61 62,origano+chilly flakes,origano+chilly flakes_pkt_reciepe,gm,1
+other1,other1,other1_gm_in,gm,24
+other1,other1,other1_kg_in,gm,24
+other1,other1,other1_kg_out,gm,24
+other1,other1,other1_kg_reciepe,gm,24
+other1,other1,other1_l_in,ml,7
+other1,other1,other1_l_out,ml,7
+other1,other1,other1_l_reciepe,ml,10
+other1,other1,other1_ml_in,ml,23
+other1,other1,other1_ml_out,ml,23
+other1,other1,other1_ml_reciepe,ml,22
+other2,other2,other2_gm_in,gm,1
+other2,other2,other2_gm_inventory,gm,1
+other2,other2,other2_gm_out,gm,1
+other2,other2,other2_gm_reciepe,gm,1
+other2,other2,other2_kg_in,gm,1
+other2,other2,other2_kg_out,gm,1
+other2,other2,other2_kg_reciepe,gm,1
+other2,other2,other2_ltr_in,,1
+other2,other2,other2_ltr_out,,1
+other2,other2,other2_ltr_reciepe,ml,1
+other2,other2,other2_ml_in,ml,1
+other2,other2,other2_ml_out,ml,1
+other2,other2,other2_ml_reciepe,ml,1
+other2,other2,other2_other_in,other,1
+other2,other2,other2_piece_in,piece,1
+other2,other2,other2_piece_out,piece,1
+other2,other2,other2_piece_reciepe,piece,1
+other2,other2,other2_pkt_in,gm,1
+other2,other2,other2_pkt_out,gm,1
+other2,other2,other2_pkt_reciepe,gm,1
+other3,other3,other3_gm_in,gm,6
+other3,other3,other3_gm_inventory,gm,6
+other3,other3,other3_gm_out,gm,6
+other3,other3,other3_gm_reciepe,gm,6
+other3,other3,other3_kg_in,gm,6
+other3,other3,other3_kg_out,gm,6
+other3,other3,other3_kg_reciepe,gm,6
+other3,other3,other3_ltr_in,,1
+other3,other3,other3_ltr_out,,1
+other3,other3,other3_ltr_reciepe,ml,6
+other3,other3,other3_ml_in,ml,6
+other3,other3,other3_ml_out,ml,6
+other3,other3,other3_ml_reciepe,ml,6
+other3,other3,other3_other_in,other,6
+other3,other3,other3_piece_in,piece,6
+other3,other3,other3_piece_out,piece,6
+other3,other3,other3_piece_reciepe,piece,6
+other3,other3,other3_pkt_in,gm,6
+other3,other3,other3_pkt_out,gm,6
+other3,other3,other3_pkt_reciepe,gm,6
+63,pasta,pasta_gm_in,gm,1
+63,pasta,pasta_gm_inventory,gm,1
+63,pasta,pasta_gm_out,gm,1
+63,pasta,pasta_gm_reciepe,gm,1
+63,pasta,pasta_kg_in,gm,1
+63,pasta,pasta_kg_out,gm,1
+63,pasta,pasta_kg_reciepe,gm,1
+63,pasta,pasta_ltr_in,,1
+63,pasta,pasta_ltr_out,,1
+63,pasta,pasta_ltr_reciepe,ml,1
+63,pasta,pasta_ml_in,ml,1
+63,pasta,pasta_ml_out,ml,1
+63,pasta,pasta_ml_reciepe,ml,1
+63,pasta,pasta_other_in,other,1
+63,pasta,pasta_piece_in,piece,1
+63,pasta,pasta_piece_out,piece,1
+63,pasta,pasta_piece_reciepe,piece,1
+63,pasta,pasta_pkt_in,gm,1
+63,pasta,pasta_pkt_out,gm,1
+63,pasta,pasta_pkt_reciepe,gm,1
+48,pasta pizza sauce,pasta pizza sauce_gm_in,gm,1
+48,pasta pizza sauce,pasta pizza sauce_gm_inventory,gm,1
+48,pasta pizza sauce,pasta pizza sauce_gm_out,gm,1
+48,pasta pizza sauce,pasta pizza sauce_gm_reciepe,gm,1
+48,pasta pizza sauce,pasta pizza sauce_kg_in,gm,1
+48,pasta pizza sauce,pasta pizza sauce_kg_out,gm,1
+48,pasta pizza sauce,pasta pizza sauce_kg_reciepe,gm,1
+48,pasta pizza sauce,pasta pizza sauce_ltr_in,,1
+48,pasta pizza sauce,pasta pizza sauce_ltr_out,,1
+48,pasta pizza sauce,pasta pizza sauce_ltr_reciepe,ml,1
+48,pasta pizza sauce,pasta pizza sauce_ml_in,ml,1
+48,pasta pizza sauce,pasta pizza sauce_ml_out,ml,1
+48,pasta pizza sauce,pasta pizza sauce_ml_reciepe,ml,1
+48,pasta pizza sauce,pasta pizza sauce_other_in,other,1
+48,pasta pizza sauce,pasta pizza sauce_piece_in,piece,1
+48,pasta pizza sauce,pasta pizza sauce_piece_out,piece,1
+48,pasta pizza sauce,pasta pizza sauce_piece_reciepe,piece,1
+48,pasta pizza sauce,pasta pizza sauce_pkt_in,gm,1
+48,pasta pizza sauce,pasta pizza sauce_pkt_out,gm,1
+48,pasta pizza sauce,pasta pizza sauce_pkt_reciepe,gm,1
+48,pasta sauce,pasta sauce_gm_in,gm,1
+48,pasta sauce,pasta sauce_gm_inventory,gm,1
+48,pasta sauce,pasta sauce_gm_out,gm,1
+48,pasta sauce,pasta sauce_gm_reciepe,gm,1
+48,pasta sauce,pasta sauce_kg_in,gm,1
+48,pasta sauce,pasta sauce_kg_out,gm,1
+48,pasta sauce,pasta sauce_kg_reciepe,gm,1
+48,pasta sauce,pasta sauce_ltr_in,,1
+48,pasta sauce,pasta sauce_ltr_out,,1
+48,pasta sauce,pasta sauce_ltr_reciepe,ml,1
+48,pasta sauce,pasta sauce_ml_in,ml,1
+48,pasta sauce,pasta sauce_ml_out,ml,1
+48,pasta sauce,pasta sauce_ml_reciepe,ml,1
+48,pasta sauce,pasta sauce_other_in,other,1
+48,pasta sauce,pasta sauce_piece_in,piece,1
+48,pasta sauce,pasta sauce_piece_out,piece,1
+48,pasta sauce,pasta sauce_piece_reciepe,piece,1
+48,pasta sauce,pasta sauce_pkt_in,gm,1
+48,pasta sauce,pasta sauce_pkt_out,gm,1
+48,pasta sauce,pasta sauce_pkt_reciepe,gm,1
+1020,peach iced tea syrup,peach iced tea syrup_gm_in,gm,1
+1020,peach iced tea syrup,peach iced tea syrup_gm_inventory,gm,1
+1020,peach iced tea syrup,peach iced tea syrup_gm_out,gm,1
+1020,peach iced tea syrup,peach iced tea syrup_gm_reciepe,gm,1
+1020,peach iced tea syrup,peach iced tea syrup_kg_in,gm,1
+1020,peach iced tea syrup,peach iced tea syrup_kg_out,gm,1
+1020,peach iced tea syrup,peach iced tea syrup_kg_reciepe,gm,1
+1020,peach iced tea syrup,peach iced tea syrup_ltr_in,,1
+1020,peach iced tea syrup,peach iced tea syrup_ltr_out,,1
+1020,peach iced tea syrup,peach iced tea syrup_ltr_reciepe,ml,1
+1020,peach iced tea syrup,peach iced tea syrup_ml_in,ml,1
+1020,peach iced tea syrup,peach iced tea syrup_ml_out,ml,1
+1020,peach iced tea syrup,peach iced tea syrup_ml_reciepe,ml,1
+1020,peach iced tea syrup,peach iced tea syrup_piece_in,piece,1
+1020,peach iced tea syrup,peach iced tea syrup_piece_out,piece,1
+1020,peach iced tea syrup,peach iced tea syrup_piece_reciepe,piece,1
+1020,peach iced tea syrup,peach iced tea syrup_pkt_in,gm,1
+1020,peach iced tea syrup,peach iced tea syrup_pkt_out,gm,1
+1020,peach iced tea syrup,peach iced tea syrup_pkt_reciepe,gm,1
+64,peri peri masala,peri peri masala_gm_in,gm,1
+64,peri peri masala,peri peri masala_gm_inventory,gm,1
+64,peri peri masala,peri peri masala_gm_out,gm,1
+64,peri peri masala,peri peri masala_gm_reciepe,gm,1
+64,peri peri masala,peri peri masala_kg_in,gm,1
+64,peri peri masala,peri peri masala_kg_out,gm,1
+64,peri peri masala,peri peri masala_kg_reciepe,gm,1
+64,peri peri masala,peri peri masala_ltr_in,,1
+64,peri peri masala,peri peri masala_ltr_out,,1
+64,peri peri masala,peri peri masala_ltr_reciepe,ml,1
+64,peri peri masala,peri peri masala_ml_in,ml,1
+64,peri peri masala,peri peri masala_ml_out,ml,1
+64,peri peri masala,peri peri masala_ml_reciepe,ml,1
+64,peri peri masala,peri peri masala_other_in,other,1
+64,peri peri masala,peri peri masala_piece_in,gm,1
+64,peri peri masala,peri peri masala_piece_out,piece,1
+64,peri peri masala,peri peri masala_piece_reciepe,piece,1
+64,peri peri masala,peri peri masala_pkt_in,gm,1
+64,peri peri masala,peri peri masala_pkt_out,gm,1
+64,peri peri masala,peri peri masala_pkt_reciepe,gm,1
+49,peri peri sauce,peri peri sauce_gm_in,gm,1
+49,peri peri sauce,peri peri sauce_gm_inventory,gm,1
+49,peri peri sauce,peri peri sauce_gm_out,gm,1
+49,peri peri sauce,peri peri sauce_gm_reciepe,gm,1
+49,peri peri sauce,peri peri sauce_kg_in,gm,1
+49,peri peri sauce,peri peri sauce_kg_out,gm,1
+49,peri peri sauce,peri peri sauce_kg_reciepe,gm,1
+49,peri peri sauce,peri peri sauce_ltr_in,,1
+49,peri peri sauce,peri peri sauce_ltr_out,,1
+49,peri peri sauce,peri peri sauce_ltr_reciepe,ml,1
+49,peri peri sauce,peri peri sauce_ml_in,ml,1
+49,peri peri sauce,peri peri sauce_ml_out,ml,1
+49,peri peri sauce,peri peri sauce_ml_reciepe,ml,1
+49,peri peri sauce,peri peri sauce_other_in,other,1
+49,peri peri sauce,peri peri sauce_piece_in,piece,1
+49,peri peri sauce,peri peri sauce_piece_out,piece,1
+49,peri peri sauce,peri peri sauce_piece_reciepe,piece,1
+49,peri peri sauce,peri peri sauce_pkt_in,gm,1
+49,peri peri sauce,peri peri sauce_pkt_out,gm,1
+49,peri peri sauce,peri peri sauce_pkt_reciepe,gm,1
+64,periperi msala,periperi msala_gm_in,gm,1
+64,periperi msala,periperi msala_gm_inventory,gm,1
+64,periperi msala,periperi msala_gm_out,gm,1
+64,periperi msala,periperi msala_gm_reciepe,gm,1
+64,periperi msala,periperi msala_kg_in,gm,1
+64,periperi msala,periperi msala_kg_out,gm,1
+64,periperi msala,periperi msala_kg_reciepe,gm,1
+64,periperi msala,periperi msala_ltr_in,,1
+64,periperi msala,periperi msala_ltr_out,,1
+64,periperi msala,periperi msala_ltr_reciepe,ml,1
+64,periperi msala,periperi msala_ml_in,ml,1
+64,periperi msala,periperi msala_ml_out,ml,1
+64,periperi msala,periperi msala_ml_reciepe,ml,1
+64,periperi msala,periperi msala_other_in,other,1
+64,periperi msala,periperi msala_piece_in,piece,1
+64,periperi msala,periperi msala_piece_out,piece,1
+64,periperi msala,periperi msala_piece_reciepe,piece,1
+64,periperi msala,periperi msala_pkt_in,gm,1
+64,periperi msala,periperi msala_pkt_out,gm,1
+64,periperi msala,periperi msala_pkt_reciepe,gm,1
+49,periperi sauce,periperi sauce_gm_in,gm,1
+49,periperi sauce,periperi sauce_gm_inventory,gm,1
+49,periperi sauce,periperi sauce_gm_out,gm,1
+49,periperi sauce,periperi sauce_gm_reciepe,gm,1
+49,periperi sauce,periperi sauce_kg_in,gm,1
+49,periperi sauce,periperi sauce_kg_out,gm,1
+49,periperi sauce,periperi sauce_kg_reciepe,gm,1
+49,periperi sauce,periperi sauce_ltr_in,,1
+49,periperi sauce,periperi sauce_ltr_out,,1
+49,periperi sauce,periperi sauce_ltr_reciepe,ml,1
+49,periperi sauce,periperi sauce_ml_in,ml,1
+49,periperi sauce,periperi sauce_ml_out,ml,1
+49,periperi sauce,periperi sauce_ml_reciepe,ml,1
+49,periperi sauce,periperi sauce_other_in,other,1
+49,periperi sauce,periperi sauce_piece_in,piece,1
+49,periperi sauce,periperi sauce_piece_out,piece,1
+49,periperi sauce,periperi sauce_piece_reciepe,piece,1
+49,periperi sauce,periperi sauce_pkt_in,gm,1
+49,periperi sauce,periperi sauce_pkt_out,gm,1
+49,periperi sauce,periperi sauce_pkt_reciepe,gm,1
+64,perperi masala,perperi masala_gm_in,gm,1
+64,perperi masala,perperi masala_gm_inventory,gm,1
+64,perperi masala,perperi masala_gm_out,gm,1
+64,perperi masala,perperi masala_gm_reciepe,gm,1
+64,perperi masala,perperi masala_kg_in,gm,1
+64,perperi masala,perperi masala_kg_out,gm,1
+64,perperi masala,perperi masala_kg_reciepe,gm,1
+64,perperi masala,perperi masala_ltr_in,,1
+64,perperi masala,perperi masala_ltr_out,,1
+64,perperi masala,perperi masala_ltr_reciepe,ml,1
+64,perperi masala,perperi masala_ml_in,ml,1
+64,perperi masala,perperi masala_ml_out,ml,1
+64,perperi masala,perperi masala_ml_reciepe,ml,1
+64,perperi masala,perperi masala_other_in,other,1
+64,perperi masala,perperi masala_piece_in,piece,1
+64,perperi masala,perperi masala_piece_out,piece,1
+64,perperi masala,perperi masala_piece_reciepe,piece,1
+64,perperi masala,perperi masala_pkt_in,gm,1
+64,perperi masala,perperi masala_pkt_out,gm,1
+64,perperi masala,perperi masala_pkt_reciepe,gm,1
+48,pizza pasta sauce,pizza pasta sauce_gm_in,gm,1
+48,pizza pasta sauce,pizza pasta sauce_gm_inventory,gm,1
+48,pizza pasta sauce,pizza pasta sauce_gm_out,gm,1
+48,pizza pasta sauce,pizza pasta sauce_gm_reciepe,gm,1
+48,pizza pasta sauce,pizza pasta sauce_kg_in,gm,1
+48,pizza pasta sauce,pizza pasta sauce_kg_out,gm,1
+48,pizza pasta sauce,pizza pasta sauce_kg_reciepe,gm,1
+48,pizza pasta sauce,pizza pasta sauce_ltr_in,,1
+48,pizza pasta sauce,pizza pasta sauce_ltr_out,,1
+48,pizza pasta sauce,pizza pasta sauce_ltr_reciepe,ml,1
+48,pizza pasta sauce,pizza pasta sauce_ml_in,ml,1
+48,pizza pasta sauce,pizza pasta sauce_ml_out,ml,1
+48,pizza pasta sauce,pizza pasta sauce_ml_reciepe,ml,1
+48,pizza pasta sauce,pizza pasta sauce_other_in,other,1
+48,pizza pasta sauce,pizza pasta sauce_piece_in,piece,1
+48,pizza pasta sauce,pizza pasta sauce_piece_out,piece,1
+48,pizza pasta sauce,pizza pasta sauce_piece_reciepe,piece,1
+48,pizza pasta sauce,pizza pasta sauce_pkt_in,gm,1
+48,pizza pasta sauce,pizza pasta sauce_pkt_out,gm,1
+48,pizza pasta sauce,pizza pasta sauce_pkt_reciepe,gm,1
+48,pizza sauce,pizza sauce_gm_in,gm,1
+48,pizza sauce,pizza sauce_gm_inventory,gm,1
+48,pizza sauce,pizza sauce_gm_out,gm,1
+48,pizza sauce,pizza sauce_gm_reciepe,gm,1
+48,pizza sauce,pizza sauce_kg_in,gm,1
+48,pizza sauce,pizza sauce_kg_out,gm,1
+48,pizza sauce,pizza sauce_kg_reciepe,gm,1
+48,pizza sauce,pizza sauce_ltr_in,,1
+48,pizza sauce,pizza sauce_ltr_out,,1
+48,pizza sauce,pizza sauce_ltr_reciepe,ml,1
+48,pizza sauce,pizza sauce_ml_in,ml,1
+48,pizza sauce,pizza sauce_ml_out,ml,1
+48,pizza sauce,pizza sauce_ml_reciepe,ml,1
+48,pizza sauce,pizza sauce_other_in,other,1
+48,pizza sauce,pizza sauce_piece_in,piece,1
+48,pizza sauce,pizza sauce_piece_out,piece,1
+48,pizza sauce,pizza sauce_piece_reciepe,piece,1
+48,pizza sauce,pizza sauce_pkt_in,gm,1
+48,pizza sauce,pizza sauce_pkt_out,gm,1
+48,pizza sauce,pizza sauce_pkt_reciepe,gm,1
+V22,potato,potato_gm_in,gm,1
+V22,potato,potato_gm_inventory,gm,1
+V22,potato,potato_gm_out,gm,1
+V22,potato,potato_gm_reciepe,gm,1
+V22,potato,potato_kg_in,gm,1
+V22,potato,potato_kg_out,gm,1
+V22,potato,potato_kg_reciepe,gm,1
+V22,potato,potato_ltr_in,,1
+V22,potato,potato_ltr_out,,1
+V22,potato,potato_ltr_reciepe,ml,1
+V22,potato,potato_ml_in,ml,1
+V22,potato,potato_ml_out,ml,1
+V22,potato,potato_ml_reciepe,ml,1
+V22,potato,potato_piece_in,piece,1
+V22,potato,potato_piece_out,piece,1
+V22,potato,potato_piece_reciepe,piece,1
+V22,potato,potato_pkt_in,gm,1
+V22,potato,potato_pkt_out,gm,1
+V22,potato,potato_pkt_reciepe,gm,1
+81,proccess chese,proccess chese_gm_in,gm,1
+81,proccess chese,proccess chese_gm_inventory,gm,1
+81,proccess chese,proccess chese_gm_out,gm,1
+81,proccess chese,proccess chese_gm_reciepe,gm,1
+81,proccess chese,proccess chese_kg_in,gm,1
+81,proccess chese,proccess chese_kg_out,gm,1
+81,proccess chese,proccess chese_kg_reciepe,gm,1
+81,proccess chese,proccess chese_ltr_in,,1
+81,proccess chese,proccess chese_ltr_out,,1
+81,proccess chese,proccess chese_ltr_reciepe,ml,1
+81,proccess chese,proccess chese_ml_in,ml,1
+81,proccess chese,proccess chese_ml_out,ml,1
+81,proccess chese,proccess chese_ml_reciepe,ml,1
+81,proccess chese,proccess chese_other_in,other,1
+81,proccess chese,proccess chese_piece_in,piece,1
+81,proccess chese,proccess chese_piece_out,piece,1
+81,proccess chese,proccess chese_piece_reciepe,piece,1
+81,proccess chese,proccess chese_pkt_in,gm,1
+81,proccess chese,proccess chese_pkt_out,gm,1
+81,proccess chese,proccess chese_pkt_reciepe,gm,1
+81,process cheese,process cheese_gm_in,gm,1
+81,process cheese,process cheese_gm_inventory,gm,1
+81,process cheese,process cheese_gm_out,gm,1
+81,process cheese,process cheese_gm_reciepe,gm,1
+81,process cheese,process cheese_kg_in,gm,1
+81,process cheese,process cheese_kg_out,gm,1
+81,process cheese,process cheese_kg_reciepe,gm,1
+81,process cheese,process cheese_ltr_in,,1
+81,process cheese,process cheese_ltr_out,,1
+81,process cheese,process cheese_ltr_reciepe,ml,1
+81,process cheese,process cheese_ml_in,ml,1
+81,process cheese,process cheese_ml_out,ml,1
+81,process cheese,process cheese_ml_reciepe,ml,1
+81,process cheese,process cheese_other_in,other,1
+81,process cheese,process cheese_piece_in,piece,1
+81,process cheese,process cheese_piece_out,piece,1
+81,process cheese,process cheese_piece_reciepe,piece,1
+81,process cheese,process cheese_pkt_in,gm,1
+81,process cheese,process cheese_pkt_out,gm,1
+81,process cheese,process cheese_pkt_reciepe,gm,1
+81,process cheesse,process cheesse_gm_in,gm,1
+81,process cheesse,process cheesse_gm_inventory,gm,1
+81,process cheesse,process cheesse_gm_out,gm,1
+81,process cheesse,process cheesse_gm_reciepe,gm,1
+81,process cheesse,process cheesse_kg_in,gm,1
+81,process cheesse,process cheesse_kg_out,gm,1
+81,process cheesse,process cheesse_kg_reciepe,gm,1
+81,process cheesse,process cheesse_ltr_in,,1
+81,process cheesse,process cheesse_ltr_out,,1
+81,process cheesse,process cheesse_ltr_reciepe,ml,1
+81,process cheesse,process cheesse_ml_in,ml,1
+81,process cheesse,process cheesse_ml_out,ml,1
+81,process cheesse,process cheesse_ml_reciepe,ml,1
+81,process cheesse,process cheesse_other_in,other,1
+81,process cheesse,process cheesse_piece_in,piece,1
+81,process cheesse,process cheesse_piece_out,piece,1
+81,process cheesse,process cheesse_piece_reciepe,piece,1
+81,process cheesse,process cheesse_pkt_in,gm,1
+81,process cheesse,process cheesse_pkt_out,gm,1
+81,process cheesse,process cheesse_pkt_reciepe,gm,1
+81,processed cheese,processed cheese_gm_in,gm,1
+81,processed cheese,processed cheese_gm_inventory,gm,1
+81,processed cheese,processed cheese_gm_out,gm,1
+81,processed cheese,processed cheese_gm_reciepe,gm,1
+81,processed cheese,processed cheese_kg_in,gm,1
+81,processed cheese,processed cheese_kg_out,gm,1
+81,processed cheese,processed cheese_kg_reciepe,gm,1
+81,processed cheese,processed cheese_ltr_in,,1
+81,processed cheese,processed cheese_ltr_out,,1
+81,processed cheese,processed cheese_ltr_reciepe,ml,1
+81,processed cheese,processed cheese_ml_in,ml,1
+81,processed cheese,processed cheese_ml_out,ml,1
+81,processed cheese,processed cheese_ml_reciepe,ml,1
+81,processed cheese,processed cheese_other_in,other,1
+81,processed cheese,processed cheese_piece_in,piece,1
+81,processed cheese,processed cheese_piece_out,piece,1
+81,processed cheese,processed cheese_piece_reciepe,piece,1
+81,processed cheese,processed cheese_pkt_in,gm,1
+81,processed cheese,processed cheese_pkt_out,gm,1
+81,processed cheese,processed cheese_pkt_reciepe,gm,1
+60A,red peperica,red peperica_gm_in,gm,1
+60A,red peperica,red peperica_gm_inventory,gm,1
+60A,red peperica,red peperica_gm_out,gm,1
+60A,red peperica,red peperica_gm_reciepe,gm,1
+60A,red peperica,red peperica_kg_in,gm,1
+60A,red peperica,red peperica_kg_out,gm,1
+60A,red peperica,red peperica_kg_reciepe,gm,1
+60A,red peperica,red peperica_ltr_in,,1
+60A,red peperica,red peperica_ltr_out,,1
+60A,red peperica,red peperica_ltr_reciepe,ml,1
+60A,red peperica,red peperica_ml_in,ml,1
+60A,red peperica,red peperica_ml_out,ml,1
+60A,red peperica,red peperica_ml_reciepe,ml,1
+60A,red peperica,red peperica_other_in,other,1
+60A,red peperica,red peperica_piece_in,piece,1
+60A,red peperica,red peperica_piece_out,piece,1
+60A,red peperica,red peperica_piece_reciepe,piece,1
+60A,red peperica,red peperica_pkt_in,gm,1
+60A,red peperica,red peperica_pkt_out,gm,1
+60A,red peperica,red peperica_pkt_reciepe,gm,1
+60A,red peprica,red peprica_gm_in,gm,1
+60A,red peprica,red peprica_gm_inventory,gm,1
+60A,red peprica,red peprica_gm_out,gm,1
+60A,red peprica,red peprica_gm_reciepe,gm,1
+60A,red peprica,red peprica_kg_in,gm,1
+60A,red peprica,red peprica_kg_out,gm,1
+60A,red peprica,red peprica_kg_reciepe,gm,1
+60A,red peprica,red peprica_ltr_in,,1
+60A,red peprica,red peprica_ltr_out,,1
+60A,red peprica,red peprica_ltr_reciepe,ml,1
+60A,red peprica,red peprica_ml_in,ml,1
+60A,red peprica,red peprica_ml_out,ml,1
+60A,red peprica,red peprica_ml_reciepe,ml,1
+60A,red peprica,red peprica_other_in,other,1
+60A,red peprica,red peprica_piece_in,piece,1
+60A,red peprica,red peprica_piece_out,piece,1
+60A,red peprica,red peprica_piece_reciepe,piece,1
+60A,red peprica,red peprica_pkt_in,gm,1
+60A,red peprica,red peprica_pkt_out,gm,1
+60A,red peprica,red peprica_pkt_reciepe,gm,1
+3,rice,rice_gm_in,gm,1
+3,rice,rice_gm_inventory,gm,1
+3,rice,rice_gm_out,gm,1
+3,rice,rice_gm_reciepe,gm,1
+3,rice,rice_kg_in,gm,1
+3,rice,rice_kg_out,gm,1
+3,rice,rice_kg_reciepe,gm,1
+3,rice,rice_ltr_in,,1
+3,rice,rice_ltr_out,,1
+3,rice,rice_ltr_reciepe,ml,1
+3,rice,rice_ml_in,ml,1
+3,rice,rice_ml_out,ml,1
+3,rice,rice_ml_reciepe,ml,1
+3,rice,rice_other_in,other,1
+3,rice,rice_piece_in,piece,1
+3,rice,rice_piece_out,piece,1
+3,rice,rice_piece_reciepe,piece,1
+3,rice,rice_pkt_in,gm,1
+3,rice,rice_pkt_out,gm,1
+3,rice,rice_pkt_reciepe,gm,1
+27A,salt,salt_gm_in,gm,1
+27A,salt,salt_gm_inventory,gm,1
+27A,salt,salt_gm_out,gm,1
+27A,salt,salt_gm_reciepe,gm,1
+27A,salt,salt_kg_in,gm,1
+27A,salt,salt_kg_out,gm,1
+27A,salt,salt_kg_reciepe,gm,1
+27A,salt,salt_ltr_in,,1
+27A,salt,salt_ltr_out,,1
+27A,salt,salt_ltr_reciepe,ml,1
+27A,salt,salt_ml_in,ml,1
+27A,salt,salt_ml_out,ml,1
+27A,salt,salt_ml_reciepe,ml,1
+27A,salt,salt_other_in,other,1
+27A,salt,salt_piece_in,piece,1
+27A,salt,salt_piece_out,piece,1
+27A,salt,salt_piece_reciepe,piece,1
+27A,salt,salt_pkt_in,gm,1
+27A,salt,salt_pkt_out,gm,1
+27A,salt,salt_pkt_reciepe,gm,1
+23A,sarso tel,sarso tel_gm_in,gm,1
+23A,sarso tel,sarso tel_gm_inventory,gm,1
+23A,sarso tel,sarso tel_gm_out,gm,1
+23A,sarso tel,sarso tel_gm_reciepe,gm,1
+23A,sarso tel,sarso tel_kg_in,gm,1
+23A,sarso tel,sarso tel_kg_out,gm,1
+23A,sarso tel,sarso tel_kg_reciepe,gm,1
+23A,sarso tel,sarso tel_l_in,ml,1
+23A,sarso tel,sarso tel_ltr_in,,1
+23A,sarso tel,sarso tel_ltr_out,,1
+23A,sarso tel,sarso tel_ltr_reciepe,ml,1
+23A,sarso tel,sarso tel_ml_in,ml,1
+23A,sarso tel,sarso tel_ml_out,ml,1
+23A,sarso tel,sarso tel_ml_reciepe,ml,1
+23A,sarso tel,sarso tel_other_in,other,1
+23A,sarso tel,sarso tel_piece_in,piece,1
+23A,sarso tel,sarso tel_piece_out,piece,1
+23A,sarso tel,sarso tel_piece_reciepe,piece,1
+23A,sarso tel,sarso tel_pkt_in,gm,1
+23A,sarso tel,sarso tel_pkt_out,gm,1
+23A,sarso tel,sarso tel_pkt_reciepe,gm,1
+41,schezwan,schezwan_gm_in,gm,1
+41,schezwan,schezwan_gm_inventory,gm,1
+41,schezwan,schezwan_gm_out,gm,1
+41,schezwan,schezwan_gm_reciepe,gm,1
+41,schezwan,schezwan_kg_in,gm,1
+41,schezwan,schezwan_kg_out,gm,1
+41,schezwan,schezwan_kg_reciepe,gm,1
+41,schezwan,schezwan_ltr_in,,1
+41,schezwan,schezwan_ltr_out,,1
+41,schezwan,schezwan_ltr_reciepe,ml,1
+41,schezwan,schezwan_ml_in,ml,1
+41,schezwan,schezwan_ml_out,ml,1
+41,schezwan,schezwan_ml_reciepe,ml,1
+41,schezwan,schezwan_other_in,other,1
+41,schezwan,schezwan_piece_in,piece,1
+41,schezwan,schezwan_piece_out,piece,1
+41,schezwan,schezwan_piece_reciepe,piece,1
+41,schezwan,schezwan_pkt_in,gm,1
+41,schezwan,schezwan_pkt_out,gm,1
+41,schezwan,schezwan_pkt_reciepe,gm,1
+41,schezwan sauce,schezwan sauce_gm_in,gm,1
+41,schezwan sauce,schezwan sauce_gm_inventory,gm,1
+41,schezwan sauce,schezwan sauce_gm_out,gm,1
+41,schezwan sauce,schezwan sauce_gm_reciepe,gm,1
+41,schezwan sauce,schezwan sauce_kg_in,gm,1
+41,schezwan sauce,schezwan sauce_kg_out,gm,1
+41,schezwan sauce,schezwan sauce_kg_reciepe,gm,1
+41,schezwan sauce,schezwan sauce_ltr_in,,1
+41,schezwan sauce,schezwan sauce_ltr_out,,1
+41,schezwan sauce,schezwan sauce_ltr_reciepe,ml,1
+41,schezwan sauce,schezwan sauce_ml_in,ml,1
+41,schezwan sauce,schezwan sauce_ml_out,ml,1
+41,schezwan sauce,schezwan sauce_ml_reciepe,ml,1
+41,schezwan sauce,schezwan sauce_other_in,other,1
+41,schezwan sauce,schezwan sauce_piece_in,gm,1
+41,schezwan sauce,schezwan sauce_piece_out,piece,1
+41,schezwan sauce,schezwan sauce_piece_reciepe,piece,1
+41,schezwan sauce,schezwan sauce_pkt_in,gm,1
+41,schezwan sauce,schezwan sauce_pkt_out,gm,1
+41,schezwan sauce,schezwan sauce_pkt_reciepe,gm,1
+111A,sev,sev_gm_in,gm,1
+111A,sev,sev_gm_inventory,gm,1
+111A,sev,sev_gm_out,gm,1
+111A,sev,sev_gm_reciepe,gm,1
+111A,sev,sev_kg_in,gm,1
+111A,sev,sev_kg_out,gm,1
+111A,sev,sev_kg_reciepe,gm,1
+111A,sev,sev_ltr_in,,1
+111A,sev,sev_ltr_out,,1
+111A,sev,sev_ltr_reciepe,ml,1
+111A,sev,sev_ml_in,ml,1
+111A,sev,sev_ml_out,ml,1
+111A,sev,sev_ml_reciepe,ml,1
+111A,sev,sev_other_in,other,1
+111A,sev,sev_piece_in,piece,1
+111A,sev,sev_piece_out,piece,1
+111A,sev,sev_piece_reciepe,piece,1
+111A,sev,sev_pkt_in,gm,1
+111A,sev,sev_pkt_out,gm,1
+111A,sev,sev_pkt_reciepe,gm,1
+97,soda,soda_gm_in,gm,1
+97,soda,soda_gm_inventory,gm,1
+97,soda,soda_gm_out,gm,1
+97,soda,soda_gm_reciepe,gm,1
+97,soda,soda_kg_in,gm,1
+97,soda,soda_kg_out,gm,1
+97,soda,soda_kg_reciepe,gm,1
+97,soda,soda_ltr_in,,1
+97,soda,soda_ltr_out,,1
+97,soda,soda_ltr_reciepe,ml,1
+97,soda,soda_ml_in,ml,1
+97,soda,soda_ml_out,ml,1
+97,soda,soda_ml_reciepe,ml,1
+97,soda,soda_other_in,other,1
+97,soda,soda_piece_in,piece,1
+97,soda,soda_piece_out,piece,1
+97,soda,soda_piece_reciepe,piece,1
+97,soda,soda_pkt_in,gm,1
+97,soda,soda_pkt_out,gm,1
+97,soda,soda_pkt_reciepe,gm,1
+98,soft drink,soft drink_gm_in,gm,1
+98,soft drink,soft drink_gm_inventory,gm,1
+98,soft drink,soft drink_gm_out,gm,1
+98,soft drink,soft drink_kg_in,gm,1
+98,soft drink,soft drink_kg_out,gm,1
+98,soft drink,soft drink_kg_reciepe,gm,1
+98,soft drink,soft drink_ltr_in,,1
+98,soft drink,soft drink_ltr_out,,1
+98,soft drink,soft drink_ltr_reciepe,ml,1
+98,soft drink,soft drink_ml_in,ml,1
+98,soft drink,soft drink_ml_out,ml,1
+98,soft drink,soft drink_other_in,other,1
+98,soft drink,soft drink_pkt_in,gm,1
+98,soft drink,soft drink_pkt_out,gm,1
+98,soft drink,soft drink_pkt_reciepe,gm,1
+43A,soya sauce,soya sauce_gm_in,gm,1
+43A,soya sauce,soya sauce_gm_inventory,gm,1
+43A,soya sauce,soya sauce_gm_out,gm,1
+43A,soya sauce,soya sauce_gm_reciepe,gm,1
+43A,soya sauce,soya sauce_kg_in,gm,1
+43A,soya sauce,soya sauce_kg_out,gm,1
+43A,soya sauce,soya sauce_kg_reciepe,gm,1
+43A,soya sauce,soya sauce_ltr_in,,1
+43A,soya sauce,soya sauce_ltr_out,,1
+43A,soya sauce,soya sauce_ltr_reciepe,ml,1
+43A,soya sauce,soya sauce_ml_in,ml,1
+43A,soya sauce,soya sauce_ml_out,ml,1
+43A,soya sauce,soya sauce_ml_reciepe,ml,1
+43A,soya sauce,soya sauce_other_in,other,1
+43A,soya sauce,soya sauce_piece_in,piece,1
+43A,soya sauce,soya sauce_piece_out,piece,1
+43A,soya sauce,soya sauce_piece_reciepe,piece,1
+43A,soya sauce,soya sauce_pkt_in,gm,1
+43A,soya sauce,soya sauce_pkt_out,gm,1
+43A,soya sauce,soya sauce_pkt_reciepe,gm,1
+4,staff rice,staff rice_gm_in,gm,1
+4,staff rice,staff rice_gm_inventory,gm,1
+4,staff rice,staff rice_gm_out,gm,1
+4,staff rice,staff rice_gm_reciepe,gm,1
+4,staff rice,staff rice_kg_in,gm,1
+4,staff rice,staff rice_kg_out,gm,1
+4,staff rice,staff rice_kg_reciepe,gm,1
+4,staff rice,staff rice_ltr_in,,1
+4,staff rice,staff rice_ltr_out,,1
+4,staff rice,staff rice_ltr_reciepe,ml,1
+4,staff rice,staff rice_ml_in,ml,1
+4,staff rice,staff rice_ml_out,ml,1
+4,staff rice,staff rice_ml_reciepe,ml,1
+4,staff rice,staff rice_other_in,other,1
+4,staff rice,staff rice_piece_in,piece,1
+4,staff rice,staff rice_piece_out,piece,1
+4,staff rice,staff rice_piece_reciepe,piece,1
+4,staff rice,staff rice_pkt_in,gm,1
+4,staff rice,staff rice_pkt_out,gm,1
+4,staff rice,staff rice_pkt_reciepe,gm,1
+6,sugar,sugar_gm_in,gm,1
+6,sugar,sugar_gm_inventory,gm,1
+6,sugar,sugar_gm_out,gm,1
+6,sugar,sugar_gm_reciepe,gm,1
+6,sugar,sugar_kg_in,gm,1
+6,sugar,sugar_kg_out,gm,1
+6,sugar,sugar_kg_reciepe,gm,1
+6,sugar,sugar_ltr_in,,1
+6,sugar,sugar_ltr_out,,1
+6,sugar,sugar_ltr_reciepe,ml,1
+6,sugar,sugar_ml_in,ml,1
+6,sugar,sugar_ml_out,ml,1
+6,sugar,sugar_ml_reciepe,ml,1
+6,sugar,sugar_other_in,other,1
+6,sugar,sugar_piece_in,piece,1
+6,sugar,sugar_piece_out,piece,1
+6,sugar,sugar_piece_reciepe,piece,1
+6,sugar,sugar_pkt_in,gm,1
+6,sugar,sugar_pkt_out,gm,1
+6,sugar,sugar_pkt_reciepe,gm,1
+6B,tea powder,tea powder_gm_in,gm,1
+6B,tea powder,tea powder_gm_inventory,gm,1
+6B,tea powder,tea powder_gm_out,gm,1
+6B,tea powder,tea powder_gm_reciepe,gm,1
+6B,tea powder,tea powder_kg_in,gm,1
+6B,tea powder,tea powder_kg_out,gm,1
+6B,tea powder,tea powder_kg_reciepe,gm,1
+6B,tea powder,tea powder_ltr_in,,1
+6B,tea powder,tea powder_ltr_out,,1
+6B,tea powder,tea powder_ltr_reciepe,ml,1
+6B,tea powder,tea powder_ml_in,ml,1
+6B,tea powder,tea powder_ml_out,ml,1
+6B,tea powder,tea powder_ml_reciepe,ml,1
+6B,tea powder,tea powder_other_in,other,1
+6B,tea powder,tea powder_piece_in,piece,1
+6B,tea powder,tea powder_piece_out,piece,1
+6B,tea powder,tea powder_piece_reciepe,piece,1
+6B,tea powder,tea powder_pkt_in,gm,1
+6B,tea powder,tea powder_pkt_out,gm,1
+6B,tea powder,tea powder_pkt_reciepe,gm,1
+42B,thai chilly,thai chilly_gm_in,gm,1
+42B,thai chilly,thai chilly_gm_inventory,gm,1
+42B,thai chilly,thai chilly_gm_out,gm,1
+42B,thai chilly,thai chilly_gm_reciepe,gm,1
+42B,thai chilly,thai chilly_kg_in,gm,1
+42B,thai chilly,thai chilly_kg_out,gm,1
+42B,thai chilly,thai chilly_kg_reciepe,gm,1
+42B,thai chilly,thai chilly_ltr_in,,1
+42B,thai chilly,thai chilly_ltr_out,,1
+42B,thai chilly,thai chilly_ltr_reciepe,ml,1
+42B,thai chilly,thai chilly_ml_in,ml,1
+42B,thai chilly,thai chilly_ml_out,ml,1
+42B,thai chilly,thai chilly_ml_reciepe,ml,1
+42B,thai chilly,thai chilly_other_in,other,1
+42B,thai chilly,thai chilly_piece_in,piece,1
+42B,thai chilly,thai chilly_piece_out,piece,1
+42B,thai chilly,thai chilly_piece_reciepe,piece,1
+42B,thai chilly,thai chilly_pkt_in,gm,1
+42B,thai chilly,thai chilly_pkt_out,gm,1
+42B,thai chilly,thai chilly_pkt_reciepe,gm,1
+42B,thai chilly sauce,thai chilly sauce_gm_in,gm,1
+42B,thai chilly sauce,thai chilly sauce_gm_inventory,gm,1
+42B,thai chilly sauce,thai chilly sauce_gm_out,gm,1
+42B,thai chilly sauce,thai chilly sauce_gm_reciepe,gm,1
+42B,thai chilly sauce,thai chilly sauce_kg_in,gm,1
+42B,thai chilly sauce,thai chilly sauce_kg_out,gm,1
+42B,thai chilly sauce,thai chilly sauce_kg_reciepe,gm,1
+42B,thai chilly sauce,thai chilly sauce_ltr_in,,1
+42B,thai chilly sauce,thai chilly sauce_ltr_out,,1
+42B,thai chilly sauce,thai chilly sauce_ltr_reciepe,ml,1
+42B,thai chilly sauce,thai chilly sauce_ml_in,ml,1
+42B,thai chilly sauce,thai chilly sauce_ml_out,ml,1
+42B,thai chilly sauce,thai chilly sauce_ml_reciepe,ml,1
+42B,thai chilly sauce,thai chilly sauce_other_in,other,1
+42B,thai chilly sauce,thai chilly sauce_piece_in,gm,1
+42B,thai chilly sauce,thai chilly sauce_piece_out,piece,1
+42B,thai chilly sauce,thai chilly sauce_piece_reciepe,piece,1
+42B,thai chilly sauce,thai chilly sauce_pkt_in,gm,1
+42B,thai chilly sauce,thai chilly sauce_pkt_out,gm,1
+42B,thai chilly sauce,thai chilly sauce_pkt_reciepe,gm,1
+54,thousand sauce,thousand sauce_gm_in,gm,1
+54,thousand sauce,thousand sauce_gm_inventory,gm,1
+54,thousand sauce,thousand sauce_gm_out,gm,1
+54,thousand sauce,thousand sauce_gm_reciepe,gm,1
+54,thousand sauce,thousand sauce_kg_in,gm,1
+54,thousand sauce,thousand sauce_kg_out,gm,1
+54,thousand sauce,thousand sauce_kg_reciepe,gm,1
+54,thousand sauce,thousand sauce_ltr_in,,1
+54,thousand sauce,thousand sauce_ltr_out,,1
+54,thousand sauce,thousand sauce_ltr_reciepe,ml,1
+54,thousand sauce,thousand sauce_ml_in,ml,1
+54,thousand sauce,thousand sauce_ml_out,ml,1
+54,thousand sauce,thousand sauce_ml_reciepe,ml,1
+54,thousand sauce,thousand sauce_other_in,other,1
+54,thousand sauce,thousand sauce_piece_in,gm,1
+54,thousand sauce,thousand sauce_piece_out,piece,1
+54,thousand sauce,thousand sauce_piece_reciepe,piece,1
+54,thousand sauce,thousand sauce_pkt_in,gm,1
+54,thousand sauce,thousand sauce_pkt_out,gm,1
+54,thousand sauce,thousand sauce_pkt_reciepe,gm,1
+52,tika sauce,tika sauce_gm_in,gm,1
+52,tika sauce,tika sauce_gm_inventory,gm,1
+52,tika sauce,tika sauce_gm_out,gm,1
+52,tika sauce,tika sauce_gm_reciepe,gm,1
+52,tika sauce,tika sauce_kg_in,gm,1
+52,tika sauce,tika sauce_kg_out,gm,1
+52,tika sauce,tika sauce_kg_reciepe,gm,1
+52,tika sauce,tika sauce_ltr_in,,1
+52,tika sauce,tika sauce_ltr_out,,1
+52,tika sauce,tika sauce_ltr_reciepe,ml,1
+52,tika sauce,tika sauce_ml_in,ml,1
+52,tika sauce,tika sauce_ml_out,ml,1
+52,tika sauce,tika sauce_ml_reciepe,ml,1
+52,tika sauce,tika sauce_other_in,other,1
+52,tika sauce,tika sauce_piece_in,piece,1
+52,tika sauce,tika sauce_piece_out,piece,1
+52,tika sauce,tika sauce_piece_reciepe,piece,1
+52,tika sauce,tika sauce_pkt_in,gm,1
+52,tika sauce,tika sauce_pkt_out,gm,1
+52,tika sauce,tika sauce_pkt_reciepe,gm,1
+37,tomato,tomato_gm_inventory,gm,1
+37,tomato,tomato_gm_reciepe,gm,1
+37,tomato,tomato_kg_in,gm,1
+37,tomato,tomato_kg_out,gm,1
+37,tomato,tomato_kg_reciepe,gm,1
+37,tomato,tomato_ml_in,ml,1
+37,tomato,tomato_ml_out,ml,1
+37,tomato,tomato_other_in,other,1
+37,tomato,tomato_piece_in,piece,1
+37,tomato,tomato_piece_out,piece,1
+37,tomato,tomato_pkt_in,gm,1
+37,tomato,tomato_pkt_out,gm,1
+37,tomato kechup,tomato kechup_gm_in,gm,1
+37,tomato kechup,tomato kechup_gm_inventory,gm,1
+37,tomato kechup,tomato kechup_gm_out,gm,1
+37,tomato kechup,tomato kechup_gm_reciepe,gm,1
+37,tomato kechup,tomato kechup_kg_in,gm,1
+37,tomato kechup,tomato kechup_kg_out,gm,1
+37,tomato kechup,tomato kechup_kg_reciepe,gm,1
+37,tomato kechup,tomato kechup_ltr_in,,1
+37,tomato kechup,tomato kechup_ltr_out,,1
+37,tomato kechup,tomato kechup_ltr_reciepe,ml,1
+37,tomato kechup,tomato kechup_ml_in,ml,1
+37,tomato kechup,tomato kechup_ml_out,ml,1
+37,tomato kechup,tomato kechup_ml_reciepe,ml,1
+37,tomato kechup,tomato kechup_other_in,other,1
+37,tomato kechup,tomato kechup_piece_in,piece,1
+37,tomato kechup,tomato kechup_piece_out,piece,1
+37,tomato kechup,tomato kechup_piece_reciepe,piece,1
+37,tomato kechup,tomato kechup_pkt_in,gm,1
+37,tomato kechup,tomato kechup_pkt_out,gm,1
+37,tomato kechup,tomato kechup_pkt_reciepe,gm,1
+37,tomato ketchup,tomato ketchup_gm_in,gm,1
+37,tomato ketchup,tomato ketchup_gm_inventory,gm,1
+37,tomato ketchup,tomato ketchup_gm_out,gm,1
+37,tomato ketchup,tomato ketchup_gm_reciepe,gm,1
+37,tomato ketchup,tomato ketchup_kg_in,gm,1
+37,tomato ketchup,tomato ketchup_kg_out,gm,1
+37,tomato ketchup,tomato ketchup_kg_reciepe,gm,1
+37,tomato ketchup,tomato ketchup_ltr_in,,1
+37,tomato ketchup,tomato ketchup_ltr_out,,1
+37,tomato ketchup,tomato ketchup_ltr_reciepe,ml,1
+37,tomato ketchup,tomato ketchup_ml_in,ml,1
+37,tomato ketchup,tomato ketchup_ml_out,ml,1
+37,tomato ketchup,tomato ketchup_other_in,other,1
+37,tomato ketchup,tomato ketchup_piece_in,piece,1
+37,tomato ketchup,tomato ketchup_piece_out,piece,1
+37,tomato ketchup,tomato ketchup_pkt_out,gm,1
+37,tomato sauce,tomato sauce_gm_in,gm,1
+37,tomato sauce,tomato sauce_gm_inventory,gm,1
+37,tomato sauce,tomato sauce_gm_out,gm,1
+37,tomato sauce,tomato sauce_gm_reciepe,gm,1
+37,tomato sauce,tomato sauce_kg_in,gm,1
+37,tomato sauce,tomato sauce_kg_out,gm,1
+37,tomato sauce,tomato sauce_kg_reciepe,gm,1
+37,tomato sauce,tomato sauce_ltr_in,,1
+37,tomato sauce,tomato sauce_ltr_out,,1
+37,tomato sauce,tomato sauce_ltr_reciepe,ml,1
+37,tomato sauce,tomato sauce_ml_in,ml,1
+37,tomato sauce,tomato sauce_ml_out,ml,1
+37,tomato sauce,tomato sauce_ml_reciepe,ml,1
+37,tomato sauce,tomato sauce_other_in,other,1
+37,tomato sauce,tomato sauce_piece_in,piece,1
+37,tomato sauce,tomato sauce_piece_out,piece,1
+37,tomato sauce,tomato sauce_piece_reciepe,piece,1
+37,tomato sauce,tomato sauce_pkt_in,gm,1
+37,tomato sauce,tomato sauce_pkt_out,gm,1
+37,tomato sauce,tomato sauce_pkt_reciepe,gm,1
+37,tomato suce,tomato suce_gm_in,gm,1
+37,tomato suce,tomato suce_gm_inventory,gm,1
+37,tomato suce,tomato suce_gm_out,gm,1
+37,tomato suce,tomato suce_gm_reciepe,gm,1
+37,tomato suce,tomato suce_kg_in,gm,1
+37,tomato suce,tomato suce_kg_out,gm,1
+37,tomato suce,tomato suce_kg_reciepe,gm,1
+37,tomato suce,tomato suce_ltr_in,,1
+37,tomato suce,tomato suce_ltr_out,,1
+37,tomato suce,tomato suce_ltr_reciepe,ml,1
+37,tomato suce,tomato suce_ml_in,ml,1
+37,tomato suce,tomato suce_ml_out,ml,1
+37,tomato suce,tomato suce_ml_reciepe,ml,1
+37,tomato suce,tomato suce_other_in,other,1
+37,tomato suce,tomato suce_piece_in,piece,1
+37,tomato suce,tomato suce_piece_out,piece,1
+37,tomato suce,tomato suce_piece_reciepe,piece,1
+37,tomato suce,tomato suce_pkt_in,gm,1
+37,tomato suce,tomato suce_pkt_out,gm,1
+37,tomato suce,tomato suce_pkt_reciepe,gm,1
+5,tur dal,tur dal_gm_in,gm,1
+5,tur dal,tur dal_gm_inventory,gm,1
+5,tur dal,tur dal_gm_out,gm,1
+5,tur dal,tur dal_gm_reciepe,gm,1
+5,tur dal,tur dal_kg_in,gm,1
+5,tur dal,tur dal_kg_out,gm,1
+5,tur dal,tur dal_kg_reciepe,gm,1
+5,tur dal,tur dal_ltr_in,,1
+5,tur dal,tur dal_ltr_out,,1
+5,tur dal,tur dal_ltr_reciepe,ml,1
+5,tur dal,tur dal_ml_in,ml,1
+5,tur dal,tur dal_ml_out,ml,1
+5,tur dal,tur dal_ml_reciepe,ml,1
+5,tur dal,tur dal_other_in,other,1
+5,tur dal,tur dal_piece_in,piece,1
+5,tur dal,tur dal_piece_out,piece,1
+5,tur dal,tur dal_piece_reciepe,piece,1
+5,tur dal,tur dal_pkt_in,gm,1
+5,tur dal,tur dal_pkt_out,gm,1
+5,tur dal,tur dal_pkt_reciepe,gm,1
+44,vinegar,vinegar_gm_in,gm,1
+44,vinegar,vinegar_gm_inventory,gm,1
+44,vinegar,vinegar_gm_out,gm,1
+44,vinegar,vinegar_gm_reciepe,gm,1
+44,vinegar,vinegar_kg_in,gm,1
+44,vinegar,vinegar_kg_out,gm,1
+44,vinegar,vinegar_kg_reciepe,gm,1
+44,vinegar,vinegar_ltr_in,,1
+44,vinegar,vinegar_ltr_out,,1
+44,vinegar,vinegar_ltr_reciepe,ml,1
+44,vinegar,vinegar_ml_in,ml,1
+44,vinegar,vinegar_ml_out,ml,1
+44,vinegar,vinegar_ml_reciepe,ml,1
+44,vinegar,vinegar_other_in,other,1
+44,vinegar,vinegar_piece_in,piece,1
+44,vinegar,vinegar_piece_out,piece,1
+44,vinegar,vinegar_piece_reciepe,piece,1
+44,vinegar,vinegar_pkt_in,gm,1
+44,vinegar,vinegar_pkt_out,gm,1
+44,vinegar,vinegar_pkt_reciepe,gm,1
+39A,white pepper,white pepper_gm_in,gm,1
+39A,white pepper,white pepper_gm_inventory,gm,1
+39A,white pepper,white pepper_gm_out,gm,1
+39A,white pepper,white pepper_gm_reciepe,gm,1
+39A,white pepper,white pepper_kg_in,gm,1
+39A,white pepper,white pepper_kg_out,gm,1
+39A,white pepper,white pepper_kg_reciepe,gm,1
+39A,white pepper,white pepper_ltr_in,,1
+39A,white pepper,white pepper_ltr_out,,1
+39A,white pepper,white pepper_ltr_reciepe,ml,1
+39A,white pepper,white pepper_ml_in,ml,1
+39A,white pepper,white pepper_ml_out,ml,1
+39A,white pepper,white pepper_ml_reciepe,ml,1
+39A,white pepper,white pepper_other_in,other,1
+39A,white pepper,white pepper_piece_in,piece,1
+39A,white pepper,white pepper_piece_out,piece,1
+39A,white pepper,white pepper_piece_reciepe,piece,1
+39A,white pepper,white pepper_pkt_in,gm,1
+39A,white pepper,white pepper_pkt_out,gm,1
+39A,white pepper,white pepper_pkt_reciepe,gm,1
+V21,yellow bell pepper,yellow bell pepper_gm_in,gm,1
+V21,yellow bell pepper,yellow bell pepper_gm_inventory,gm,1
+V21,yellow bell pepper,yellow bell pepper_gm_out,gm,1
+V21,yellow bell pepper,yellow bell pepper_gm_reciepe,gm,1
+V21,yellow bell pepper,yellow bell pepper_kg_in,gm,1
+V21,yellow bell pepper,yellow bell pepper_kg_out,gm,1
+V21,yellow bell pepper,yellow bell pepper_kg_reciepe,gm,1
+V21,yellow bell pepper,yellow bell pepper_ltr_in,,1
+V21,yellow bell pepper,yellow bell pepper_ltr_out,,1
+V21,yellow bell pepper,yellow bell pepper_ltr_reciepe,ml,1
+V21,yellow bell pepper,yellow bell pepper_ml_in,ml,1
+V21,yellow bell pepper,yellow bell pepper_ml_out,ml,1
+V21,yellow bell pepper,yellow bell pepper_ml_reciepe,ml,1
+V21,yellow bell pepper,yellow bell pepper_piece_in,piece,1
+V21,yellow bell pepper,yellow bell pepper_piece_out,piece,1
+V21,yellow bell pepper,yellow bell pepper_piece_reciepe,piece,1
+V21,yellow bell pepper,yellow bell pepper_pkt_in,gm,1
+V21,yellow bell pepper,yellow bell pepper_pkt_out,gm,1
+V21,yellow bell pepper,yellow bell pepper_pkt_reciepe,gm,1

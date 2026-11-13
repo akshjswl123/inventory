@@ -1,0 +1,193 @@
+Rack,pgNo,itemnames,currentStock,Unit,scoopfactor,DestinationUnit
+R11,1,"aaata,aata",1,bag,26000,gm
+R11,2,maida,1,bag,26000,gm
+R11,3,rice,1,bag,30000,gm
+R11,4,staff rice,1,bag,30000,gm
+R11,5,"dal,tur dal",1,bag,30000,gm
+,6,sugar,1,pkt,,gm
+R13,7,oil tin,1,tin,15000,ml
+R5,8,kasturi methi,1,pkt,100,gm
+R6,9,"dhaniiya masala,dhaniya",1,pkt,500,gm
+R6,10,chilly powder,1,pkt,500,gm
+R6,11,haldi powder,1,pkt,500,gm
+R5,12,"degi ,mirch,degi miorch,degi mirch",1,pkt,100,gm
+R5,13,"kitchen king,masala",1,pkt,100,gm
+R5,14,garam masala,1,pkt,100,gm
+R5,15,"jeeera,jeera",1,pkt,1000,gm
+R6,20,MAGAJ,1,pkt,,gm
+R4,24,mushroom,1,tin,400,gm
+R12,35,Oreo biscuit,1,superpkt,41,piece
+R8,37,"tomato,tomato kechup,tomato ketchup,tomato sauce,tomato suce",1,pkt,850,gm
+R2,38,noodles,1,pkt,1000,gm
+R2,40,ajinomoto,1,pkt,500,gm
+R1,41,"schezwan,schezwan sauce",1,pkt,1000,gm
+,42,green sauce,1,pkt,,gm
+R3,44,",vinegar",1,bottle,650,ml
+,45,MILK POWDER,1,pkt,,gm
+,47,coffee powder,1,pkt,,gm
+R1,48,"pasta pizza sauce,pasta sauce,pizza pasta sauce,pizza sauce",1,pkt,1000,gm
+R1,49,"peri peri sauce,periperi sauce",1,pkt,1000,gm
+R3,50,"MYONESE,metonese,meyo,meyo nese,meyonese,meyonesse,meyonse,myonese",1,pkt,1000,gm
+,52,tika sauce,1,pkt,,gm
+,53,CHEESE BLEND,1,pkt,,gm
+R1,54,thousand sauce,1,pkt,1000,gm
+R1,55,CHOCOLATE SYRUP,1,bottle,1300,gm
+R1,56,"imli chatni,imli chutney",1,bottle,950,gm
+,61,"chilli flake,chillly flakes",1,pkt,,gm
+R12,62,"cregano,oregano",1,loose,1000,gm
+R1,63,pasta,1,pkt,1000,gm
+R8,64,"peri peri masala,periperi msala,perperi masala",1,pkt,250,gm
+R7,65,NACHOS,1,pkt,200,gm
+R12,66,maggi masala,1,superpacket,60,piece
+R12,67,maggi,1,box,60,piece
+R1,68,MANGO PULP,1,tin,650,gm
+,72,amul butter,1,pkt,,gm
+F1,73,butter,1,pkt,500,gm
+F1,74,"mozerella,mozrella",1,pkt,1000,gm
+F1,75,"RICH COOKING CREAM,cream,cream 30",1,pkt,1000,gm
+F1,75,"RICH COOKING CREAM,cream,cream 30",1,pkt,1000,gm
+,76,AMUL CREAM,1,pkt,,gm
+F1,78,fries,1,pkt,2500,gm
+F1,79,"green peas,matar",1,pkt,1000,gm
+F1,80,corn,1,pkt,1000,gm
+F1,81,"cheese processed,proccess chese,process cheese,process cheesse,processed cheese",1,pkt,500,gm
+,97,soda,1,pkt,,gm
+,98,"coke,soft drink",1,pkt,,gm
+P1,99,"ice cream,ice cream vanilla",1,gallon,2375,gm
+P1,100,ICE CREAM CHOCOLATE,1,gallon,2110,gm
+P1,101,MANGO ICE CREAM,1,pkt,1910,gm
+R10,103,SAUNF,1,pkt,1000,gm
+R6,110,lal mirch,1,pkt,,gm
+,1020,peach iced tea syrup,1,pkt,,gm
+R4,111A,sev,1,loose,1000,gm
+R3,112A,KALAUNJI,1,loose,250,gm
+R4,112B,AJWAIN,1,loose,250,gm
+R12,16 A,jeera masala,1,pkt,100,gm
+,16B,chhola,1,pkt,,gm
+R5,17A,chana dal,1,pkt,,gm
+,17B,BLACK MUNG DAL,1,pkt,,gm
+R5,18A,UDAD SAL,1,loose,1000,gm
+R5,18B,RAJMA,1,pkt,,gm
+R5,19A,MASUR DAL,1,pkt,,gm
+R3,19B,SOYABEAN WADI,1,loose,2000,gm
+R4,21A,GHEE,1,pkt,1000,gm
+R12,21B,"chaat masala,chat amsala,chat masala",1,pkt,100,gm
+,22A,kaju,1,pkt,,gm
+R5,22B,KISMIS,1,loose,250,gm
+R3,23A,sarso tel,1,bottle,850,gm
+R5,23B,HING,1,pkt,50,gm
+R4,25A,ROSE WATER,1,bottle,250,ml
+R4,25B,KEVDA JAL,1,bottle,250,ml
+R13,27A,salt,1,bag,,gm
+R13,27A,salt,1,pkt,1000,gm
+R12,27B,KALA NAMAK,1,pkt,1000,gm
+R5,28A,GULAB JAMUN,1,pkt,1000,gm
+R9,28B,boondi,1,pkt,,gm
+R9,29A,"bread crum,bread crums",1,pkt,1000,gm
+R12,29B,KIT KAT CHOCOLATE,1,box,,gm
+F3,29B,KIT KAT CHOCOLATE,1,pkt,,piece
+R12,29B,KIT KAT CHOCOLATE,1,box,42,piece
+,30A,KAJU TUKDA,1,pkt,,gm
+R4,30B,KAJUN KANKI,1,loose,10000,gm
+,31A,STARFOOL,1,pkt,,gm
+R5,31B,LOUNG,1,loose,250,gm
+R5,32A,DALCHINI,1,loose,250,gm
+R5,33A,BADI ELAICHI,1,loose,250,gm
+R5,33B,HARI ELAICHI,1,loose,250,gm
+R3,34A,PAPAD,1,pkt,250,gm
+R3,34A,PAPAD,1,superpkt,25,piece
+R1,35A,olive,1,tin,1560,gm
+R8,36A,"corn floor,corn flor",1,pkt,1000,gm
+R2,39A,white pepper,1,pkt,500,gm
+R2,39B,black pepper,1,pkt,500,gm
+R1,42B,"thai chilly,thai chilly sauce",1,bottle,500,gm
+R13,43A,soya sauce,1,box,24,bottle
+R13,43A,soya sauce,1,bottle,750,gm
+R3,43B,GREEN CHILLY SAUCE,1,bottle,680,gm
+,46A,MASALA TEA,1,pkt,,gm
+,46B,LEMON ICE TEA,1,pkt,,gm
+R1,51A,makhani sauce,1,pkt,1000,gm
+R1,51B,TOM MAKHAN SAUCE,1,pkt,1000,gm
+R1,57A,lemon mojito,1,bottle,1000,ml
+R1,57B,blue coroco,1,bottle,1000,ml
+R1,58A,STRAWBERRY CRUSH,1,bottle,1000,ml
+R1,58B,BLUBERRY CRUSH,1,bottle,1000,ml
+R1,59A,IRISH SYRUP,1,bottle,750,ml
+R1,59B,HAZELNUT SYRUP,1,bottle,750,ml
+R4,60A,"red peperica,red peprica",1,bottle,360,gm
+R4,60B,"jalapeno,jelipino",1,bottle,360,gm
+,61  62,chilly flakes+oregano,1,pkt,,gm
+,61 62,"chilli oregano,chilly + oregano,chilly+oregano,origano+chilly flakes",1,pkt,,gm
+,69A,SUGAR SACHET,1,pkt,,gm
+,6B,tea powder,1,pkt,,gm
+R12,70A,CHILLY FLAKES SACHET,1,superpacket,,piece
+R12,70B,OREGANO SACHET,1,superpkt,62,piece
+,71A,MEYONESE SACHET,1,pkt,,gm
+,71B,TOMATO KETCHUP,1,pkt,,gm
+F1,77A,aloo tikki,1,pkt,20,piece
+,77B,masla fries,1,pkt,,gm
+F1,82A,"cheese 1pc,cheese slice",1,pkt,750,gm
+,82B,CHOCO CHIPS,1,pkt,,gm
+F3,B1,WHITE BREAD,1,pkt,21,piece
+F3,B2,BURGER BUN,1,pkt,2,piece
+F3,B3,PIZZA BASE,1,pkt,2,piece
+F3,B4,BROWNIE,1,superpkt,4,piece
+,B5,MACE (JAVITRI),1,pkt,,gm
+R5,BL1,Bay leaves,1,pkt,,gm
+,CH3,CHINESE VEGETABLES,1,pkt,,gm
+,CN4,CONTI MASALA,1,pkt,,gm
+,D1,MILK,1,pkt,,gm
+,D2,CURD,1,pkt,,gm
+,D3,PANEER,1,pkt,,gm
+,OT1,ALL SPICES,1,pkt,,gm
+,other1,other1,1,pkt,,gm
+,other2,other2,1,pkt,,gm
+,other3,other3,1,pkt,,gm
+,P102031,PROCESSED CHOLA,1,pkt,,gm
+,SS6,SAMPLE SUGAR,1,pkt,,gm
+,SSB,SAMPLE BUTTER,1,pkt,,gm
+,SSF,SAMPLE FLOUR,1,pkt,,gm
+,SSM,SAMPLE MAIDA,1,pkt,,gm
+,V1,Capsicum,1,pkt,,gm
+,V10,Garlic,1,pkt,,gm
+,V11,Onion,1,pkt,,gm
+,V12,Cucumber,1,pkt,,gm
+,V13,Lemon,1,pkt,,gm
+,V14,Red Bell Pepper,1,pkt,,gm
+,V15,Broccoli,1,pkt,,gm
+,V16,Basil,1,pkt,,gm
+,V17,Mint Leaves,1,pkt,,gm
+,V18,Tomato,1,pkt,,gm
+,V19,Kadi Patta,1,pkt,,gm
+,V2,Green Chilli,1,pkt,,gm
+,V20,SPINACH,1,pkt,,gm
+,V21,yellow bell pepper,1,pkt,,gm
+,V22,potato,1,pkt,,gm
+,V3,Ginger,1,pkt,,gm
+,V4,Carrot,1,pkt,,gm
+,V5,Beans,1,pkt,,gm
+,V6,Cauliflower,1,pkt,,gm
+,V7,Cabbage,1,pkt,,gm
+,V8,Spring Onion,1,pkt,,gm
+,V9,Coriander,1,pkt,,gm
+R10,102,Color sauf,1,pkt,1000,gm
+R2,53,Delmonte creamy cheese  blend,1,pkt,1000,gm
+R3,114,Besan,1,loose,2000,gm
+R3,,Veeba Cheese Dressing,1,pkt,1000,gm
+R3,,Red chilly sauce,1,bottle,680,gm
+R3,,Aromatic Mix,1,pkt,500,gm
+R4,60A,"red peperica,red peprica",1,bottle,360,gm
+R4,118,Baby corn,1,tin,225,gm
+,98C,Cocal cola,1,peti,28,piece
+,98C,Cocal cola,1,piece,,piece
+,98E,Diet coke,1,,,piece
+,98B,thumpsup,1,piece,,piece
+,,,1,peti,28,piece
+,98A,Sprite,1,piece,,piece
+,,,1,peti,28,piece
+,98D,Fanta,1,piece,,piece
+,,,1,peti,28,piece
+,97,Soda,1,peti,24,piece
+,,,1,piece,,piece
+,96,Water,1,peti,15,piece
+R12,71C,Tomato ketchup sachet,1,superpkt,,piece

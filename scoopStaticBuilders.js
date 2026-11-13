@@ -90,7 +90,7 @@
       scoop_item_name: r.scoop_item_name || r.scoopItemName || '',
       scoop_item_id: r.scoop_item_id != null ? String(r.scoop_item_id) : (r.scoopItemId != null ? String(r.scoopItemId) : ''),
       destination_unit: r.destination_unit || r.destinationUnit || '',
-      scoop_name: r.scoop_name || r.scoopName || '',
+      scoop_name: r.scoop_name || r.scoopName || r.saved || '',
       factor: r.factor != null ? Number(r.factor) : null,
       conversion_chain: r.conversion_chain != null ? r.conversion_chain : (r.conversionChain != null ? r.conversionChain : null),
       qty_in_grams: r.qty_in_grams != null ? Number(r.qty_in_grams) : (r.qtyInGrams != null ? Number(r.qtyInGrams) : null),
@@ -98,6 +98,27 @@
       qty_in_piece: r.qty_in_piece != null ? Number(r.qty_in_piece) : (r.qtyInPiece != null ? Number(r.qtyInPiece) : null),
       unused: !!r.unused
     };
+  }
+
+  /**
+   * @param {object} r scoop row (any shape normalizeScoopRow accepts)
+   * @param {{ includeUnused?: boolean }} [options] default: active only
+   */
+  function isActiveScoopRow(r, options) {
+    const row = normalizeScoopRow(r);
+    if (!row.scoop_name || !String(row.scoop_name).trim()) return false;
+    if (options && options.includeUnused) return true;
+    return !row.unused;
+  }
+
+  /**
+   * Normalize scoop_config rows; by default drop unused (retired) scoops.
+   * @param {{ includeUnused?: boolean }} [options]
+   */
+  function filterScoopRows(scoopRows, options) {
+    const rows = (scoopRows || []).map(normalizeScoopRow).filter(r => r.scoop_name);
+    if (options && options.includeUnused) return rows;
+    return rows.filter(r => !r.unused);
   }
 
   function buildScoopCatalog(rows, suffix, scoopField) {
@@ -154,7 +175,7 @@
   }
 
   /** Map lowercased dish name / dish code → scoop_config rows for that dish. */
-  function buildScoopConfigByDishName(scoopRows, dishCatalog) {
+  function buildScoopConfigByDishName(scoopRows, dishCatalog, options) {
     const out = {};
     const nameByCode = new Map();
     (dishCatalog || []).forEach(d => {
@@ -171,7 +192,7 @@
       out[k].push(picker);
     }
 
-    (scoopRows || []).map(normalizeScoopRow).filter(r => r.scoop_name && !r.unused).forEach(r => {
+    filterScoopRows(scoopRows, options).forEach(r => {
       const picker = {
         scoop_name: r.scoop_name,
         destination_unit: r.destination_unit || '',
@@ -207,22 +228,26 @@
     }));
   }
 
-  /** @param {object[]} scoopRows normalized scoop_config rows */
-  function buildScoopDerivedCatalogs(scoopRows, dishNames, dishCatalog) {
+  /**
+   * @param {object[]} scoopRows scoop_config rows
+   * @param {{ includeUnused?: boolean }} [options] pickers exclude unused unless includeUnused
+   */
+  function buildScoopDerivedCatalogs(scoopRows, dishNames, dishCatalog, options) {
     const rows = (scoopRows || []).map(normalizeScoopRow).filter(r => r.scoop_name);
+    const pickerRows = filterScoopRows(rows, options);
     const catalog = dishCatalog || (dishNames || []).map(name => ({ dishName: name, dishCode: '' }));
-    const scoopOutCatalog = buildScoopCatalog(rows, '_out', 'scoop_out');
+    const scoopOutCatalog = buildScoopCatalog(pickerRows, '_out', 'scoop_out');
     return {
       SCOOP_CONFIG: rows,
-      SCOOP_IN_CATALOG: buildScoopCatalog(rows, '_in', 'scoop_in'),
+      SCOOP_IN_CATALOG: buildScoopCatalog(pickerRows, '_in', 'scoop_in'),
       SCOOP_OUT_CATALOG: scoopOutCatalog.map(r => ({
         itemname: r.itemname,
         scoop_out: r.scoop_out,
         defaultQty: r.factor
       })),
-      RECIPE_SCOOP_CATALOG: buildRecipeScoopCatalog(rows),
-      DISH_OUT_SCOOP_CATALOG: buildDishOutScoopCatalog(rows, dishNames, catalog),
-      SCOOP_INVENTORY_CATALOG: buildInventoryCatalog(rows)
+      RECIPE_SCOOP_CATALOG: buildRecipeScoopCatalog(pickerRows),
+      DISH_OUT_SCOOP_CATALOG: buildDishOutScoopCatalog(pickerRows, dishNames, catalog),
+      SCOOP_INVENTORY_CATALOG: buildInventoryCatalog(pickerRows)
     };
   }
 
@@ -233,6 +258,8 @@
     parseCatalogBlock,
     parseScoopConfigCsv,
     normalizeScoopRow,
+    isActiveScoopRow,
+    filterScoopRows,
     buildScoopDerivedCatalogs,
     buildScoopCatalog,
     buildRecipeScoopCatalog,

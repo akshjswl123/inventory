@@ -9,7 +9,7 @@
   ];
   const EXPORT_CSV_HEADER = [
     "Item Name", "Pg No", "Destination Unit", "Saved as", "factor", "Chain",
-    "qty_in_grams", "qty_in_ml", "qty_in_piece"
+    "qty_in_grams", "qty_in_ml", "qty_in_piece", "unused"
   ];
   const STORAGE_KEY = "inventory_scoop_config";
   const CHAIN_SEP = ";;";
@@ -338,6 +338,34 @@
     return saved.startsWith(prefix) && saved.length > prefix.length;
   }
 
+  /** IN / OUT / RECIPE scoop rows (retire/restore in Config List). */
+  function isPrimaryScoopListRow(row) {
+    return !!savedAsKind(row && row.saved);
+  }
+
+  function parseBoolish(v) {
+    if (v === true || v === 1) return true;
+    const t = String(v == null ? "" : v).trim().toLowerCase();
+    return t === "1" || t === "true" || t === "yes" || t === "y";
+  }
+
+  function setListRowUnused(idx, unused) {
+    const row = listRows[idx];
+    if (!row || !isPrimaryScoopListRow(row)) return;
+    row.unused = !!unused;
+    renderList();
+    renderPreview();
+    if (listRows.length && listRowsMatchCurrentItem(listRows)) {
+      populateEditorFromListRows(listRows, { preserveDest: true });
+    }
+    setMsg(
+      unused
+        ? "Scoop retired locally — Save to DB to hide from inventory/recipe pickers."
+        : "Scoop restored to active — Save to DB to apply.",
+      "ok"
+    );
+  }
+
   function isFlatListRow(r) {
     return !!(r && r.saved != null && r.chain != null && r.scoop_in == null && r.conversion_chain == null);
   }
@@ -438,26 +466,31 @@
   }
 
   /** After Load: rebuild conversion chains + IN/OUT/RECIPE picks from flat list rows. */
-  function populateEditorFromListRows(rows) {
+  function populateEditorFromListRows(rows, options) {
+    options = options || {};
     const item = getItem();
     if (!rows || !rows.length) {
       resetChains();
       return;
     }
 
-    const dest = rows[0].base_unit || "";
-    if (dest) {
-      const destSel = document.getElementById("itemDetailsDestUnit");
-      if (destSel) {
-        const match = Array.from(destSel.options).find(
-          o => o.value === dest || unitsMatch(o.value, dest)
-        );
-        if (match) destSel.value = match.value;
+    if (!options.preserveDest) {
+      const dest = rows[0].base_unit || "";
+      if (dest) {
+        const destSel = document.getElementById("itemDetailsDestUnit");
+        if (destSel) {
+          const match = Array.from(destSel.options).find(
+            o => o.value === dest || unitsMatch(o.value, dest)
+          );
+          if (match) destSel.value = match.value;
+        }
       }
     }
     destUnit = getDestUnit();
 
-    chains = uniqueChainsFromListRows(rows);
+    const editorRows = rowsForActiveDestUnit(rows);
+
+    chains = uniqueChainsFromListRows(editorRows);
     activeChainIdx = chains.length ? chains.length - 1 : -1;
 
     const unitsInChain = chainUnits();
@@ -465,8 +498,13 @@
     const outUnits = [];
     const recipeUnits = [];
 
-    rows.forEach(row => {
-      if (row.unused || isUnusedScoopName(row.saved, row.itemname)) return;
+    editorRows.forEach(row => {
+      const activeOnly =
+        typeof global.ScoopStaticBuilders !== "undefined" &&
+        global.ScoopStaticBuilders.isActiveScoopRow
+          ? global.ScoopStaticBuilders.isActiveScoopRow(row)
+          : !row.unused;
+      if (!activeOnly || isUnusedScoopName(row.saved, row.itemname)) return;
       const kind = savedAsKind(row.saved);
       if (!kind) return;
       const slug = unitFromSavedAs(row.saved, row.itemname, kind);
@@ -501,7 +539,8 @@
       r.chain,
       qty.qty_in_grams,
       qty.qty_in_ml,
-      qty.qty_in_piece
+      qty.qty_in_piece,
+      r.unused ? "true" : "false"
     ];
   }
 
@@ -527,13 +566,15 @@
       const saved = vals[hi("Saved as")] != null ? vals[hi("Saved as")] : vals[3];
       const factor = parseFloat(vals[hi("factor")] != null ? vals[hi("factor")] : vals[4]) || 0;
       const chain = vals[hi("Chain")] != null ? vals[hi("Chain")] : vals[5];
+      const unusedCol = hi("unused");
+      const unusedVal = unusedCol >= 0 ? vals[unusedCol] : "";
       rows.push({
         itemname: itemname,
         base_unit: dest,
         saved: saved,
         factor: factor,
         chain: chain,
-        unused: isUnusedScoopName(saved, itemname)
+        unused: unusedCol >= 0 ? parseBoolish(unusedVal) : isUnusedScoopName(saved, itemname)
       });
     }
     return rows;
@@ -608,7 +649,7 @@
     onItemOrDestChange();
   }
 
-  function onItemOrDestChange() {
+  function syncItemSelectionMeta() {
     destUnit = getDestUnit();
     const item = getItem();
     if (isDishMode()) {
@@ -627,6 +668,39 @@
         : destUnit
           ? "Each chain must end at: " + destUnit + " — use + Add Chain for another path (Bag, packet, …)"
           : "Select destination unit";
+    }
+  }
+
+  function listRowsMatchCurrentItem(rows) {
+    if (!rows || !rows.length) return false;
+    const item = getItem();
+    if (!item) return false;
+    return rows.every(r => String(r.itemname || "").trim() === item);
+  }
+
+  function rowsForActiveDestUnit(rows) {
+    if (!destUnit) return rows || [];
+    return (rows || []).filter(r => unitsMatch(r.base_unit, destUnit));
+  }
+
+  /** Item / dish selection changed — reset editor; keep list only if still same item. */
+  function onItemOrDestChange() {
+    syncItemSelectionMeta();
+    if (listRows.length && !listRowsMatchCurrentItem(listRows)) {
+      listRows = [];
+      renderList();
+      renderPreview();
+    }
+    resetChains();
+  }
+
+  /** Destination unit changed — rebuild chains/scoops from loaded list for that unit. */
+  function onDestUnitChange() {
+    syncItemSelectionMeta();
+    destUnit = getDestUnit();
+    if (listRows.length && listRowsMatchCurrentItem(listRows)) {
+      populateEditorFromListRows(listRows, { preserveDest: true });
+      return;
     }
     resetChains();
   }
@@ -1003,6 +1077,9 @@
     listRows.splice(idx, 1);
     renderList();
     renderPreview();
+    if (listRows.length && listRowsMatchCurrentItem(listRows)) {
+      populateEditorFromListRows(listRows, { preserveDest: true });
+    }
   }
 
   function renderList() {
@@ -1010,13 +1087,30 @@
     if (!tbody) return;
     if (!listRows.length) {
       tbody.innerHTML =
-        '<tr id="itemDetailsEmptyRow"><td colspan="7" class="item-details-empty">No items added yet</td></tr>';
+        '<tr id="itemDetailsEmptyRow"><td colspan="8" class="item-details-empty">No items added yet</td></tr>';
       return;
     }
 
     const chainCellStyle = "font-size:11px;color:#555;max-width:260px;word-break:break-all";
     let html = "";
     listRows.forEach((row, idx) => {
+      const primary = isPrimaryScoopListRow(row);
+      const status = row.unused
+        ? (primary ? "Retired" : "Chain only")
+        : "Active";
+      const statusClass = row.unused ? "item-details-status-retired" : "item-details-status-active";
+      let actionHtml = "";
+      if (primary) {
+        if (row.unused) {
+          actionHtml +=
+            '<button type="button" class="plain" data-restore-idx="' + idx + '">Restore</button> ';
+        } else {
+          actionHtml +=
+            '<button type="button" class="danger" data-retire-idx="' + idx + '">Retire</button> ';
+        }
+      }
+      actionHtml += '<button type="button" class="danger" data-remove-idx="' + idx + '" title="Remove from list only">&times;</button>';
+
       html +=
         "<tr" + (row.unused ? ' class="item-details-unused"' : "") + ">" +
         "<td>" + (idx + 1) + "</td>" +
@@ -1025,13 +1119,26 @@
         '<td class="scoop-name">' + escHtml(row.saved) + "</td>" +
         '<td class="num">' + row.factor + "</td>" +
         '<td style="' + chainCellStyle + '">' + escHtml(row.chain) + "</td>" +
-        '<td><button type="button" class="danger" data-remove-idx="' + idx + '">&times;</button></td>' +
+        '<td class="' + statusClass + '">' + escHtml(status) + "</td>" +
+        '<td class="item-details-row-actions">' + actionHtml + "</td>" +
         "</tr>";
     });
     tbody.innerHTML = html;
 
     tbody.querySelectorAll("[data-remove-idx]").forEach(btn => {
       btn.addEventListener("click", () => removeListRow(+btn.dataset.removeIdx));
+    });
+    tbody.querySelectorAll("[data-retire-idx]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const i = +btn.dataset.retireIdx;
+        const row = listRows[i];
+        if (!row) return;
+        if (!confirm('Retire scoop "' + row.saved + '"? It will be hidden from inventory/recipe pickers after Save to DB.')) return;
+        setListRowUnused(i, true);
+      });
+    });
+    tbody.querySelectorAll("[data-restore-idx]").forEach(btn => {
+      btn.addEventListener("click", () => setListRowUnused(+btn.dataset.restoreIdx, false));
     });
   }
 
@@ -1107,7 +1214,7 @@
     if (!name) return [];
     const store = global.ScoopConfigStore;
     if (store && typeof store.getRowsForScoopItem === "function") {
-      return store.getRowsForScoopItem(name);
+      return store.getRowsForScoopItem(name, getEntityId(), { includeUnused: true });
     }
     const q = name.trim().toLowerCase();
     return (global.SCOOP_CONFIG || []).filter(
@@ -1134,6 +1241,14 @@
       try {
         const d = await postJSONFn("/api/scoop-config", { rows: listRowsForApi() });
         setMsg("Saved " + d.count + " row(s) to database", "ok");
+        if (typeof global.refreshStaticData === "function") {
+          try {
+            await global.refreshStaticData();
+            setMsg("Saved " + d.count + " row(s); catalogs refreshed", "ok");
+          } catch (_refreshErr) {
+            setMsg("Saved " + d.count + " row(s). Refresh static data if pickers still show retired scoops.", "ok");
+          }
+        }
       } catch (e) {
         alert("Save to DB failed: " + e.message);
       }
@@ -1247,7 +1362,7 @@
     postJSONFn = opts.postJSON || null;
 
     document.getElementById("itemDetailsEntityType").addEventListener("change", onEntityTypeChange);
-    document.getElementById("itemDetailsDestUnit").addEventListener("change", onItemOrDestChange);
+    document.getElementById("itemDetailsDestUnit").addEventListener("change", onDestUnitChange);
     updateEntityTypeUi();
     document.getElementById("itemDetailsAddStepBtn").addEventListener("click", () => addChainRow());
     document.getElementById("itemDetailsNewChainBtn").addEventListener("click", addNewChain);

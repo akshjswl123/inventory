@@ -18,12 +18,21 @@
     return rows;
   }
 
+  function filterUnused(rows, options) {
+    if (options && options.includeUnused) return rows;
+    const B = global.ScoopStaticBuilders;
+    if (B && typeof B.filterScoopRows === 'function') {
+      return B.filterScoopRows(rows, options);
+    }
+    return (rows || []).filter(r => !r.unused);
+  }
+
   /** Match scoop_item_name and/or scoop_item_id (e.g. dish name + dish code P8). */
-  function getRowsForScoopItem(scoopItemName, scoopItemId) {
+  function getRowsForScoopItem(scoopItemName, scoopItemId, options) {
     const q = normalizeName(scoopItemName);
     const id = normalizeName(scoopItemId);
     if (!q && !id) return [];
-    return rows.filter(r => {
+    const matched = rows.filter(r => {
       const n = normalizeName(r.scoop_item_name || r.scoopItemName);
       const rid = normalizeName(r.scoop_item_id != null ? r.scoop_item_id : r.scoopItemId);
       if (q && n === q) return true;
@@ -32,6 +41,7 @@
       if (id && n === id) return true;
       return false;
     });
+    return filterUnused(matched, options);
   }
 
   function findByScoopName(scoopName) {
