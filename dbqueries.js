@@ -881,6 +881,132 @@ async function saveDishes(data) {
     }
 }
 
+async function listRawMaterialScoopNameGroups() {
+    const res = await pool.query(`
+        SELECT TRIM(rm."pgNo") AS pgno,
+               MAX(sel.selected_scoop_name) AS selected_scoop_name,
+               json_agg(
+                   json_build_object(
+                       'id', rm.id,
+                       'itemname', TRIM(rm.itemname),
+                       'comments', COALESCE(TRIM(rm.comments), '')
+                   )
+                   ORDER BY LOWER(TRIM(rm.itemname)), rm.id
+               ) AS items
+        FROM raw_materials rm
+        LEFT JOIN raw_material_selected_scoop sel
+          ON TRIM(sel.pg_no_or_dishcode) = TRIM(rm."pgNo")
+        WHERE rm."pgNo" IS NOT NULL AND TRIM(rm."pgNo") <> ''
+          AND rm.itemname IS NOT NULL AND TRIM(rm.itemname) <> ''
+        GROUP BY TRIM(rm."pgNo")
+        ORDER BY
+            NULLIF(regexp_replace(TRIM(rm."pgNo"), '\\D.*', '', 'g'), '')::int NULLS LAST,
+            TRIM(rm."pgNo")
+    `);
+    return res.rows.map(r => {
+        const items = Array.isArray(r.items) ? r.items : [];
+        const active = items.filter(
+            i => String(i.comments || '').trim().toLowerCase() !== 'unused'
+        );
+        const itemnames = active.map(i => i.itemname);
+        let selected = r.selected_scoop_name != null ? String(r.selected_scoop_name).trim() : '';
+        if (selected && itemnames.length && !itemnames.some(n => n === selected)) {
+            const ci = itemnames.find(n => n.toLowerCase() === selected.toLowerCase());
+            selected = ci || '';
+        }
+        if (!selected && itemnames.length === 1) {
+            selected = itemnames[0];
+        }
+        return {
+            pgNo: r.pgno,
+            itemnames,
+            itemnameSelectedForScoop: selected,
+            items
+        };
+    });
+}
+
+async function upsertRawMaterialSelectedScoop(pgNoOrDishcode, selectedScoopName) {
+    const key = pgNoOrDishcode != null ? String(pgNoOrDishcode).trim() : '';
+    const name = selectedScoopName != null ? String(selectedScoopName).trim() : '';
+    if (!key || !name) {
+        throw new Error('pg_no_or_dishcode and selected_scoop_name are required');
+    }
+    await pool.query(
+        `INSERT INTO raw_material_selected_scoop (pg_no_or_dishcode, selected_scoop_name)
+         VALUES (TRIM($1), TRIM($2))
+         ON CONFLICT (pg_no_or_dishcode)
+         DO UPDATE SET selected_scoop_name = EXCLUDED.selected_scoop_name`,
+        [key, name]
+    );
+}
+
+async function saveRawMaterialScoopNameSelections(data) {
+    const client = await pool.connect();
+    const rows = (data && data.rows) || [];
+    try {
+        await client.query('BEGIN');
+        let updated = 0;
+        for (const row of rows) {
+            const pgNo = row.pgNo != null ? String(row.pgNo).trim() : '';
+            const selected = row.itemnameSelectedForScoop != null
+                ? String(row.itemnameSelectedForScoop).trim()
+                : '';
+            const chipList = Array.isArray(row.itemnames)
+                ? row.itemnames.map(n => String(n || '').trim()).filter(Boolean)
+                : [];
+            const removedList = Array.isArray(row.removedItemnames)
+                ? row.removedItemnames.map(n => String(n || '').trim()).filter(Boolean)
+                : [];
+            if (!pgNo || !selected) continue;
+
+            if (removedList.length) {
+                const resRemoved = await client.query(
+                    `UPDATE raw_materials rm
+                     SET comments = 'unused'
+                     WHERE TRIM(rm."pgNo") = TRIM($1)
+                       AND EXISTS (
+                           SELECT 1 FROM unnest($2::text[]) AS rem(name)
+                           WHERE LOWER(TRIM(rem.name)) = LOWER(TRIM(rm.itemname))
+                       )`,
+                    [pgNo, removedList]
+                );
+                updated += resRemoved.rowCount;
+            }
+
+            if (chipList.length) {
+                const resActive = await client.query(
+                    `UPDATE raw_materials rm
+                     SET comments = ''
+                     WHERE TRIM(rm."pgNo") = TRIM($1)
+                       AND LOWER(TRIM(COALESCE(rm.comments, ''))) = 'unused'
+                       AND EXISTS (
+                           SELECT 1 FROM unnest($2::text[]) AS chip(name)
+                           WHERE LOWER(TRIM(chip.name)) = LOWER(TRIM(rm.itemname))
+                       )`,
+                    [pgNo, chipList]
+                );
+                updated += resActive.rowCount;
+            }
+
+            await client.query(
+                `INSERT INTO raw_material_selected_scoop (pg_no_or_dishcode, selected_scoop_name)
+                 VALUES (TRIM($1), TRIM($2))
+                 ON CONFLICT (pg_no_or_dishcode)
+                 DO UPDATE SET selected_scoop_name = EXCLUDED.selected_scoop_name`,
+                [pgNo, selected]
+            );
+        }
+        await client.query('COMMIT');
+        return { updated, count: rows.length };
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+}
+
 async function saveRawMaterials(data) {
     const client = await pool.connect();
     try {
@@ -899,7 +1025,6 @@ async function saveRawMaterials(data) {
         `;
 
         let lastId = null;
-        let scoopConfigCount = 0;
         let inserted = 0;
         let updated = 0;
         for (const row of data.rows) {
@@ -918,12 +1043,13 @@ async function saveRawMaterials(data) {
                 inserted += 1;
             }
             lastId = res.rows[0].id;
-            scoopConfigCount += await insertDefaultScoopConfigs(
-                client,
-                itemname,
-                pgNo || null,
-                false
-            );
+            // Default scoop_config rows disabled for raw-materials save (manage via Scoop tab).
+            // scoopConfigCount += await insertDefaultScoopConfigs(
+            //     client,
+            //     itemname,
+            //     pgNo || null,
+            //     false
+            // );
         }
 
         await client.query('COMMIT');
@@ -932,7 +1058,7 @@ async function saveRawMaterials(data) {
             count: inserted + updated,
             inserted,
             updated,
-            scoopConfigCount
+            scoopConfigCount: 0
         };
     } catch (err) {
         await client.query('ROLLBACK');
@@ -1075,28 +1201,20 @@ function parseIsoDateOnly(value) {
 }
 
 /**
- * Stock by pgNo through end of asOf (see scripts/33_current_stock_by_pgno_as_of.sql).
- * @param {string} asOfDate YYYY-MM-DD
+ * Current stock from view current_stock_by_pgno (baseline + in/out after baseline).
  * @param {string|null|undefined} pgNo optional filter
  */
-async function fetchCurrentStockByPgnoAsOf(asOfDate, pgNo) {
-    const iso = parseIsoDateOnly(asOfDate);
-    if (!iso) {
-        const err = new Error('asOf must be a valid date YYYY-MM-DD');
-        err.statusCode = 400;
-        throw err;
-    }
-    const params = [iso];
-    let sql = 'SELECT * FROM public.current_stock_by_pgno_as_of($1::date)';
+async function fetchCurrentStockByPgno(pgNo) {
     const pgTrim = pgNo != null ? String(pgNo).trim() : '';
+    const params = [];
+    let sql = 'SELECT * FROM public.current_stock_by_pgno';
     if (pgTrim) {
-        sql += ' WHERE "pgNo" = $2';
+        sql += ' WHERE "pgNo" = $1';
         params.push(pgTrim);
     }
     sql += ' ORDER BY "pgNo"';
     const res = await pool.query(sql, params);
     return {
-        asOf: iso,
         pgNo: pgTrim || null,
         columns: res.fields ? res.fields.map(f => f.name) : [],
         rows: res.rows || [],
@@ -1685,6 +1803,16 @@ async function listItemReportLines(opts) {
     return { rows: res.rows, total: countRes.rows[0].total };
 }
 
+/** Rack/storage per pg_no from raw_materials_storage (scoop-ScoopConfig Rack). */
+async function listRawMaterialsStorage() {
+    const res = await pool.query(
+        `SELECT pg_no, storage, source
+         FROM public.raw_materials_storage
+         ORDER BY storage NULLS LAST`
+    );
+    return res.rows || [];
+}
+
 module.exports = {
     saveOrder,
     loadOrderByBillNo,
@@ -1692,12 +1820,15 @@ module.exports = {
     saveRecipe,
     saveDishes,
     saveRawMaterials,
+    listRawMaterialScoopNameGroups,
+    upsertRawMaterialSelectedScoop,
+    saveRawMaterialScoopNameSelections,
     saveScoopConfig,
     loadScoopConfig,
     loadScoopConfigByDishCode,
     fetchStaticData,
     runQuery,
-    fetchCurrentStockByPgnoAsOf,
+    fetchCurrentStockByPgno,
     upsertRawMaterialsCostFromOrders,
     upsertDishCostFromStaging,
     waitForDb,
@@ -1718,5 +1849,6 @@ module.exports = {
     listItemReportLines,
     getItemReportSummary,
     getItemReportAnalysis,
-    getItemReportDateBounds
+    getItemReportDateBounds,
+    listRawMaterialsStorage
 };

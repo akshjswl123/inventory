@@ -94,6 +94,12 @@
     .item-details-status-retired { font-size: 12px; color: #856404; font-weight: 600; }
     .item-details-row-actions { white-space: nowrap; }
     .item-details-row-actions button { margin-right: 4px; font-size: 12px; padding: 4px 8px; }
+    .item-details-chain-orphan { color: #dc3545; font-weight: 600; }
+    .item-details-factor-mismatch { text-decoration: underline dotted #b45309; cursor: help; }
+    .item-details-list-divider td {
+      background: #f1f3f5; font-size: 11px; font-weight: 600; color: #495057;
+      padding: 6px 8px; border-top: 2px solid #adb5bd;
+    }
     button.save { background: #0d6efd; color: #fff; }
     #itemDetailsMsg { font-size: 12px; color: #666; }
     #itemDetailsMsg.ok { color: #198754; }
@@ -616,7 +622,14 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
         <button type="button" class="plain" id="itemDetailsClearBtn">Clear List</button>
         <span id="itemDetailsMsg"></span>
       </div>
-      <div class="hint" id="itemDetailsDbHint">Load/Save uses the same shared scoop_config as bill and recipe tabs (DB on server, scoop_config_catalog.js offline). Use <strong>Retire</strong> on IN/OUT/RECIPE rows (e.g. <code>other1_gm_in</code>) then <strong>Save to DB</strong> to hide them from pickers; pink &ldquo;Chain only&rdquo; rows are intermediate units, not bill scoops.</div>
+      <div class="hint" id="itemDetailsDbHint">
+        Load/Save uses the shared <code>scoop_config</code> table. <strong>Active</strong> rows (<code>unused=false</code>) are listed first; retire others then <strong>Save to DB</strong>.
+        <strong>Factor</strong> = product of chain step quantities from this row&rsquo;s unit to <strong>destination</strong> (e.g. <code>kg:1000:gm</code> &rarr; 1000). After <strong>Add to List</strong> it is computed from the chain;
+        <strong>Load from DB</strong> may show old stored numbers (e.g. recipe <code>1</code> or wrong <code>500</code> on kg) — the list recomputes from <strong>Chain</strong> when possible (dotted factor = was corrected).
+        Chains in <span style="color:#dc3545;font-weight:600">red</span> are not used by any active IN/OUT/RECIPE scoop — safe to retire those rows.
+        If <strong>Conversion Chains</strong> stay empty after <strong>Load from DB</strong>: set <strong>Destination Unit</strong> to the same unit as the config rows (usually <code>gm</code>), Load again; or rebuild chains manually, <strong>Add to List</strong>, then Save.
+        <strong>Raw materials:</strong> only one of <code>gm</code>, <code>ml</code>, or <code>piece</code> may be active — other units must be <strong>Retired</strong> (<code>unused=true</code>).
+      </div>
 
       <h3 style="margin-top:18px;">CSV Preview</h3>
       <pre id="itemDetailsPreview">-- add items to see preview --</pre>
@@ -626,7 +639,9 @@ docker           <input type="number" id="dishOutQtyOfScoops" min="0" step="any"
   <!-- TAB: RAW MATERIALS (pgNo, itemname, comments) -->
   <div id="rawMaterialsTab" class="tab-pane">
     <h2>Raw Materials</h2>
-    <p class="hint">Columns: pgNo, itemname, comments — type itemname manually in each row.</p>
+    <p class="hint">Columns: pgNo, itemname, comments — type itemname manually in each row.
+      <a href="/rawMaterialScoopNames.html" target="_blank" rel="noopener">Scoop name aliases (pgNo chiplets) →</a>
+    </p>
 
     <table>
       <thead>

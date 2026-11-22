@@ -1,0 +1,30 @@
+﻿Rack,pgNo,itemnames,currentStock,Unit,source_line,reason
+R6,20,MAGAJ,10,pkt,17,not_convertible_or_excluded
+,53,CHEESE BLEND,,pkt,32,duplicate_row_not_chosen
+F1,75,"RICH COOKING CREAM,cream,cream 30",9,pkt,47,duplicate_row_not_chosen
+R6,110,lal mirch,15,pkt,60,not_convertible_or_excluded
+R13,27A,salt,1,pkt,82,duplicate_row_not_chosen
+R9,28B,boondi,1,pkt,85,not_convertible_or_excluded
+R12,29B,KIT KAT CHOCOLATE,2,box,87,duplicate_row_not_chosen
+R12,29B,KIT KAT CHOCOLATE,1,box,89,duplicate_row_not_chosen
+R3,34A,PAPAD,38,superpkt,98,duplicate_row_not_chosen
+R13,43A,soya sauce,1,Box,104,duplicate_row_not_chosen
+R12,70A,CHILLY FLAKES SACHET,9,superpacket,123,not_convertible_or_excluded
+,71B,TOMATO KETCHUP,5,pkt,126,not_convertible_or_excluded
+R3,,Veeba Cheese Dressing,2,pkt,176,no_pgNo
+R3,,Red chilly sauce,32,bottle,177,no_pgNo
+R3,,Aromatic Mix,4,pkt,178,no_pgNo
+,,,93,Piece,180,no_pgNo
+,,Coca cola,1,peti,181,no_pgNo
+,,Cocal cola,34,piece,182,no_pgNo
+,,Diet coke,0,,183,no_pgNo
+,,thumpsup,67,Piece,184,no_pgNo
+,,,1,Peti,185,no_pgNo
+,,Sprite,24,piece,186,no_pgNo
+,,,1,peti,187,no_pgNo
+,,Fanta,26,piece,188,no_pgNo
+,,,1,Peti,189,no_pgNo
+,,Soda,1,peti,190,no_pgNo
+,,,17,piece,191,no_pgNo
+,,Water,1,Peti,192,no_pgNo
+R12,71C,Tomato ketchup sachet,5,superpkt,193,not_convertible_or_excluded

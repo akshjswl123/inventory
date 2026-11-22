@@ -1,0 +1,67 @@
+﻿Rack,pgNo,itemnames,currentStock,Unit,source_line,reason
+,6,sugar,,pkt,7,empty_currentStock
+,42,green sauce,,pkt,24,empty_currentStock
+,45,MILK POWDER,,pkt,26,empty_currentStock
+,47,coffee powder,,pkt,27,empty_currentStock
+,52,tika sauce,,pkt,31,empty_currentStock
+,61,"chilli flake,chillly flakes",,pkt,36,empty_currentStock
+,72,amul butter,,pkt,44,empty_currentStock
+,76,AMUL CREAM,,pkt,49,empty_currentStock
+,97,soda,,pkt,54,empty_currentStock
+,98,"coke,soft drink",,pkt,55,empty_currentStock
+,1020,peach iced tea syrup,,pkt,61,empty_currentStock
+,16B,chhola,,pkt,66,empty_currentStock
+R5,17A,chana dal,1KG,pkt,67,empty_currentStock
+,17B,BLACK MUNG DAL,,pkt,68,empty_currentStock
+R5,18B,RAJMA,2KG,pkt,70,empty_currentStock
+R5,19A,MASUR DAL,1KG,pkt,71,empty_currentStock
+,22A,kaju,,pkt,75,empty_currentStock
+,30A,KAJU TUKDA,,pkt,90,empty_currentStock
+,31A,STARFOOL,,pkt,92,empty_currentStock
+,46A,MASALA TEA,,pkt,107,empty_currentStock
+,46B,LEMON ICE TEA,,pkt,108,empty_currentStock
+,61  62,chilly flakes+oregano,,pkt,119,empty_currentStock
+,61 62,"chilli oregano,chilly + oregano,chilly+oregano,origano+chilly flakes",,pkt,120,empty_currentStock
+,69A,SUGAR SACHET,,pkt,121,empty_currentStock
+,6B,tea powder,,pkt,122,empty_currentStock
+,71A,MEYONESE SACHET,,pkt,125,empty_currentStock
+,77B,masla fries,,pkt,128,empty_currentStock
+,82B,CHOCO CHIPS,,pkt,130,empty_currentStock
+,B5,MACE (JAVITRI),,pkt,135,empty_currentStock
+R5,BL1,Bay leaves,2PKT,pkt,136,empty_currentStock
+,CH3,CHINESE VEGETABLES,,pkt,137,empty_currentStock
+,CN4,CONTI MASALA,,pkt,138,empty_currentStock
+,D1,MILK,,pkt,139,empty_currentStock
+,D2,CURD,,pkt,140,empty_currentStock
+,D3,PANEER,,pkt,141,empty_currentStock
+,OT1,ALL SPICES,,pkt,142,empty_currentStock
+,other1,other1,,pkt,143,empty_currentStock
+,other2,other2,,pkt,144,empty_currentStock
+,other3,other3,,pkt,145,empty_currentStock
+,P102031,PROCESSED CHOLA,,pkt,146,empty_currentStock
+,SS6,SAMPLE SUGAR,,pkt,147,empty_currentStock
+,SSB,SAMPLE BUTTER,,pkt,148,empty_currentStock
+,SSF,SAMPLE FLOUR,,pkt,149,empty_currentStock
+,SSM,SAMPLE MAIDA,,pkt,150,empty_currentStock
+,V1,Capsicum,,pkt,151,empty_currentStock
+,V10,Garlic,,pkt,152,empty_currentStock
+,V11,Onion,,pkt,153,empty_currentStock
+,V12,Cucumber,,pkt,154,empty_currentStock
+,V13,Lemon,,pkt,155,empty_currentStock
+,V14,Red Bell Pepper,,pkt,156,empty_currentStock
+,V15,Broccoli,,pkt,157,empty_currentStock
+,V16,Basil,,pkt,158,empty_currentStock
+,V17,Mint Leaves,,pkt,159,empty_currentStock
+,V18,Tomato,,pkt,160,empty_currentStock
+,V19,Kadi Patta,,pkt,161,empty_currentStock
+,V2,Green Chilli,,pkt,162,empty_currentStock
+,V20,SPINACH,,pkt,163,empty_currentStock
+,V21,yellow bell pepper,,pkt,164,empty_currentStock
+,V22,potato,,pkt,165,empty_currentStock
+,V3,Ginger,,pkt,166,empty_currentStock
+,V4,Carrot,,pkt,167,empty_currentStock
+,V5,Beans,,pkt,168,empty_currentStock
+,V6,Cauliflower,,pkt,169,empty_currentStock
+,V7,Cabbage,,pkt,170,empty_currentStock
+,V8,Spring Onion,,pkt,171,empty_currentStock
+,V9,Coriander,,pkt,172,empty_currentStock

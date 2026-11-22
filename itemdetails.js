@@ -51,6 +51,49 @@
     return entityType === "dish";
   }
 
+  const RAW_MATERIAL_BASE_UNITS = ["gm", "ml", "piece"];
+
+  function normMaterialDestUnit(row) {
+    const d = normUnit(row && row.base_unit) || String(row && row.base_unit || "").trim().toLowerCase();
+    return d;
+  }
+
+  /** Active (unused=false) destination units for the current raw material item. */
+  function activeDestinationUnitsForItem(rows, itemName) {
+    const set = new Set();
+    const name = String(itemName || "").trim();
+    (rows || listRows).forEach(r => {
+      if (r.unused) return;
+      if (name && String(r.itemname || "").trim() !== name) return;
+      const d = normMaterialDestUnit(r);
+      if (!d) return;
+      set.add(d);
+    });
+    return set;
+  }
+
+  /**
+   * Raw materials: at most one of gm / ml / piece among active scoops.
+   * Extra units must be retired (unused=true) before save.
+   */
+  function assertSingleActiveDestUnitForRawMaterial(rows, context) {
+    if (isDishMode()) return true;
+    const item = getItem();
+    if (!item) return true;
+    const units = activeDestinationUnitsForItem(rows, item);
+    if (units.size <= 1) return true;
+    const list = Array.from(units);
+    alert(
+      "Only one destination unit is allowed for active raw-material scoops (gm, ml, or piece).\n\n" +
+      "Item: " + item + "\n" +
+      "Active destination units found: " + list.join(", ") + ".\n\n" +
+      "Retire every row for the unit(s) you do not want (unused = true), then Save to DB." +
+      (context ? "\n\n" + context : "")
+    );
+    setMsg("Multiple active destination units — retire extras (unused=true).", "err");
+    return false;
+  }
+
   function getDestUnit() {
     return document.getElementById("itemDetailsDestUnit").value;
   }
@@ -349,9 +392,104 @@
     return t === "1" || t === "true" || t === "yes" || t === "y";
   }
 
+  function unitFromListRow(row) {
+    if (!row || !row.saved) return "";
+    const kind = savedAsKind(row.saved);
+    if (kind) return unitFromSavedAs(row.saved, row.itemname, kind);
+    if (isUnusedScoopName(row.saved, row.itemname)) {
+      const prefix = row.itemname + "_";
+      return row.saved.startsWith(prefix) ? row.saved.slice(prefix.length) : "";
+    }
+    return "";
+  }
+
+  /** Factor in destination units: multiply chain steps from this row's unit to base_unit. */
+  function factorFromChainForListRow(row) {
+    const unit = unitFromListRow(row);
+    const dest = row.base_unit || "";
+    const chainStr = String(row.chain || row.conversion_chain || "").trim();
+    if (!unit || !dest || !chainStr) return null;
+    const parsed = parseChainStrings(chainStr);
+    for (let i = 0; i < parsed.length; i++) {
+      const f = factorForUnit(unit, parsed[i].rows, dest);
+      if (f != null) return f;
+    }
+    return null;
+  }
+
+  function resolveListRowFactor(row) {
+    const fromChain = factorFromChainForListRow(row);
+    const stored = parseFloat(row.factor);
+    if (fromChain != null && !isNaN(fromChain)) {
+      row._factorStored = !isNaN(stored) ? stored : null;
+      row._factorFromChain = fromChain;
+      const mismatch = row._factorStored != null && Math.abs(row._factorStored - fromChain) > 1e-6;
+      row._factorMismatch = mismatch;
+      row.factor = fromChain;
+      return fromChain;
+    }
+    row._factorMismatch = false;
+    row._factorStored = null;
+  }
+
+  function resolveAllListRowFactors(rows) {
+    (rows || listRows).forEach(r => resolveListRowFactor(r));
+  }
+
+  function normalizeChainKey(chain) {
+    return String(chain || "").trim();
+  }
+
+  /** Chain strings referenced by active IN/OUT/RECIPE rows. */
+  function chainsUsedByActiveScoops(rows) {
+    const set = new Set();
+    (rows || listRows).forEach(r => {
+      if (r.unused || !isPrimaryScoopListRow(r)) return;
+      const k = normalizeChainKey(r.chain);
+      if (k) set.add(k);
+    });
+    return set;
+  }
+
+  function isOrphanChainForList(chain, rows) {
+    const k = normalizeChainKey(chain);
+    if (!k) return false;
+    return !chainsUsedByActiveScoops(rows).has(k);
+  }
+
+  function listRowSortTier(row) {
+    if (!row.unused && isPrimaryScoopListRow(row)) return 0;
+    if (!row.unused) return 1;
+    if (isPrimaryScoopListRow(row)) return 2;
+    return 3;
+  }
+
+  function sortedListRowIndices(rows) {
+    const src = rows || listRows;
+    return src.map((_, idx) => idx).sort((a, b) => {
+      const ta = listRowSortTier(src[a]);
+      const tb = listRowSortTier(src[b]);
+      if (ta !== tb) return ta - tb;
+      const sa = String(src[a].saved || "");
+      const sb = String(src[b].saved || "");
+      return sa.localeCompare(sb, undefined, { sensitivity: "base" });
+    });
+  }
+
+  function listRowSectionLabel(tier) {
+    if (tier === 0) return "";
+    if (tier === 1) return "Other active rows (chain-only or extra)";
+    if (tier === 2) return "Retired IN/OUT/RECIPE scoops";
+    return "Retired / chain-only — retire or remove, then Save to DB";
+  }
+
+  function canRetireOrRestoreListRow(row) {
+    return !!(row && row.saved && String(row.saved).trim());
+  }
+
   function setListRowUnused(idx, unused) {
     const row = listRows[idx];
-    if (!row || !isPrimaryScoopListRow(row)) return;
+    if (!row || !canRetireOrRestoreListRow(row)) return;
     row.unused = !!unused;
     renderList();
     renderPreview();
@@ -465,32 +603,73 @@
     return out;
   }
 
+  function rowHasChain(r) {
+    return !!normalizeChainKey(r && (r.chain || r.conversion_chain));
+  }
+
+  /** Prefer active IN/OUT/RECIPE rows; fall back so Load from DB still fills the chain editor. */
+  function chainSourceRowsForEditor(editorRows) {
+    const pool = editorRows || [];
+    const activePrimary = pool.filter(r => !r.unused && isPrimaryScoopListRow(r) && rowHasChain(r));
+    if (activePrimary.length) return activePrimary;
+    const activeAny = pool.filter(r => !r.unused && rowHasChain(r));
+    if (activeAny.length) return activeAny;
+    return pool.filter(r => rowHasChain(r));
+  }
+
+  function pickDominantDestUnit(rows) {
+    const counts = new Map();
+    (rows || []).forEach(r => {
+      const d = String(r.base_unit || "").trim();
+      if (!d) return;
+      const key = normUnit(d) || d;
+      counts.set(key, (counts.get(key) || 0) + 1);
+    });
+    let best = "";
+    let bestN = 0;
+    counts.forEach((n, d) => {
+      if (n > bestN) {
+        bestN = n;
+        best = d;
+      }
+    });
+    return best;
+  }
+
+  function applyDestUnitFromRows(rows, preserveDest) {
+    if (preserveDest) return;
+    const dest = pickDominantDestUnit(rows) || (rows[0] && rows[0].base_unit) || "";
+    if (!dest) return;
+    const destSel = document.getElementById("itemDetailsDestUnit");
+    if (!destSel) return;
+    const match = Array.from(destSel.options).find(
+      o => o.value === dest || unitsMatch(o.value, dest)
+    );
+    if (match) destSel.value = match.value;
+  }
+
   /** After Load: rebuild conversion chains + IN/OUT/RECIPE picks from flat list rows. */
   function populateEditorFromListRows(rows, options) {
     options = options || {};
     const item = getItem();
     if (!rows || !rows.length) {
       resetChains();
-      return;
+      return false;
     }
 
-    if (!options.preserveDest) {
-      const dest = rows[0].base_unit || "";
-      if (dest) {
-        const destSel = document.getElementById("itemDetailsDestUnit");
-        if (destSel) {
-          const match = Array.from(destSel.options).find(
-            o => o.value === dest || unitsMatch(o.value, dest)
-          );
-          if (match) destSel.value = match.value;
-        }
-      }
-    }
+    applyDestUnitFromRows(rows, options.preserveDest);
     destUnit = getDestUnit();
 
-    const editorRows = rowsForActiveDestUnit(rows);
+    let editorRows = rowsForActiveDestUnit(rows);
+    if (!editorRows.length && destUnit) {
+      applyDestUnitFromRows(rows, false);
+      destUnit = getDestUnit();
+      editorRows = rowsForActiveDestUnit(rows);
+    }
+    if (!editorRows.length) editorRows = rows.slice();
 
-    chains = uniqueChainsFromListRows(editorRows);
+    const chainSourceRows = chainSourceRowsForEditor(editorRows);
+    chains = uniqueChainsFromListRows(chainSourceRows.length ? chainSourceRows : editorRows);
     activeChainIdx = chains.length ? chains.length - 1 : -1;
 
     const unitsInChain = chainUnits();
@@ -525,6 +704,7 @@
       buildScoopOptions(inUnits, outUnits, recipeUnits);
     }
     updateChainButtons();
+    return chains.length > 0;
   }
 
   function flatRowToExportCsvRow(r) {
@@ -754,11 +934,15 @@
 
       const head = document.createElement("div");
       head.className = "chain-group-head";
+      const chainKey = chainToString(chain);
+      const editorOrphan =
+        listRows.length && listRowsMatchCurrentItem(listRows) && isOrphanChainForList(chainKey, listRows);
       head.innerHTML =
         "<strong>Chain " + (chainIdx + 1) + "</strong>" +
         (chain.done
           ? '<span class="chain-done-badge">&#10003; complete</span>'
           : '<span class="chain-open-badge">in progress</span>') +
+        (editorOrphan ? '<span class="chain-open-badge" style="color:#dc3545">unused in list</span>' : "") +
         '<button type="button" class="danger mini chain-delete">Remove</button>';
       group.appendChild(head);
 
@@ -1070,6 +1254,9 @@
 
     renderList();
     renderPreview();
+    if (!assertSingleActiveDestUnitForRawMaterial(listRows, "After Add to List.")) {
+      return;
+    }
     setMsg("Added " + addedRows.length + " row(s) for " + item, "ok");
   }
 
@@ -1091,16 +1278,33 @@
       return;
     }
 
-    const chainCellStyle = "font-size:11px;color:#555;max-width:260px;word-break:break-all";
+    resolveAllListRowFactors(listRows);
+    const order = sortedListRowIndices(listRows);
+    const chainCellStyle = "font-size:11px;max-width:260px;word-break:break-all";
     let html = "";
-    listRows.forEach((row, idx) => {
+    let displaySr = 0;
+    let lastTier = -1;
+
+    order.forEach(idx => {
+      const row = listRows[idx];
+      const tier = listRowSortTier(row);
+      if (tier !== lastTier) {
+        const label = listRowSectionLabel(tier);
+        if (label) {
+          html +=
+            '<tr class="item-details-list-divider"><td colspan="8">' + escHtml(label) + "</td></tr>";
+        }
+        lastTier = tier;
+      }
+
+      displaySr += 1;
       const primary = isPrimaryScoopListRow(row);
       const status = row.unused
         ? (primary ? "Retired" : "Chain only")
-        : "Active";
+        : (primary ? "Active" : "Chain only");
       const statusClass = row.unused ? "item-details-status-retired" : "item-details-status-active";
       let actionHtml = "";
-      if (primary) {
+      if (canRetireOrRestoreListRow(row)) {
         if (row.unused) {
           actionHtml +=
             '<button type="button" class="plain" data-restore-idx="' + idx + '">Restore</button> ';
@@ -1111,14 +1315,24 @@
       }
       actionHtml += '<button type="button" class="danger" data-remove-idx="' + idx + '" title="Remove from list only">&times;</button>';
 
+      const chainOrphan = isOrphanChainForList(row.chain, listRows);
+      const chainStyle = chainCellStyle + (chainOrphan ? ";color:#dc3545;font-weight:600" : ";color:#555");
+      let factorTitle = "Units of destination (" + (row.base_unit || "") + ") per 1 scoop of this row\u2019s unit (from chain).";
+      if (row._factorMismatch && row._factorStored != null) {
+        factorTitle += " DB had " + row._factorStored + "; corrected from chain.";
+      }
+      const factorClass = "num" + (row._factorMismatch ? " item-details-factor-mismatch" : "");
+
       html +=
         "<tr" + (row.unused ? ' class="item-details-unused"' : "") + ">" +
-        "<td>" + (idx + 1) + "</td>" +
+        "<td>" + displaySr + "</td>" +
         "<td>" + escHtml(row.itemname) + "</td>" +
         "<td>" + escHtml(row.base_unit) + "</td>" +
         '<td class="scoop-name">' + escHtml(row.saved) + "</td>" +
-        '<td class="num">' + row.factor + "</td>" +
-        '<td style="' + chainCellStyle + '">' + escHtml(row.chain) + "</td>" +
+        '<td class="' + factorClass + '" title="' + escHtml(factorTitle) + '">' + row.factor + "</td>" +
+        '<td class="' + (chainOrphan ? "item-details-chain-orphan " : "") + '" style="' + chainStyle + '" title="' +
+        (chainOrphan ? "Not used by any active IN/OUT/RECIPE scoop — consider Retire." : "") + '">' +
+        escHtml(row.chain) + "</td>" +
         '<td class="' + statusClass + '">' + escHtml(status) + "</td>" +
         '<td class="item-details-row-actions">' + actionHtml + "</td>" +
         "</tr>";
@@ -1178,6 +1392,7 @@
             : importFromInternalCsv(lines, header);
           if (!rows.length) { alert("No valid rows found in CSV."); return; }
           listRows = flattenListRows(rows);
+          assertSingleActiveDestUnitForRawMaterial(listRows, "After CSV import.");
           renderList();
           renderPreview();
           setMsg("Imported " + listRows.length + " row(s)", "ok");
@@ -1223,7 +1438,7 @@
   }
 
   function listRowsFromApiRows(apiRows) {
-    return (apiRows || []).map(r => ({
+    const rows = (apiRows || []).map(r => ({
       itemname: r.scoop_item_name || r.scoopItemName || r.itemname || "",
       pgNo: r.scoop_item_id || r.scoopItemId || r.pgNo || "",
       base_unit: r.destination_unit || r.destinationUnit || "",
@@ -1232,10 +1447,15 @@
       chain: r.conversion_chain || r.chain || "",
       unused: !!r.unused
     }));
+    resolveAllListRowFactors(rows);
+    return rows;
   }
 
   async function saveDB() {
     if (!listRows.length) { alert("Nothing to save."); return; }
+    if (!assertSingleActiveDestUnitForRawMaterial(listRows, "Cannot save until fixed.")) {
+      return;
+    }
 
     if (isServerModeFn() && postJSONFn) {
       try {
@@ -1279,14 +1499,30 @@
         const data = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(data.detail || data.error || res.statusText);
         listRows = listRowsFromApiRows(data.rows);
-        populateEditorFromListRows(listRows);
+        assertSingleActiveDestUnitForRawMaterial(
+          listRows,
+          "Loaded from DB — retire rows for extra units, then Save."
+        );
+        const chainsOk = populateEditorFromListRows(listRows);
         renderList();
         renderPreview();
         const label = isDishMode() ? "dish" : "item";
-        setMsg(
-          "Loaded " + listRows.length + " row(s) for " + label + " \"" + scoopItemName + "\"",
-          "ok"
-        );
+        if (!chainsOk && listRows.some(rowHasChain)) {
+          setMsg(
+            "Loaded " + listRows.length + " row(s) but chains did not rebuild — set Destination Unit to match the config list (e.g. gm), then Load again.",
+            "err"
+          );
+        } else if (!chainsOk && listRows.length) {
+          setMsg(
+            "Loaded " + listRows.length + " row(s); no Entire Chain on rows — add chains below, pick IN/OUT/RECIPE, Add to List, Save to DB.",
+            "err"
+          );
+        } else {
+          setMsg(
+            "Loaded " + listRows.length + " row(s) for " + label + " \"" + scoopItemName + "\"",
+            "ok"
+          );
+        }
       } catch (e) {
         alert("Load from DB failed: " + e.message);
       }

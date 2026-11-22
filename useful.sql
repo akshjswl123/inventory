@@ -131,6 +131,15 @@ ORDER BY
     id;
 
 
+SELECT 'pgNo'
+FROM raw_materials
+ORDER BY
+    -- 1. Extract and sort by the leading numeric part (cast to integer)
+    NULLIF(regexp_replace('pgNo', '\D.*', '', 'g'), '')::int NULLS LAST,
+    -- 2. Sort by the full string to handle the alphabetical suffixes
+    'pgNo';
+
+
 ---items not present in raw_material cost table but present in reciepe
 WITH recipe_latest_batch AS (
     SELECT DISTINCT ON (UPPER(TRIM(dishcode)))

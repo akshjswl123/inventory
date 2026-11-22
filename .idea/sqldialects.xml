@@ -40,6 +40,13 @@
     <file url="file://$PROJECT_DIR$/scripts/31_petpooja_basemenu.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/scripts/32_current_stock_by_pgno.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/scripts/33_current_stock_by_pgno_as_of.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/scripts/34_raw_material_selected_scoop.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/scripts/35_clear_raw_materials_unused_comments.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/scripts/36_raw_materials_destination_unit.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/scripts/37_raw_materials_storage.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/scripts/38_stock_baselines.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/scripts/39_raw_materials_default_scoop.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/scripts/40_kitchen_stock_baselines.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/scripts/align_dinein_online_display_from_item_report.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/scripts/backfill_dinein_menu_dishcode.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/scripts/dish_scoops_seed.sql" dialect="GenericSQL" />

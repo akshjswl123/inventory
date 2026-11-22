@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stock baselines</title>
+  <style>
+    :root { --primary: #0d6efd; --border: #dee2e6; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 20px 24px 36px;
+      background: #f4f4f8;
+      color: #222;
+      line-height: 1.45;
+    }
+    .wrap { max-width: 1280px; margin: 0 auto; }
+    h1 { font-size: 1.35rem; margin: 0 0 6px; }
+    .sub { font-size: 13px; color: #555; margin: 0 0 16px; }
+    .sub a { color: var(--primary); }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      margin-bottom: 14px;
+    }
+  label { font-size: 13px; font-weight: 600; }
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    input[type="date"], select {
+      padding: 7px 8px;
+      font-size: 13px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      min-width: 160px;
+    }
+    input[type="url"] { padding: 7px 8px; font-size: 13px; min-width: 280px; border-radius: 6px; border: 1px solid var(--border); }
+    button {
+      padding: 8px 14px;
+      border: 0;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      background: #e9ecef;
+    }
+    button.primary { background: var(--primary); color: #fff; }
+    button.toggle-active { background: #198754; color: #fff; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .hint { font-size: 12px; color: #666; margin: 0; }
+    #err {
+      display: none;
+      background: #fff0f0;
+      border: 1px solid #dc3545;
+      color: #b02a37;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+      font-size: 13px;
+    }
+    .tbl-wrap {
+      overflow: auto;
+      max-height: 70vh;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid #eee;
+      padding: 6px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: #f8f9fa;
+      z-index: 1;
+    }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .status-active { color: #198754; font-weight: 600; }
+    .status-retired { color: #6c757d; }
+    #meta { font-size: 13px; color: #444; margin: 8px 0 0; }
+    tr.row-updated td { background: #f8d7da !important; }
+    tr.row-dirty td { background: #fff3cd; }
+    input.qty-edit {
+      width: 100%;
+      min-width: 7rem;
+      padding: 4px 6px;
+      font-size: 13px;
+      text-align: right;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+    }
+    input.qty-edit:focus { outline: 2px solid var(--primary); border-color: var(--primary); }
+    button.force { background: #dc3545; color: #fff; }
+    select.status-edit {
+      padding: 4px 6px;
+      font-size: 12px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      min-width: 6.5rem;
+    }
+    #failModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,.45);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    #failModal .modal-card {
+      background: #fff;
+      border-radius: 8px;
+      max-width: 520px;
+      width: 100%;
+      padding: 18px 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.2);
+    }
+    #failModal h2 { margin: 0 0 10px; font-size: 1.1rem; color: #b02a37; }
+    #failModal ul { margin: 0 0 14px; padding-left: 1.2rem; font-size: 13px; }
+    #failModal .modal-actions { text-align: right; }
+    .sort-toggle { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    .sort-toggle button { border-radius: 0; background: #fff; border: 0; border-right: 1px solid var(--border); }
+    .sort-toggle button:last-child { border-right: 0; }
+    .sort-toggle button.active { background: var(--primary); color: #fff; font-weight: 600; }
+    button.mini { padding: 4px 8px; font-size: 12px; background: #e9ecef; border-radius: 4px; }
+    input.line-qty, select.line-scoop-used { width: 100%; min-width: 4rem; padding: 4px 6px; font-size: 13px; border: 1px solid #ced4da; border-radius: 4px; }
+    input.line-qty { text-align: right; }
+    #createSection h2 { margin: 0 0 12px; font-size: 1.05rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Stock baselines</h1>
+    <p class="sub">
+      Baselines for a physical count date — item names from <code>raw_materials</code>.
+      <code>qty</code> shows gm/ml/piece with labels; <code>qty_in_packaging</code> uses the largest
+      <code>scoop_config</code> factor (e.g. <em>3 bag</em> or <em>2 bag 2000 gm</em>).
+      <a href="kitchen_stock_baselines.html">Kitchen baselines</a> · <a href="index.html">Main app</a>
+    </p>
+
+    <div id="browseSection">
+    <div class="card">
+      <div id="apiBar" class="bar" style="display:none;">
+        <form class="field" style="flex:1;" onsubmit="return false;">
+          <label for="apiBase">App server URL</label>
+          <input type="url" id="apiBase" placeholder="http://localhost:3050" />
+        </form>
+        <button type="button" class="primary" onclick="StockBaselines.saveApiBase()">Connect</button>
+        <p class="hint" style="margin:0;">Required when opened via <code>file://</code></p>
+      </div>
+
+      <div class="bar">
+        <form class="field" onsubmit="StockBaselines.load(); return false;">
+          <label for="baselineDate">Baseline date</label>
+          <input type="date" id="baselineDate" required />
+        </form>
+        <div class="field">
+          <label for="statusFilter">Status</label>
+          <select id="statusFilter">
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="retired">Retired</option>
+          </select>
+        </div>
+        <button type="button" class="primary" id="loadBtn" onclick="StockBaselines.load()">Load</button>
+        <button type="button" id="csvBtn" disabled onclick="StockBaselines.exportCsv()">Export CSV</button>
+        <button type="button" id="forceUpdateBtn" class="force" disabled onclick="StockBaselines.forceUpdate()">Force update</button>
+        <button type="button" class="primary" onclick="StockBaselines.openCreate()">Create new baseline</button>
+        <button type="button" id="showCurrentStockBtn" onclick="StockBaselines.showCurrentStock()">Show current stock</button>
+        <button type="button" id="downloadCurrentStockBtn" onclick="StockBaselines.downloadCurrentStock()">Download current stock</button>
+        <div class="field">
+          <label>Sort</label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button type="button" id="sortStorageBtn" class="toggle-active" onclick="StockBaselines.setSort('storage')">By storage</button>
+            <button type="button" id="sortPgnoBtn" onclick="StockBaselines.setSort('pgno')">By pgNo</button>
+          </div>
+        </div>
+      </div>
+
+      <p id="meta"></p>
+      <div id="err"></div>
+    </div>
+
+    <div class="card tbl-wrap">
+      <table id="tbl">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>storage</th>
+            <th>pgno</th>
+            <th>itemnames</th>
+            <th>baseline_date</th>
+            <th>qty_in_packaging</th>
+            <th>qty</th>
+            <th>qty_at_override_in_packaging</th>
+            <th>qty (at override)</th>
+            <th>verified_by</th>
+            <th>status</th>
+            <th>remarks</th>
+            <th>created_at</th>
+            <th>created_by</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="14" class="hint">Pick a date and load.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+
+    <div id="createSection" style="display:none;">
+      <div class="card">
+        <h2>Create new baseline</h2>
+        <div class="bar">
+          <div class="field">
+            <label for="createBaselineDate">Baseline date (all rows)</label>
+            <input type="date" id="createBaselineDate" required />
+          </div>
+          <div class="field">
+            <label for="createVerifier">Verifier (all rows)</label>
+            <input type="text" id="createVerifier" placeholder="Name" style="padding:7px 8px;border:1px solid var(--border);border-radius:6px;" />
+          </div>
+          <button type="button" id="saveCreateBtn" class="primary" onclick="StockBaselineCreate.saveBatch()">Save baselines</button>
+          <button type="button" onclick="StockBaselineCreate.closeCreate()">Cancel</button>
+          <div class="field">
+            <label>Sort</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <button type="button" id="createSortStorageBtn" class="toggle-active" onclick="StockBaselineCreate.setSort('storage')">By storage</button>
+              <button type="button" id="createSortPgnoBtn" onclick="StockBaselineCreate.setSort('pgno')">By pgNo</button>
+            </div>
+          </div>
+        </div>
+        <p class="hint">Full <code>raw_materials</code> catalog — blank storage is fine. Add qty + <strong>scoopUsed</strong> lines per item. System stock columns use <code>current_stock_by_pgno</code>.</p>
+      </div>
+      <div class="card tbl-wrap">
+        <table id="createTbl">
+          <thead>
+            <tr>
+              <th>storage</th>
+              <th>pgno</th>
+              <th>itemnames</th>
+              <th>qty</th>
+              <th>scoopUsed</th>
+              <th>qty_in_destination_unit</th>
+              <th>qty_at_override_in_packaging</th>
+              <th>qty_at_override</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="createTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="currentStockSection" style="display:none;">
+      <div class="card">
+        <h2>Current stock</h2>
+        <div class="bar">
+          <button type="button" class="primary" onclick="StockBaselines.downloadCurrentStock()">Download current stock</button>
+          <button type="button" onclick="StockBaselines.closeCurrentStock()">Back to baselines</button>
+        </div>
+        <p id="currentStockMeta" class="hint"></p>
+      </div>
+      <div class="card tbl-wrap">
+        <table id="currentStockTbl">
+          <thead>
+            <tr>
+              <th>storage</th>
+              <th>pgno</th>
+              <th>itemnames</th>
+              <th>destination_unit</th>
+              <th>qty</th>
+              <th>qty_in_packaging</th>
+              <th>active_baseline_date</th>
+            </tr>
+          </thead>
+          <tbody id="currentStockTbody">
+            <tr><td colspan="7" class="hint">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="failModal" role="dialog" aria-labelledby="failModalTitle" aria-modal="true">
+    <div class="modal-card">
+      <h2 id="failModalTitle">Force update — errors</h2>
+      <p id="failModalSummary" class="hint"></p>
+      <ul id="failModalBody"></ul>
+      <div class="modal-actions">
+        <button type="button" class="primary" onclick="StockBaselines.closeFailModal()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="stockQtyDisplay.js"></script>
+  <script src="stock_baselines_create.js"></script>
+  <script src="stock_baselines_current_stock.js"></script>
+  <script>
+  const StockBaselines = (function () {
+    const API_KEY = 'stockBaselinesApiBase';
+    const DEFAULT_BASE = 'http://localhost:3050';
+    const SORT_KEY = 'stockBaselinesSortBy';
+    let lastRows = [];
+    let sortBy = 'storage';
+    /** @type {Set<number>} */
+    const dirtyIds = new Set();
+    /** @type {Set<number>} */
+    const updatedIds = new Set();
+
+    function loadSortPref() {
+      try {
+        const s = localStorage.getItem(SORT_KEY);
+        if (s === 'pgno' || s === 'storage') sortBy = s;
+      } catch (e) { /* ignore */ }
+      syncSortButtons();
+    }
+
+    function syncSortButtons() {
+      const a = document.getElementById('sortStorageBtn');
+      const b = document.getElementById('sortPgnoBtn');
+      if (!a || !b) return;
+      a.classList.toggle('toggle-active', sortBy === 'storage');
+      b.classList.toggle('toggle-active', sortBy === 'pgno');
+      a.classList.toggle('primary', sortBy === 'storage');
+      b.classList.toggle('primary', sortBy === 'pgno');
+    }
+
+    function setSortPreference(mode) {
+      sortBy = mode === 'pgno' ? 'pgno' : 'storage';
+      try { localStorage.setItem(SORT_KEY, sortBy); } catch (e) { /* ignore */ }
+      syncSortButtons();
+      if (globalThis.StockBaselineCreate && typeof StockBaselineCreate.syncSortButtons === 'function') {
+        StockBaselineCreate.syncSortButtons();
+      }
+    }
+
+    function setSort(mode) {
+      setSortPreference(mode);
+      const createEl = document.getElementById('createSection');
+      if (createEl && createEl.style.display !== 'none') return;
+      if (document.getElementById('baselineDate').value) load();
+    }
+
+    function isServer() {
+      return location.protocol === 'http:' || location.protocol === 'https:';
+    }
+
+    function apiBase() {
+      if (isServer()) return '';
+      const el = document.getElementById('apiBase');
+      const v = el && String(el.value || '').trim();
+      if (v) return v.replace(/\/$/, '');
+      try {
+        const s = localStorage.getItem(API_KEY);
+        if (s) return s.replace(/\/$/, '');
+      } catch (e) { /* ignore */ }
+      return DEFAULT_BASE;
+    }
+
+    function url(path) {
+      const base = apiBase();
+      return base + (path.startsWith('/') ? path : '/' + path);
+    }
+
+    function showErr(msg) {
+      const el = document.getElementById('err');
+      if (!msg) {
+        el.style.display = 'none';
+        el.textContent = '';
+        return;
+      }
+      el.style.display = 'block';
+      el.textContent = msg;
+    }
+
+    function fmtDateInput(d) {
+      if (!d) return '';
+      if (typeof d === 'string') return d.slice(0, 10);
+      return d.toISOString().slice(0, 10);
+    }
+
+    function fmtTs(v) {
+      if (v == null || v === '') return '';
+      const d = new Date(v);
+      if (Number.isNaN(d.getTime())) return String(v);
+      return d.toLocaleString();
+    }
+
+    function syncForceBtn() {
+      const btn = document.getElementById('forceUpdateBtn');
+      if (btn) btn.disabled = dirtyIds.size === 0;
+    }
+
+    function rowClass(id) {
+      if (updatedIds.has(id)) return 'row-updated';
+      if (dirtyIds.has(id)) return 'row-dirty';
+      return '';
+    }
+
+    function render(rows) {
+      lastRows = rows || [];
+      dirtyIds.clear();
+      updatedIds.clear();
+      syncForceBtn();
+      const tbody = document.getElementById('tbody');
+      const csvBtn = document.getElementById('csvBtn');
+      csvBtn.disabled = !lastRows.length;
+      if (!lastRows.length) {
+        tbody.innerHTML = '<tr><td colspan="14" class="hint">Pick a date and load.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = lastRows.map((r) => {
+        const rid = Number(r.id);
+        const qtyVal = escapeHtml(r.qty || '');
+        const stVal = String(r.status || 'ACTIVE').toUpperCase() === 'RETIRED' ? 'RETIRED' : 'ACTIVE';
+        return `<tr data-id="${rid}" class="${rowClass(rid)}">
+          <td class="num">${escapeHtml(r.id)}</td>
+          <td>${escapeHtml(r.storage || '')}</td>
+          <td>${escapeHtml(r.pgno)}</td>
+          <td>${escapeHtml(r.itemnames || '')}</td>
+          <td>${escapeHtml(fmtDateInput(r.baseline_date))}</td>
+          <td class="qty-pack" data-id="${rid}">${escapeHtml(r.qty_in_packaging || '')}</td>
+          <td class="num">
+            <input type="text" class="qty-edit" data-id="${rid}" data-original="${qtyVal}" value="${qtyVal}" title="e.g. 78000 gm" />
+          </td>
+          <td>${escapeHtml(r.qty_at_override_in_packaging || '')}</td>
+          <td class="num">${escapeHtml(r.qty_at_override || '')}</td>
+          <td>${escapeHtml(r.verified_by || '')}</td>
+          <td>
+            <select class="status-edit" data-id="${rid}" data-original="${stVal}" aria-label="Status">
+              <option value="ACTIVE"${stVal === 'ACTIVE' ? ' selected' : ''}>ACTIVE</option>
+              <option value="RETIRED"${stVal === 'RETIRED' ? ' selected' : ''}>RETIRED</option>
+            </select>
+          </td>
+          <td class="remarks" data-id="${rid}">${escapeHtml(r.remarks || '')}</td>
+          <td>${escapeHtml(fmtTs(r.created_at))}</td>
+          <td>${escapeHtml(r.created_by || '')}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    function isRowDirty(id) {
+      const inp = document.querySelector(`input.qty-edit[data-id="${id}"]`);
+      const sel = document.querySelector(`select.status-edit[data-id="${id}"]`);
+      const qtyDirty =
+        inp && (inp.value || '').trim() !== (inp.dataset.original || '').trim();
+      const stDirty =
+        sel &&
+        String(sel.value || '').toUpperCase() !==
+          String(sel.dataset.original || '').toUpperCase();
+      return Boolean(qtyDirty || stDirty);
+    }
+
+    function refreshRowDirty(id) {
+      const tr = document.querySelector(`tr[data-id="${id}"]`);
+      if (!tr) return;
+      if (isRowDirty(id)) {
+        dirtyIds.add(id);
+        updatedIds.delete(id);
+        tr.classList.remove('row-updated');
+        tr.classList.add('row-dirty');
+      } else {
+        dirtyIds.delete(id);
+        tr.classList.remove('row-dirty');
+        if (updatedIds.has(id)) tr.classList.add('row-updated');
+      }
+      syncForceBtn();
+    }
+
+    function onRowEdit(ev) {
+      const el = ev.target;
+      if (!el || (!el.classList.contains('qty-edit') && !el.classList.contains('status-edit'))) return;
+      const id = Number(el.dataset.id);
+      if (Number.isFinite(id)) refreshRowDirty(id);
+    }
+
+    function showFailurePopup(failed, updatedCount) {
+      const modal = document.getElementById('failModal');
+      const list = document.getElementById('failModalBody');
+      const summary = document.getElementById('failModalSummary');
+      if (!failed || !failed.length) return;
+      list.innerHTML = failed
+        .map(
+          (f) =>
+            `<li><strong>id ${escapeHtml(f.id)}</strong>: ${escapeHtml(f.error || 'unknown error')}</li>`
+        )
+        .join('');
+      summary.textContent =
+        updatedCount > 0
+          ? `${updatedCount} row(s) saved; the following could not be updated.`
+          : 'No rows were saved. Fix the issues below and try again.';
+      modal.style.display = 'flex';
+    }
+
+    function closeFailModal() {
+      document.getElementById('failModal').style.display = 'none';
+    }
+
+    function patchRowInDom(row) {
+      const id = Number(row.id);
+      const tr = document.querySelector(`tr[data-id="${id}"]`);
+      if (!tr) return;
+      const qtyIn = tr.querySelector('input.qty-edit');
+      if (qtyIn) {
+        qtyIn.value = row.qty || '';
+        qtyIn.dataset.original = row.qty || '';
+      }
+      const pack = tr.querySelector('td.qty-pack');
+      if (pack) pack.textContent = row.qty_in_packaging || '';
+      const rem = tr.querySelector('td.remarks');
+      if (rem) rem.textContent = row.remarks || '';
+      const sel = tr.querySelector('select.status-edit');
+      if (sel && row.status) {
+        const st = String(row.status).toUpperCase() === 'RETIRED' ? 'RETIRED' : 'ACTIVE';
+        sel.value = st;
+        sel.dataset.original = st;
+      }
+      const idx = lastRows.findIndex((r) => Number(r.id) === id);
+      if (idx >= 0) lastRows[idx] = { ...lastRows[idx], ...row };
+    }
+
+    async function forceUpdate() {
+      if (!dirtyIds.size) return;
+      showErr('');
+      const btn = document.getElementById('forceUpdateBtn');
+      btn.disabled = true;
+      const updates = [];
+      dirtyIds.forEach((id) => {
+        const inp = document.querySelector(`input.qty-edit[data-id="${id}"]`);
+        const sel = document.querySelector(`select.status-edit[data-id="${id}"]`);
+        if (inp && sel) {
+          updates.push({ id, qty: inp.value, status: sel.value });
+        }
+      });
+      try {
+        const res = await fetch(url('/api/stock-baselines-page/force-update'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ updates })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || data.detail || res.statusText);
+        for (const row of data.updated || []) {
+          const id = Number(row.id);
+          dirtyIds.delete(id);
+          updatedIds.add(id);
+          patchRowInDom(row);
+          const tr = document.querySelector(`tr[data-id="${id}"]`);
+          if (tr) {
+            tr.classList.remove('row-dirty');
+            tr.classList.add('row-updated');
+          }
+        }
+        if (data.failed && data.failed.length) {
+          showFailurePopup(data.failed, data.updatedCount || 0);
+          const msg = data.failed.map((f) => `id ${f.id}: ${f.error}`).join('\n');
+          showErr(`Some rows failed (see popup):\n${msg}`);
+        } else {
+          closeFailModal();
+        }
+        document.getElementById('meta').textContent =
+          `Saved ${data.updatedCount || 0} row(s)` +
+          (data.failedCount ? `; ${data.failedCount} failed` : '');
+      } catch (e) {
+        const msg = e.message || String(e);
+        showErr(msg);
+        showFailurePopup([{ id: '—', error: msg }], 0);
+      } finally {
+        syncForceBtn();
+      }
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    async function loadDates() {
+      const res = await fetch(url('/api/stock-baselines-page/dates'));
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || data.detail || res.statusText);
+      const dates = data.dates || [];
+      const input = document.getElementById('baselineDate');
+      if (dates.length && !input.value) {
+        input.value = dates[0];
+      }
+    }
+
+    async function load() {
+      showErr('');
+      const date = document.getElementById('baselineDate').value;
+      if (!date) {
+        showErr('Select a baseline date.');
+        return;
+      }
+      const status = document.getElementById('statusFilter').value;
+      const btn = document.getElementById('loadBtn');
+      btn.disabled = true;
+      document.getElementById('meta').textContent = 'Loading…';
+      try {
+        const q = new URLSearchParams({ date, status, sortBy });
+        const res = await fetch(url('/api/stock-baselines-page/by-date?' + q));
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || data.detail || res.statusText);
+        render(data.rows || []);
+        document.getElementById('meta').textContent =
+          `${data.count || 0} row(s) for ${data.date}` +
+          (status !== 'all' ? ` (${status})` : '');
+      } catch (e) {
+        showErr(e.message || String(e));
+        render([]);
+        document.getElementById('meta').textContent = '';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function exportCsv() {
+      if (!lastRows.length) return;
+      const cols = [
+        'id', 'storage', 'pgno', 'itemnames', 'baseline_date',
+        'qty_in_packaging', 'qty', 'qty_at_override_in_packaging', 'qty_at_override',
+        'verified_by', 'status', 'remarks', 'created_at', 'created_by'
+      ];
+      const esc = (v) => {
+        const s = v == null ? '' : String(v);
+        if (/[",\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+        return s;
+      };
+      const lines = [cols.join(',')];
+      for (const r of lastRows) {
+        lines.push(cols.map((c) => esc(c === 'baseline_date' ? fmtDateInput(r.baseline_date) : r[c])).join(','));
+      }
+      const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'stock_baselines_' + (document.getElementById('baselineDate').value || 'export') + '.csv';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function saveApiBase() {
+      const el = document.getElementById('apiBase');
+      const v = el && String(el.value || '').trim().replace(/\/$/, '');
+      try {
+        if (v) localStorage.setItem(API_KEY, v);
+        else localStorage.removeItem(API_KEY);
+      } catch (e) { /* ignore */ }
+      loadDates().then(load).catch((e) => showErr(e.message));
+    }
+
+    function init() {
+      loadSortPref();
+      document.getElementById('tbody').addEventListener('input', onRowEdit);
+      document.getElementById('tbody').addEventListener('change', onRowEdit);
+      const bar = document.getElementById('apiBar');
+      if (!isServer()) {
+        bar.style.display = 'flex';
+        const el = document.getElementById('apiBase');
+        try {
+          el.value = localStorage.getItem(API_KEY) || DEFAULT_BASE;
+        } catch (e) {
+          el.value = DEFAULT_BASE;
+        }
+      }
+      loadDates()
+        .then(() => {
+          if (document.getElementById('baselineDate').value) return load();
+        })
+        .catch((e) => showErr(e.message));
+
+      const sharedDeps = {
+        url,
+        getSortBy: () => sortBy,
+        showErr
+      };
+      StockBaselineCreate.init({
+        ...sharedDeps,
+        setSortPreference,
+        showFailurePopup,
+        onSaved: async (date) => {
+          document.getElementById('baselineDate').value = date;
+          document.getElementById('statusFilter').value = 'active';
+          await load();
+        }
+      });
+      StockBaselineCurrentStock.init(sharedDeps);
+    }
+
+    function openCreate() {
+      StockBaselineCreate.openCreate();
+    }
+
+    function showCurrentStock() {
+      StockBaselineCurrentStock.showCurrentStock();
+    }
+
+    function closeCurrentStock() {
+      StockBaselineCurrentStock.closeCurrentStock();
+    }
+
+    function downloadCurrentStock() {
+      StockBaselineCurrentStock.downloadCurrentStock();
+    }
+
+    return {
+      init,
+      load,
+      exportCsv,
+      saveApiBase,
+      setSort,
+      forceUpdate,
+      closeFailModal,
+      openCreate,
+      showCurrentStock,
+      closeCurrentStock,
+      downloadCurrentStock
+    };
+  })();
+
+  document.addEventListener('DOMContentLoaded', () => StockBaselines.init());
+  </script>
+</body>
+</html>

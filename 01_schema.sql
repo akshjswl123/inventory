@@ -215,6 +215,136 @@ CREATE TRIGGER raw_materials_touch_last_updated_at
     BEFORE UPDATE ON public.raw_materials
     FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
 
+-- Canonical scoop display name per pgNo or dish code (raw material scoop names UI)
+CREATE TABLE IF NOT EXISTS public.raw_material_selected_scoop
+(
+    pg_no_or_dishcode text COLLATE pg_catalog."default" NOT NULL,
+    selected_scoop_name text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT raw_material_selected_scoop_pkey PRIMARY KEY (pg_no_or_dishcode)
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.raw_material_selected_scoop OWNER TO poc;
+GRANT ALL ON TABLE public.raw_material_selected_scoop TO poc;
+
+-- One stock/cost destination unit per catalog pgNo (from scoop-ScoopConfig.csv)
+CREATE TABLE IF NOT EXISTS public.raw_materials_destination_unit
+(
+    pg_no text COLLATE pg_catalog."default" NOT NULL,
+    destination_unit text COLLATE pg_catalog."default" NOT NULL,
+    purchase_unit text COLLATE pg_catalog."default",
+    scoop_factor numeric,
+    conversion_chain text COLLATE pg_catalog."default",
+    source text COLLATE pg_catalog."default" DEFAULT 'scoop-ScoopConfig.csv',
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT raw_materials_destination_unit_pkey PRIMARY KEY (pg_no),
+    CONSTRAINT raw_materials_destination_unit_dest_check
+        CHECK (LOWER(TRIM(destination_unit)) IN ('gm', 'ml', 'piece'))
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.raw_materials_destination_unit OWNER TO poc;
+GRANT ALL ON TABLE public.raw_materials_destination_unit TO poc;
+
+DROP TRIGGER IF EXISTS raw_materials_destination_unit_touch_last_updated_at ON public.raw_materials_destination_unit;
+CREATE TRIGGER raw_materials_destination_unit_touch_last_updated_at
+    BEFORE UPDATE ON public.raw_materials_destination_unit
+    FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
+
+-- Default scoop per pgNo: highest factor in scoop_config matching raw_materials_destination_unit
+CREATE TABLE IF NOT EXISTS public.raw_materials_default_scoop
+(
+    pg_no text COLLATE pg_catalog."default" NOT NULL,
+    destination_unit text COLLATE pg_catalog."default" NOT NULL,
+    scoop_name text COLLATE pg_catalog."default",
+    factor numeric,
+    source text COLLATE pg_catalog."default" DEFAULT 'scoop_config',
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT raw_materials_default_scoop_pkey PRIMARY KEY (pg_no),
+    CONSTRAINT raw_materials_default_scoop_dest_check
+        CHECK (LOWER(TRIM(destination_unit)) IN ('gm', 'ml', 'piece'))
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.raw_materials_default_scoop OWNER TO poc;
+GRANT ALL ON TABLE public.raw_materials_default_scoop TO poc;
+
+DROP TRIGGER IF EXISTS raw_materials_default_scoop_touch_last_updated_at ON public.raw_materials_default_scoop;
+CREATE TRIGGER raw_materials_default_scoop_touch_last_updated_at
+    BEFORE UPDATE ON public.raw_materials_default_scoop
+    FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
+
+-- Physical storage rack per catalog pgNo (Rack column in scoop-ScoopConfig.csv)
+CREATE TABLE IF NOT EXISTS public.raw_materials_storage
+(
+    pg_no text COLLATE pg_catalog."default" NOT NULL,
+    storage text COLLATE pg_catalog."default",
+    source text COLLATE pg_catalog."default" DEFAULT 'scoop-ScoopConfig.csv',
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT raw_materials_storage_pkey PRIMARY KEY (pg_no)
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.raw_materials_storage OWNER TO poc;
+GRANT ALL ON TABLE public.raw_materials_storage TO poc;
+
+DROP TRIGGER IF EXISTS raw_materials_storage_touch_last_updated_at ON public.raw_materials_storage;
+CREATE TRIGGER raw_materials_storage_touch_last_updated_at
+    BEFORE UPDATE ON public.raw_materials_storage
+    FOR EACH ROW EXECUTE FUNCTION public.touch_last_updated_at();
+
+-- Physical stock verification baseline per pgNo (ACTIVE/RETIRED). Stock view uses latest ACTIVE + movements after baseline_date.
+CREATE TABLE IF NOT EXISTS public.stock_baselines
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+    pgno text COLLATE pg_catalog."default" NOT NULL,
+    baseline_date date NOT NULL,
+    qty_gm numeric,
+    qty_ml numeric,
+    qty_piece numeric,
+    qty_gm_calculated_at_time_of_override numeric,
+    qty_ml_calculated_at_time_of_override numeric,
+    qty_piece_calculated_at_time_of_override numeric,
+    verified_by text COLLATE pg_catalog."default",
+    status text COLLATE pg_catalog."default" NOT NULL DEFAULT 'ACTIVE',
+    remarks text COLLATE pg_catalog."default",
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by text COLLATE pg_catalog."default",
+    CONSTRAINT stock_baselines_pkey PRIMARY KEY (id),
+    CONSTRAINT stock_baselines_status_check CHECK (LOWER(TRIM(status)) IN ('active', 'retired'))
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.stock_baselines OWNER TO poc;
+GRANT ALL ON TABLE public.stock_baselines TO poc;
+
+CREATE UNIQUE INDEX IF NOT EXISTS stock_baselines_one_active_per_pgno
+    ON public.stock_baselines (TRIM(pgno))
+    WHERE LOWER(TRIM(status)) = 'active';
+
+-- Kitchen / restaurant physical count per pgNo (ACTIVE/RETIRED). Not used by current_stock_by_pgno.
+CREATE TABLE IF NOT EXISTS public.kitchen_stock_baselines
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+    pgno text COLLATE pg_catalog."default" NOT NULL,
+    baseline_date date NOT NULL,
+    qty_gm numeric,
+    qty_ml numeric,
+    qty_piece numeric,
+    verified_by text COLLATE pg_catalog."default",
+    status text COLLATE pg_catalog."default" NOT NULL DEFAULT 'ACTIVE',
+    remarks text COLLATE pg_catalog."default",
+    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by text COLLATE pg_catalog."default",
+    CONSTRAINT kitchen_stock_baselines_pkey PRIMARY KEY (id),
+    CONSTRAINT kitchen_stock_baselines_status_check CHECK (LOWER(TRIM(status)) IN ('active', 'retired'))
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.kitchen_stock_baselines OWNER TO poc;
+GRANT ALL ON TABLE public.kitchen_stock_baselines TO poc;
+
+CREATE UNIQUE INDEX IF NOT EXISTS kitchen_stock_baselines_one_active_per_pgno
+    ON public.kitchen_stock_baselines (TRIM(pgno))
+    WHERE LOWER(TRIM(status)) = 'active';
+
 -- Table: public.raw_materials_cost (computed rates from purchases + scoop_config)
 CREATE TABLE IF NOT EXISTS public.raw_materials_cost
 (
@@ -758,19 +888,45 @@ ORDER BY dc.dish_code;
 ALTER VIEW public.v_dish_recipe_and_cost_versions OWNER TO poc;
 GRANT SELECT ON public.v_dish_recipe_and_cost_versions TO poc;
 
--- Current stock by catalog pgNo (scoop_config base units; see scripts/32_current_stock_by_pgno.sql)
+-- Current stock: baseline + movements after baseline_date (scripts/32_current_stock_by_pgno.sql)
 DROP VIEW IF EXISTS public.current_stock_by_pgno;
-CREATE OR REPLACE VIEW public.current_stock_by_pgno AS
+
+CREATE VIEW public.current_stock_by_pgno AS
 WITH
+active_baseline AS (
+    SELECT DISTINCT ON (TRIM(pgno))
+        TRIM(pgno) AS pgno,
+        baseline_date,
+        id AS baseline_id,
+        COALESCE(qty_gm, 0)::numeric AS baseline_gm,
+        COALESCE(qty_ml, 0)::numeric AS baseline_ml,
+        COALESCE(qty_piece, 0)::numeric AS baseline_piece
+    FROM public.stock_baselines
+    WHERE LOWER(TRIM(status)) = 'active'
+    ORDER BY TRIM(pgno), baseline_date DESC, created_at DESC, id DESC
+),
 move_in AS (
-    SELECT TRIM(oi.pgno) AS pgno, TRIM(oi.itemname) AS itemname, TRIM(oi.scoopin) AS scoop_name, oi.qty::numeric AS qty
+    SELECT
+        TRIM(oi.pgno) AS pgno,
+        TRIM(oi.itemname) AS itemname,
+        TRIM(oi.scoopin) AS scoop_name,
+        oi.qty::numeric AS qty,
+        o.dt::date AS move_dt
     FROM public.order_items oi
+    INNER JOIN public.orders o ON o.id = oi.order_id
     WHERE oi.pgno IS NOT NULL AND TRIM(oi.pgno) <> ''
       AND oi.itemname IS NOT NULL AND TRIM(oi.itemname) <> ''
       AND oi.qty IS NOT NULL AND oi.qty > 0
       AND oi.scoopin IS NOT NULL AND TRIM(oi.scoopin) <> ''
+
     UNION ALL
-    SELECT TRIM(oe.pgno), TRIM(oe.itemname), TRIM(oe.scoopin), oe.qty::numeric
+
+    SELECT
+        TRIM(oe.pgno),
+        TRIM(oe.itemname),
+        TRIM(oe.scoopin),
+        oe.qty::numeric,
+        oe.dt::date
     FROM public.order_entries oe
     WHERE oe.pgno IS NOT NULL AND TRIM(oe.pgno) <> ''
       AND oe.itemname IS NOT NULL AND TRIM(oe.itemname) <> ''
@@ -778,47 +934,96 @@ move_in AS (
       AND oe.scoopin IS NOT NULL AND TRIM(oe.scoopin) <> ''
 ),
 move_out AS (
-    SELECT TRIM(ioi.pgno) AS pgno, TRIM(ioi.itemname) AS itemname, TRIM(ioi.scoop_out) AS scoop_name, ioi.qty::numeric AS qty
+    SELECT
+        TRIM(ioi.pgno) AS pgno,
+        TRIM(ioi.itemname) AS itemname,
+        TRIM(ioi.scoop_out) AS scoop_name,
+        ioi.qty::numeric AS qty,
+        io.dt::date AS move_dt
     FROM public.inventory_out_items ioi
+    INNER JOIN public.inventory_out io ON io.id = ioi.inventory_out_id
     WHERE ioi.pgno IS NOT NULL AND TRIM(ioi.pgno) <> ''
       AND ioi.itemname IS NOT NULL AND TRIM(ioi.itemname) <> ''
       AND ioi.qty IS NOT NULL AND ioi.qty > 0
       AND ioi.scoop_out IS NOT NULL AND TRIM(ioi.scoop_out) <> ''
+
     UNION ALL
-    SELECT TRIM(oo."pgNo"), TRIM(oo.itemname), TRIM(oo.scoop_out), oo.qty::numeric
+
+    SELECT
+        TRIM(oo."pgNo"),
+        TRIM(oo.itemname),
+        TRIM(oo.scoop_out),
+        oo.qty::numeric,
+        oo.dt::date
     FROM public.order_out oo
     WHERE oo."pgNo" IS NOT NULL AND TRIM(oo."pgNo") <> ''
       AND oo.itemname IS NOT NULL AND TRIM(oo.itemname) <> ''
       AND oo.qty IS NOT NULL AND oo.qty > 0
       AND oo.scoop_out IS NOT NULL AND TRIM(oo.scoop_out) <> ''
 ),
-in_converted AS (
-    SELECT m.pgno,
-        CASE LOWER(TRIM(sc.destination_unit)) WHEN 'gm' THEN m.qty * COALESCE(sc.qty_in_grams, sc.factor, 1::numeric) ELSE 0::numeric END AS add_gm,
-        CASE LOWER(TRIM(sc.destination_unit)) WHEN 'ml' THEN m.qty * COALESCE(sc.qty_in_ml, sc.factor, 1::numeric) ELSE 0::numeric END AS add_ml,
-        CASE LOWER(TRIM(sc.destination_unit)) WHEN 'piece' THEN m.qty * COALESCE(sc.qty_in_piece, sc.factor, 1::numeric) ELSE 0::numeric END AS add_piece
+move_in_after AS (
+    SELECT m.*
     FROM move_in m
-    INNER JOIN public.scoop_config sc ON sc.scoop_name = m.scoop_name AND TRIM(sc.scoop_item_id) = m.pgno
+    LEFT JOIN active_baseline ab ON ab.pgno = m.pgno
+    WHERE ab.pgno IS NULL OR m.move_dt > ab.baseline_date
+),
+move_out_after AS (
+    SELECT m.*
+    FROM move_out m
+    LEFT JOIN active_baseline ab ON ab.pgno = m.pgno
+    WHERE ab.pgno IS NULL OR m.move_dt > ab.baseline_date
+),
+in_converted AS (
+    SELECT
+        m.pgno,
+        CASE LOWER(TRIM(sc.destination_unit))
+            WHEN 'gm' THEN m.qty * COALESCE(sc.qty_in_grams, sc.factor, 1::numeric)
+            ELSE 0::numeric END AS add_gm,
+        CASE LOWER(TRIM(sc.destination_unit))
+            WHEN 'ml' THEN m.qty * COALESCE(sc.qty_in_ml, sc.factor, 1::numeric)
+            ELSE 0::numeric END AS add_ml,
+        CASE LOWER(TRIM(sc.destination_unit))
+            WHEN 'piece' THEN m.qty * COALESCE(sc.qty_in_piece, sc.factor, 1::numeric)
+            ELSE 0::numeric END AS add_piece
+    FROM move_in_after m
+    INNER JOIN public.scoop_config sc
+        ON sc.scoop_name = m.scoop_name
+       AND TRIM(sc.scoop_item_id) = m.pgno
        AND LOWER(TRIM(sc.scoop_item_name)) = LOWER(m.itemname)
-       AND sc.destination_unit IS NOT NULL AND TRIM(sc.destination_unit) <> ''
+       AND sc.destination_unit IS NOT NULL
+       AND TRIM(sc.destination_unit) <> ''
        AND LOWER(TRIM(sc.destination_unit)) IN ('gm', 'ml', 'piece')
 ),
 out_converted AS (
-    SELECT m.pgno,
-        CASE LOWER(TRIM(sc.destination_unit)) WHEN 'gm' THEN m.qty * COALESCE(sc.qty_in_grams, sc.factor, 1::numeric) ELSE 0::numeric END AS sub_gm,
-        CASE LOWER(TRIM(sc.destination_unit)) WHEN 'ml' THEN m.qty * COALESCE(sc.qty_in_ml, sc.factor, 1::numeric) ELSE 0::numeric END AS sub_ml,
-        CASE LOWER(TRIM(sc.destination_unit)) WHEN 'piece' THEN m.qty * COALESCE(sc.qty_in_piece, sc.factor, 1::numeric) ELSE 0::numeric END AS sub_piece
-    FROM move_out m
-    INNER JOIN public.scoop_config sc ON sc.scoop_name = m.scoop_name AND TRIM(sc.scoop_item_id) = m.pgno
+    SELECT
+        m.pgno,
+        CASE LOWER(TRIM(sc.destination_unit))
+            WHEN 'gm' THEN m.qty * COALESCE(sc.qty_in_grams, sc.factor, 1::numeric)
+            ELSE 0::numeric END AS sub_gm,
+        CASE LOWER(TRIM(sc.destination_unit))
+            WHEN 'ml' THEN m.qty * COALESCE(sc.qty_in_ml, sc.factor, 1::numeric)
+            ELSE 0::numeric END AS sub_ml,
+        CASE LOWER(TRIM(sc.destination_unit))
+            WHEN 'piece' THEN m.qty * COALESCE(sc.qty_in_piece, sc.factor, 1::numeric)
+            ELSE 0::numeric END AS sub_piece
+    FROM move_out_after m
+    INNER JOIN public.scoop_config sc
+        ON sc.scoop_name = m.scoop_name
+       AND TRIM(sc.scoop_item_id) = m.pgno
        AND LOWER(TRIM(sc.scoop_item_name)) = LOWER(m.itemname)
-       AND sc.destination_unit IS NOT NULL AND TRIM(sc.destination_unit) <> ''
+       AND sc.destination_unit IS NOT NULL
+       AND TRIM(sc.destination_unit) <> ''
        AND LOWER(TRIM(sc.destination_unit)) IN ('gm', 'ml', 'piece')
 ),
 tot_in AS (
-    SELECT pgno, SUM(add_gm) AS total_in_gm, SUM(add_ml) AS total_in_ml, SUM(add_piece) AS total_in_piece FROM in_converted GROUP BY pgno
+    SELECT pgno, SUM(add_gm) AS total_in_gm, SUM(add_ml) AS total_in_ml, SUM(add_piece) AS total_in_piece
+    FROM in_converted
+    GROUP BY pgno
 ),
 tot_out AS (
-    SELECT pgno, SUM(sub_gm) AS total_out_gm, SUM(sub_ml) AS total_out_ml, SUM(sub_piece) AS total_out_piece FROM out_converted GROUP BY pgno
+    SELECT pgno, SUM(sub_gm) AS total_out_gm, SUM(sub_ml) AS total_out_ml, SUM(sub_piece) AS total_out_piece
+    FROM out_converted
+    GROUP BY pgno
 ),
 catalog_names AS (
     SELECT TRIM(rm."pgNo") AS pgno,
@@ -830,24 +1035,34 @@ catalog_names AS (
 ),
 movement_names AS (
     SELECT u.pgno, STRING_AGG(DISTINCT u.itemname, ',' ORDER BY u.itemname) AS itemnames
-    FROM (SELECT pgno, itemname FROM move_in UNION SELECT pgno, itemname FROM move_out) u
+    FROM (SELECT pgno, itemname FROM move_in_after UNION SELECT pgno, itemname FROM move_out_after) u
     GROUP BY u.pgno
 ),
 all_pg AS (
-    SELECT pgno FROM tot_in UNION SELECT pgno FROM tot_out UNION SELECT pgno FROM catalog_names
+    SELECT pgno FROM tot_in
+    UNION SELECT pgno FROM tot_out
+    UNION SELECT pgno FROM catalog_names
+    UNION SELECT pgno FROM active_baseline
 )
-SELECT a.pgno AS "pgNo",
+SELECT
+    a.pgno AS "pgNo",
     COALESCE(cn.itemnames, mn.itemnames) AS itemnames,
+    ab.baseline_id,
+    ab.baseline_date,
+    ROUND(COALESCE(ab.baseline_gm, 0)::numeric, 4) AS baseline_gm,
+    ROUND(COALESCE(ab.baseline_ml, 0)::numeric, 4) AS baseline_ml,
+    ROUND(COALESCE(ab.baseline_piece, 0)::numeric, 4) AS baseline_piece,
     ROUND(COALESCE(i.total_in_gm, 0)::numeric, 4) AS total_in_gm,
     ROUND(COALESCE(i.total_in_ml, 0)::numeric, 4) AS total_in_ml,
     ROUND(COALESCE(i.total_in_piece, 0)::numeric, 4) AS total_in_piece,
     ROUND(COALESCE(o.total_out_gm, 0)::numeric, 4) AS total_out_gm,
     ROUND(COALESCE(o.total_out_ml, 0)::numeric, 4) AS total_out_ml,
     ROUND(COALESCE(o.total_out_piece, 0)::numeric, 4) AS total_out_piece,
-    ROUND((COALESCE(i.total_in_gm, 0) - COALESCE(o.total_out_gm, 0))::numeric, 4) AS current_stock_gm,
-    ROUND((COALESCE(i.total_in_ml, 0) - COALESCE(o.total_out_ml, 0))::numeric, 4) AS current_stock_ml,
-    ROUND((COALESCE(i.total_in_piece, 0) - COALESCE(o.total_out_piece, 0))::numeric, 4) AS current_stock_piece
+    ROUND((COALESCE(ab.baseline_gm, 0) + COALESCE(i.total_in_gm, 0) - COALESCE(o.total_out_gm, 0))::numeric, 4) AS current_stock_gm,
+    ROUND((COALESCE(ab.baseline_ml, 0) + COALESCE(i.total_in_ml, 0) - COALESCE(o.total_out_ml, 0))::numeric, 4) AS current_stock_ml,
+    ROUND((COALESCE(ab.baseline_piece, 0) + COALESCE(i.total_in_piece, 0) - COALESCE(o.total_out_piece, 0))::numeric, 4) AS current_stock_piece
 FROM all_pg a
+LEFT JOIN active_baseline ab ON ab.pgno = a.pgno
 LEFT JOIN tot_in i ON i.pgno = a.pgno
 LEFT JOIN tot_out o ON o.pgno = a.pgno
 LEFT JOIN catalog_names cn ON cn.pgno = a.pgno
@@ -856,4 +1071,3 @@ LEFT JOIN movement_names mn ON mn.pgno = a.pgno;
 ALTER VIEW public.current_stock_by_pgno OWNER TO poc;
 GRANT SELECT ON public.current_stock_by_pgno TO poc;
 
--- Dated stock function (API GET /api/current-stock/by-pgno?asOf=...) — apply scripts/33_current_stock_by_pgno_as_of.sql on existing DBs.

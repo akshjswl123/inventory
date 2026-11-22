@@ -1,0 +1,255 @@
+item_id,category_name,item_name,zomato_price,zomato_available,item_base_price,container_charge,dining_price
+"165853870","Biryani & Pulao","Hyderabadi Biryani",219.0000,"No",249.0000,0.0000,249.0000
+"165853877","Biryani & Pulao","Matar Pulao",159.0000,"No",209.0000,0.0000,209.0000
+"165853841","Biryani & Pulao","Paneer Pulao",199.0000,"No",209.0000,8.0000,209.0000
+"165853774","Biryani & Pulao","Veg Dum Biryani",249.0000,"Yes",259.0000,9.0000,259.0000
+"165853847","Biryani & Pulao","Veg Pulao",189.0000,"No",209.0000,9.0000,209.0000
+"165853869","Biryani & Pulao","Veg Tawa Pulao",209.0000,"No",209.0000,0.0000,209.0000
+"165853705","Breads / Dal / Rice","Butter Naan",50.0000,"Yes",45.0000,3.0000,45.0000
+"165853828","Breads / Dal / Rice","Butter Tandoori Roti",35.0000,"Yes",30.0000,0.0000,30.0000
+"1320097604","Breads / Dal / Rice","DAL DHABHA",249.0000,"Yes",229.0000,11.0000,229.0000
+"1320098366","Breads / Dal / Rice","DAL KOLHAPURI",229.0000,"Yes",229.0000,11.0000,229.0000
+"165853721","Breads / Dal / Rice","Dal Fry",199.0000,"Yes",179.0000,9.0000,179.0000
+"165853722","Breads / Dal / Rice","Dal Makhani Special",249.0000,"Yes",219.0000,9.0000,219.0000
+"165853720","Breads / Dal / Rice","Dal Tadka",209.0000,"Yes",189.0000,9.0000,189.0000
+"165853830","Breads / Dal / Rice","Garlic Butter Naan",79.0000,"Yes",70.0000,3.0000,70.0000
+"165853771","Breads / Dal / Rice","Garlic Jeera Rice",159.0000,"No",179.0000,9.0000,179.0000
+"165853706","Breads / Dal / Rice","Garlic Naan",55.0000,"No",65.0000,3.0000,65.0000
+"165853839","Breads / Dal / Rice","Half Dal Fry",109.0000,"No",119.0000,8.0000,119.0000
+"165853854","Breads / Dal / Rice","Jeera Garlic Rice",149.0000,"No",179.0000,9.0000,179.0000
+"165853769","Breads / Dal / Rice","Jeera Rice",189.0000,"Yes",169.0000,9.0000,169.0000
+"165853829","Breads / Dal / Rice","Jeera Rice Half",79.0000,"No",119.0000,8.0000,119.0000
+"165853707","Breads / Dal / Rice","Laccha Paratha",69.0000,"Yes",65.0000,3.0000,65.0000
+"1320097898","Breads / Dal / Rice","MASALA RICE",229.0000,"Yes",229.0000,11.0000,229.0000
+"165853773","Breads / Dal / Rice","Masala Dal Khichdi",219.0000,"Yes",189.0000,9.0000,189.0000
+"165853704","Breads / Dal / Rice","Plain Naan",35.0000,"No",35.0000,0.0000,35.0000
+"165853719","Breads / Dal / Rice","Punjabi Dal Tadka",219.0000,"Yes",209.0000,8.0000,209.0000
+"165853831","Breads / Dal / Rice","Pyaz Kulcha (Roti)",59.0000,"Yes",55.0000,3.0000,55.0000
+"165853770","Breads / Dal / Rice","Steam Rice",169.0000,"Yes",139.0000,9.0000,139.0000
+"165853917","Breads / Dal / Rice","Steam Rice Half",79.0000,"No",99.0000,0.0000,99.0000
+"165853703","Breads / Dal / Rice","Tandoori Roti",30.0000,"Yes",25.0000,3.0000,25.0000
+"165853772","Breads / Dal / Rice","Veg Biryani",239.0000,"Yes",229.0000,9.0000,229.0000
+"165853708","Burgers & Sandwiches","Aloo Tikki Burger",189.0000,"Yes",105.0000,9.0000,105.0000
+"165853777","Burgers & Sandwiches","Bombay Sandwich",199.0000,"Yes",179.0000,9.0000,179.0000
+"165853709","Burgers & Sandwiches","Cheese Burger",219.0000,"Yes",125.0000,9.0000,125.0000
+"165853778","Burgers & Sandwiches","Cheese Corn Sandwich",179.0000,"Yes",139.0000,9.0000,139.0000
+"165853712","Burgers & Sandwiches","Maharaja Burger",229.0000,"Yes",175.0000,8.0000,175.0000
+"165853779","Burgers & Sandwiches","Makhani Sandwich",199.0000,"Yes",149.0000,9.0000,149.0000
+"165853780","Burgers & Sandwiches","Mexican Sandwich",139.0000,"No",139.0000,9.0000,139.0000
+"165853781","Burgers & Sandwiches","Paneer Schezwan Sandwich",189.0000,"Yes",129.0000,8.0000,129.0000
+"165853782","Burgers & Sandwiches","Paneer Tikka Sandwich",189.0000,"Yes",149.0000,9.0000,149.0000
+"165853710","Burgers & Sandwiches","Peri Peri Burger",209.0000,"Yes",125.0000,9.0000,125.0000
+"165853783","Burgers & Sandwiches","Pizza Sandwich",189.0000,"No",179.0000,8.0000,179.0000
+"165853843","Burgers & Sandwiches","Vegetable Sandwich",179.0000,"Yes",129.0000,8.0000,129.0000
+"165853711","Burgers & Sandwiches","Veggie Burger",199.0000,"Yes",125.0000,9.0000,125.0000
+"1321069910","COMBOS","CHINESE COMBO ( For 2 ) (CHINESE COMBO ( For 2 ))",419.0000,"No",419.0000,0.0000,1.0000
+"1321069909","COMBOS","CHINESE COMBO ( For 2 ) (CHINESE COMBO ( For 2 ))",429.0000,"No",429.0000,0.0000,10.0000
+"1317253079","COMBOS","Chinese Starter Box ( For 3 )",599.0000,"Yes",599.0000,0.0000,599.0000
+"1319642842","COMBOS","Chole Kulche + RAITA + GULAB JAMUN",439.0000,"Yes",429.0000,21.0000,429.0000
+"1317253502","COMBOS","Family Veg Feast",999.0000,"Yes",999.0000,0.0000,999.0000
+"1317253501","COMBOS","North Indian Main Combo",649.0000,"Yes",649.0000,26.0000,649.0000
+"1317253919","COMBOS","Paneer Starter Craving",369.0000,"Yes",369.0000,21.0000,369.0000
+"1319642841","COMBOS","Veg Dum Biryani + Raita + Gulab Jamun",449.0000,"Yes",399.0000,21.0000,399.0000
+"165853713","Cold Coffee","Brownie Cold Coffee",219.0000,"Yes",189.0000,9.0000,189.0000
+"165853714","Cold Coffee","Choco Cold Coffee",199.0000,"Yes",159.0000,8.0000,159.0000
+"165853800","Cold Coffee","Chocolate Oreo Shake",139.0000,"No",159.0000,9.0000,159.0000
+"165853715","Cold Coffee","Cold Coffee",179.0000,"Yes",129.0000,8.0000,129.0000
+"165853797","Cold Coffee","Strawberry Shake",129.0000,"No",169.0000,9.0000,169.0000
+"165853871","Cold Coffee","Thick Cold Coffee",139.0000,"No",159.0000,0.0000,159.0000
+"165853806","Drinks ( Beverages )","Blue Ocean Mojito",109.0000,"No",129.0000,8.0000,129.0000
+"165853901","Drinks ( Beverages )","Classic Lassi",89.0000,"No",79.0000,8.0000,79.0000
+"165853902","Drinks ( Beverages )","Coco Cola Zero Sugar",45.0000,"No",45.0000,0.0000,45.0000
+"165853825","Drinks ( Beverages )","Coke",30.0000,"No",30.0000,9.0000,30.0000
+"165853717","Drinks ( Beverages )","Coke Float",89.0000,"No",99.0000,8.0000,99.0000
+"165853910","Drinks ( Beverages )","Diet Coke",35.0000,"No",35.0000,0.0000,35.0000
+"165853912","Drinks ( Beverages )","Diet Coke 300 Ml",70.0000,"No",70.0000,0.0000,70.0000
+"165853862","Drinks ( Beverages )","Fanta",30.0000,"No",30.0000,8.0000,30.0000
+"165853853","Drinks ( Beverages )","Lemon Soda",59.0000,"No",69.0000,9.0000,69.0000
+"165853864","Drinks ( Beverages )","Maaza",30.0000,"No",30.0000,8.0000,30.0000
+"165853911","Drinks ( Beverages )","Peach Iced Tea",69.0000,"No",99.0000,0.0000,99.0000
+"165853832","Drinks ( Beverages )","Red Bull",149.0000,"No",149.0000,8.0000,149.0000
+"165853879","Drinks ( Beverages )","Small Water",12.0000,"No",12.0000,0.0000,12.0000
+"165853863","Drinks ( Beverages )","Sprite",30.0000,"No",30.0000,8.0000,30.0000
+"165853849","Drinks ( Beverages )","Thumbs Up Can",45.0000,"No",45.0000,8.0000,45.0000
+"165853865","Drinks ( Beverages )","Thumbsup",30.0000,"No",30.0000,8.0000,30.0000
+"165853718","Drinks ( Beverages )","Virgin Mojito",109.0000,"No",119.0000,8.0000,119.0000
+"165853702","Drinks ( Beverages )","Water Bottle",20.0000,"No",20.0000,9.0000,20.0000
+"165853727","Hot Coffee","Black Coffee",49.0000,"No",49.0000,9.0000,49.0000
+"165853729","Hot Coffee","Cappuccino",69.0000,"No",69.0000,9.0000,69.0000
+"165853728","Hot Coffee","Classic Hot Coffee",49.0000,"No",49.0000,9.0000,49.0000
+"165853826","Hot Coffee","Tea",29.0000,"No",29.0000,9.0000,29.0000
+"165853893","JAIN SPECIAL","Jain Dal Fry",159.0000,"No",179.0000,0.0000,179.0000
+"165853894","JAIN SPECIAL","Jain Jeera Dal",149.0000,"No",179.0000,0.0000,179.0000
+"165853887","JAIN SPECIAL","Jain Kadhaipaneer",329.0000,"Yes",289.0000,0.0000,289.0000
+"165853891","JAIN SPECIAL","Jain Kaju Curry",299.0000,"No",379.0000,0.0000,379.0000
+"165853892","JAIN SPECIAL","Jain Methi Malai Matar",279.0000,"No",329.0000,0.0000,329.0000
+"165853890","JAIN SPECIAL","Jain Mix Veg",219.0000,"Yes",199.0000,0.0000,199.0000
+"165853888","JAIN SPECIAL","Jain Paneer Butter Masala",329.0000,"Yes",289.0000,0.0000,289.0000
+"165853896","JAIN SPECIAL","Jain Paneer Pulao",209.0000,"No",229.0000,0.0000,229.0000
+"165853895","JAIN SPECIAL","Jain Veg Pulao",199.0000,"No",209.0000,0.0000,209.0000
+"165853889","JAIN SPECIAL","Jainmatar Paneer",319.0000,"Yes",279.0000,0.0000,279.0000
+"165853885","JAIN STARTER","Jain Chilly Paneer",199.0000,"No",219.0000,0.0000,219.0000
+"165853884","JAIN STARTER","Jain Fried Rice",159.0000,"No",189.0000,0.0000,189.0000
+"165853881","JAIN STARTER","Jain Hakkaa Nooodles",159.0000,"No",189.0000,0.0000,189.0000
+"165853883","JAIN STARTER","Jain Paneer Fried Rice",179.0000,"No",219.0000,0.0000,219.0000
+"165853882","JAIN STARTER","Jain Paneer Noodles",179.0000,"No",219.0000,0.0000,219.0000
+"165853886","JAIN STARTER","Jain Paneer Tikka",289.0000,"Yes",219.0000,0.0000,219.0000
+"165853874","MEALS","Chola Mashala Rice Bowl",179.0000,"No",219.0000,11.0000,189.0000
+"1317256978","MEALS","Dal Makhani Ricebowl",249.0000,"Yes",249.0000,11.0000,249.0000
+"165853867","MEALS","Fast Track Delux Mini Meal / Special Thali",289.0000,"Yes",279.0000,16.0000,279.0000
+"165853866","MEALS","Fast Track Mini Meal",229.0000,"Yes",219.0000,16.0000,219.0000
+"165853811","MEALS","Paneer Butter Masala Rice Bowl",249.0000,"Yes",219.0000,11.0000,219.0000
+"165853858","MEALS","Paneer Punjabi Rice Bowl",229.0000,"Yes",219.0000,11.0000,219.0000
+"165853860","MEALS","Skywalk Special Veg Thali",389.0000,"Yes",349.0000,16.0000,349.0000
+"1320790512","Noodles & Fried Rice","COCKTAIL RICE",329.0000,"Yes",259.0000,11.0000,259.0000
+"165853868","Noodles & Fried Rice","Chili Garlic Noodles",219.0000,"Yes",199.0000,0.0000,199.0000
+"1320790516","Noodles & Fried Rice","Chilly Garlic Noodles  (full)",339.0000,"Yes",249.0000,11.0000,249.0000
+"1320047870","Noodles & Fried Rice","Chinese Manchurian Bowl ( Noodles/rice ) (Chinese Manchurian Bowl ( Noodles/rice ))",249.0000,"No",339.0000,11.0000,249.0000
+"1320047869","Noodles & Fried Rice","Chinese Manchurian Bowl ( Noodles/rice ) (Chinese Manchurian Bowl ( Noodles/rice ))",339.0000,"Yes",339.0000,11.0000,249.0000
+"165853903","Noodles & Fried Rice","Cocktail Noodles",239.0000,"No",239.0000,0.0000,239.0000
+"165853904","Noodles & Fried Rice","Cocktaill Rice",239.0000,"Yes",239.0000,0.0000,239.0000
+"165853751","Noodles & Fried Rice","Hakka Noodles",209.0000,"Yes",189.0000,0.0000,189.0000
+"1320790517","Noodles & Fried Rice","Hakka Noodles (full)",329.0000,"Yes",329.0000,11.0000,249.0000
+"1320791309","Noodles & Fried Rice","MANCHURIAN FRIED RICE (full)",249.0000,"Yes",249.0000,11.0000,249.0000
+"1320790513","Noodles & Fried Rice","MANCHURIAN NOODLES (full)",339.0000,"Yes",259.0000,11.0000,259.0000
+"165853835","Noodles & Fried Rice","Manchurian Fried Rice",179.0000,"No",219.0000,8.0000,219.0000
+"165853850","Noodles & Fried Rice","Manchurian Noodles",229.0000,"Yes",219.0000,9.0000,219.0000
+"1320791308","Noodles & Fried Rice","PANEER FRIED RICE (full)",259.0000,"Yes",259.0000,11.0000,259.0000
+"1320790514","Noodles & Fried Rice","PANEER NOODLES (full)",329.0000,"Yes",259.0000,11.0000,259.0000
+"1320790515","Noodles & Fried Rice","PANEER SCHEZWAN NOODLES (full)",349.0000,"Yes",239.0000,11.0000,239.0000
+"165853814","Noodles & Fried Rice","Paneer Fried Rice",219.0000,"Yes",219.0000,9.0000,219.0000
+"165853753","Noodles & Fried Rice","Paneer Noodles",229.0000,"Yes",219.0000,9.0000,219.0000
+"165853815","Noodles & Fried Rice","Paneer Schezwan Fried Rice",189.0000,"No",219.0000,8.0000,219.0000
+"1320791311","Noodles & Fried Rice","SCHEZWAN FRIED RICE (full)",329.0000,"Yes",239.0000,11.0000,239.0000
+"165853804","Noodles & Fried Rice","Schezwan Fried Rice",179.0000,"No",199.0000,8.0000,199.0000
+"165853752","Noodles & Fried Rice","Schezwan Noodles",219.0000,"Yes",199.0000,9.0000,199.0000
+"1320047814","Noodles & Fried Rice","Triple Schezwan Fried Rice",289.0000,"Yes",289.0000,12.0000,289.0000
+"1320791310","Noodles & Fried Rice","VEG FRIED RICE (full)",319.0000,"Yes",239.0000,11.0000,239.0000
+"165853802","Noodles & Fried Rice","Veg Fried Rice",189.0000,"Yes",189.0000,9.0000,189.0000
+"165853787","Noodles & Fried Rice","Veg Noodles",199.0000,"No",189.0000,9.0000,189.0000
+"165853916","Noodles & Fried Rice","Veg Noodls",169.0000,"No",169.0000,0.0000,169.0000
+"1320043275","North Indian (Chole Bhature & Parathas n more)","ADDON KULCHA / BHATURA (ADDON KULCHA / BHATURA)",40.0000,"Yes",40.0000,0.0000,40.0000
+"1320043274","North Indian (Chole Bhature & Parathas n more)","ADDON KULCHA / BHATURA (ADDON KULCHA / BHATURA)",40.0000,"Yes",40.0000,0.0000,40.0000
+"165853833","North Indian (Chole Bhature & Parathas n more)","Aloo Lehsuni Paratha",129.0000,"Yes",129.0000,8.0000,129.0000
+"165853807","North Indian (Chole Bhature & Parathas n more)","Aloo Paratha",129.0000,"Yes",119.0000,9.0000,119.0000
+"165853918","North Indian (Chole Bhature & Parathas n more)","Chole Bhature",219.0000,"Yes",189.0000,0.0000,189.0000
+"165853838","North Indian (Chole Bhature & Parathas n more)","Chole Kulche",199.0000,"Yes",179.0000,8.0000,179.0000
+"165853809","North Indian (Chole Bhature & Parathas n more)","Mix Veg Paratha",129.0000,"Yes",129.0000,9.0000,129.0000
+"165853808","North Indian (Chole Bhature & Parathas n more)","Onion Paratha",99.0000,"No",109.0000,9.0000,109.0000
+"165853810","North Indian (Chole Bhature & Parathas n more)","Paneer Paratha",139.0000,"Yes",149.0000,9.0000,149.0000
+"165853812","OTHERS","Add On 3",30.0000,"No",30.0000,8.0000,30.0000
+"165853899","OTHERS","Child.",255.0000,"No",255.0000,0.0000,255.0000
+"165853859","OTHERS","Container 1",10.0000,"No",10.0000,9.0000,10.0000
+"165853848","OTHERS","Container 2",20.0000,"No",20.0000,8.0000,20.0000
+"165853898","OTHERS","Daily Menu Dinner",389.0000,"No",389.0000,0.0000,389.0000
+"165853897","OTHERS","Daily Menu Lunch",369.0000,"No",369.0000,0.0000,369.0000
+"165853908","OTHERS","Extra Cheese",29.0000,"No",29.0000,0.0000,29.0000
+"165853907","OTHERS","Extra Veggie",19.0000,"No",19.0000,0.0000,19.0000
+"165853803","OTHERS","Ghee Addon",60.0000,"No",60.0000,9.0000,60.0000
+"165853909","OTHERS","Mushroom",39.0000,"No",39.0000,0.0000,39.0000
+"165853906","OTHERS","Paneer",29.0000,"No",29.0000,0.0000,29.0000
+"165853748","Paneer Main course","Kadhhai Paneer",319.0000,"Yes",289.0000,9.0000,289.0000
+"165853817","Paneer Main course","Lahsuni Paneer",319.0000,"Yes",269.0000,8.0000,269.0000
+"165853837","Paneer Main course","Lehsuni Palak Corn",229.0000,"No",229.0000,8.0000,229.0000
+"165853824","Paneer Main course","Mutter Paneer",289.0000,"No",279.0000,9.0000,279.0000
+"165853745","Paneer Main course","Palak Paneer",329.0000,"Yes",279.0000,9.0000,279.0000
+"165853747","Paneer Main course","Paneer Angara",319.0000,"Yes",299.0000,9.0000,299.0000
+"165853744","Paneer Main course","Paneer Butter Masala",319.0000,"Yes",289.0000,9.0000,289.0000
+"165853846","Paneer Main course","Paneer Cheese Masala",329.0000,"Yes",269.0000,9.0000,269.0000
+"165853742","Paneer Main course","Paneer Do Pyaza",289.0000,"No",279.0000,9.0000,279.0000
+"165853818","Paneer Main course","Paneer Kofta",349.0000,"Yes",299.0000,8.0000,299.0000
+"165853844","Paneer Main course","Paneer Kolhapuri",299.0000,"Yes",289.0000,9.0000,289.0000
+"165853845","Paneer Main course","Paneer Lababdar",319.0000,"Yes",299.0000,8.0000,299.0000
+"165853746","Paneer Main course","Paneer Punjabi",329.0000,"Yes",299.0000,9.0000,299.0000
+"165853872","Paneer Main course","Paneer Takatak",279.0000,"No",299.0000,0.0000,299.0000
+"165853819","Paneer Main course","Paneer Tawa Masala",329.0000,"No",319.0000,8.0000,319.0000
+"165853743","Paneer Main course","Paneer Tikka Masala",349.0000,"Yes",299.0000,8.0000,299.0000
+"165853816","Paneer Main course","Shahi Paneer",329.0000,"Yes",309.0000,9.0000,309.0000
+"165853757","Pasta & Pizzas","Alfredo Pasta (white Sause)",299.0000,"Yes",249.0000,9.0000,249.0000
+"165853758","Pasta & Pizzas","Arrabiata Pasta (red Sause)",299.0000,"Yes",239.0000,9.0000,239.0000
+"165853764","Pasta & Pizzas","Cheese Corn Pizza",279.0000,"Yes",209.0000,9.0000,209.0000
+"165853762","Pasta & Pizzas","Loaded Pizza",319.0000,"Yes",289.0000,9.0000,289.0000
+"165853761","Pasta & Pizzas","Margherita Pizza",279.0000,"Yes",199.0000,9.0000,199.0000
+"165853763","Pasta & Pizzas","Paneer Makhani Pizza",349.0000,"Yes",249.0000,9.0000,249.0000
+"165853873","Pasta & Pizzas","Paneer Schezwan Pizza",349.0000,"No",249.0000,0.0000,249.0000
+"165853760","Pasta & Pizzas","Peri Peri Pizza",279.0000,"Yes",199.0000,9.0000,199.0000
+"165853759","Pasta & Pizzas","Pink Sause Pasta",329.0000,"Yes",269.0000,8.0000,269.0000
+"165853765","Pasta & Pizzas","Veg Pizza",289.0000,"Yes",219.0000,9.0000,219.0000
+"165853768","Salad - Papad - Raita","Boondi Raita",79.0000,"Yes",69.0000,5.0000,69.0000
+"165853840","Salad - Papad - Raita","Butter Milk",59.0000,"No",69.0000,9.0000,69.0000
+"165853880","Salad - Papad - Raita","Chola Mashal Salad",99.0000,"No",99.0000,0.0000,99.0000
+"165853766","Salad - Papad - Raita","Curd",70.0000,"No",49.0000,5.0000,49.0000
+"165853842","Salad - Papad - Raita","Dahi Kachumber",95.0000,"Yes",89.0000,6.0000,89.0000
+"165853756","Salad - Papad - Raita","Fried Masala Papad",49.0000,"No",55.0000,4.0000,55.0000
+"165853914","Salad - Papad - Raita","Fried Masala Papad ( Masala Alg Se)",55.0000,"No",55.0000,0.0000,55.0000
+"165853755","Salad - Papad - Raita","Fried Papad",35.0000,"No",40.0000,3.0000,40.0000
+"165853775","Salad - Papad - Raita","Green Salad",79.0000,"Yes",69.0000,6.0000,69.0000
+"165853776","Salad - Papad - Raita","Kachumbar Salad",89.0000,"Yes",69.0000,6.0000,69.0000
+"165853767","Salad - Papad - Raita","Mix Raita",69.0000,"Yes",79.0000,5.0000,79.0000
+"165853913","Salad - Papad - Raita","Roasted Masala Papad",55.0000,"No",55.0000,0.0000,55.0000
+"165853915","Salad - Papad - Raita","Roasted Masala Papad(masala Alg Se)",55.0000,"No",55.0000,0.0000,55.0000
+"165853754","Salad - Papad - Raita","Roasted Papad",40.0000,"Yes",30.0000,3.0000,30.0000
+"165853798","Shakes & Desserts","Blueberry Shake",179.0000,"Yes",179.0000,9.0000,179.0000
+"165853905","Shakes & Desserts","Brownie With Chocolate Sauce",169.0000,"Yes",149.0000,9.0000,149.0000
+"165853827","Shakes & Desserts","Chocolate Brownie Shake",199.0000,"Yes",179.0000,8.0000,179.0000
+"165853796","Shakes & Desserts","Classic Chocolate Shake",179.0000,"Yes",159.0000,9.0000,159.0000
+"165853723","Shakes & Desserts","Gulab Jamun",99.0000,"Yes",69.0000,9.0000,69.0000
+"165853805","Shakes & Desserts","Gulab Jamun With Ice Cream",80.0000,"No",90.0000,9.0000,90.0000
+"165853716","Shakes & Desserts","Hazelnut Cold Coffee",229.0000,"No",199.0000,8.0000,199.0000
+"165853919","Shakes & Desserts","Hot Brownie With Ice Cream",169.0000,"No",179.0000,0.0000,179.0000
+"165853856","Shakes & Desserts","Ice Cream Chocolate",40.0000,"No",39.0000,9.0000,39.0000
+"165853857","Shakes & Desserts","Ice Cream Mango",40.0000,"No",39.0000,9.0000,39.0000
+"165853878","Shakes & Desserts","Ice Cream Sunde",149.0000,"No",149.0000,0.0000,149.0000
+"165853855","Shakes & Desserts","Ice Cream Vanilla",40.0000,"No",39.0000,9.0000,39.0000
+"165853801","Shakes & Desserts","Kit Kat Shake",199.0000,"Yes",169.0000,9.0000,169.0000
+"165853799","Shakes & Desserts","Mango Shake",169.0000,"Yes",169.0000,9.0000,169.0000
+"165853813","Shakes & Desserts","Sizzling Brownie",189.0000,"No",229.0000,8.0000,229.0000
+"165853732","Snacks ( Fries ,Nachos & Maggi)","Cheese Corn Maggi",159.0000,"Yes",145.0000,9.0000,145.0000
+"165853725","Snacks ( Fries ,Nachos & Maggi)","Cheese Fries",199.0000,"Yes",169.0000,8.0000,169.0000
+"165853731","Snacks ( Fries ,Nachos & Maggi)","Cheese Maggi",149.0000,"No",145.0000,9.0000,145.0000
+"165853749","Snacks ( Fries ,Nachos & Maggi)","Classic Nachos",139.0000,"No",129.0000,9.0000,129.0000
+"165853750","Snacks ( Fries ,Nachos & Maggi)","Mexican Loaded Cheese Nachos",199.0000,"Yes",179.0000,9.0000,179.0000
+"165853724","Snacks ( Fries ,Nachos & Maggi)","Peri Peri Fries",179.0000,"Yes",149.0000,9.0000,149.0000
+"165853734","Snacks ( Fries ,Nachos & Maggi)","Peri Peri Maggi",149.0000,"Yes",125.0000,9.0000,125.0000
+"165853730","Snacks ( Fries ,Nachos & Maggi)","Plain Maggi",79.0000,"No",99.0000,8.0000,99.0000
+"165853733","Snacks ( Fries ,Nachos & Maggi)","Punjabi Maggi",189.0000,"Yes",185.0000,9.0000,185.0000
+"165853726","Snacks ( Fries ,Nachos & Maggi)","Salted Fries",169.0000,"Yes",129.0000,9.0000,129.0000
+"165853735","Snacks ( Fries ,Nachos & Maggi)","Vegetable Maggi",179.0000,"Yes",125.0000,9.0000,125.0000
+"165853786","Soup","Hot And Sour Soup",159.0000,"No",159.0000,8.0000,159.0000
+"165853785","Soup","Manchow Soup",159.0000,"No",159.0000,8.0000,159.0000
+"165853784","Soup","Tomato Soup",149.0000,"No",149.0000,8.0000,149.0000
+"165853788","Starters","Chilly Mushroom",249.0000,"Yes",219.0000,9.0000,219.0000
+"165853922","Starters","Chilly Paneer (Chilly Paneer)",239.0000,"Yes",219.0000,8.0000,219.0000
+"165853921","Starters","Chilly Paneer (Chilly Paneer)",239.0000,"Yes",219.0000,8.0000,219.0000
+"165853920","Starters","Chilly Paneer (Chilly Paneer)",239.0000,"Yes",219.0000,8.0000,219.0000
+"165853790","Starters","Crispy Corn",199.0000,"No",199.0000,9.0000,199.0000
+"165853791","Starters","Crispy Veg",229.0000,"Yes",189.0000,9.0000,189.0000
+"1320088361","Starters","Gobi Manchurian",179.0000,"Yes",179.0000,11.0000,179.0000
+"165853792","Starters","Hara Bhara Kebab",249.0000,"No",219.0000,9.0000,219.0000
+"165853793","Starters","Honey Chilly Potato",239.0000,"Yes",209.0000,8.0000,209.0000
+"165853923","Starters","Manchurian (Manchurian)",239.0000,"Yes",189.0000,8.0000,189.0000
+"165853924","Starters","Manchurian (Manchurian)",239.0000,"Yes",189.0000,8.0000,189.0000
+"165853925","Starters","Manchurian (Manchurian)",239.0000,"Yes",189.0000,8.0000,189.0000
+"165853795","Starters","Paneer 65",239.0000,"Yes",219.0000,9.0000,219.0000
+"1320088272","Starters","Paneer Crispy",209.0000,"Yes",209.0000,11.0000,209.0000
+"165853834","Starters","Paneer Tikka",289.0000,"Yes",219.0000,9.0000,219.0000
+"165853740","Veg Main Course","Aloo Gobi LEHSUNI",199.0000,"No",189.0000,9.0000,189.0000
+"165853741","Veg Main Course","Corn Palak",239.0000,"Yes",219.0000,9.0000,219.0000
+"165853852","Veg Main Course","Half Dal Jeera",89.0000,"No",129.0000,8.0000,129.0000
+"165853851","Veg Main Course","Half Dal Tadka",129.0000,"No",129.0000,8.0000,129.0000
+"1320097549","Veg Main Course","KUMBH KADHAI",369.0000,"Yes",369.0000,11.0000,369.0000
+"165853836","Veg Main Course","Kaju Curry",480.0000,"No",379.0000,8.0000,379.0000
+"1320097127","Veg Main Course","METHI ALOO",219.0000,"Yes",219.0000,11.0000,219.0000
+"165853739","Veg Main Course","MUSHROOM DO PYAZA",329.0000,"Yes",269.0000,9.0000,269.0000
+"165853737","Veg Main Course","Malai Kofta",349.0000,"No",339.0000,9.0000,339.0000
+"165853861","Veg Main Course","Methi Malai Matar",339.0000,"No",329.0000,9.0000,329.0000
+"165853736","Veg Main Course","Mix Veg",219.0000,"Yes",199.0000,9.0000,199.0000
+"165853823","Veg Main Course","Nargis Kofta",289.0000,"No",359.0000,9.0000,359.0000
+"165853820","Veg Main Course","Sev Tamatar",199.0000,"Yes",189.0000,8.0000,189.0000
+"1320096127","Veg Main Course","TAWA VEG",319.0000,"Yes",319.0000,11.0000,319.0000
+"165853900","Veg Main Course","Veg Angara",249.0000,"Yes",229.0000,0.0000,229.0000
+"165853876","Veg Main Course","Veg Handi",219.0000,"No",219.0000,0.0000,219.0000
+"165853875","Veg Main Course","Veg Kadhai",239.0000,"Yes",219.0000,0.0000,219.0000
+"165853822","Veg Main Course","Veg Keema Kasturi",239.0000,"No",239.0000,9.0000,239.0000
+"165853821","Veg Main Course","Veg Kofta",239.0000,"Yes",219.0000,9.0000,219.0000
+"165853738","Veg Main Course","Veg Kolhapuri",219.0000,"Yes",209.0000,9.0000,209.0000

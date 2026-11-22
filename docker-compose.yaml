@@ -78,6 +78,17 @@ services:
       - ./excelToCSV.html:/app/excelToCSV.html:ro
       - ./excelToCsv.js:/app/excelToCsv.js:ro
       - ./recreateFromPgDump.html:/app/recreateFromPgDump.html:ro
+      - ./stock_baselines.html:/app/stock_baselines.html:ro
+      - ./stock_baselines_page_api.js:/app/stock_baselines_page_api.js:ro
+      - ./stockQtyDisplay.js:/app/stockQtyDisplay.js:ro
+      - ./stock_baselines_create.js:/app/stock_baselines_create.js:ro
+      - ./stock_baselines_current_stock.js:/app/stock_baselines_current_stock.js:ro
+      - ./kitchen_stock_baselines.html:/app/kitchen_stock_baselines.html:ro
+      - ./kitchen_stock_baselines_page_api.js:/app/kitchen_stock_baselines_page_api.js:ro
+      - ./kitchen_stock_baselines_create.js:/app/kitchen_stock_baselines_create.js:ro
+      - ./kitchen_stock_baselines_current_stock.js:/app/kitchen_stock_baselines_current_stock.js:ro
+      - ./rawMaterialScoopNames.html:/app/rawMaterialScoopNames.html:ro
+      - ./rawMaterialScoopNames.js:/app/rawMaterialScoopNames.js:ro
       - ./report.js:/app/report.js:ro
       - ./recipeCost.js:/app/recipeCost.js:ro
       - ./recipeCostQueries.js:/app/recipeCostQueries.js:ro

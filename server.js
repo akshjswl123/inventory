@@ -12,11 +12,14 @@ const {
     saveRecipe,
     saveDishes,
     saveRawMaterials,
+    listRawMaterialScoopNameGroups,
+    upsertRawMaterialSelectedScoop,
+    saveRawMaterialScoopNameSelections,
     saveScoopConfig,
     loadScoopConfig,
     loadScoopConfigByDishCode,
     runQuery,
-    fetchCurrentStockByPgnoAsOf,
+    fetchCurrentStockByPgno,
     upsertRawMaterialsCostFromOrders,
     upsertDishCostFromStaging,
     fetchStaticData,
@@ -37,9 +40,12 @@ const {
     listItemReportLines,
     getItemReportSummary,
     getItemReportAnalysis,
-    getItemReportDateBounds
+    getItemReportDateBounds,
+    listRawMaterialsStorage
 } = require('./dbqueries');
 const { excelBufferToCsv } = require('./excelToCsv');
+const { registerStockBaselinesPageRoutes } = require('./stock_baselines_page_api');
+const { registerKitchenStockBaselinesPageRoutes } = require('./kitchen_stock_baselines_page_api');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -94,6 +100,9 @@ app.post(
 
 app.use('/data', express.static(path.join(__dirname, 'data')));
 app.use(express.static(path.join(__dirname))); // serves index.html, excelToCSV.html, report.js
+
+registerStockBaselinesPageRoutes(app);
+registerKitchenStockBaselinesPageRoutes(app);
 
 /*
  * POST /api/orders
@@ -354,6 +363,59 @@ app.post('/api/dishes', async (req, res) => {
 });
 
 /*
+ * GET /api/raw-materials/scoop-names — pgNo groups for scoop name picker
+ */
+app.get('/api/raw-materials/scoop-names', async (req, res) => {
+    try {
+        const rows = await listRawMaterialScoopNameGroups();
+        res.json({ rows });
+    } catch (err) {
+        console.error('GET /api/raw-materials/scoop-names error:', err);
+        res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
+ * PUT /api/raw-materials/scoop-names/selected — upsert raw_material_selected_scoop for one pgNo/dishcode
+ */
+app.put('/api/raw-materials/scoop-names/selected', async (req, res) => {
+    const pgNo = req.body && req.body.pgNo;
+    const itemnameSelectedForScoop = req.body && req.body.itemnameSelectedForScoop;
+    if (!pgNo || !itemnameSelectedForScoop) {
+        return res.status(400).json({
+            error: 'pgNo and itemnameSelectedForScoop are required'
+        });
+    }
+    try {
+        await upsertRawMaterialSelectedScoop(pgNo, itemnameSelectedForScoop);
+        res.json({ ok: true });
+    } catch (err) {
+        console.error('PUT /api/raw-materials/scoop-names/selected error:', err);
+        res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
+ * POST /api/raw-materials/scoop-names — chip list + selected_scoop; unused only for removed chiplets
+ */
+app.post('/api/raw-materials/scoop-names', async (req, res) => {
+    const { rows = [] } = req.body;
+    if (!Array.isArray(rows) || rows.length === 0) {
+        return res.status(400).json({ error: 'At least one row is required' });
+    }
+    try {
+        const result = await saveRawMaterialScoopNameSelections(req.body);
+        res.status(200).json({
+            ...result,
+            message: 'Raw material scoop names updated'
+        });
+    } catch (err) {
+        console.error('POST /api/raw-materials/scoop-names error:', err);
+        res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
  * POST /api/raw-materials
  */
 app.post('/api/raw-materials', async (req, res) => {
@@ -424,6 +486,19 @@ app.get('/api/scoop-config/by-dishcode', async (req, res) => {
 });
 
 /*
+ * GET /api/raw-materials-storage — pg_no → storage (rack), sorted by storage
+ */
+app.get('/api/raw-materials-storage', async (req, res) => {
+    try {
+        const rows = await listRawMaterialsStorage();
+        res.json({ rows });
+    } catch (err) {
+        console.error('GET /api/raw-materials-storage error:', err);
+        res.status(500).json({ error: 'Database error', detail: err.message });
+    }
+});
+
+/*
  * GET /api/static-data — catalog / lookup constants from DB
  */
 app.get('/api/static-data', async (req, res) => {
@@ -469,21 +544,12 @@ app.post('/api/dish-cost/upsert-from-staging', async (req, res) => {
 });
 
 /*
- * GET /api/current-stock/by-pgno?asOf=YYYY-MM-DD&pgNo=optional
- * Dated stock (function current_stock_by_pgno_as_of). View + Inventory In UI unchanged.
+ * GET /api/current-stock/by-pgno?pgNo=optional — SELECT from view current_stock_by_pgno
  */
 app.get('/api/current-stock/by-pgno', async (req, res) => {
-    const asOf = (req.query.asOf || req.query.as_of || req.query.date || '').trim();
     const pgNo = (req.query.pgNo || req.query.pgno || '').trim();
-    if (!asOf) {
-        return res.status(400).json({
-            error: 'Query parameter asOf (YYYY-MM-DD) is required',
-            example: '/api/current-stock/by-pgno?asOf=2025-09-30',
-            optional: 'pgNo=1 filters one catalog page'
-        });
-    }
     try {
-        const result = await fetchCurrentStockByPgnoAsOf(asOf, pgNo || null);
+        const result = await fetchCurrentStockByPgno(pgNo || null);
         res.json(result);
     } catch (err) {
         const status = err.statusCode || 500;

@@ -17,7 +17,13 @@ const SQL = {
     rawMaterials: `
         SELECT id, itemname AS item_name, "pgNo" AS pg_no
         FROM raw_materials
-        ORDER BY itemname
+        WHERE itemname IS NOT NULL AND TRIM(itemname) <> ''
+          AND "pgNo" IS NOT NULL AND TRIM("pgNo") <> ''
+          AND LOWER(COALESCE(TRIM(comments), '')) <> 'unused'
+        ORDER BY
+            NULLIF(regexp_replace(TRIM("pgNo"), '\\D.*', '', 'g'), '')::int NULLS LAST,
+            TRIM("pgNo"),
+            LOWER(TRIM(itemname))
     `,
     dishes: `
         SELECT id, dish_name, dish_code

@@ -180,9 +180,9 @@
     try {
       const dataRows = readRowsFromDom();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(dataRows));
-      const scoopAdded = mergeDefaultScoopsForRows(dataRows);
-      let msg = "Saved to browser storage";
-      if (scoopAdded > 0) msg += "; " + scoopAdded + " scoop_config row(s) in catalog store";
+      // const scoopAdded = mergeDefaultScoopsForRows(dataRows);
+      const msg = "Saved to browser storage";
+      // if (scoopAdded > 0) msg += "; " + scoopAdded + " scoop_config row(s) in catalog store";
       setMsg(msg, "ok");
     } catch (e) {
       alert("Save failed: " + e.message);
@@ -224,14 +224,14 @@
     if (!dataRows.length) { alert("Add at least one row."); return; }
     try {
       const d = await postJSON("/api/raw-materials", { rows: dataRows });
-      mergeDefaultScoopsForRows(dataRows);
+      // mergeDefaultScoopsForRows(dataRows);
       let msg = "Saved " + d.count + " row(s) to database";
       if (d.inserted != null || d.updated != null) {
         msg += " (" + (d.inserted || 0) + " inserted, " + (d.updated || 0) + " updated)";
       }
-      if (d.scoopConfigCount != null && d.scoopConfigCount > 0) {
-        msg += "; " + d.scoopConfigCount + " scoop_config row(s) added";
-      }
+      // if (d.scoopConfigCount != null && d.scoopConfigCount > 0) {
+      //   msg += "; " + d.scoopConfigCount + " scoop_config row(s) added";
+      // }
       setMsg(msg, "ok");
     } catch (e) {
       alert("Save to DB failed: " + e.message);

@@ -27,7 +27,7 @@ View **`public.current_stock_by_pgno`**: sums all **in** minus all **out** per *
 
 Inventory In / Out **Current Stock** column and Query tab **Current Stock** use this view (`report.js`).
 
-**As-of date (API only, UI unchanged):** `GET /api/current-stock/by-pgno?asOf=YYYY-MM-DD` optional `&pgNo=1` — calls `current_stock_by_pgno_as_of(date)` ([`../33_current_stock_by_pgno_as_of.sql`](../33_current_stock_by_pgno_as_of.sql)).
+**API:** `GET /api/current-stock/by-pgno` optional `&pgNo=1` — reads view `current_stock_by_pgno` (baseline + movements). Apply [`../38_stock_baselines.sql`](../38_stock_baselines.sql) before the view. Drop old function: [`../33_current_stock_by_pgno_as_of.sql`](../33_current_stock_by_pgno_as_of.sql).
 
 ---
 
